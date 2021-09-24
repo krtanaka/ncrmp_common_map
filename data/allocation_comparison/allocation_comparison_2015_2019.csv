@@ -1,0 +1,447 @@
+"OBS_YEAR","REGION","ISLAND","SEC_NAME","REEF_ZONE","DEPTH_BIN","AREA_PCT","AREA_VAR_PCT","MANUAL_PCT","SEC_sites","N_AREA","N_AREA_VAR","N_MANUAL","N_SITES"
+2017,"PRIAs","Jarvis","Jarvis","Forereef","Deep",0.05,0.07,0.125,28,1,2,4,4
+2017,"PRIAs","Jarvis","Jarvis","Forereef","Mid",0.52,0.52,0.475,28,15,15,13,13
+2017,"PRIAs","Jarvis","Jarvis","Forereef","Shallow",0.42,0.41,0.4,28,12,11,11,11
+2017,"PRIAs","Wake","Wake","Forereef","Deep",0.21,0.35,0.35,53,11,19,19,17
+2017,"PRIAs","Wake","Wake","Forereef","Mid",0.37,0.41,0.41,53,20,22,22,22
+2017,"PRIAs","Wake","Wake","Forereef","Shallow",0.42,0.24,0.25,53,22,13,13,14
+2017,"MARIANA","Guam","GUA_EAST_OPEN","Forereef","Deep",0.24,0.35,0.325,19,5,7,6,6
+2017,"MARIANA","Guam","GUA_EAST_OPEN","Forereef","Mid",0.4,0.54,0.5,19,8,10,10,9
+2017,"MARIANA","Guam","GUA_EAST_OPEN","Forereef","Shallow",0.36,0.11,0.175,19,7,2,3,4
+2017,"MARIANA","Guam","GUA_WEST_OPEN","Forereef","Deep",0.15,0.23,0.23,26,4,6,6,6
+2017,"MARIANA","Guam","GUA_WEST_OPEN","Forereef","Mid",0.33,0.37,0.37,26,9,10,10,9
+2017,"MARIANA","Guam","GUA_WEST_OPEN","Forereef","Shallow",0.52,0.41,0.41,26,14,11,11,11
+2017,"MARIANA","Guam","GUA_MP","Forereef","Deep",0.2,0.34,0.34,21,4,7,7,8
+2017,"MARIANA","Guam","GUA_MP","Forereef","Mid",0.31,0.36,0.36,21,7,8,8,7
+2017,"MARIANA","Guam","GUA_MP","Forereef","Shallow",0.49,0.3,0.3,21,10,6,6,6
+2017,"MARIANA","Rota","Rota","Forereef","Deep",0.14,0.31,0.31,28,4,9,9,8
+2017,"MARIANA","Rota","Rota","Forereef","Mid",0.19,0.43,0.43,28,5,12,12,14
+2017,"MARIANA","Rota","Rota","Forereef","Shallow",0.67,0.26,0.26,28,19,7,7,6
+2017,"MARIANA","Saipan","Saipan","Forereef","Deep",0.56,0.68,0.5,37,21,25,18,17
+2017,"MARIANA","Saipan","Saipan","Forereef","Mid",0.32,0.26,0.325,37,12,10,12,14
+2017,"MARIANA","Saipan","Saipan","Forereef","Shallow",0.12,0.06,0.175,37,4,2,6,6
+2017,"MARIANA","Aguijan","Aguijan","Forereef","Deep",0.29,0.45,0.4,17,5,8,7,7
+2017,"MARIANA","Aguijan","Aguijan","Forereef","Mid",0.32,0.39,0.4,17,5,7,7,7
+2017,"MARIANA","Aguijan","Aguijan","Forereef","Shallow",0.39,0.16,0.2,17,7,3,3,3
+2017,"MARIANA","Tinian","Tinian","Forereef","Deep",0.39,0.59,0.48,24,9,14,12,9
+2017,"MARIANA","Tinian","Tinian","Forereef","Mid",0.38,0.32,0.323,24,9,8,8,9
+2017,"MARIANA","Tinian","Tinian","Forereef","Shallow",0.23,0.08,0.2,24,6,2,5,6
+2017,"MARIANA","Alamagan","Alamagan","Forereef","Deep",0.33,0.42,0.4,9,3,4,4,3
+2017,"MARIANA","Alamagan","Alamagan","Forereef","Mid",0.47,0.5,0.4,9,4,4,4,3
+2017,"MARIANA","Alamagan","Alamagan","Forereef","Shallow",0.21,0.09,0.2,9,2,1,2,3
+2017,"MARIANA","Agrihan","Agrihan","Forereef","Deep",0.54,0.78,0.5,19,10,15,10,8
+2017,"MARIANA","Agrihan","Agrihan","Forereef","Mid",0.06,0.03,0.2,19,1,1,4,4
+2017,"MARIANA","Agrihan","Agrihan","Forereef","Shallow",0.4,0.19,0.3,19,8,4,6,7
+2017,"MARIANA","Pagan","Pagan","Forereef","Deep",0.38,0.43,0.43,40,15,17,17,17
+2017,"MARIANA","Pagan","Pagan","Forereef","Mid",0.33,0.31,0.31,40,13,12,12,13
+2017,"MARIANA","Pagan","Pagan","Forereef","Shallow",0.3,0.26,0.26,40,12,10,10,10
+2017,"MARIANA","Farallon de Pajaros","Farallon de Pajaros","Forereef","Deep",0.27,0.35,0.35,16,4,6,6,5
+2017,"MARIANA","Farallon de Pajaros","Farallon de Pajaros","Forereef","Mid",0.5,0.42,0.42,16,8,7,7,7
+2017,"MARIANA","Farallon de Pajaros","Farallon de Pajaros","Forereef","Shallow",0.24,0.23,0.23,16,4,4,4,4
+2017,"MARIANA","Maug","Maug","Forereef","Deep",0.28,0.31,0.3,38,11,12,11,12
+2017,"MARIANA","Maug","Maug","Forereef","Mid",0.61,0.62,0.575,38,23,24,22,17
+2017,"MARIANA","Maug","Maug","Forereef","Shallow",0.11,0.07,0.125,38,4,3,5,9
+2017,"MARIANA","Asuncion","Asuncion","Forereef","Deep",0.26,0.31,0.3,19,5,6,6,6
+2017,"MARIANA","Asuncion","Asuncion","Forereef","Mid",0.53,0.56,0.5,19,10,11,10,9
+2017,"MARIANA","Asuncion","Asuncion","Forereef","Shallow",0.22,0.12,0.2,19,4,2,4,4
+2017,"MARIANA","Sarigan","Sarigan","Forereef","Deep",0.45,0.39,0.39,9,4,4,4,4
+2017,"MARIANA","Sarigan","Sarigan","Forereef","Mid",0.15,0.21,0.21,9,1,2,2,2
+2017,"MARIANA","Sarigan","Sarigan","Forereef","Shallow",0.4,0.4,0.4,9,4,4,4,3
+2017,"MARIANA","Guguan","Guguan","Forereef","Deep",0.35,0.72,0.5,9,3,6,4,4
+2017,"MARIANA","Guguan","Guguan","Forereef","Mid",0.37,0.13,0.25,9,3,1,2,3
+2017,"MARIANA","Guguan","Guguan","Forereef","Shallow",0.29,0.15,0.25,9,3,1,2,2
+2019,"MHI","Hawaii","HAW_HAMAKUA","Forereef","Deep",0.300012561,0.342639621,0.357142857,19,6,7,7,6
+2019,"MHI","Hawaii","HAW_HAMAKUA","Forereef","Mid",0.473386766,0.484985292,0.5,19,9,9,10,9
+2019,"MHI","Hawaii","HAW_HAMAKUA","Forereef","Shallow",0.226600673,0.172375087,0.142857143,19,4,3,3,4
+2019,"MHI","Hawaii","HAW_KONA","Forereef","Deep",0.270080835,0.176841223,0.2,37,10,7,7,6
+2019,"MHI","Hawaii","HAW_KONA","Forereef","Mid",0.412524766,0.585832797,0.6,37,15,22,22,23
+2019,"MHI","Hawaii","HAW_KONA","Forereef","Shallow",0.317394399,0.23732598,0.2,37,12,9,7,8
+2019,"MHI","Hawaii","HAW_PUNA","Forereef","Deep",0.356047773,0.534702524,0.411764706,17,6,9,7,7
+2019,"MHI","Hawaii","HAW_PUNA","Forereef","Mid",0.394688345,0.357166603,0.352941176,17,7,6,6,6
+2019,"MHI","Hawaii","HAW_PUNA","Forereef","Shallow",0.249263881,0.108130873,0.235294118,17,4,2,4,4
+2019,"MHI","Kahoolawe","KAH_NORTH","Forereef","Deep",0.333333333,0.394571362,0.4,8,3,3,3,2
+2019,"MHI","Kahoolawe","KAH_NORTH","Forereef","Mid",0.333333333,0.23291286,0.3,8,3,2,2,3
+2019,"MHI","Kahoolawe","KAH_NORTH","Forereef","Shallow",0.333333333,0.372515778,0.3,8,3,3,2,3
+2019,"MHI","Kahoolawe","KAH_SOUTH","Forereef","Deep",0.333333333,0.386685543,0.333333333,12,4,5,4,4
+2019,"MHI","Kahoolawe","KAH_SOUTH","Forereef","Mid",0.333333333,0.371418047,0.333333333,12,4,4,4,6
+2019,"MHI","Kahoolawe","KAH_SOUTH","Forereef","Shallow",0.333333333,0.24189641,0.333333333,12,4,3,4,2
+2019,"MHI","Kauai","KAU_EAST","Forereef","Deep",0.250412586,0.359689584,0.277777778,13,3,5,4,4
+2019,"MHI","Kauai","KAU_EAST","Forereef","Mid",0.485269841,0.458697734,0.5,13,6,6,6,7
+2019,"MHI","Kauai","KAU_EAST","Forereef","Shallow",0.264317574,0.181612681,0.222222222,13,3,2,3,2
+2019,"MHI","Kauai","KAU_NAPALI","Forereef","Deep",0.654536972,0.577940447,0.444444444,9,6,5,4,3
+2019,"MHI","Kauai","KAU_NAPALI","Forereef","Mid",0.285034051,0.364721415,0.333333333,9,3,3,3,4
+2019,"MHI","Kauai","KAU_NAPALI","Forereef","Shallow",0.060428976,0.057338139,0.222222222,9,1,1,2,2
+2019,"MHI","Lanai","LAN_NORTH","Forereef","Deep",0.191267346,0.29682047,0.333333333,5,1,1,2,1
+2019,"MHI","Lanai","LAN_NORTH","Forereef","Mid",0.393891306,0.448426456,0.444444444,5,2,2,2,3
+2019,"MHI","Lanai","LAN_NORTH","Forereef","Shallow",0.414841348,0.254753074,0.222222222,5,2,1,1,1
+2019,"MHI","Lanai","LAN_SOUTH","Forereef","Deep",0.166549847,0.180557331,0.166666667,22,4,4,4,6
+2019,"MHI","Lanai","LAN_SOUTH","Forereef","Mid",0.329573602,0.487044888,0.5,22,7,11,11,9
+2019,"MHI","Lanai","LAN_SOUTH","Forereef","Shallow",0.503876551,0.332397781,0.333333333,22,11,7,7,7
+2019,"MHI","Maui","MAI_KIHEI","Forereef","Deep",0.287594155,0.336225312,0.333333333,12,3,4,4,3
+2019,"MHI","Maui","MAI_KIHEI","Forereef","Mid",0.364879533,0.281656285,0.277777778,12,4,3,3,4
+2019,"MHI","Maui","MAI_KIHEI","Forereef","Shallow",0.347526312,0.382118403,0.388888889,12,4,5,5,5
+2019,"MHI","Maui","MAI_LAHAINA","Forereef","Deep",0.237237712,0.41712153,0.444444444,13,3,5,6,6
+2019,"MHI","Maui","MAI_LAHAINA","Forereef","Mid",0.399797008,0.289054375,0.277777778,13,5,4,4,3
+2019,"MHI","Maui","MAI_LAHAINA","Forereef","Shallow",0.362965281,0.293824095,0.277777778,13,5,4,4,4
+2019,"MHI","Maui","MAI_NE","Forereef","Deep",0.385525207,0.438381566,0.444444444,8,3,4,4,3
+2019,"MHI","Maui","MAI_NE","Forereef","Mid",0.404446157,0.376759313,0.333333333,8,3,3,3,3
+2019,"MHI","Maui","MAI_NE","Forereef","Shallow",0.210028635,0.184859121,0.222222222,8,2,1,2,2
+2019,"MHI","Maui","MAI_SE","Forereef","Deep",NA,0.4185486,0.333333333,9,NA,4,3,3
+2019,"MHI","Maui","MAI_SE","Forereef","Mid",NA,0.3664297,0.333333333,9,NA,3,3,5
+2019,"MHI","Maui","MAI_SE","Forereef","Shallow",NA,0.2150217,0.333333333,9,NA,2,3,1
+2019,"MHI","Molokai","MOL_PALI","Forereef","Deep",0.3918199,0.450689975,0.444444444,17,7,8,8,6
+2019,"MHI","Molokai","MOL_PALI","Forereef","Mid",0.289168226,0.279411617,0.333333333,17,5,5,6,6
+2019,"MHI","Molokai","MOL_PALI","Forereef","Shallow",0.319011874,0.269898408,0.222222222,17,5,5,4,5
+2019,"MHI","Molokai","MOL_SOUTH","Forereef","Deep",0.09853899,0.160284741,0.166666667,15,1,2,3,1
+2019,"MHI","Molokai","MOL_SOUTH","Forereef","Mid",0.211009241,0.315837242,0.333333333,15,3,5,5,7
+2019,"MHI","Molokai","MOL_SOUTH","Forereef","Shallow",0.690451769,0.523878017,0.5,15,10,8,8,7
+2019,"MHI","Molokai","MOL_WEST","Forereef","Deep",0.439823605,0.391067998,0.3,9,4,4,3,3
+2019,"MHI","Molokai","MOL_WEST","Forereef","Mid",0.397416292,0.549864657,0.5,9,4,5,4,4
+2019,"MHI","Molokai","MOL_WEST","Forereef","Shallow",0.162760102,0.059067344,0.2,9,1,1,2,2
+2019,"MHI","Niihau","NII_EAST","Forereef","Deep",0.369676076,0.449523486,0.4,3,1,1,1,2
+2019,"MHI","Niihau","NII_EAST","Forereef","Mid",0.409429773,0.404578647,0.4,3,1,1,1,1
+2019,"MHI","Niihau","NII_LEHUA","Forereef","Deep",0.237901402,0.242922102,0.222222222,7,2,2,2,2
+2019,"MHI","Niihau","NII_LEHUA","Forereef","Mid",0.441203076,0.46337648,0.444444444,7,3,3,3,4
+2019,"MHI","Niihau","NII_LEHUA","Forereef","Shallow",0.320895522,0.293701417,0.333333333,7,2,2,2,1
+2019,"MHI","Niihau","NII_WEST","Forereef","Deep",0.272905824,0.334471155,0.3,7,2,2,2,2
+2019,"MHI","Niihau","NII_WEST","Forereef","Mid",0.556229721,0.517683401,0.5,7,4,4,4,4
+2019,"MHI","Niihau","NII_WEST","Forereef","Shallow",0.170864456,0.147845444,0.2,7,1,1,1,1
+2019,"MHI","Oahu","OAH_EAST","Forereef","Deep",0.224059915,0.145407709,0.222222222,7,2,1,2,2
+2019,"MHI","Oahu","OAH_EAST","Forereef","Mid",0.423035272,0.376058643,0.333333333,7,3,3,2,3
+2019,"MHI","Oahu","OAH_EAST","Forereef","Shallow",0.352904813,0.478533648,0.444444444,7,2,3,3,2
+2019,"MHI","Oahu","OAH_NE","Forereef","Deep",0.080729676,0.085079856,0.214285714,11,1,1,2,3
+2019,"MHI","Oahu","OAH_NE","Forereef","Mid",0.428477844,0.477121217,0.357142857,11,5,5,4,5
+2019,"MHI","Oahu","OAH_NE","Forereef","Shallow",0.490792481,0.437798927,0.428571429,11,5,5,5,3
+2019,"MHI","Oahu","OAH_NORTH","Forereef","Deep",0.217318538,0.112220701,0.214285714,11,2,1,2,2
+2019,"MHI","Oahu","OAH_NORTH","Forereef","Mid",0.448003887,0.724060236,0.571428571,11,5,8,6,6
+2019,"MHI","Oahu","OAH_NORTH","Forereef","Shallow",0.334677575,0.163719063,0.214285714,11,4,2,2,3
+2019,"MHI","Oahu","OAH_SOUTH","Forereef","Deep",0.161174931,0.257409422,0.259259259,19,3,5,5,4
+2019,"MHI","Oahu","OAH_SOUTH","Forereef","Mid",0.434232825,0.330677212,0.333333333,19,8,6,6,6
+2019,"MHI","Oahu","OAH_SOUTH","Forereef","Shallow",0.404592245,0.411913366,0.407407407,19,8,8,8,9
+2019,"MHI","Oahu","OAH_KAENA","Forereef","Deep",0.402926782,0.4083536,0.4,10,4,4,4,4
+2019,"MHI","Oahu","OAH_KAENA","Forereef","Mid",0.378435482,0.3835325,0.3,10,4,4,3,2
+2019,"MHI","Oahu","OAH_KAENA","Forereef","Shallow",0.218637735,0.2081139,0.3,10,2,2,3,4
+2016,"MHI","Hawaii","HAW_KONA","Forereef","Deep",0.27,0.19,0.2,36,10,7,7,8
+2016,"MHI","Hawaii","HAW_KONA","Forereef","Mid",0.41,0.64,0.5,36,15,23,18,18
+2016,"MHI","Hawaii","HAW_KONA","Forereef","Shallow",0.32,0.17,0.3,36,12,6,11,10
+2016,"MHI","Hawaii","HAW_PUNA","Forereef","Deep",0.36,0.4,0.35,14,5,6,5,7
+2016,"MHI","Hawaii","HAW_PUNA","Forereef","Mid",0.39,0.45,0.45,14,5,6,6,5
+2016,"MHI","Hawaii","HAW_PUNA","Forereef","Shallow",0.25,0.15,0.2,14,4,2,3,2
+2016,"MHI","Hawaii","HAW_SE","Forereef","Deep",0.28,0.2,0.28,9,3,2,3,2
+2016,"MHI","Hawaii","HAW_SE","Forereef","Mid",0.41,0.44,0.41,9,4,4,4,4
+2016,"MHI","Hawaii","HAW_SE","Forereef","Shallow",0.31,0.36,0.31,9,3,3,3,3
+2016,"MHI","Kauai","KAU_EAST","Forereef","Deep",0.25,0.28,0.28,21,5,6,6,6
+2016,"MHI","Kauai","KAU_EAST","Forereef","Mid",0.49,0.55,0.53,21,10,12,11,10
+2016,"MHI","Kauai","KAU_EAST","Forereef","Shallow",0.26,0.17,0.2,21,5,4,4,5
+2016,"MHI","Kauai","KAU_NAPALI","Forereef","Deep",0.65,0.53,0.53,9,6,5,5,2
+2016,"MHI","Kauai","KAU_NAPALI","Forereef","Mid",0.29,0.41,0.41,9,3,4,4,5
+2016,"MHI","Kauai","KAU_NAPALI","Forereef","Shallow",0.06,0.06,0.06,9,1,1,1,2
+2016,"MHI","Lanai","LAN_NORTH","Forereef","Deep",0.19,0.4,0.4,8,2,3,3,2
+2016,"MHI","Lanai","LAN_NORTH","Forereef","Mid",0.39,0.33,0.33,8,3,3,3,4
+2016,"MHI","Lanai","LAN_NORTH","Forereef","Shallow",0.41,0.28,0.28,8,3,2,2,2
+2016,"MHI","Lanai","LAN_SOUTH","Forereef","Deep",0.17,0.16,0.16,18,3,3,3,4
+2016,"MHI","Lanai","LAN_SOUTH","Forereef","Mid",0.33,0.48,0.48,18,6,9,9,9
+2016,"MHI","Lanai","LAN_SOUTH","Forereef","Shallow",0.5,0.36,0.36,18,9,6,6,5
+2016,"MHI","Maui","MAI_KIHEI","Forereef","Deep",0.29,0.34,0.34,14,4,5,5,3
+2016,"MHI","Maui","MAI_KIHEI","Forereef","Mid",0.36,0.27,0.27,14,5,4,4,5
+2016,"MHI","Maui","MAI_KIHEI","Forereef","Shallow",0.35,0.39,0.39,14,5,5,5,6
+2016,"MHI","Maui","MAI_LAHAINA","Forereef","Deep",0.24,0.22,0.22,6,1,1,1,2
+2016,"MHI","Maui","MAI_LAHAINA","Forereef","Mid",0.4,0.31,0.31,6,2,2,2,2
+2016,"MHI","Maui","MAI_LAHAINA","Forereef","Shallow",0.36,0.46,0.46,6,2,3,3,2
+2016,"MHI","Maui","MAI_NE","Forereef","Deep",0.39,0.43,0.4,7,3,3,3,2
+2016,"MHI","Maui","MAI_NE","Forereef","Mid",0.4,0.4,0.4,7,3,3,3,3
+2016,"MHI","Maui","MAI_NE","Forereef","Shallow",0.21,0.17,0.2,7,1,1,1,2
+2016,"MHI","Maui","MAI_SE","Forereef","Mid",0.37,0.32,0.37,1,0,0,0,1
+2016,"MHI","Molokai","MOL_NW","Forereef","Shallow",0.27,0.22,0.22,1,0,0,0,1
+2016,"MHI","Molokai","MOL_PALI","Forereef","Deep",0.39,0.46,0.46,6,2,3,3,3
+2016,"MHI","Molokai","MOL_PALI","Forereef","Mid",0.29,0.27,0.27,6,2,2,2,2
+2016,"MHI","Molokai","MOL_PALI","Forereef","Shallow",0.32,0.27,0.27,6,2,2,2,1
+2016,"MHI","Molokai","MOL_SOUTH","Forereef","Deep",0.1,0.2,0.2,7,1,1,1,2
+2016,"MHI","Molokai","MOL_SOUTH","Forereef","Mid",0.21,0.23,0.23,7,1,2,2,2
+2016,"MHI","Molokai","MOL_SOUTH","Forereef","Shallow",0.69,0.57,0.57,7,5,4,4,3
+2016,"MHI","Molokai","MOL_WEST","Forereef","Deep",0.44,0.4,0.4,9,4,4,4,4
+2016,"MHI","Molokai","MOL_WEST","Forereef","Mid",0.4,0.54,0.54,9,4,5,5,5
+2016,"MHI","Niihau","NII_LEHUA","Forereef","Mid",0.44,0.46,0.46,2,1,1,1,2
+2016,"MHI","Niihau","NII_WEST","Forereef","Deep",0.27,0.34,0.34,10,3,3,3,4
+2016,"MHI","Niihau","NII_WEST","Forereef","Mid",0.56,0.51,0.51,10,6,5,5,4
+2016,"MHI","Niihau","NII_WEST","Forereef","Shallow",0.17,0.14,0.14,10,2,1,1,2
+2016,"MHI","Oahu","OAH_EAST","Forereef","Deep",0.22,0.16,0.16,11,2,2,2,3
+2016,"MHI","Oahu","OAH_EAST","Forereef","Mid",0.42,0.52,0.52,11,5,6,6,4
+2016,"MHI","Oahu","OAH_EAST","Forereef","Shallow",0.35,0.31,0.31,11,4,3,3,4
+2016,"MHI","Oahu","OAH_NE","Forereef","Deep",0.08,0.09,0.09,11,1,1,1,1
+2016,"MHI","Oahu","OAH_NE","Forereef","Mid",0.43,0.5,0.5,11,5,6,6,6
+2016,"MHI","Oahu","OAH_NE","Forereef","Shallow",0.49,0.4,0.4,11,5,4,4,4
+2016,"MHI","Oahu","OAH_NORTH","Forereef","Deep",0.22,0.11,0.2,7,2,1,1,2
+2016,"MHI","Oahu","OAH_NORTH","Forereef","Mid",0.45,0.73,0.6,7,3,5,4,4
+2016,"MHI","Oahu","OAH_NORTH","Forereef","Shallow",0.33,0.16,0.2,7,2,1,1,1
+2016,"MHI","Oahu","OAH_SOUTH","Forereef","Deep",0.16,0.22,0.22,25,4,6,6,6
+2016,"MHI","Oahu","OAH_SOUTH","Forereef","Mid",0.43,0.4,0.4,25,11,10,10,10
+2016,"MHI","Oahu","OAH_SOUTH","Forereef","Shallow",0.4,0.38,0.38,25,10,10,10,9
+2016,"NWHI","Kure","Kure","Forereef","Deep",0.46,0.53,0.45,39,18,21,18,15
+2016,"NWHI","Kure","Kure","Forereef","Mid",0.45,0.4,0.4,39,18,16,16,18
+2016,"NWHI","Kure","Kure","Forereef","Shallow",0.09,0.08,0.15,39,4,3,6,6
+2016,"NWHI","Lisianski","Lisianski","Forereef","Deep",0.45,0.5,0.41,40,18,20,16,20
+2016,"NWHI","Lisianski","Lisianski","Forereef","Mid",0.36,0.39,0.39,40,14,16,16,16
+2016,"NWHI","Lisianski","Lisianski","Forereef","Shallow",0.19,0.11,0.2,40,8,4,8,4
+2016,"MHI","Kahoolawe","KAH_NORTH","Forereef","Deep",0,0,0.17,10,0,0,2,4
+2016,"MHI","Kahoolawe","KAH_NORTH","Forereef","Mid",0,0,0.17,10,0,0,2,3
+2016,"MHI","Kahoolawe","KAH_NORTH","Forereef","Shallow",0,0,0.17,10,0,0,2,3
+2016,"MHI","Kahoolawe","KAH_SOUTH","Forereef","Deep",0,0,0.17,14,0,0,2,4
+2016,"MHI","Kahoolawe","KAH_SOUTH","Forereef","Mid",0,0,0.17,14,0,0,2,5
+2016,"MHI","Kahoolawe","KAH_SOUTH","Forereef","Shallow",0,0,0.17,14,0,0,2,5
+2015,"PRIAs","Baker","Baker","Forereef","Deep",0.16580441,0.262232634,0.25,36,6,9,9,11
+2015,"PRIAs","Baker","Baker","Forereef","Mid",0.56993954,0.443867968,0.45,36,21,16,16,14
+2015,"PRIAs","Baker","Baker","Forereef","Shallow",0.264256051,0.293899398,0.3,36,10,11,11,11
+2015,"PRIAs","Howland","Howland","Forereef","Deep",0.191346694,0.200514789,0.2,35,7,7,7,10
+2015,"PRIAs","Howland","Howland","Forereef","Mid",0.255725022,0.399997817,0.4,35,9,14,14,13
+2015,"PRIAs","Howland","Howland","Forereef","Shallow",0.552928284,0.399487394,0.4,35,19,14,14,12
+2015,"PRIAs","Jarvis","Jarvis","Forereef","Deep",0.073556881,0.125794143,0.166666667,62,5,8,10,13
+2015,"PRIAs","Jarvis","Jarvis","Forereef","Mid",0.612490279,0.565058806,0.516666667,62,38,35,32,31
+2015,"PRIAs","Jarvis","Jarvis","Forereef","Shallow",0.31395284,0.30914705,0.316666667,62,19,19,20,18
+2015,"PRIAs","Johnston","Johnston","Forereef","Deep",0.337983495,0.595959693,0.35,31,10,18,11,2
+2015,"PRIAs","Johnston","Johnston","Forereef","Mid",0.292279746,0.219907575,0.225,31,9,7,7,3
+2015,"PRIAs","Johnston","Johnston","Lagoon","Deep",0.000889253,0.000443426,0.05,31,0,0,2,12
+2015,"PRIAs","Johnston","Johnston","Lagoon","Mid",0.18684205,0.122843189,0.125,31,6,4,4,12
+2015,"PRIAs","Johnston","Johnston","Lagoon","Shallow",0.14593435,0.044313094,0.075,31,5,1,2,2
+2015,"SAMOA","Ofu & Olosega","Ofu & Olosega","Forereef","Deep",0.382777321,0.349854481,0.36,52,20,18,19,17
+2015,"SAMOA","Ofu & Olosega","Ofu & Olosega","Forereef","Mid",0.465118844,0.533416466,0.48,52,24,28,25,27
+2015,"SAMOA","Ofu & Olosega","Ofu & Olosega","Forereef","Shallow",0.152103835,0.116729052,0.16,52,8,6,8,8
+2015,"SAMOA","Rose","ROS_INNER","Backreef","ALL",0.432825665,0.189671897,0.170212766,10,4,2,2,5
+2015,"SAMOA","Rose","ROS_SANCTUARY","Forereef","Deep",0.04168338,0.042500175,0.127659574,37,2,2,5,10
+2015,"SAMOA","Rose","ROS_SANCTUARY","Forereef","Mid",0.215457796,0.204942964,0.446808511,37,8,8,17,21
+2015,"SAMOA","Rose","ROS_SANCTUARY","Forereef","Shallow",0.046709886,0.115633525,0.127659574,37,2,4,5,6
+2015,"SAMOA","Rose","ROS_INNER","Lagoon","ALL",0.263323274,0.447251439,0.127659574,10,3,4,1,5
+2015,"SAMOA","Tutuila","TUT_AUNUU_B","Forereef","Deep",0.824218797,0.832678523,0.678571429,27,22,22,18,15
+2015,"SAMOA","Tutuila","TUT_AUNUU_B","Forereef","Mid",0.172136602,0.164744241,0.214285714,27,5,4,6,9
+2015,"SAMOA","Tutuila","TUT_AUNUU_B","Forereef","Shallow",0.003644601,0.002577236,0.107142857,27,0,0,3,3
+2015,"SAMOA","Tutuila","TUT_FAGATELE","Forereef","Deep",0.159398132,0.177731178,0.178571429,27,4,5,5,6
+2015,"SAMOA","Tutuila","TUT_FAGATELE","Forereef","Mid",0.602595713,0.636514932,0.607142857,27,16,17,16,15
+2015,"SAMOA","Tutuila","TUT_FAGATELE","Forereef","Shallow",0.238006155,0.18575389,0.214285714,27,6,5,6,6
+2015,"PRIAs","Palmyra","Palmyra","Forereef","Deep",0.217734064,0.48052294,0.428571429,78,17,37,33,33
+2015,"PRIAs","Palmyra","Palmyra","Forereef","Mid",0.521510624,0.371227002,0.4,78,41,29,31,30
+2015,"PRIAs","Palmyra","Palmyra","Forereef","Shallow",0.260755312,0.148250058,0.171428571,78,20,12,13,15
+2015,"PRIAs","Kingman","Kingman","Backreef","Deep",0.007859689,0.013835007,0.04,49,0,1,2,2
+2015,"PRIAs","Kingman","Kingman","Backreef","Mid",0.035645436,0.034593677,0.06,49,2,2,3,3
+2015,"PRIAs","Kingman","Kingman","Backreef","Shallow",0.047714461,0.04098197,0.04,49,2,2,2,2
+2015,"PRIAs","Kingman","Kingman","Forereef","Deep",0.012853414,0.036478646,0.06,49,1,2,3,5
+2015,"PRIAs","Kingman","Kingman","Forereef","Mid",0.100175793,0.12964647,0.16,49,5,6,8,8
+2015,"PRIAs","Kingman","Kingman","Forereef","Shallow",0.049520922,0.04618932,0.08,49,2,2,4,4
+2015,"PRIAs","Kingman","Kingman","Lagoon","Deep",0.277875304,0.246423711,0.1,49,14,12,5,4
+2015,"PRIAs","Kingman","Kingman","Lagoon","Mid",0.227536522,0.089669248,0.08,49,11,4,4,3
+2015,"PRIAs","Kingman","Kingman","Protected Slope","Deep",0.0328226,0.093152216,0.12,49,2,5,6,6
+2015,"PRIAs","Kingman","Kingman","Protected Slope","Mid",0.207822164,0.268961284,0.26,49,10,13,13,12
+2015,"SAMOA","Tutuila","TUT_NE_OPEN","Forereef","Deep",0.042312387,0.047595471,0.047169811,22,1,1,1,6
+2015,"SAMOA","Tutuila","TUT_NE_OPEN","Forereef","Mid",0.061163647,0.065176892,0.066037736,22,1,1,1,11
+2015,"SAMOA","Tutuila","TUT_NE_OPEN","Forereef","Shallow",0.049143861,0.038693384,0.047169811,22,1,1,1,5
+2015,"SAMOA","Tutuila","TUT_NW_OPEN","Forereef","Deep",0.085081801,0.095705033,0.094339623,18,2,2,2,9
+2015,"SAMOA","Tutuila","TUT_NW_OPEN","Forereef","Mid",0.077252346,0.082321249,0.08490566,18,1,1,2,5
+2015,"SAMOA","Tutuila","TUT_NW_OPEN","Forereef","Shallow",0.035520956,0.027967399,0.037735849,18,1,1,1,4
+2015,"SAMOA","Tutuila","TUT_SE_OPEN","Forereef","Deep",0.10068746,0.1132592,0.103773585,52,5,6,5,15
+2015,"SAMOA","Tutuila","TUT_SE_OPEN","Forereef","Mid",0.148242207,0.157969101,0.150943396,52,8,8,8,26
+2015,"SAMOA","Tutuila","TUT_SE_OPEN","Forereef","Shallow",0.11055921,0.087048717,0.094339623,52,6,5,5,11
+2015,"SAMOA","Tutuila","TUT_SW_OPEN","Forereef","Deep",0.067446415,0.07586771,0.066037736,15,1,1,1,4
+2015,"SAMOA","Tutuila","TUT_SW_OPEN","Forereef","Mid",0.119094821,0.126909213,0.122641509,15,2,2,2,6
+2015,"SAMOA","Tutuila","TUT_SW_OPEN","Forereef","Shallow",0.10349489,0.08148663,0.08490566,15,2,1,1,5
+2016,"PRIAs","Jarvis","Jarvis","Forereef","Deep",0.073556881,0.125794143,0.166666667,30,2,4,5,5
+2016,"PRIAs","Jarvis","Jarvis","Forereef","Mid",0.612490279,0.565058806,0.516666667,30,18,17,16,15
+2016,"PRIAs","Jarvis","Jarvis","Forereef","Shallow",0.31395284,0.30914705,0.316666667,30,9,9,10,10
+2016,"SAMOA","Ofu & Olosega","Ofu & Olosega","Forereef","Deep",0.382777321,0.349854481,0.36,11,4,4,4,4
+2016,"SAMOA","Ofu & Olosega","Ofu & Olosega","Forereef","Mid",0.465118844,0.533416466,0.48,11,5,6,5,5
+2016,"SAMOA","Ofu & Olosega","Ofu & Olosega","Forereef","Shallow",0.152103835,0.116729052,0.16,11,2,1,2,2
+2016,"SAMOA","Rose","ROS_SANCTUARY","Forereef","Deep",0.04168338,0.042500175,0.14,47,2,2,7,13
+2016,"SAMOA","Rose","ROS_SANCTUARY","Forereef","Mid",0.215457796,0.204942964,0.44,47,10,10,21,27
+2016,"SAMOA","Rose","ROS_SANCTUARY","Forereef","Shallow",0.046709886,0.115633525,0.14,47,2,5,7,7
+2016,"SAMOA","Tutuila","TUT_FAGATELE","Forereef","Mid",0.602595713,0.636514932,0.6,4,2,3,2,3
+2016,"SAMOA","Tutuila","TUT_FAGATELE","Forereef","Shallow",0.238006155,0.18575389,0.2,4,1,1,1,1
+2016,"SAMOA","Tutuila","TUT_NE_OPEN","Forereef","Deep",0.042312387,0.047595471,0.044444444,15,1,1,1,6
+2016,"SAMOA","Tutuila","TUT_NE_OPEN","Forereef","Mid",0.061163647,0.065176892,0.066666667,15,1,1,1,7
+2016,"SAMOA","Tutuila","TUT_NE_OPEN","Forereef","Shallow",0.049143861,0.038693384,0.044444444,15,1,1,1,2
+2016,"SAMOA","Tutuila","TUT_NW_OPEN","Forereef","Deep",0.085081801,0.095705033,0.1,32,3,3,3,10
+2016,"SAMOA","Tutuila","TUT_NW_OPEN","Forereef","Mid",0.077252346,0.082321249,0.077777778,32,2,3,2,16
+2016,"SAMOA","Tutuila","TUT_NW_OPEN","Forereef","Shallow",0.035520956,0.027967399,0.033333333,32,1,1,1,6
+2016,"SAMOA","Tutuila","TUT_SW_OPEN","Forereef","Deep",0.067446415,0.07586771,0.077777778,21,1,2,2,7
+2016,"SAMOA","Tutuila","TUT_SW_OPEN","Forereef","Mid",0.119094821,0.126909213,0.122222222,21,3,3,3,10
+2016,"SAMOA","Tutuila","TUT_SW_OPEN","Forereef","Shallow",0.10349489,0.08148663,0.077777778,21,2,2,2,4
+2018,"PRIAs","Baker","Baker","Forereef","Deep",0.153792634,0.222944494,0.228571429,32,5,7,7,8
+2018,"PRIAs","Baker","Baker","Forereef","Mid",0.303971092,0.283750292,0.342857143,32,10,9,11,14
+2018,"PRIAs","Baker","Baker","Forereef","Shallow",0.542236274,0.493305214,0.428571429,32,17,16,14,10
+2018,"PRIAs","Howland","Howland","Forereef","Deep",0.191346694,0.198085327,0.25,29,6,6,7,6
+2018,"PRIAs","Howland","Howland","Forereef","Mid",0.255725022,0.236759926,0.3,29,7,7,9,11
+2018,"PRIAs","Howland","Howland","Forereef","Shallow",0.552928284,0.565154748,0.45,29,16,16,13,12
+2018,"PRIAs","Jarvis","Jarvis","Forereef","Deep",0.053683412,0.084217878,0.16,39,2,3,6,7
+2018,"PRIAs","Jarvis","Jarvis","Forereef","Mid",0.522301477,0.54431837,0.5,39,20,21,20,18
+2018,"PRIAs","Jarvis","Jarvis","Forereef","Shallow",0.424015111,0.371463752,0.34,39,17,14,13,14
+2018,"PRIAs","Kingman","Kingman","Backreef","Deep",0.013395535,0.017518261,0.044444444,40,1,1,2,2
+2018,"PRIAs","Kingman","Kingman","Backreef","Mid",0.054181939,0.070857445,0.066666667,40,2,3,3,3
+2018,"PRIAs","Kingman","Kingman","Backreef","Shallow",0.1014995,0.13273787,0.088888889,40,4,5,4,5
+2018,"PRIAs","Kingman","Kingman","Forereef","Deep",0.012462512,0.012812065,0.044444444,40,0,1,2,2
+2018,"PRIAs","Kingman","Kingman","Forereef","Mid",0.075308231,0.097338077,0.111111111,40,3,4,4,4
+2018,"PRIAs","Kingman","Kingman","Forereef","Shallow",0.074375208,0.078900534,0.088888889,40,3,3,4,3
+2018,"PRIAs","Kingman","Kingman","Lagoon","Deep",0.233722093,0.220444884,0.155555556,40,9,9,6,8
+2018,"PRIAs","Kingman","Kingman","Lagoon","Mid",0.019926691,0.010448634,0.044444444,40,1,0,2,2
+2018,"PRIAs","Kingman","Kingman","Protected Slope","Deep",0.061046318,0.059397163,0.088888889,40,2,2,4,3
+2018,"PRIAs","Kingman","Kingman","Protected Slope","Mid",0.354081973,0.299545067,0.266666667,40,14,12,11,8
+2018,"PRIAs","Palmyra","Palmyra","Forereef","Deep",0.223369801,0.245897617,0.25,50,11,12,12,13
+2018,"PRIAs","Palmyra","Palmyra","Forereef","Mid",0.546788659,0.43263531,0.416666667,50,27,22,21,21
+2018,"PRIAs","Palmyra","Palmyra","Forereef","Shallow",0.229841539,0.321467073,0.333333333,50,11,16,17,16
+2018,"SAMOA","Ofu & Olosega","Ofu & Olosega","Forereef","Deep",0.382777321,0.353508106,0.342857143,25,10,9,9,9
+2018,"SAMOA","Ofu & Olosega","Ofu & Olosega","Forereef","Mid",0.465118844,0.506914555,0.485714286,25,12,13,12,13
+2018,"SAMOA","Ofu & Olosega","Ofu & Olosega","Forereef","Shallow",0.152103835,0.139577339,0.171428571,25,4,3,4,3
+2018,"SAMOA","Rose","ROS_INNER","Backreef","ALL",0.432825665,0.428666545,0.15,5,2,2,1,4
+2018,"SAMOA","Rose","ROS_SANCTUARY","Forereef","Deep",0.04168338,0.034853272,0.125,16,1,1,2,3
+2018,"SAMOA","Rose","ROS_SANCTUARY","Forereef","Mid",0.215457796,0.279125203,0.425,16,3,4,7,9
+2018,"SAMOA","Rose","ROS_SANCTUARY","Forereef","Shallow",0.046709886,0.071432363,0.2,16,1,1,3,4
+2018,"SAMOA","Rose","ROS_INNER","Lagoon","ALL",0.263323274,0.185922617,0.1,5,1,1,0,1
+2018,"SAMOA","Swains","SWA_OPEN","Forereef","Deep",0.010447163,0.007864079,0.066666667,10,0,0,1,4
+2018,"SAMOA","Swains","SWA_OPEN","Forereef","Mid",0.055660117,0.029409467,0.066666667,10,1,0,1,3
+2018,"SAMOA","Swains","SWA_OPEN","Forereef","Shallow",0.328792911,0.370102309,0.2,10,3,4,2,3
+2018,"SAMOA","Swains","SWA_SANCTUARY","Forereef","Deep",0.033410852,0.019565182,0.1,20,1,0,2,4
+2018,"SAMOA","Swains","SWA_SANCTUARY","Forereef","Mid",0.149046918,0.308126069,0.3,20,3,6,6,7
+2018,"SAMOA","Swains","SWA_SANCTUARY","Forereef","Shallow",0.42264204,0.264932895,0.266666667,20,8,5,5,9
+2018,"SAMOA","Tutuila","TUT_FAGATELE","Forereef","Deep",0.131964809,0.067786438,0.2,8,1,1,2,2
+2018,"SAMOA","Tutuila","TUT_FAGATELE","Forereef","Mid",0.592375367,0.649328025,0.533333333,8,5,5,4,4
+2018,"SAMOA","Tutuila","TUT_FAGATELE","Forereef","Shallow",0.275659824,0.282885537,0.266666667,8,2,2,2,2
+2018,"SAMOA","Tutuila","TUT_NE_OPEN","Forereef","Deep",0.097955752,0.072337434,0.075,20,2,1,2,4
+2018,"SAMOA","Tutuila","TUT_NE_OPEN","Forereef","Mid",0.111671659,0.118095582,0.125,20,2,2,2,13
+2018,"SAMOA","Tutuila","TUT_NE_OPEN","Forereef","Shallow",0.071706343,0.041367667,0.05,20,1,1,1,3
+2018,"SAMOA","Tutuila","TUT_NW_OPEN","Forereef","Deep",0.067712439,0.072337434,0.075,23,2,2,2,6
+2018,"SAMOA","Tutuila","TUT_NW_OPEN","Forereef","Mid",0.057885333,0.118095582,0.1125,23,1,3,3,12
+2018,"SAMOA","Tutuila","TUT_NW_OPEN","Forereef","Shallow",0.034263493,0.041367667,0.05,23,1,1,1,5
+2018,"SAMOA","Tutuila","TUT_SE_OPEN","Forereef","Deep",0.076672447,0.054727142,0.05,12,1,1,1,3
+2018,"SAMOA","Tutuila","TUT_SE_OPEN","Forereef","Mid",0.173288139,0.12637148,0.125,12,2,2,2,6
+2018,"SAMOA","Tutuila","TUT_SE_OPEN","Forereef","Shallow",0.124257712,0.087100694,0.0875,12,1,1,1,3
+2018,"SAMOA","Tutuila","TUT_SW_OPEN","Forereef","Deep",0.069945872,0.054727142,0.0625,15,1,1,1,4
+2018,"SAMOA","Tutuila","TUT_SW_OPEN","Forereef","Mid",0.059777182,0.12637148,0.1,15,1,2,2,7
+2018,"SAMOA","Tutuila","TUT_SW_OPEN","Forereef","Shallow",0.054863629,0.087100694,0.0875,15,1,1,1,4
+2015,"NWHI","Midway","Midway","Backreef","Shallow",0.110701115022535,0.0266188584197569,0,14,2,0,0,2
+2015,"NWHI","French Frigate","French Frigate","Forereef","Deep",0.0146268012081518,0.0104284771780204,0,8,0,0,0,2
+2015,"NWHI","French Frigate","French Frigate","Forereef","Mid",0.266125305809719,0.126618575542115,0,8,2,1,0,3
+2015,"NWHI","French Frigate","French Frigate","Forereef","Shallow",0.0386300907888781,0.0222730350444423,0,8,0,0,0,1
+2015,"NWHI","French Frigate","French Frigate","Protected Slope","Deep",0.478189073977109,0.561226474822114,0,8,4,4,0,1
+2015,"NWHI","Kure","Kure","Forereef","Deep",0.408034653591467,0.592784613506785,0,8,3,5,0,4
+2015,"NWHI","Kure","Kure","Forereef","Mid",0.398449554851454,0.378471547381206,0,8,3,3,0,2
+2015,"NWHI","Laysan","Laysan","Forereef","Deep",0.518791169883046,0.360480967662637,0,8,4,3,0,3
+2015,"NWHI","Laysan","Laysan","Forereef","Mid",0.422378577808895,0.548200628396434,0,8,3,4,0,3
+2015,"NWHI","Laysan","Laysan","Forereef","Shallow",0.0588302523080593,0.0913184039409295,0,8,0,1,0,2
+2015,"NWHI","Lisianski","Lisianski","Forereef","Deep",0.454178995785319,0.514653732296845,0,18,8,9,0,8
+2015,"NWHI","Lisianski","Lisianski","Forereef","Mid",0.357114908063142,0.388311980919168,0,18,6,7,0,7
+2015,"NWHI","Lisianski","Lisianski","Forereef","Shallow",0.188706096151539,0.0970342867839872,0,18,3,2,0,3
+2015,"NWHI","Maro","Maro","Forereef","Deep",0.211018228155928,0.204189253048163,0,17,4,3,0,3
+2015,"NWHI","Maro","Maro","Forereef","Mid",0.5587949301699,0.692446964263109,0,17,9,12,0,11
+2015,"NWHI","Maro","Maro","Forereef","Shallow",0.230186841674171,0.103363782688727,0,17,4,2,0,3
+2015,"NWHI","Midway","Midway","Forereef","Deep",0.423053873712,0.501148546107808,0,14,6,7,0,4
+2015,"NWHI","Midway","Midway","Forereef","Mid",0.3976059192924,0.428423049890049,0,14,6,6,0,5
+2015,"NWHI","Midway","Midway","Forereef","Shallow",0.0686390919730649,0.0438095455823863,0,14,1,1,0,3
+2015,"NWHI","Pearl & Hermes","Pearl & Hermes","Forereef","Deep",0.244733634224704,0.274933388252412,0,23,6,6,0,8
+2015,"NWHI","Pearl & Hermes","Pearl & Hermes","Forereef","Mid",0.549803314007628,0.657671683231729,0,23,13,15,0,10
+2015,"NWHI","Pearl & Hermes","Pearl & Hermes","Forereef","Shallow",0.0620558488356158,0.0673949285158599,0,23,1,2,0,3
+2015,"NWHI","French Frigate","French Frigate","Protected Slope","Shallow",5.91651209778811e-05,0,0,8,0,0,0,1
+2015,"NWHI","Pearl & Hermes","Pearl & Hermes","Backreef","Shallow",0.143407202932051,0,0,23,3,0,0,2
+2015,"NWHI","Kure","Kure","Forereef","Shallow",0.0799092116968585,0,0,8,1,0,0,2
+2017,"NWHI","French Frigate","French Frigate","Forereef","Deep",0.0131488599658647,0.018821542859624,0,28,0,1,0,4
+2017,"NWHI","French Frigate","French Frigate","Forereef","Mid",0.23923510887088,0.182375061626955,0,28,7,5,0,10
+2017,"NWHI","French Frigate","French Frigate","Forereef","Shallow",0.0347267763486464,0.0213771975912455,0,28,1,1,0,5
+2017,"NWHI","French Frigate","French Frigate","Protected Slope","Deep",0.42987123988718,0.530381497734185,0,28,12,15,0,4
+2017,"NWHI","French Frigate","French Frigate","Protected Slope","Mid",0.181921461064812,0.24704470018799,0,28,5,7,0,4
+2017,"NWHI","Kure","Kure","Forereef","Deep",0.460331320518063,0.611689364067767,0,6,3,4,0,2
+2017,"NWHI","Kure","Kure","Forereef","Mid",0.449517726325879,0.28515954376793,0,6,3,2,0,2
+2017,"NWHI","Kure","Kure","Forereef","Shallow",0.0901509531560571,0.103151092164303,0,6,1,1,0,2
+2017,"NWHI","Laysan","Laysan","Forereef","Deep",0.518791169883046,0.353508522397998,0,11,6,4,0,4
+2017,"NWHI","Laysan","Laysan","Forereef","Mid",0.422378577808895,0.56911179017097,0,11,5,6,0,5
+2017,"NWHI","Laysan","Laysan","Forereef","Shallow",0.0588302523080593,0.0773796874310313,0,11,1,1,0,2
+2017,"NWHI","Lisianski","Lisianski","Forereef","Deep",0.454178995785319,0.507268066699002,0,17,8,9,0,5
+2017,"NWHI","Lisianski","Lisianski","Forereef","Mid",0.357114908063142,0.407877874263261,0,17,6,7,0,9
+2017,"NWHI","Lisianski","Lisianski","Forereef","Shallow",0.188706096151539,0.0848540590377369,0,17,3,1,0,3
+2017,"NWHI","Midway","Midway","Forereef","Deep",0.475716185928559,0.496521737099464,0,10,5,5,0,2
+2017,"NWHI","Midway","Midway","Forereef","Mid",0.4471004360952,0.419690200732828,0,10,4,4,0,4
+2017,"NWHI","Midway","Midway","Forereef","Shallow",0.0771833779762404,0.0837880621677081,0,10,1,1,0,4
+2017,"NWHI","Pearl & Hermes","Pearl & Hermes","Forereef","Deep",0.285705921252675,0.167436225620525,0,20,6,3,0,6
+2017,"NWHI","Pearl & Hermes","Pearl & Hermes","Forereef","Mid",0.641849097832206,0.787528573091252,0,20,13,16,0,11
+2017,"NWHI","Pearl & Hermes","Pearl & Hermes","Forereef","Shallow",0.0724449809151189,0.0450352012882226,0,20,1,1,0,3
+2017,"NWHI","French Frigate","French Frigate","Lagoon","Shallow",0.101096553862617,0,0,28,3,0,0,1
+2016,"NWHI","French Frigate","French Frigate","Forereef","Deep",0.0092838634571332,0.00835694388839047,0,47,0,0,0,3
+2016,"NWHI","French Frigate","French Frigate","Forereef","Mid",0.168913965976942,0.0903398264800336,0,47,8,4,0,15
+2016,"NWHI","French Frigate","French Frigate","Forereef","Shallow",0.024519133275752,0.0131694091750855,0,47,1,1,0,4
+2016,"NWHI","French Frigate","French Frigate","Lagoon","Mid",0.293941567464043,0.133463911122096,0,47,14,6,0,3
+2016,"NWHI","French Frigate","French Frigate","Lagoon","Shallow",0.0713800743550265,0.0779673757606792,0,47,3,4,0,3
+2016,"NWHI","French Frigate","French Frigate","Protected Slope","Deep",0.303514213827031,0.471489824700214,0,47,14,22,0,10
+2016,"NWHI","French Frigate","French Frigate","Protected Slope","Mid",0.128447181644072,0.205212708873501,0,47,6,10,0,9
+2016,"NWHI","Pearl & Hermes","Pearl & Hermes","Forereef","Deep",0.148574498612551,0.128009979443078,0,56,8,7,0,12
+2016,"NWHI","Pearl & Hermes","Pearl & Hermes","Forereef","Mid",0.333778199195951,0.610695605339233,0,56,19,34,0,31
+2016,"NWHI","Pearl & Hermes","Pearl & Hermes","Forereef","Shallow",0.0376732714158224,0.0239369560233037,0,56,2,1,0,8
+2016,"NWHI","Pearl & Hermes","Pearl & Hermes","Lagoon","Mid",0.164128194108468,0.0873715042537914,0,56,9,5,0,2
+2016,"NWHI","Pearl & Hermes","Pearl & Hermes","Lagoon","Shallow",0.315845836667208,0.149985954940594,0,56,18,8,0,3
+2015,"MHI","Hawaii","HAW_HAMAKUA","Forereef","Deep",0.100483275797338,0.172299627509882,0,27,3,5,0,6
+2015,"MHI","Hawaii","HAW_HAMAKUA","Forereef","Mid",0.158551537797946,0.155816849670612,0,27,4,4,0,17
+2015,"MHI","Hawaii","HAW_HAMAKUA","Forereef","Shallow",0.0758954153919157,0.0263538624730851,0,27,2,1,0,4
+2015,"MHI","Hawaii","HAW_KONA","Forereef","Deep",0.105072724417281,0.066423185561701,0,65,7,4,0,23
+2015,"MHI","Hawaii","HAW_KONA","Forereef","Mid",0.160489362354032,0.250593450941495,0,65,10,16,0,31
+2015,"MHI","Hawaii","HAW_KONA","Forereef","Shallow",0.12347967646241,0.0456508126319145,0,65,8,3,0,11
+2015,"MHI","Hawaii","HAW_PUNA","Forereef","Deep",0.0982791575932821,0.120434119744367,0,5,0,1,0,2
+2015,"MHI","Hawaii","HAW_PUNA","Forereef","Mid",0.108945037697785,0.135310274990025,0,5,1,1,0,2
+2015,"MHI","Hawaii","HAW_PUNA","Forereef","Shallow",0.0688038124880094,0.027117816476918,0,5,0,0,0,1
+2015,"MHI","Kauai","KAU_EAST","Forereef","Deep",0.250412585623041,0.305716490236801,0,20,5,6,0,2
+2015,"MHI","Kauai","KAU_EAST","Forereef","Mid",0.485269840705323,0.543860681397133,0,20,10,11,0,16
+2015,"MHI","Kauai","KAU_EAST","Forereef","Shallow",0.264317573671636,0.150422828366066,0,20,5,3,0,2
+2015,"MHI","Lanai","LAN_SOUTH","Forereef","Deep",0.166549847303854,0.209257619404152,0,15,2,3,0,3
+2015,"MHI","Lanai","LAN_SOUTH","Forereef","Mid",0.329573602157216,0.37475944691762,0,15,5,6,0,8
+2015,"MHI","Lanai","LAN_SOUTH","Forereef","Shallow",0.503876550538929,0.415982933678228,0,15,8,6,0,4
+2015,"MHI","Maui","MAI_KIHEI","Forereef","Deep",0.0693253947834388,0.0967363063813837,0,10,1,1,0,2
+2015,"MHI","Maui","MAI_KIHEI","Forereef","Mid",0.0879552564456527,0.0923295400911597,0,10,1,1,0,4
+2015,"MHI","Maui","MAI_KIHEI","Forereef","Shallow",0.0837722128623878,0.17177058211661,0,10,1,2,0,4
+2015,"MHI","Maui","MAI_LAHAINA","Forereef","Mid",0.0623624749829701,0.039464513779695,0,2,0,0,0,1
+2015,"MHI","Maui","MAI_NE","Forereef","Deep",0.113835554706021,0.243962647502763,0,3,0,1,0,2
+2015,"MHI","Maui","MAI_NE","Forereef","Mid",0.119422418507659,0.20694586213349,0,3,0,1,0,1
+2015,"MHI","Molokai","MOL_SOUTH","Forereef","Deep",0.075830970817857,0.274400680211885,0,32,2,9,0,6
+2015,"MHI","Molokai","MOL_SOUTH","Forereef","Mid",0.162382785394522,0.316205702084938,0,32,5,10,0,16
+2015,"MHI","Molokai","MOL_SOUTH","Forereef","Shallow",0.531339200598938,0.409393617703178,0,32,17,13,0,10
+2015,"MHI","Niihau","NII_EAST","Forereef","Deep",0.110891303576264,0.251056181393263,0,12,1,3,0,4
+2015,"MHI","Niihau","NII_EAST","Forereef","Mid",0.12281617421587,0.181239555760948,0,12,1,2,0,5
+2015,"MHI","Niihau","NII_EAST","Forereef","Shallow",0.0662613622854459,0.0443267500417967,0,12,1,1,0,3
+2015,"MHI","Niihau","NII_WEST","Forereef","Deep",0.158482267511601,0.0687576631033271,0,22,3,2,0,5
+2015,"MHI","Niihau","NII_WEST","Forereef","Mid",0.323014533951678,0.295041164907905,0,22,7,6,0,11
+2015,"MHI","Niihau","NII_WEST","Forereef","Shallow",0.0992246557195373,0.15957868479276,0,22,2,4,0,6
+2015,"MHI","Oahu","OAH_KAENA","Forereef","Deep",0.0329812768322581,0.049677990304557,0,2,0,0,0,1
+2015,"MHI","Oahu","OAH_KAENA","Forereef","Mid",0.0309765594125857,0.0070787622223837,0,2,0,0,0,1
+2015,"MHI","Oahu","OAH_NE","Forereef","Deep",0.0296704331543021,0.0458901995017329,0,6,0,0,0,6
+2015,"MHI","Oahu","OAH_NORTH","Forereef","Deep",0.0272602327546015,0.0109272276336228,0,3,0,0,0,3
+2015,"MHI","Oahu","OAH_SOUTH","Forereef","Deep",0.0714125656040617,0.0544297357634073,0,24,2,1,0,6
+2015,"MHI","Oahu","OAH_SOUTH","Forereef","Mid",0.192397663769839,0.153097620442662,0,24,5,4,0,11
+2015,"MHI","Oahu","OAH_SOUTH","Forereef","Shallow",0.179264666755486,0.223967985917678,0,24,4,5,0,7
+2015,"MHI","Maui","MAI_KAHULUI","Forereef","Deep",0.0564882550548256,0,0,15,1,0,0,3
+2015,"MHI","Maui","MAI_KAHULUI","Forereef","Mid",0.109548883224773,0,0,15,2,0,0,6
+2015,"MHI","Maui","MAI_KAHULUI","Forereef","Shallow",0.141650690518701,0,0,15,2,0,0,6
+2015,"MHI","Molokai","MOL_NW","Forereef","Deep",0.0920463289575375,0,0,16,1,0,0,6
+2015,"MHI","Molokai","MOL_NW","Forereef","Mid",0.0754794786018367,0,0,16,1,0,0,6
+2015,"MHI","Molokai","MOL_NW","Forereef","Shallow",0.0629212356293092,0,0,16,1,0,0,4
+2015,"MHI","Niihau","NII_LEHUA","Forereef","Deep",0.0283839455635606,0,0,15,0,0,0,5
+2015,"MHI","Niihau","NII_LEHUA","Forereef","Mid",0.052639807789455,0,0,15,1,0,0,6
+2015,"MHI","Niihau","NII_LEHUA","Forereef","Shallow",0.0382859493865898,0,0,15,1,0,0,4
+2015,"MHI","Maui","MAI_LAHAINA","Forereef","Deep",0.0370056067892058,0,0,2,0,0,0,1
+2015,"SAMOA","Swains","SWA_OPEN","Forereef","Deep",0.0104471627492494,0.0119991075416543,0,7,0,0,0,2
+2015,"SAMOA","Swains","SWA_OPEN","Forereef","Mid",0.0556601165972295,0.0134871445053762,0,7,0,0,0,3
+2015,"SAMOA","Swains","SWA_OPEN","Forereef","Shallow",0.328792911054046,0.291403028788564,0,7,2,2,0,2
+2015,"SAMOA","Swains","SWA_SANCTUARY","Forereef","Deep",0.0334108518919736,0.0359723886858171,0,25,1,1,0,6
+2015,"SAMOA","Swains","SWA_SANCTUARY","Forereef","Mid",0.149046917517336,0.269201974758073,0,25,4,7,0,9
+2015,"SAMOA","Swains","SWA_SANCTUARY","Forereef","Shallow",0.422642040190166,0.377936355720516,0,25,11,9,0,10
+2015,"SAMOA","Tau","TAU_OPEN","Forereef","Deep",0.201605333123486,0.452963577315664,0,43,9,19,0,14
+2015,"SAMOA","Tau","TAU_OPEN","Forereef","Mid",0.55636371812239,0.385250750956168,0,43,24,17,0,23
+2015,"SAMOA","Tau","TAU_OPEN","Forereef","Shallow",0.13420776023428,0.0464408423459323,0,43,6,2,0,6
+2015,"SAMOA","Tau","TAU_SANCTUARY","Forereef","Deep",0.0271799310875907,0.0303896453492022,0,3,0,0,0,2
+2015,"SAMOA","Tau","TAU_SANCTUARY","Forereef","Mid",0.0806432574322539,0.0849551840330336,0,3,0,0,0,1
+2016,"SAMOA","Tau","TAU_OPEN","Forereef","Deep",0.198407956896456,0.381867971005531,0,41,8,16,0,12
+2016,"SAMOA","Tau","TAU_OPEN","Forereef","Mid",0.547540022348347,0.41548578179907,0,41,22,17,0,25
+2016,"SAMOA","Tau","TAU_OPEN","Forereef","Shallow",0.132079281312578,0.073309196331651,0,41,5,3,0,4
+2016,"SAMOA","Tau","TAU_SANCTUARY","Forereef","Deep",0.0267488687532499,0.029769239041122,0,9,0,0,0,3
+2016,"SAMOA","Tau","TAU_SANCTUARY","Forereef","Mid",0.0793642891123724,0.0995678118226258,0,9,1,1,0,5
+2016,"SAMOA","Tau","TAU_SANCTUARY","Forereef","Shallow",0.0158595815769967,0,0,9,0,0,0,1
+2016,"SAMOA","Tutuila","TUT_FAGALUA","Forereef","Deep",0.00310996883304934,0,0,5,0,0,0,2
+2016,"SAMOA","Tutuila","TUT_FAGALUA","Forereef","Mid",0.0111515711022911,0,0,5,0,0,0,3
+2018,"SAMOA","Tau","TAU_OPEN","Forereef","Deep",0.198407956896456,0.359937284594545,0,23,5,8,0,7
+2018,"SAMOA","Tau","TAU_OPEN","Forereef","Mid",0.547540022348347,0.480624849767332,0,23,13,11,0,13
+2018,"SAMOA","Tau","TAU_OPEN","Forereef","Shallow",0.132079281312578,0.0569378671518213,0,23,3,1,0,3
+2018,"SAMOA","Tau","TAU_SANCTUARY","Forereef","Deep",0.0267488687532499,0.0228428454346382,0,5,0,0,0,1
+2018,"SAMOA","Tau","TAU_SANCTUARY","Forereef","Mid",0.0793642891123724,0.0796571530516631,0,5,0,0,0,2
+2018,"SAMOA","Tau","TAU_SANCTUARY","Forereef","Shallow",0.0158595815769967,0,0,5,0,0,0,2
+2018,"SAMOA","Tutuila","TUT_FAGALUA","Forereef","Deep",0.00199120372020101,0.00177903097206171,0,3,0,0,0,1
+2018,"SAMOA","Tutuila","TUT_FAGALUA","Forereef","Mid",0.00713995896968392,0.00747360976516947,0,3,0,0,0,2
