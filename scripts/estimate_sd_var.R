@@ -5,7 +5,7 @@ library(rgdal)
 
 rm(list = ls())
 
-load("data/rea/ALL_REA_FISH_RAW.rdata")
+load("data/rea/fish_site_data.Rdata"); df = wsd; rm(wsd)
 
 #Function
 LongLatToUTM<-function(x,y,zone){
@@ -23,28 +23,26 @@ select = dplyr::select
 glimpse(df)
 
 df %>% 
-  subset(REGION == "MHI") %>% 
-  select(LONGITUDE, LATITUDE, DEPTH_BIN, SECTOR, ISLAND, TROPHIC_MONREP, BIOMASS_G_M2) %>% 
+  subset(REGION == "S.MARIAN") %>% 
+  select(LONGITUDE, LATITUDE, DEPTH_BIN, ISLAND, TotFishBio) %>% 
   na.omit() %>% 
-  # group_by(DEPTH_BIN, SECTOR, ISLAND, TROPHIC_MONREP) %>% 
-  group_by(DEPTH_BIN, SECTOR) %>% 
-  summarise(sd = sd(BIOMASS_G_M2, na.rm = T),
-            var = var(BIOMASS_G_M2, na.rm = T))
+  group_by(DEPTH_BIN) %>% 
+  summarise(sd = sd(TotFishBio, na.rm = T),
+            var = var(TotFishBio, na.rm = T))
 
 gdf = df %>% 
-  subset(REGION == "MHI") %>% 
-  subset(BIOMASS_G_M2 > 0) %>%
-  # subset(TROPHIC_MONREP == "PLANKTIVORE") %>%
-  # subset(TROPHIC_MONREP == "PISCIVORE") %>%
-  # subset(TROPHIC_MONREP == "PRIMARY") %>%
-  # subset(TROPHIC_MONREP == "SECONDARY") %>%
-  subset(TROPHIC_MONREP %in% c("PISCIVORE", "PLANKTIVORE", "PRIMARY", "SECONDARY")) %>%
-  select(LONGITUDE, LATITUDE, DEPTH, TROPHIC_MONREP, OBS_YEAR, BIOMASS_G_M2) %>% 
-  na.omit() %>% 
+  subset(REGION == c("S.MARIAN")) %>% 
+  mutate(LATITUDE = round(LATITUDE, 2),
+         LONGITUDE = round(LONGITUDE, 2)) %>% 
+  # subset(TotFishBio > 0) %>%
+  # select(LONGITUDE, LATITUDE, DEPTH, OBS_YEAR, TotFishBio) %>% 
+  # na.omit() %>% 
   group_by(LONGITUDE, LATITUDE) %>% 
-  summarise(sd = sd(BIOMASS_G_M2, na.rm = T),
-            var = var(BIOMASS_G_M2, na.rm = T)) %>% 
+  summarise(sd = sd(TotFishBio, na.rm = T),
+            var = var(TotFishBio, na.rm = T)) %>% 
   as.data.frame()
+
+qplot(gdf$LONGITUDE, gdf$LATITUDE, color = log10(gdf$var+1)) + scale_color_viridis_c()
 
 hist(gdf$var)
 hist(gdf$sd)
