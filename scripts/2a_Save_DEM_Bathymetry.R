@@ -1,7 +1,13 @@
-#############################################################################
-### Mariana Trench 6 arc-second Bathymetric Digital Elevation Model ###
-### https://coastwatch.pfeg.noaa.gov/erddap/griddap/usgsCeCrm10.html      ###
-#############################################################################
+#####################################################################################################
+### Mariana Trench 6 arc-second Bathymetric Digital Elevation Model                               ###
+### https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ngdc.mgg.dem:4870  ###
+#####################################################################################################
+
+library(dplyr)
+library(ggplot2)
+library(raster)
+library(tidyverse)
+
 topo = raster("L:/ktanaka/GIS/bathymetry/mariana_trench_6_msl_2012.nc")
 topo = as.data.frame(rasterToPoints(topo))
 topo$Topography = ifelse(topo$GDAL.Band.Number.1 %in% c(-30:0), topo$GDAL.Band.Number.1, NA)
@@ -21,5 +27,5 @@ topo %>%
   ggdark::dark_theme_minimal() +
   theme(axis.title = element_blank())
 
-save(topo, file = 'data/Topography_NOAA_CRM_vol10.RData')
+save(topo, file = 'data/gis_bathymetry/raster/mariana_0_30m.RData')
 save(topo, file = 'data/gis_bathymetry/raster/agu.RData')
