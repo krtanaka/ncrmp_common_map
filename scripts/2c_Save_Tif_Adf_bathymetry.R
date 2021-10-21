@@ -52,13 +52,18 @@ for (isl in 1:length(islands)) {
   
 }
 
-load('data/gis_bathymetry/raster/gua.RData')
+load('data/gis_bathymetry/raster/ala.RData')
 
 wireframe(unclass(as.bathy(topo)), 
-          shade = T, 
-          aspect = c(1/2, 0.1),
-          par.box = c(col = "gray"),
-          scales = list(arrows = FALSE, col = "transparent"), # col="black" is required 
+          shade = T,
+          aspect = c(length(unique(topo$y))/length(unique(topo$x)), 0.01),
+          par.box = c(col = "transparent"),
+          scales = list(arrows = FALSE, col = "transparent"), # col="black" is required
+          par.settings = list(axis.line = list(col = 'transparent')),
+          light.source = c(10,0,10),
           zlab = "", 
           xlab = "",
-          ylab = "")
+          ylab = "",
+          perspective = T,
+          screen = list(z = 10, x = -40, y = 10),
+          zoom = 1.1)
