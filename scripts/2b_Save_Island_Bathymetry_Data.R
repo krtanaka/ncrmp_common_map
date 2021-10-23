@@ -6,13 +6,13 @@ library(raster)
 library(tidyr)
 library(marmap)
 library(lattice)
-library(rayshader)
 
 # need to connect to pifsc VPN
 
 islands = c("gua", "rot", "sai", "tin", 
             # "agu", 
-            "agr", "ala", "asu", "gug", "fdp", "mau", "sar")
+            "agr", "ala", "asu", "gug", "fdp", "mau", "sar",
+            "jar", "joh", "kin", "pal")
 
 for (isl in 1:length(islands)) {
   
@@ -31,6 +31,11 @@ for (isl in 1:length(islands)) {
   if (islands[isl] == "mau") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/mau_inpo/w001001.adf") # 
   if (islands[isl] == "sar") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/sar_inpo/w001001.adf") # 
   
+  if (islands[isl] == "jar") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/jar_inpo_land/w001001.adf") # 
+  if (islands[isl] == "joh") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/JOH/joh_inpo/w001001.adf") # 
+  if (islands[isl] == "kin") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/kingman3/w001001.adf") # 
+  if (islands[isl] == "pal") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/pal_inpo/w001001.adf") # 
+  
   topo[topo <= -30] <- NA
   topo[topo >= 0] <- NA
   
@@ -43,7 +48,7 @@ for (isl in 1:length(islands)) {
   topo %>%
     ggplot(aes(x, y, fill = depth)) +
     geom_raster() +
-    scale_fill_viridis_c() +
+    scale_fill_viridis_c("") +
     ggdark::dark_theme_minimal() +
     coord_fixed() +
     theme(axis.title = element_blank())
