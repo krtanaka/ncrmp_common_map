@@ -1,9 +1,6 @@
 library(raster)
 library(rgdal)
 library(rgeos)
-library(pbapply)
-library(jubilee)
-library(future.apply)
 library(dplyr)
 
 rm(list = ls())
@@ -15,13 +12,13 @@ shp_path = "L:/ktanaka/GIS" # pc
 # Hard/Soft Bottom Substrate ----------------------------------------------
 
 shp_list = list.files(path = paste0(shp_path, "/hardsoft/"), pattern = "\\.shp$", full.names = T); shp_list
-shp_list = shp_list[c(2, 12:14)]; shp_list
+# shp_list = shp_list[c(1:7, 12:14)]; shp_list
 
 for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  # shp_i = 3
+  # shp_i = 1
   
   dat <- shapefile(shp_list[shp_i])
   
@@ -32,10 +29,10 @@ for (shp_i in 1:length(shp_list)) {
   dat <- dat[dat$HardSoft %in% c("Hard", "hard", "Unknown", "unknown"),]
   
   # get names
-  nam <- unique(dat$HardSoft)
+  nam <- unique(dat$HardSoft); nam
   
   # create a data.frame
-  nam_df <- data.frame(ID = 1:length(nam), nam = nam)
+  nam_df <- data.frame(ID = 1:length(nam), nam = nam); nam_df
   
   # Place IDs
   dat$ID <- nam_df$ID[match(dat$HardSoft,nam_df$nam)]
@@ -63,7 +60,8 @@ for (shp_i in 1:length(shp_list)) {
   
   # rasterVis::levelplot(r)
   
-  island_name = tolower(substr(shp_list[shp_i], 25, nchar(shp_list[shp_i])-18))
+  # island_name = tolower(substr(shp_list[shp_i], 25, nchar(shp_list[shp_i])-18))
+  island_name = tolower(substr(shp_list[shp_i], 25, nchar(shp_list[shp_i])))
   
   raster = readAll(r)
   
