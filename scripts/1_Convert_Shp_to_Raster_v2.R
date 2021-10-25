@@ -9,12 +9,12 @@ spatial_resolution = 100 # spatial resolution in m
 
 shp_path = "L:/ktanaka/GIS" # pc
 
-S.MARI = c("gua", "rot", "sai", "tin", "agu")
-N.MARI = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar")
-AMSM = c("ofu", "ros", "swa", "tau", "tut")
-PRIA = c("bak", "how", "jar", "joh", "kin", "pal", "wak")
-MHI = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")
-NWHI = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr")
+s_mari = c("gua", "rot", "sai", "tin", "agu")
+n_mari = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar")
+amsm = c("ofu", "ros", "swa", "tau", "tut")
+pria = c("bak", "how", "jar", "joh", "kin", "pal", "wak")
+mhi = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")
+nwhi = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr")
 
 # Hard/Soft Bottom Substrate ----------------------------------------------
 
@@ -145,7 +145,7 @@ for (shp_i in 1:length(shp_list)) {
   # rasterVis::levelplot(r)
   
   island_name = tolower(substr(shp_list[shp_i], 25, 27))
-
+  
   raster = readAll(r)
   
   table = nam_df
@@ -237,5 +237,5 @@ for (shp_i in 1:length(shp_list)) {
   time = end - start
   
   print(paste0(island_name, "...done...took ", time, "..."))
-
+  
 }
