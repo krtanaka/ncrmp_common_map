@@ -158,19 +158,27 @@ for (shp_i in 1:length(shp_list)) {
 # Sub-Island Sector -------------------------------------------------------
 
 shp_list = list.files(path = paste0(shp_path, "/sector/"), pattern = "\\.shp$", full.names = T); shp_list
-# shp_list = shp_list[1]; shp_list
+shp_list = shp_list[c(10, 12)]; shp_list
 
 for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  # shp_i = 1
+  # shp_i = 4
   
-  dat <- shapefile(shp_list[shp_i])
+  dat <- shapefile(shp_list[shp_i], verbose = T)
+  
+  zone <- spTransform(dat, CRS('+proj=longlat +datum=WGS84'))
+  zone = as.data.frame(zone@polygons[[2]]@Polygons[[1]]@coords)
+  zone <- (floor((zone$V1[1] + 180)/6) %% 60) + 1
   
   # dat <- spTransform(dat, CRS('+proj=utm +zone=55 +datum=WGS84 +units=km +no_defs'))
-  dat <- spTransform(dat, CRS('+proj=utm +zone=55 +datum=WGS84 +units=m +no_defs'))
+  dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', zone, ' +datum=WGS84 +units=m +no_defs')))
   # dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84'))
+  
+  dat = dat[c(names(dat) %in% c("SEC_NAME", "Sanctuary"))]
+  
+  names(dat) = "Sector"
   
   dat <- dat[dat$Sector != c("Land"),]
   dat <- dat[dat$Sector != c("Harbor"),]
@@ -207,7 +215,7 @@ for (shp_i in 1:length(shp_list)) {
   
   # rasterVis::levelplot(r)
   
-  island_name = tolower(substr(shp_list[shp_i], 23, nchar(shp_list[shp_i])-37))
+  island_name = tolower(substr(shp_list[shp_i], 23, 25))
   
   raster = readAll(r)
   
@@ -222,6 +230,5 @@ for (shp_i in 1:length(shp_list)) {
   time = end - start
   
   print(paste0(island_name, "...done...took ", time, "..."))
-  
-  
+
 }
