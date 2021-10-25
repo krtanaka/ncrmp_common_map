@@ -9,6 +9,13 @@ spatial_resolution = 100 # spatial resolution in m
 
 shp_path = "L:/ktanaka/GIS" # pc
 
+S.MARI = c("gua", "rot", "sai", "tin", "agu")
+N.MARI = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar")
+AMSM = c("ofu", "ros", "swa", "tau", "tut")
+PRIA = c("bak", "how", "jar", "joh", "kin", "pal", "wak")
+MHI = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")
+NWHI = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr")
+
 # Hard/Soft Bottom Substrate ----------------------------------------------
 
 shp_list = list.files(path = paste0(shp_path, "/hardsoft/"), pattern = "\\.shp$", full.names = T); shp_list
