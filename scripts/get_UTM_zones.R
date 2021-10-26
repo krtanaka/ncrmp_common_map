@@ -13,9 +13,12 @@ ncrmp_utm_zones = df %>%
   summarise(Lon = median(LONGITUDE_LOV, na.rm = T),
             Lat = median(LATITUDE_LOV, na.rm = T)) %>% 
   mutate(UTM_Zone = (floor((Lon + 180)/6) %% 60) + 1) %>% 
-  select(ISLAND, Island_Code, UTM_Zone) %>% 
+  dplyr::select(ISLAND, Island_Code, UTM_Zone) %>% 
   as.data.frame()
 
 colnames(ncrmp_utm_zones) = c("Island", "Island_Code", "UTM_Zone")
+
+ncrmp_utm_zones$Island_Code = tolower(as.character(ncrmp_utm_zones$Island_Code))
+ncrmp_utm_zones$Island = gsub(" " , "_", ncrmp_utm_zones$Island)
 
 write_csv(ncrmp_utm_zones, file = 'data/ncrmp_utm_zones.csv')

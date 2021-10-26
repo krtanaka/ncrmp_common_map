@@ -16,6 +16,8 @@ pria = c("bak", "how", "jar", "joh", "kin", "pal", "wak")
 mhi = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")
 nwhi = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr")
 
+utm = read_csv('data/ncrmp_utm_zones.csv')
+
 # Hard/Soft Bottom Substrate ----------------------------------------------
 
 shp_list = list.files(path = paste0(shp_path, "/hardsoft/"), pattern = "\\.shp$", full.names = T); shp_list
@@ -165,13 +167,15 @@ for (shp_i in 1:length(shp_list)) {
 # Sub-Island Sector -------------------------------------------------------
 
 shp_list = list.files(path = paste0(shp_path, "/sector/"), pattern = "\\.shp$", full.names = T); shp_list
-shp_list = shp_list[c(10, 12)]; shp_list
+# shp_list = shp_list[c(10, 12)]; shp_list
 
 for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  # shp_i = 4
+  shp_i = 1
+  
+  island_name = tolower(substr(shp_list[shp_i], 23, 25))
   
   dat <- shapefile(shp_list[shp_i], verbose = T)
   
@@ -222,7 +226,6 @@ for (shp_i in 1:length(shp_list)) {
   
   # rasterVis::levelplot(r)
   
-  island_name = tolower(substr(shp_list[shp_i], 23, 25))
   
   raster = readAll(r)
   
