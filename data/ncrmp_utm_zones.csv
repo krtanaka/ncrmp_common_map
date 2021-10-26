@@ -1,76 +1,76 @@
 Island,Island_Code,UTM_Zone
-Agrihan,AGR,55
-Aguijan,AGU,55
-Alamagan,ALA,55
-Anatahan,ANA,55
-Arakane,ARA,54
-Asuncion,ASC,55
-Baker,BAK,1
-Farallon de Pajaros,FDP,55
-French Frigate,FFS,3
-Gardner,GAR,2
-Guam,GUA,55
-Guguan,GUG,55
-Hawaii,HAW,5
-Howland,HOW,1
-Jarvis,JAR,4
-Johnston,JOH,2
-Kahoolawe,KAH,4
-Kanton,K,NA
-Kauai,KAU,4
-Kaula,KAL,4
-Kingman,KIN,3
-Kure,KUR,1
-Lanai,LAN,4
-Laysan,LAY,2
-Lehua,LEH,4
-Lisianski,LIS,2
-Maro,MAR,2
-Maug,MAU,55
-Maui,MAI,4
-Midway,MID,1
-Molokai,MOL,4
-Molokini,MOI,4
-Necker,NEC,3
-New Britain,KIM,56
-Nihoa,NIH,4
-Niihau,NII,4
-Nikumaroro,N,NA
-Oahu,OAH,4
-Ofu & Olosega,OFU,2
-Ofu & Olosega,OLO,2
-Pagan,PAG,55
-Palmyra,FR,3
-Palmyra,PAL,3
-Palmyra,RT,3
-Pathfinder,PAT,54
-Pearl & Hermes,PHR,1
-Philippines,ART,51
-Philippines,BAA,51
-Philippines,BAO,51
-Philippines,KOA,51
-Philippines,TWI,51
-Rose,ROS,2
-Rota,ROT,55
-Saipan,SAI,55
-Santa Rosa,SRR,55
-Sarigan,SAR,55
-South Bank,SOB,2
-Stingray,STI,54
-Supply,SUP,55
-Swains,SWA,2
-Tau,TAU,2
-Timor Leste,ATA,51
-Timor Leste,BAU,52
-Timor Leste,BOB,51
-Timor Leste,DIL,51
-Timor Leste,LAU,52
-Timor Leste,LIQ,51
-Timor Leste,MAF,51
-Timor Leste,MAN,51
-Timor Leste,OEC,51
-Timor Leste,VIL,51
-Tinian,TIN,55
-Tutuila,TUT,2
-Wake,WAK,58
-Zealandia,ZEA,55
+Agrihan,agr,55
+Aguijan,agu,55
+Alamagan,ala,55
+Anatahan,ana,55
+Arakane,ara,54
+Asuncion,asc,55
+Baker,bak,1
+Farallon_de_Pajaros,fdp,55
+French_Frigate,ffs,3
+Gardner,gar,2
+Guam,gua,55
+Guguan,gug,55
+Hawaii,haw,5
+Howland,how,1
+Jarvis,jar,4
+Johnston,joh,2
+Kahoolawe,kah,4
+Kanton,k,NA
+Kauai,kau,4
+Kaula,kal,4
+Kingman,kin,3
+Kure,kur,1
+Lanai,lan,4
+Laysan,lay,2
+Lehua,leh,4
+Lisianski,lis,2
+Maro,mar,2
+Maug,mau,55
+Maui,mai,4
+Midway,mid,1
+Molokai,mol,4
+Molokini,moi,4
+Necker,nec,3
+New_Britain,kim,56
+Nihoa,nih,4
+Niihau,nii,4
+Nikumaroro,n,NA
+Oahu,oah,4
+Ofu_&_Olosega,ofu,2
+Ofu_&_Olosega,olo,2
+Pagan,pag,55
+Palmyra,fr,3
+Palmyra,pal,3
+Palmyra,rt,3
+Pathfinder,pat,54
+Pearl_&_Hermes,phr,1
+Philippines,art,51
+Philippines,baa,51
+Philippines,bao,51
+Philippines,koa,51
+Philippines,twi,51
+Rose,ros,2
+Rota,rot,55
+Saipan,sai,55
+Santa_Rosa,srr,55
+Sarigan,sar,55
+South_Bank,sob,2
+Stingray,sti,54
+Supply,sup,55
+Swains,swa,2
+Tau,tau,2
+Timor_Leste,ata,51
+Timor_Leste,bau,52
+Timor_Leste,bob,51
+Timor_Leste,dil,51
+Timor_Leste,lau,52
+Timor_Leste,liq,51
+Timor_Leste,maf,51
+Timor_Leste,man,51
+Timor_Leste,oec,51
+Timor_Leste,vil,51
+Tinian,tin,55
+Tutuila,tut,2
+Wake,wak,58
+Zealandia,zea,55
