@@ -100,10 +100,13 @@ for (shp_i in 1:length(shp_list)) {
   
   # shp_i = 5
   
+  island_name = tolower(substr(shp_list[shp_i], 25, 27)); island_name
+  
+  utm_i = utm %>% subset(Island_Code == island_name)
+  
   dat <- shapefile(shp_list[shp_i], verbose = T)
   
-  # dat <- spTransform(dat, CRS('+proj=utm +zone=55 +datum=WGS84 +units=km +no_defs'))
-  dat <- spTransform(dat, CRS('+proj=utm +zone=55 +datum=WGS84 +units=m +no_defs'))
+  dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs')))
   # dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84'))
   
   dat = dat[c(names(dat) %in% c("Zone", "REEF_ZONE"))]
@@ -112,7 +115,7 @@ for (shp_i in 1:length(shp_list)) {
   
   table(dat$Reef)
   
-  dat <- dat[dat$Reef %in% c("Backreef", "Forereef", "Lagoon", "BRF", "FRF", "LAG"),]
+  # dat <- dat[dat$Reef %in% c("Backreef", "Forereef", "Lagoon", "BRF", "FRF", "LAG"),]
   
   # get names
   nam <- unique(dat$Reef)
@@ -145,8 +148,7 @@ for (shp_i in 1:length(shp_list)) {
   levels(r) <- rat
   
   # rasterVis::levelplot(r)
-  
-  island_name = tolower(substr(shp_list[shp_i], 25, 27))
+  plot(r, col = matlab.like(length(unique(r))))
   
   raster = readAll(r)
   
@@ -154,7 +156,7 @@ for (shp_i in 1:length(shp_list)) {
   
   raster_and_table = list(raster, table)
   
-  save(raster_and_table, file = paste0("data/gis_reef/raster_alt/", island_name, ".RData"))
+  save(raster_and_table, file = paste0("data/gis_reef/", island_name, ".RData"))
   
   end = Sys.time()
   
@@ -173,26 +175,20 @@ for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  shp_i = 1
+  # shp_i = 12
   
-  island_name = tolower(substr(shp_list[shp_i], 23, 25))
+  island_name = tolower(substr(shp_list[shp_i], 23, 25)); island_name
+  
+  utm_i = utm %>% subset(Island_Code == island_name)
   
   dat <- shapefile(shp_list[shp_i], verbose = T)
   
-  zone <- spTransform(dat, CRS('+proj=longlat +datum=WGS84'))
-  zone = as.data.frame(zone@polygons[[2]]@Polygons[[1]]@coords)
-  zone <- (floor((zone$V1[1] + 180)/6) %% 60) + 1
-  
-  # dat <- spTransform(dat, CRS('+proj=utm +zone=55 +datum=WGS84 +units=km +no_defs'))
-  dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', zone, ' +datum=WGS84 +units=m +no_defs')))
+  dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs')))
   # dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84'))
   
   dat = dat[c(names(dat) %in% c("SEC_NAME", "Sanctuary"))]
   
   names(dat) = "Sector"
-  
-  dat <- dat[dat$Sector != c("Land"),]
-  dat <- dat[dat$Sector != c("Harbor"),]
   
   # get names
   nam <- unique(dat$Sector)
@@ -225,7 +221,7 @@ for (shp_i in 1:length(shp_list)) {
   levels(r) <- rat
   
   # rasterVis::levelplot(r)
-  
+  plot(r, col = matlab.like(length(unique(r))))
   
   raster = readAll(r)
   
@@ -233,7 +229,7 @@ for (shp_i in 1:length(shp_list)) {
   
   raster_and_table = list(raster, table)
   
-  save(raster_and_table, file = paste0("data/gis_sector/raster_alt/", island_name, ".RData"))
+  save(raster_and_table, file = paste0("data/gis_sector/", island_name, ".RData"))
   
   end = Sys.time()
   
