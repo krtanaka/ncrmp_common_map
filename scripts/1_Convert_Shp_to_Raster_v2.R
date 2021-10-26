@@ -9,13 +9,6 @@ spatial_resolution = 100 # spatial resolution in m
 
 shp_path = "L:/ktanaka/GIS" # pc
 
-s_mari = c("gua", "rot", "sai", "tin", "agu")
-n_mari = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar")
-amsm = c("ofu", "ros", "swa", "tau", "tut")
-pria = c("bak", "how", "jar", "joh", "kin", "pal", "wak")
-mhi = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")
-nwhi = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr")
-
 utm = read_csv('data/ncrmp_utm_zones.csv')
 
 # Hard/Soft Bottom Substrate ----------------------------------------------

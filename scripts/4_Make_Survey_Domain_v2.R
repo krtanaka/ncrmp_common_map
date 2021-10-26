@@ -14,13 +14,18 @@ library(patchwork)
 library(SimSurvey)
 library(sf)
 
-islands = c("gua", "rot", "sai", "tin")
+islands = c("gua", "rot", "sai", "tin", "agu")                              # South Mariana Islands
+islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar")                # North Mariana Islands
+islands = c("ofu", "ros", "swa", "tau", "tut")                              # American Samoa
+islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak")                # Pacific Remote Island Areas
+islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")  # Main Hawaiian Islands
+islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr")                # Northern Hawaiian Islands
 
 for (isl in 1:length(islands)) {
   
   isl = 1
   
-  load(paste0("data/gis_bathymetry/raster/", islands[isl], ".RData"))
+  load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
   df = topo; rm(topo)
   
