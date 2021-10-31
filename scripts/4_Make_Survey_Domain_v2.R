@@ -15,11 +15,11 @@ library(SimSurvey)
 library(sf)
 
 islands = c("gua", "rot", "sai", "tin", "agu")                              # South Mariana Islands
-islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar")                # North Mariana Islands
-islands = c("ofu", "ros", "swa", "tau", "tut")                              # American Samoa
-islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak")                # Pacific Remote Island Areas
-islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")  # Main Hawaiian Islands
-islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr")                # Northern Hawaiian Islands
+# islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar")                # North Mariana Islands
+# islands = c("ofu", "ros", "swa", "tau", "tut")                              # American Samoa
+# islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak")                # Pacific Remote Island Areas
+# islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")  # Main Hawaiian Islands
+# islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr")                # Northern Hawaiian Islands
 
 for (isl in 1:length(islands)) {
   
@@ -41,26 +41,35 @@ for (isl in 1:length(islands)) {
   ### these are outputs from "convert_shp_to_data.frame.R ###
   ###########################################################
   
-  if (isl == 1) {
-    load("data/gis_sector/raster_alt/gua.RData"); sector = raster_and_table[[1]]; sector_name = raster_and_table[[2]]
-    load("data/gis_reef/raster_alt/gua.RData"); reef = raster_and_table[[1]]; reef_name = raster_and_table[[2]]
-    load("data/gis_hardsoft/raster_alt/gua.RData"); hardsoft = raster_and_table[[1]]; hardsoft_name = raster_and_table[[2]]
-  }
-  if (isl == 2) { # using reef raster as a placeholder bc there are no sectors for this island
-    load("data/gis_reef/raster/rot.RData"); sector = raster_and_table[[1]] ; sector_name = raster_and_table[[2]] 
-    load("data/gis_reef/raster/rot.RData"); reef = raster_and_table[[1]]; reef_name = raster_and_table[[2]]
-    load("data/gis_hardsoft/raster/rot.RData"); hardsoft = raster_and_table[[1]]; hardsoft_name = raster_and_table[[2]]
-  }
-  if (isl == 3) { # using reef raster as a placeholder bc there are no sectors for this island
-    load("data/gis_reef/raster/sai.RData"); sector = raster_and_table[[1]] ; sector_name = raster_and_table[[2]] 
-    load("data/gis_reef/raster/sai.RData"); reef = raster_and_table[[1]]; reef_name = raster_and_table[[2]]
-    load("data/gis_hardsoft/raster/sai.RData"); hardsoft = raster_and_table[[1]]; hardsoft_name = raster_and_table[[2]]
-  }
-  if (isl == 4) { # using reef raster as a placeholder bc there are no sectors for this island
-    load("data/gis_reef/raster/tin.RData"); sector = raster_and_table[[1]] ; sector_name = raster_and_table[[2]] 
-    load("data/gis_reef/raster/tin.RData"); reef = raster_and_table[[1]]; reef_name = raster_and_table[[2]]
-    load("data/gis_hardsoft/raster/tin.RData"); hardsoft = raster_and_table[[1]]; hardsoft_name = raster_and_table[[2]]
-  }
+  load(paste0("data/gis_sector/", islands[isl], ".RData"))
+  load(paste0("data/gis_reef/", islands[isl], ".RData"))
+  load(paste0("data/gis_hardsoft/", islands[isl], ".RData"))
+  
+  sector = raster_and_table[[1]]; sector_name = raster_and_table[[2]]
+  reef = raster_and_table[[1]]; reef_name = raster_and_table[[2]]
+  hardsoft = raster_and_table[[1]]; hardsoft_name = raster_and_table[[2]]
+  
+  
+  # if (isl == 1) {
+  #   load("data/gis_sector/raster_alt/gua.RData"); sector = raster_and_table[[1]]; sector_name = raster_and_table[[2]]
+  #   load("data/gis_reef/raster_alt/gua.RData"); reef = raster_and_table[[1]]; reef_name = raster_and_table[[2]]
+  #   load("data/gis_hardsoft/raster_alt/gua.RData"); hardsoft = raster_and_table[[1]]; hardsoft_name = raster_and_table[[2]]
+  # }
+  # if (isl == 2) { # using reef raster as a placeholder bc there are no sectors for this island
+  #   load("data/gis_reef/raster/rot.RData"); sector = raster_and_table[[1]] ; sector_name = raster_and_table[[2]] 
+  #   load("data/gis_reef/raster/rot.RData"); reef = raster_and_table[[1]]; reef_name = raster_and_table[[2]]
+  #   load("data/gis_hardsoft/raster/rot.RData"); hardsoft = raster_and_table[[1]]; hardsoft_name = raster_and_table[[2]]
+  # }
+  # if (isl == 3) { # using reef raster as a placeholder bc there are no sectors for this island
+  #   load("data/gis_reef/raster/sai.RData"); sector = raster_and_table[[1]] ; sector_name = raster_and_table[[2]] 
+  #   load("data/gis_reef/raster/sai.RData"); reef = raster_and_table[[1]]; reef_name = raster_and_table[[2]]
+  #   load("data/gis_hardsoft/raster/sai.RData"); hardsoft = raster_and_table[[1]]; hardsoft_name = raster_and_table[[2]]
+  # }
+  # if (isl == 4) { # using reef raster as a placeholder bc there are no sectors for this island
+  #   load("data/gis_reef/raster/tin.RData"); sector = raster_and_table[[1]] ; sector_name = raster_and_table[[2]] 
+  #   load("data/gis_reef/raster/tin.RData"); reef = raster_and_table[[1]]; reef_name = raster_and_table[[2]]
+  #   load("data/gis_hardsoft/raster/tin.RData"); hardsoft = raster_and_table[[1]]; hardsoft_name = raster_and_table[[2]]
+  # }
   
   rm(raster_and_table)
   
