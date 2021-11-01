@@ -14,16 +14,18 @@ library(patchwork)
 library(SimSurvey)
 library(sf)
 
-islands = c("gua", "rot", "sai", "tin", "agu")                              # South Mariana Islands
-# islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar")                # North Mariana Islands
-# islands = c("ofu", "ros", "swa", "tau", "tut")                              # American Samoa
-# islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak")                # Pacific Remote Island Areas
-# islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")  # Main Hawaiian Islands
-# islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr")                # Northern Hawaiian Islands
+utm = read_csv('data/ncrmp_utm_zones.csv')
+
+islands = c("gua", "rot", "sai", "tin", "agu"); region = "MARIAN"                           # South Mariana Islands
+# islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "MARIAN"             # North Mariana Islands
+# islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                            # American Samoa
+# islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"              # Pacific Remote Island Areas
+# islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI"  # Main Hawaiian Islands
+# islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"               # Northern Hawaiian Islands
 
 for (isl in 1:length(islands)) {
   
-  # isl = 5
+  isl = 1
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -43,47 +45,66 @@ for (isl in 1:length(islands)) {
     
   } else {
     
-    # using reef raster as a placeholder bc there is no sector for this island
-    load(paste0("data/gis_reef/", islands[isl], ".RData"))
-    sector = raster_and_table[[1]]; sector_name = raster_and_table[[2]]
-    remove_id = sector_name %>% subset(sector_name$nam %in% c("Land"))
-    remove_id = remove_id$ID
-    sector[sector %in% remove_id] <- NA
-    sector[sector >= 1] <- 1
+    # using bathymetry raster as a placeholder bc there is no sector for this island
+    load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
+    sector = topo_i
+    sector[sector <= 0] <- 1
     
   }
   
   ### Reef Zones ###
-  load(paste0("data/gis_reef/", islands[isl], ".RData"))
-  reef = raster_and_table[[1]]; reef_name = raster_and_table[[2]]
-  remove_id = reef_name %>% subset(reef_name$nam %in% c("Land", "Land", "Reef Crest/Reef Flat"))
-  remove_id = remove_id$ID
-  reef[reef %in% remove_id] <- NA
+  if (file.exists(paste0("data/gis_reef/", islands[isl], ".RData"))) {
+    
+    load(paste0("data/gis_reef/", islands[isl], ".RData"))
+    reef = raster_and_table[[1]]; reef_name = raster_and_table[[2]]
+    remove_id = reef_name %>% subset(reef_name$nam %in% c("Land", "Land", "Reef Crest/Reef Flat"))
+    remove_id = remove_id$ID
+    reef[reef %in% remove_id] <- NA
+    
+  } else {
+    
+    # using bathymetry raster as a placeholder bc there is no reef data for this island
+    load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
+    reef = topo_i
+    reef[reef <= 0] <- 1
+    
+  }
   
   ### Bottom Substrate ###
-  load(paste0("data/gis_hardsoft/", islands[isl], ".RData"))
-  hardsoft = raster_and_table[[1]]; hardsoft_name = raster_and_table[[2]]
-  remove_id = hardsoft_name %>% subset(hardsoft_name$nam %in% c("Land", "Other", "Soft"))
-  remove_id = remove_id$ID
-  hardsoft[hardsoft %in% remove_id] <- NA
+  if (file.exists(paste0("data/gis_hardsoft/", islands[isl], ".RData"))) {
+    
+    load(paste0("data/gis_hardsoft/", islands[isl], ".RData"))
+    hardsoft = raster_and_table[[1]]; hardsoft_name = raster_and_table[[2]]
+    remove_id = hardsoft_name %>% subset(hardsoft_name$nam %in% c("Land", "Other", "Soft"))
+    remove_id = remove_id$ID
+    hardsoft[hardsoft %in% remove_id] <- NA
+    
+  } else {
+    
+    # using bathymetry raster as a placeholder bc there is no reef data for this island
+    load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
+    hardsoft = topo_i
+    hardsoft[hardsoft <= 0] <- 1
+    
+  }
   
   default_proj = "+init=epsg:4326 +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"
   
-  crs(topo) = default_proj
+  crs(topo_i) = default_proj
   crs(sector) = default_proj
   crs(reef) = default_proj
   crs(hardsoft) = default_proj
   
-  names(topo) = "depth"
+  names(topo_i) = "depth"
   names(sector) = "sector"
   names(reef) = "reef"
   names(hardsoft) = "hardsoft"
   
-  sector = resample(sector, topo, method = "bilinear"); plot(sector)
-  reef = resample(reef, topo, method = "bilinear"); plot(reef)
-  hardsoft = resample(hardsoft, topo, method = "bilinear"); plot(hardsoft)
+  sector = resample(sector, topo_i, method = "bilinear"); plot(sector)
+  reef = resample(reef, topo_i, method = "bilinear"); plot(reef)
+  hardsoft = resample(hardsoft, topo_i, method = "bilinear"); plot(hardsoft)
   
-  ncrmp = stack(sector, topo)
+  ncrmp = stack(sector, topo_i)
   ncrmp = stack(reef, ncrmp)
   ncrmp = stack(hardsoft, ncrmp)
   

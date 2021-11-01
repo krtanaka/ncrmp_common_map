@@ -6,30 +6,55 @@ library(raster)
 library(tidyr)
 library(marmap)
 library(lattice)
+library(readr)
 
-topo = raster("L:/ktanaka/GIS/bathymetry/mariana_trench_6_msl_2012.nc") # Mariana 
-topo = raster("L:/ktanaka/GIS/bathymetry/pago_pago_3_mhw_2009.nc") # American Samoa
-topo = raster("L:/ktanaka/GIS/bathymetry/usgsCeCrm10.nc") # Main Hawaiian Islands
+utm = read_csv('data/ncrmp_utm_zones.csv')
+
+islands = c("gua", "rot", "sai", "tin", "agu")[5]; region = "MARIAN"                           # South Mariana Islands
+# islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "MARIAN"             # North Mariana Islands
+# islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                            # American Samoa
+# islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"              # Pacific Remote Island Areas
+# islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI"  # Main Hawaiian Islands
+# islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"               # Northern Hawaiian Islands
+
+island_boxes = read_csv("data/misc/Island_Extents.csv") # Updated Bounding boxes 2021
+island_names_codes = read_csv("data/misc/island_name_code.csv")
+island_names_codes_boxes = merge(island_names_codes, island_boxes)
+rm(island_names_codes, island_boxes)
+
+if(region == "MARIAN") topo = raster("L:/ktanaka/GIS/bathymetry/mariana_trench_6_msl_2012.nc") # Mariana 
+if(region == "SAMOA") topo = raster("L:/ktanaka/GIS/bathymetry/pago_pago_3_mhw_2009.nc") # American Samoa
+if(region == "MHI") topo = raster("L:/ktanaka/GIS/bathymetry/usgsCeCrm10.nc") # Main Hawaiian Islands
+
+default_proj = crs(topo)
 
 topo = as.data.frame(rasterToPoints(topo))
 colnames(topo)[3] = "depth"
 topo$depth = as.numeric(as.character(topo$depth))
 
-topo = topo %>% 
-  subset(depth > -30 & depth < 0)
+for (i in length(islands)) {
+  
+  # i = 1
+  
+  box = island_names_codes_boxes %>% subset(Island_Code == islands[i])
 
-topo %>%
-  ggplot(aes(x, y, fill = depth)) +
-  # geom_tile(aes(width = 0.005, height = 0.005)) +
-  geom_raster() + 
-  scale_fill_viridis_c() +
-  coord_fixed() +
-  ggdark::dark_theme_minimal() +
-  theme(axis.title = element_blank())
-
-save(topo, file = 'data/gis_bathymetry/raster/mariana_0_30m.RData')
-save(topo, file = 'data/gis_bathymetry/raster/american_samoa_0_30m.RData')
-save(topo, file = 'data/gis_bathymetry/raster/agu.RData')
+  topo_i = topo %>%
+    subset(depth %in% c(-30:0)) %>%
+    subset(x < box$xmax & x > box$xmin & y < box$ymax & y > box$ymin)
+  
+  topo_i = rasterFromXYZ(topo_i)
+  
+  crs(topo_i) = default_proj
+  
+  utm_i = utm %>% subset(Island_Code == islands[i])
+  sr = paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs')
+  topo_i <- projectRaster(topo_i, crs = sr)
+  
+  topo_i = readAll(topo_i)
+  
+  save(topo_i, file = paste0('data/gis_bathymetry/', islands[i], '.RData'))
+  
+}
 
 wireframe(unclass(as.bathy(topo)), 
           shade = T,
@@ -44,5 +69,3 @@ wireframe(unclass(as.bathy(topo)),
           perspective = T,
           screen = list(z = 10, x = -40, y = 10),
           zoom = 1.1)
-
-

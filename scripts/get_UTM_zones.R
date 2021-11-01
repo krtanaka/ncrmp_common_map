@@ -2,7 +2,7 @@ library(dplyr)
 library(readr)
 
 load('data/rea/SURVEY MASTER.RData'); df = SURVEY_MASTER
-dat = as.data.frame(do.call('rbind', strsplit(as.character(df$SITE),'-',fixed=TRUE)))[1]
+dat = as.data.frame(do.call('rbind', strsplit(as.character(df$SITE),'-',fixed = TRUE)))[1]
 
 colnames(dat) = "Island_Code"
 

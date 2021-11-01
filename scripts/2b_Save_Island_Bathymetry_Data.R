@@ -55,9 +55,9 @@ for (isl in 1:length(islands)) {
   #   coord_fixed() +
   #   theme(axis.title = element_blank())
   
-  topo = readAll(topo)
+  topo_i = readAll(topo)
   
-  save(topo, file = paste0('data/gis_bathymetry/', islands[isl], '.RData'))
+  save(topo_i, file = paste0('data/gis_bathymetry/', islands[isl], '.RData'))
   
 }
 
