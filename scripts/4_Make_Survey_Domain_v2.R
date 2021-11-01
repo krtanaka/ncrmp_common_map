@@ -23,22 +23,41 @@ islands = c("gua", "rot", "sai", "tin", "agu")                              # So
 
 for (isl in 1:length(islands)) {
   
-  isl = 1
+  isl = 2
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
   ###########################################################
   ### import sector/reefzones shapefile                   ###
   ### adjust resolutions and merge with bathymetry data   ###
-  ### these are outputs from "convert_shp_to_data.frame.R ###
   ###########################################################
   
-  load(paste0("data/gis_sector/", islands[isl], ".RData"))
-  sector = raster_and_table[[1]]; sector_name = raster_and_table[[2]]
   
+  # Island Sector
+  if (file.exists(paste0("data/gis_sector/", islands[isl], ".RData"))) {
+    
+    load(paste0("data/gis_sector/", islands[isl], ".RData"))
+    sector = raster_and_table[[1]]; sector_name = raster_and_table[[2]]
+    
+  } else {
+    
+    # using reef raster as a placeholder bc there is no sector for this island
+    load(paste0("data/gis_reef/", islands[isl], ".RData"))
+    sector = raster_and_table[[1]]; sector_name = raster_and_table[[2]]
+
+    remove_id = sector_name %>% 
+      subset(sector_name$nam %in% c("Land"))
+    remove_id = remove_id$ID
+    sector[sector %in% remove_id] <- NA
+    sector[sector >= 1] <- 1
+    
+  }
+
+  # Reef Zones
   load(paste0("data/gis_reef/", islands[isl], ".RData"))
   reef = raster_and_table[[1]]; reef_name = raster_and_table[[2]]
   
+  # Bottom Substrate
   load(paste0("data/gis_hardsoft/", islands[isl], ".RData"))
   hardsoft = raster_and_table[[1]]; hardsoft_name = raster_and_table[[2]]
   
