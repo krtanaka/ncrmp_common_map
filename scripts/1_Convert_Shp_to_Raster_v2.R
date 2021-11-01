@@ -2,6 +2,8 @@ library(raster)
 library(rgdal)
 library(rgeos)
 library(dplyr)
+library(readr)
+library(colorRamps)
 
 rm(list = ls())
 
@@ -20,7 +22,7 @@ for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  # shp_i = 1
+  # shp_i = 6
   
   island_name = tolower(substr(shp_list[shp_i], 25, 27)); island_name
   
@@ -93,7 +95,7 @@ for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  # shp_i = 5
+  # shp_i = 1
   
   island_name = tolower(substr(shp_list[shp_i], 25, 27)); island_name
   
@@ -170,7 +172,7 @@ for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  # shp_i = 12
+  # shp_i = 1
   
   island_name = tolower(substr(shp_list[shp_i], 23, 25)); island_name
   

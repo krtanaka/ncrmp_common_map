@@ -9,16 +9,18 @@ library(lattice)
 
 # need to connect to pifsc VPN
 
-islands = c("gua", "rot", "sai", "tin", 
-            # "agu", 
-            "agr", "ala", "asu", "gug", "fdp", "mau", "sar",
-            "jar", "joh", "kin", "pal")
+islands = c("gua", "rot", "sai", "tin", "agu")                              # South Mariana Islands
+# islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar")                # North Mariana Islands
+# islands = c("ofu", "ros", "swa", "tau", "tut")                              # American Samoa
+# islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak")                # Pacific Remote Island Areas
+# islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")  # Main Hawaiian Islands
+# islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr")                # Northern Hawaiian Islands
 
 for (isl in 1:length(islands)) {
   
-  # isl = 2
+  # isl = 1
   
-  if (islands[isl] == "gua")  topo = raster("L:/ktanaka/GIS/bathymetry/gua_nthmp_dem_10m_mosaic.tif") # Guam
+  if (islands[isl] == "gua") topo = raster("L:/ktanaka/GIS/bathymetry/gua_nthmp_dem_10m_mosaic.tif") # Guam
   if (islands[isl] == "rot") topo = raster("L:/ktanaka/GIS/bathymetry/Rota_5m_bathymetry.asc") # Rota
   if (islands[isl] == "sai") topo = raster("L:/ktanaka/GIS/bathymetry/sai_mb_5m.tif") # Saipan
   if (islands[isl] == "tin") topo = raster("L:/ktanaka/GIS/bathymetry/tinian_5m.asc") # Tinian
@@ -42,18 +44,20 @@ for (isl in 1:length(islands)) {
   topo <- aggregate(topo, fact = 100/res(topo))
   res(topo)
   
-  topo = as.data.frame(rasterToPoints(topo)) %>% drop_na()
-  colnames(topo) = c("x", "y", "depth")
+  # topo = as.data.frame(rasterToPoints(topo)) %>% drop_na()
+  # colnames(topo) = c("x", "y", "depth")
+  # 
+  # topo %>%
+  #   ggplot(aes(x, y, fill = depth)) +
+  #   geom_raster() +
+  #   scale_fill_viridis_c("") +
+  #   ggdark::dark_theme_minimal() +
+  #   coord_fixed() +
+  #   theme(axis.title = element_blank())
   
-  topo %>%
-    ggplot(aes(x, y, fill = depth)) +
-    geom_raster() +
-    scale_fill_viridis_c("") +
-    ggdark::dark_theme_minimal() +
-    coord_fixed() +
-    theme(axis.title = element_blank())
+  topo = readAll(topo)
   
-  save(topo, file = paste0('data/gis_bathymetry/raster/', islands[isl], '.RData'))
+  save(topo, file = paste0('data/gis_bathymetry/', islands[isl], '.RData'))
   
 }
 
