@@ -23,7 +23,7 @@ islands = c("gua", "rot", "sai", "tin", "agu")                              # So
 
 for (isl in 1:length(islands)) {
   
-  isl = 2
+  # isl = 5
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -32,34 +32,40 @@ for (isl in 1:length(islands)) {
   ### adjust resolutions and merge with bathymetry data   ###
   ###########################################################
   
-  
-  # Island Sector
+  ### Island Sector ###
   if (file.exists(paste0("data/gis_sector/", islands[isl], ".RData"))) {
     
     load(paste0("data/gis_sector/", islands[isl], ".RData"))
     sector = raster_and_table[[1]]; sector_name = raster_and_table[[2]]
+    remove_id = sector_name %>% subset(sector_name$nam %in% c("Land"))
+    remove_id = remove_id$ID
+    sector[sector %in% remove_id] <- NA
     
   } else {
     
     # using reef raster as a placeholder bc there is no sector for this island
     load(paste0("data/gis_reef/", islands[isl], ".RData"))
     sector = raster_and_table[[1]]; sector_name = raster_and_table[[2]]
-
-    remove_id = sector_name %>% 
-      subset(sector_name$nam %in% c("Land"))
+    remove_id = sector_name %>% subset(sector_name$nam %in% c("Land"))
     remove_id = remove_id$ID
     sector[sector %in% remove_id] <- NA
     sector[sector >= 1] <- 1
     
   }
-
-  # Reef Zones
+  
+  ### Reef Zones ###
   load(paste0("data/gis_reef/", islands[isl], ".RData"))
   reef = raster_and_table[[1]]; reef_name = raster_and_table[[2]]
+  remove_id = reef_name %>% subset(reef_name$nam %in% c("Land", "Land", "Reef Crest/Reef Flat"))
+  remove_id = remove_id$ID
+  reef[reef %in% remove_id] <- NA
   
-  # Bottom Substrate
+  ### Bottom Substrate ###
   load(paste0("data/gis_hardsoft/", islands[isl], ".RData"))
   hardsoft = raster_and_table[[1]]; hardsoft_name = raster_and_table[[2]]
+  remove_id = hardsoft_name %>% subset(hardsoft_name$nam %in% c("Land", "Other", "Soft"))
+  remove_id = remove_id$ID
+  hardsoft[hardsoft %in% remove_id] <- NA
   
   default_proj = "+init=epsg:4326 +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"
   
@@ -72,21 +78,6 @@ for (isl in 1:length(islands)) {
   names(sector) = "sector"
   names(reef) = "reef"
   names(hardsoft) = "hardsoft"
-  
-  remove_id = sector_name %>% 
-    subset(sector_name$nam %in% c("Land", "Other", "Soft", "land", "other", "soft"))
-  remove_id = remove_id$ID
-  sector[sector %in% remove_id] <- NA
-  
-  remove_id = reef_name %>% 
-    subset(reef_name$nam %in% c("Land", "Land", "Reef Crest/Reef Flat"))
-  remove_id = remove_id$ID
-  reef[reef %in% remove_id] <- NA
-  
-  remove_id = hardsoft_name %>% 
-    subset(hardsoft_name$nam %in% c("Land", "Other", "Soft"))
-  remove_id = remove_id$ID
-  hardsoft[hardsoft %in% remove_id] <- NA
   
   sector = resample(sector, topo, method = "bilinear"); plot(sector)
   reef = resample(reef, topo, method = "bilinear"); plot(reef)
@@ -181,5 +172,7 @@ for (isl in 1:length(islands)) {
   survey_grid_ncrmp = readAll(survey_grid_ncrmp)
   
   save(survey_grid_ncrmp, file = paste0("data/survey_grid_ncrmp/survey_grid_", islands[isl], ".RData"))
+  
+  print(paste0("...", islands[isl], " survey domain generated..."))
   
 }
