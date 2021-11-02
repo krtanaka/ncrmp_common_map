@@ -166,13 +166,13 @@ for (shp_i in 1:length(shp_list)) {
 # Sub-Island Sector -------------------------------------------------------
 
 shp_list = list.files(path = paste0(shp_path, "/sector/"), pattern = "\\.shp$", full.names = T); shp_list
-# shp_list = shp_list[c(10, 12)]; shp_list
+shp_list = shp_list[c(1:9, 11:12)]; shp_list # process NMSAS_PY separately for now
 
 for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  shp_i = 1
+  shp_i = 12
   
   island_name = tolower(substr(shp_list[shp_i], 23, 25)); island_name
   
