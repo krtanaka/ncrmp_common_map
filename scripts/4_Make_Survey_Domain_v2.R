@@ -25,7 +25,7 @@ islands = c("gua", "rot", "sai", "tin", "agu"); region = "MARIAN"               
 
 for (isl in 1:length(islands)) {
   
-  isl = 1
+  # isl = 5
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -112,6 +112,8 @@ for (isl in 1:length(islands)) {
   
   ncrmp = rasterToPoints(ncrmp) %>% as.data.frame() %>% na.omit(); head(ncrmp)
   
+  ncrmp$cell = 1:dim(ncrmp)[1]; ncrmp$cell = as.numeric(ncrmp$cell)
+  
   ncrmp$depth_bin = ""
   ncrmp$depth_bin = ifelse(ncrmp$depth <= 0  & ncrmp$depth >= -6, 1L, ncrmp$depth_bin) 
   ncrmp$depth_bin = ifelse(ncrmp$depth < -6  & ncrmp$depth >= -18, 2L, ncrmp$depth_bin) 
@@ -173,12 +175,13 @@ for (isl in 1:length(islands)) {
   
   ncrmp = as.data.frame(ncrmp)
   
+  cell = rasterFromXYZ(ncrmp[,c("longitude", "latitude", "cell")]); plot(cell)
   strat = rasterFromXYZ(ncrmp[,c("longitude", "latitude", "strat")]); plot(strat)
   depth = rasterFromXYZ(ncrmp[,c("longitude", "latitude", "depth")]); plot(depth)
   
   values = raster::values
   
-  survey_grid_ncrmp = stack(strat, depth)
+  survey_grid_ncrmp = stack(cell, strat, depth)
   survey_grid_ncrmp$strat = round(survey_grid_ncrmp$strat, digits = 0)
   
   sp::spplot(survey_grid$strat) #SimSurvey example
