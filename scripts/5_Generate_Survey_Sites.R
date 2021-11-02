@@ -51,14 +51,23 @@ survey_effort = merge(island_name_code, survey_effort)
 #################################################################
 for (i in 1:length(islands)) {
   
-  # i = 3
+  # i = 5
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData")) 
   
   total_sample = survey_effort %>% subset(Island_Code == islands[i])
-  total_sample = total_sample$Effort
   
+  if (dim(total_sample)[1] == 0){
+    
+    total_sample = 10
+
+  }else {
+    
+    total_sample = total_sample$Effort
+    
+  }
+
   n <- id <- division <- strat <- N <- strat_sets <- cell_sets <- NULL
   
   cells <- data.table(rasterToPoints(survey_grid_ncrmp))
@@ -73,7 +82,7 @@ for (i in 1:length(islands)) {
   strat_det = right_join(strat_det, sd); strat_det
   
   ## allocate sampling units by area * sd
-  strat_det$weight = strat_det$strat_area * strat_det$sd; strat_det
+  strat_det$weight = abs(strat_det$strat_area * strat_det$sd); strat_det
   strat_det$strat_sets = round((total_sample * strat_det$weight) / sum(strat_det$weight), 0); strat_det
   
   # allocate sampling units by area
@@ -202,3 +211,4 @@ for (i in 1:length(islands)) {
   #     theme_minimal())
   
 }
+
