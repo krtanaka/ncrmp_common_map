@@ -16,9 +16,11 @@ library(ggrepel)
 
 utm = read_csv('data/ncrmp_utm_zones.csv')
 
-load("data/misc/modeled_survey_variability.RData") #modeled at grid scale
+load("data/misc/modeled_survey_variability.RData") # modeled at grid scale
 
-# pick an island
+##################################
+###  select islands & regions  ###
+##################################
 islands = c("gua", "rot", "sai", "tin", "agu"); region = "MARIAN"                           # South Mariana Islands
 # islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "MARIAN"             # North Mariana Islands
 # islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                            # American Samoa
@@ -26,21 +28,27 @@ islands = c("gua", "rot", "sai", "tin", "agu"); region = "MARIAN"               
 # islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI"  # Main Hawaiian Islands
 # islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"               # Northern Hawaiian Islands
 
-
-### simulate stratified random surveys ###
-
+########################################################################
+### do some parameter settings to simulate stratified random surveys ###
+########################################################################
 # n_sims = 100 # number of simulations
-effprt_level = "mid" # total sample efforts you want to deploy
+effprt_level = "mid" # define sampling effort (low, mid, high)
 min_sets = 1 # minimum number of sets per strat
 trawl_dim = c(0.01, 0.0353) # 0.000353 sq.km (353 sq.m) from two 15-m diameter survey cylinders
 resample_cells = F
 
+##################################################################
+### determine number of sites you want to deploy @ each island ###
+##################################################################
 load('data/misc/survey_effort_ncrmp_2000-2020.RData')
 island_name_code = read_csv('data/misc/island_name_code.csv')
 survey_effort = data.frame(Island = survey_effort$Island, 
                            Effort = survey_effort[[effprt_level]])
 survey_effort = merge(island_name_code, survey_effort)
 
+#################################################################
+### Generate survey site tables & maps, check outputs/ folder ###
+#################################################################
 for (i in 1:length(islands)) {
   
   # i = 3
