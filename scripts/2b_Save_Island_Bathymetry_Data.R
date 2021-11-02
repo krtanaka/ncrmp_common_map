@@ -9,16 +9,16 @@ library(lattice)
 
 # need to connect to pifsc VPN
 
-islands = c("gua", "rot", "sai", "tin", "agu")                              # South Mariana Islands
-islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar")                # North Mariana Islands
-# islands = c("ofu", "ros", "swa", "tau", "tut")                              # American Samoa
+# islands = c("gua", "rot", "sai", "tin", "agu")                              # South Mariana Islands
+# islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar")                # North Mariana Islands
+islands = c("ofu", "ros", "swa", "tau", "tut")                              # American Samoa
 # islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak")                # Pacific Remote Island Areas
 # islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")  # Main Hawaiian Islands
 # islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr")                # Northern Hawaiian Islands
 
 for (isl in 1:length(islands)) {
   
-  # isl = 3
+  # isl = 4
   
   if (islands[isl] == "gua") topo = raster("L:/ktanaka/GIS/bathymetry/gua_nthmp_dem_10m_mosaic.tif") # Guam
   if (islands[isl] == "rot") topo = raster("L:/ktanaka/GIS/bathymetry/Rota_5m_bathymetry.asc") # Rota
@@ -32,6 +32,12 @@ for (isl in 1:length(islands)) {
   if (islands[isl] == "fdp") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/fdp_inpo/w001001.adf") # 
   if (islands[isl] == "mau") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/mau_inpo/w001001.adf") # 
   if (islands[isl] == "sar") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/sar_inpo/w001001.adf") # 
+  
+  if (islands[isl] == "ofu") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/ofu_inpo/w001001.adf") # 
+  if (islands[isl] == "ros") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/ros_inpo/w001001.adf") # 
+  # if (islands[isl] == "swa") topo = read.dbf("N:/GIS/Projects/CommonMaps/01_Preprocess/AMSM/SWA/bathymetry/swa_zonal_mb_40m.dbf") # 
+  if (islands[isl] == "tau") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/tau_inpo/w001001.adf") # 
+  # if (islands[isl] == "tut") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/pal_inpo/w001001.adf") # 
   
   if (islands[isl] == "jar") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/jar_inpo_land/w001001.adf") # 
   if (islands[isl] == "joh") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/JOH/joh_inpo/w001001.adf") # 
@@ -55,7 +61,7 @@ for (isl in 1:length(islands)) {
   #   coord_fixed() +
   #   theme(axis.title = element_blank())
   
-  topo_i = readAll(topo)
+  topo_i = readAll(topo); plot(topo_i); print( islands[isl])
   
   save(topo_i, file = paste0('data/gis_bathymetry/', islands[isl], '.RData'))
   

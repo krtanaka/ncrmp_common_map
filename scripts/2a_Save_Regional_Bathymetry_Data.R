@@ -34,7 +34,7 @@ topo$depth = as.numeric(as.character(topo$depth))
 
 for (i in 1:length(islands)) {
   
-  i = 3
+  i = 5
   
   box = island_names_codes_boxes %>% subset(Island_Code == islands[i])
 
@@ -50,7 +50,7 @@ for (i in 1:length(islands)) {
   sr = paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs')
   topo_i <- projectRaster(topo_i, crs = sr)
   
-  topo_i = readAll(topo_i)
+  topo_i = readAll(topo_i); plot(topo_i); print( islands[isl])
   
   save(topo_i, file = paste0('data/gis_bathymetry/', islands[i], '.RData'))
   
