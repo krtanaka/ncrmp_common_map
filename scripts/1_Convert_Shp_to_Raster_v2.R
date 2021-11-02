@@ -22,7 +22,7 @@ for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  shp_i = 5
+  # shp_i = 27
   
   island_name = tolower(substr(shp_list[shp_i], 25, 27)); island_name
   
@@ -95,7 +95,7 @@ for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  # shp_i = 1
+  shp_i = 16
   
   island_name = tolower(substr(shp_list[shp_i], 25, 27)); island_name
   
@@ -172,7 +172,7 @@ for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  # shp_i = 1
+  shp_i = 1
   
   island_name = tolower(substr(shp_list[shp_i], 23, 25)); island_name
   
