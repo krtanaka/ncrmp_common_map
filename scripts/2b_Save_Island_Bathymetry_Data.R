@@ -10,7 +10,7 @@ library(lattice)
 # need to connect to pifsc VPN
 
 islands = c("gua", "rot", "sai", "tin", "agu")                              # South Mariana Islands
-# islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar")                # North Mariana Islands
+islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar")                # North Mariana Islands
 # islands = c("ofu", "ros", "swa", "tau", "tut")                              # American Samoa
 # islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak")                # Pacific Remote Island Areas
 # islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")  # Main Hawaiian Islands
@@ -25,7 +25,7 @@ for (isl in 1:length(islands)) {
   if (islands[isl] == "sai") topo = raster("L:/ktanaka/GIS/bathymetry/sai_mb_5m.tif") # Saipan
   if (islands[isl] == "tin") topo = raster("L:/ktanaka/GIS/bathymetry/tinian_5m.asc") # Tinian
   # if (islands[isl] == "agu") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/agr_inpoo_new/w001001.adf") # Aguijan
-  if (islands[isl] == "agr") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/agr_inpoo_new/w001001.adf") # Tinian
+  if (islands[isl] == "agr") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/agr_inpoo_new/w001001.adf") 
   if (islands[isl] == "ala") topo = raster("N:/GIS/Projects/SeafloorCalc/Workspace/Alamagan/ala_inpo_mbik/w001001.adf") # Alamagan
   if (islands[isl] == "asu") topo = raster("N:/GIS/Projects/SeafloorCalc/Workspace/Asuncion/asc_inpo/w001001.adf") # 
   if (islands[isl] == "gug") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/gug_inpo/w001001.adf") # 
