@@ -17,7 +17,7 @@ library(sf)
 utm = read_csv('data/ncrmp_utm_zones.csv')
 
 islands = c("gua", "rot", "sai", "tin", "agu"); region = "MARIAN"                           # South Mariana Islands
-# islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "MARIAN"             # North Mariana Islands
+islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "MARIAN"             # North Mariana Islands
 # islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                            # American Samoa
 # islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"              # Pacific Remote Island Areas
 # islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI"  # Main Hawaiian Islands
@@ -25,7 +25,7 @@ islands = c("gua", "rot", "sai", "tin", "agu"); region = "MARIAN"               
 
 for (isl in 1:length(islands)) {
   
-  # isl = 5
+  # isl = 3
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   

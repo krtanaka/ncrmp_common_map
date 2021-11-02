@@ -22,7 +22,7 @@ load("data/misc/modeled_survey_variability.RData") # modeled at grid scale
 ###  select islands & regions  ###
 ##################################
 islands = c("gua", "rot", "sai", "tin", "agu"); region = "MARIAN"                           # South Mariana Islands
-# islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "MARIAN"             # North Mariana Islands
+islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "MARIAN"             # North Mariana Islands
 # islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                            # American Samoa
 # islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"              # Pacific Remote Island Areas
 # islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI"  # Main Hawaiian Islands
