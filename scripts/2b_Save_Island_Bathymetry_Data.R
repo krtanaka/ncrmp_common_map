@@ -18,7 +18,7 @@ islands = c("ofu", "ros", "swa", "tau", "tut")                              # Am
 
 for (isl in 1:length(islands)) {
   
-  # isl = 4
+  # isl = 3
   
   if (islands[isl] == "gua") topo = raster("L:/ktanaka/GIS/bathymetry/gua_nthmp_dem_10m_mosaic.tif") # Guam
   if (islands[isl] == "rot") topo = raster("L:/ktanaka/GIS/bathymetry/Rota_5m_bathymetry.asc") # Rota
@@ -35,9 +35,9 @@ for (isl in 1:length(islands)) {
   
   if (islands[isl] == "ofu") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/ofu_inpo/w001001.adf") # 
   if (islands[isl] == "ros") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/ros_inpo/w001001.adf") # 
-  # if (islands[isl] == "swa") topo = read.dbf("N:/GIS/Projects/CommonMaps/01_Preprocess/AMSM/SWA/bathymetry/swa_zonal_mb_40m.dbf") # 
+  if (islands[isl] == "swa") topo = raster("T:/Fish/GIS/Projects/Gridding/SWA/swa_inpo/w001001.adf") #
   if (islands[isl] == "tau") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/tau_inpo/w001001.adf") # 
-  # if (islands[isl] == "tut") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/pal_inpo/w001001.adf") # 
+  if (islands[isl] == "tut") topo = raster("T:/Fish/GIS/Projects/Gridding/TUT/tut_inpo/w001001.adf") #
   
   if (islands[isl] == "jar") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/jar_inpo_land/w001001.adf") # 
   if (islands[isl] == "joh") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/JOH/joh_inpo/w001001.adf") # 

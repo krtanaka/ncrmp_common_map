@@ -172,7 +172,7 @@ for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  shp_i = 12
+  # shp_i = 1
   
   island_name = tolower(substr(shp_list[shp_i], 23, 25)); island_name
   
@@ -217,8 +217,8 @@ for (shp_i in 1:length(shp_list)) {
   rat$IDs <- nam_df$ID
   levels(r) <- rat
   
-  # rasterVis::levelplot(r)
-  plot(r, col = matlab.like(length(unique(r))))
+  rasterVis::levelplot(r)
+  plot(r, col = rainbow(length(unique(r))))
   
   raster = readAll(r)
   

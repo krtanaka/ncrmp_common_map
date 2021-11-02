@@ -22,7 +22,7 @@ load("data/misc/modeled_survey_variability.RData") # modeled at grid scale
 ###  select islands & regions  ###
 ##################################
 islands = c("gua", "rot", "sai", "tin", "agu"); region = "MARIAN"                           # South Mariana Islands
-islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "MARIAN"             # North Mariana Islands
+# islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "MARIAN"             # North Mariana Islands
 # islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                            # American Samoa
 # islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"              # Pacific Remote Island Areas
 # islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI"  # Main Hawaiian Islands
@@ -32,7 +32,7 @@ islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "MARIAN" 
 ### do some parameter settings to simulate stratified random surveys ###
 ########################################################################
 # n_sims = 100 # number of simulations
-effprt_level = "mid" # define sampling effort (low, mid, high)
+effprt_level = "high" # define sampling effort (low, mid, high)
 min_sets = 1 # minimum number of sets per strat
 trawl_dim = c(0.01, 0.0353) # 0.000353 sq.km (353 sq.m) from two 15-m diameter survey cylinders
 resample_cells = F
