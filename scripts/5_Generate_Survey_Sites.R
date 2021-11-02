@@ -16,7 +16,7 @@ library(ggrepel)
 
 utm = read_csv('data/ncrmp_utm_zones.csv')
 
-load("data/modeled_survey_variability.RData") #modeled at grid scale
+load("data/misc/modeled_survey_variability.RData") #modeled at grid scale
 
 # pick an island
 islands = c("gua", "rot", "sai", "tin", "agu"); region = "MARIAN"                           # South Mariana Islands
@@ -30,10 +30,16 @@ islands = c("gua", "rot", "sai", "tin", "agu"); region = "MARIAN"               
 ### simulate stratified random surveys ###
 
 # n_sims = 100 # number of simulations
-total_sample = 30 # total sample efforts you want to deploy
+effprt_level = "mid" # total sample efforts you want to deploy
 min_sets = 1 # minimum number of sets per strat
 trawl_dim = c(0.01, 0.0353) # 0.000353 sq.km (353 sq.m) from two 15-m diameter survey cylinders
 resample_cells = F
+
+load('data/misc/survey_effort_ncrmp_2000-2020.RData')
+island_name_code = read_csv('data/misc/island_name_code.csv')
+survey_effort = data.frame(Island = survey_effort$Island, 
+                           Effort = survey_effort[[effprt_level]])
+survey_effort = merge(island_name_code, survey_effort)
 
 for (i in 1:length(islands)) {
   
@@ -41,6 +47,9 @@ for (i in 1:length(islands)) {
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData")) 
+  
+  total_sample = survey_effort %>% subset(Island_Code == islands[i])
+  total_sample = total_sample$Effort
   
   n <- id <- division <- strat <- N <- strat_sets <- cell_sets <- NULL
   
@@ -67,7 +76,7 @@ for (i in 1:length(islands)) {
   strat_table = strat_det %>% dplyr::select(strat, strat_sets); strat_table
   
   # add "strat" "strat_cells" "tow_area" ...
-  strat_det = strat_det[,c("strat", "strat_cells", "tow_area", "cell_area", "strat_area", "strat_sets" )]
+  strat_det = strat_det[,c("strat", "strat_cells", "tow_area", "cell_area", "strat_area", "strat_sets")]
   cells <- merge(cells, strat_det, by = c("strat")) 
   
   utm_i = utm %>% subset(Island_Code == islands[i])
@@ -89,9 +98,9 @@ for (i in 1:length(islands)) {
   sets$set <- seq(nrow(sets))
   sets = sets  %>% 
     mutate(id = id) %>% 
-    dplyr::select(id, x, y, longitude, latitude, depth, strat, strat_area)
+    dplyr::select(id, x, y, longitude, latitude, depth, strat)
   
-  readr::write_csv(sets, file = paste0("outputs/survey_table_", islands[i], "_", total_sample, "_sites.csv"))
+  readr::write_csv(sets, file = paste0("outputs/survey_table_", islands[i], ".csv"))
   
   (bathymetry = cells %>% 
       ggplot(aes(x, y)) +
@@ -111,24 +120,24 @@ for (i in 1:length(islands)) {
       theme_minimal() + 
       theme(legend.position = "right"))
   
-  (strat_area = cells %>% 
+  (variability = cells %>% 
       ggplot(aes(x, y)) +
-      geom_raster(aes(fill = strat_area)) + 
-      scale_fill_viridis_c("Strat area (km^2)") + 
+      geom_raster(aes(fill = sd)) + 
+      scale_fill_viridis_c("SD") + 
       ylab("Northings (km)") + xlab("Eastings (km)") +
       coord_fixed() +
       theme_minimal() + 
       theme(legend.position = "right"))
   
-  (density = cells %>% 
+  (area = cells %>% 
       ggplot(aes(x, y)) +
-      geom_raster(aes(fill = strat_sets)) + 
-      scale_fill_viridis_c("Site_allocation") + 
+      geom_raster(aes(fill = strat_area )) + 
+      scale_fill_viridis_c("Area (sq.km)") + 
       ylab("Northings (km)") + xlab("Eastings (km)") +
       coord_fixed() +
       theme_minimal() + 
       theme(legend.position = "right"))
-  
+
   (site_location = 
       ggplot() + 
       geom_point(data = sets, aes(x, y)) +  
@@ -146,11 +155,11 @@ for (i in 1:length(islands)) {
                                  "Target survey effort = ", total_sample, " sites \n",
                                  "Total survey effort = ", sum(strat_det$strat_sets), " sites"))))
   
-  pdf(paste0("outputs/survey_layers_", islands[i], "_", total_sample, "_sites.pdf"), height = 12, width = 5)
-  print((bathymetry + strata) / site_density)
+  pdf(paste0("outputs/survey_layers_", islands[i], ".pdf"), height = 10, width = 10)
+  print((bathymetry + strata) / (area + variability))
   dev.off()
   
-  pdf(paste0("outputs/survey_location_", islands[i], "_", total_sample, "_sites.pdf"), height = 12, width = 12)
+  pdf(paste0("outputs/survey_location_", islands[i], ".pdf"), height = 12, width = 12)
   print(site_location)
   dev.off()
   
