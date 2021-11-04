@@ -14,15 +14,13 @@ library(colorRamps)
 library(readr)
 library(ggrepel)
 
-utm = read_csv('data/ncrmp_utm_zones.csv')
-
-load("data/misc/modeled_survey_variability.RData") # modeled at grid scale
+utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
 ##################################
 ###  select islands & regions  ###
 ##################################
-islands = c("gua", "rot", "sai", "tin", "agu"); region = "MARIAN"                           # South Mariana Islands
-# islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "MARIAN"             # North Mariana Islands
+islands = c("gua", "rot", "sai", "tin", "agu"); region = "S.MARIAN"                           # South Mariana Islands
+# islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "N.MARIAN"             # North Mariana Islands
 # islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                            # American Samoa
 # islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"              # Pacific Remote Island Areas
 # islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI"  # Main Hawaiian Islands
@@ -32,7 +30,7 @@ islands = c("gua", "rot", "sai", "tin", "agu"); region = "MARIAN"               
 ### do some parameter settings to simulate stratified random surveys ###
 ########################################################################
 # n_sims = 100 # number of simulations
-effprt_level = "high" # define sampling effort (low, mid, high)
+effort_level = c("low", "mid", "high")[2] # define sampling effort (low, mid, high)
 min_sets = 1 # minimum number of sets per strat
 trawl_dim = c(0.01, 0.0353) # 0.000353 sq.km (353 sq.m) from two 15-m diameter survey cylinders
 resample_cells = F
@@ -43,8 +41,8 @@ resample_cells = F
 load('data/misc/survey_effort_ncrmp_2000-2020.RData')
 island_name_code = read_csv('data/misc/island_name_code.csv')
 survey_effort = data.frame(Island = survey_effort$Island, 
-                           Effort = survey_effort[[effprt_level]])
-survey_effort = merge(island_name_code, survey_effort)
+                           Effort = survey_effort[[effort_level]])
+survey_effort = merge(island_name_code, survey_effort); head(survey_effort)
 
 #################################################################
 ### Generate survey site tables & maps, check outputs/ folder ###
@@ -73,7 +71,8 @@ for (i in 1:length(islands)) {
   cells <- data.table(rasterToPoints(survey_grid_ncrmp))
   
   # add modeled trophic biomass variability, summarize by strata
-  cells$sd = predict(g, cells); sd = cells[,c("strat", "sd")]; sd = sd %>% group_by(strat) %>% summarise(sd = mean(sd,na.rm = T))
+  load(paste0("data/rea/modeled_survey_variability_", region, ".RData")) # modeled at grid scale
+  cells$sd = predict(g, cells); sd = cells[,c("strat", "sd")]; sd = sd %>% group_by(strat) %>% summarise(sd = mean(sd, na.rm = T))
   
   strat_det <- cells[, list(strat_cells = .N), by = "strat"]; strat_det
   strat_det$tow_area <- prod(trawl_dim); strat_det
@@ -117,7 +116,7 @@ for (i in 1:length(islands)) {
     mutate(id = id) %>% 
     dplyr::select(id, x, y, longitude, latitude, depth, strat)
   
-  readr::write_csv(sets, file = paste0("outputs/survey_table_", islands[i], ".csv"))
+  readr::write_csv(sets, file = paste0("outputs/survey_table_", islands[i], "_", effort_level, ".csv"))
   
   (bathymetry = cells %>% 
       ggplot(aes(x, y)) +
@@ -140,7 +139,7 @@ for (i in 1:length(islands)) {
   (variability = cells %>% 
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = sd)) + 
-      scale_fill_viridis_c("SD") + 
+      scale_fill_viridis_c("Var(Biomass)") + 
       ylab("Northings (km)") + xlab("Eastings (km)") +
       coord_fixed() +
       theme_minimal() + 
@@ -154,6 +153,8 @@ for (i in 1:length(islands)) {
       coord_fixed() +
       theme_minimal() + 
       theme(legend.position = "right"))
+  
+  (bathymetry + area) / (variability + strata)
 
   (site_location = 
       ggplot() + 
@@ -172,11 +173,11 @@ for (i in 1:length(islands)) {
                                  "Target survey effort = ", total_sample, " sites \n",
                                  "Total survey effort = ", sum(strat_det$strat_sets), " sites"))))
   
-  pdf(paste0("outputs/survey_layers_", islands[i], ".pdf"), height = 10, width = 10)
-  print((bathymetry + strata) / (area + variability))
-  dev.off()
+  # pdf(paste0("outputs/survey_layers_", islands[i], ".pdf"), height = 10, width = 10)
+  # print((bathymetry + strata) / (area + variability))
+  # dev.off()
   
-  pdf(paste0("outputs/survey_location_", islands[i], ".pdf"), height = 12, width = 12)
+  pdf(paste0("outputs/survey_location_", islands[i], "_", effort_level, ".pdf"), height = 10, width = 10)
   print(site_location)
   dev.off()
   
