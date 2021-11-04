@@ -1,0 +1,54 @@
+REGION,ISLAND,SEC_NAME,REEF_ZONE,DEPTH_BIN,TARGET_ALLOCATION
+MHI,Hawaii,HAW_HAMAKUA,Forereef,Deep, 3 
+MHI,Hawaii,HAW_HAMAKUA,Forereef,Mid, 5 
+MHI,Hawaii,HAW_HAMAKUA,Forereef,Shallow, 2 
+MHI,Hawaii,HAW_KONA,Forereef,Deep, 2 
+MHI,Hawaii,HAW_KONA,Forereef,Mid, 5 
+MHI,Hawaii,HAW_KONA,Forereef,Shallow, 3 
+MHI,Hawaii,HAW_PUNA,Forereef,Deep, 4 
+MHI,Hawaii,HAW_PUNA,Forereef,Mid, 4 
+MHI,Hawaii,HAW_PUNA,Forereef,Shallow, 2 
+MHI,Kauai,KAU_EAST,Forereef,Deep, 3 
+MHI,Kauai,KAU_EAST,Forereef,Mid, 4 
+MHI,Kauai,KAU_EAST,Forereef,Shallow, 3 
+MHI,Lanai,LAN_SOUTH,Forereef,Deep, 3 
+MHI,Lanai,LAN_SOUTH,Forereef,Mid, 5 
+MHI,Lanai,LAN_SOUTH,Forereef,Shallow, 2 
+MHI,Maui,MAI_KIHEI,Forereef,Deep, 5 
+MHI,Maui,MAI_KIHEI,Forereef,Mid, 4 
+MHI,Maui,MAI_KIHEI,Forereef,Shallow, 5 
+MHI,Maui,MAI_LAHAINA,Forereef,Mid, 4 
+MHI,Maui,MAI_LAHAINA,Forereef,Shallow, 3 
+MHI,Maui,MAI_NE,Forereef,Deep, 3 
+MHI,Maui,MAI_NE,Forereef,Mid, 2 
+MHI,Maui,MAI_NE,Forereef,Shallow, 5 
+MHI,Molokai,MOL_SOUTH,Forereef,Deep, 4 
+MHI,Molokai,MOL_SOUTH,Forereef,Mid, 2 
+MHI,Molokai,MOL_SOUTH,Forereef,Shallow, 4 
+MHI,Niihau,NII_EAST,Forereef,Deep, 5 
+MHI,Niihau,NII_EAST,Forereef,Mid, 3 
+MHI,Niihau,NII_EAST,Forereef,Shallow, 3 
+MHI,Niihau,NII_WEST,Forereef,Deep, 4 
+MHI,Niihau,NII_WEST,Forereef,Mid, 2 
+MHI,Niihau,NII_WEST,Forereef,Shallow, 3 
+MHI,Oahu,OAH_KAENA,Forereef,Deep, 5 
+MHI,Oahu,OAH_KAENA,Forereef,Mid, 4 
+MHI,Oahu,OAH_NE,Forereef,Deep, 4 
+MHI,Oahu,OAH_NE,Forereef,Mid, 2 
+MHI,Oahu,OAH_NE,Forereef,Shallow, 4 
+MHI,Oahu,OAH_NORTH,Forereef,Deep, 5 
+MHI,Oahu,OAH_NORTH,Forereef,Mid, 3 
+MHI,Oahu,OAH_NORTH,Forereef,Shallow, 3 
+MHI,Oahu,OAH_SOUTH,Forereef,Deep, 4 
+MHI,Oahu,OAH_SOUTH,Forereef,Mid, 2 
+MHI,Oahu,OAH_SOUTH,Forereef,Shallow, 3 
+MHI,Maui,MAI_KAHULUI,Forereef,Deep, 5 
+MHI,Maui,MAI_KAHULUI,Forereef,Mid, 4 
+MHI,Maui,MAI_KAHULUI,Forereef,Shallow, 4 
+MHI,Molokai,MOL_NW,Forereef,Deep, 2 
+MHI,Molokai,MOL_NW,Forereef,Mid, 5 
+MHI,Molokai,MOL_NW,Forereef,Shallow, 6 
+MHI,Niihau,NII_LEHUA,Forereef,Deep,18
+MHI,Niihau,NII_LEHUA,Forereef,Mid,15
+MHI,Niihau,NII_LEHUA,Forereef,Shallow,6
+MHI,Maui,MAI_LAHAINA,Forereef,Deep,
