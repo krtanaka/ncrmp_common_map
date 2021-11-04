@@ -11,7 +11,7 @@ spatial_resolution = 100 # spatial resolution in m
 
 shp_path = "L:/ktanaka/GIS" # pc
 
-utm = read_csv('data/ncrmp_utm_zones.csv')
+utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
 shp_list = list.files(path = paste0(shp_path, "/sector/"), pattern = "\\.shp$", full.names = T); shp_list
 

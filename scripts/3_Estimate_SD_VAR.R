@@ -2,6 +2,7 @@ library(dplyr)
 library(mgcv)
 library(sp)
 library(rgdal)
+library(ggplot2)
 
 rm(list = ls())
 
@@ -22,45 +23,61 @@ select = dplyr::select
 
 glimpse(df)
 
-df %>% 
-  subset(REGION == "S.MARIAN") %>% 
-  select(LONGITUDE, LATITUDE, DEPTH_BIN, ISLAND, TotFishBio) %>% 
-  na.omit() %>% 
-  group_by(DEPTH_BIN) %>% 
-  summarise(sd = sd(TotFishBio, na.rm = T),
-            var = var(TotFishBio, na.rm = T))
+regions = as.character(unique(df$REGION))
 
-gdf = df %>% 
-  subset(REGION == c("S.MARIAN")) %>% 
-  mutate(LATITUDE = round(LATITUDE, 2),
-         LONGITUDE = round(LONGITUDE, 2)) %>% 
-  # subset(TotFishBio > 0) %>%
-  # select(LONGITUDE, LATITUDE, DEPTH, OBS_YEAR, TotFishBio) %>% 
-  # na.omit() %>% 
-  group_by(LONGITUDE, LATITUDE) %>% 
-  summarise(sd = sd(TotFishBio, na.rm = T),
-            var = var(TotFishBio, na.rm = T)) %>% 
-  as.data.frame()
+par(mfrow = c(2,3))
 
-qplot(gdf$LONGITUDE, gdf$LATITUDE, color = log10(gdf$var+1)) + scale_color_viridis_c()
+for (r in 1:length(regions)) {
+  
+  # r = 1
+  
+  print(regions[r])
 
-hist(gdf$var)
-hist(gdf$sd)
-
-zone <- (floor((gdf$LONGITUDE[1] + 180)/6) %% 60) + 1
-
-gdf = cbind(gdf, LongLatToUTM(gdf$LONGITUDE, gdf$LATITUDE, zone))
-colnames(gdf)[6:7] = c("x", "y")
-
-g = gam(sd ~ s(x, y),
-        # + s(DEPTH) + OBS_YEAR, 
-        family = "tw(theta = NULL, link = 'log', a = 1.01, b = 1.99)", 
-        gamma = 1.4,
-        data = gdf)
-
-summary(g)
-vis.gam(g, too.far = 0.005, n.grid = 100, plot.type = "contour", type = "response", axes = F, pch = ".")
-axis(1); axis(2)
-gam.check(g)
-
-save(g, file = "data/modeled_survey_variability.RData")
+  df %>% 
+    subset(REGION == regions[r]) %>% 
+    select(LONGITUDE, LATITUDE, DEPTH_BIN, ISLAND, TotFishBio) %>% 
+    na.omit() %>% 
+    group_by(DEPTH_BIN) %>% 
+    summarise(sd = sd(TotFishBio, na.rm = T),
+              var = var(TotFishBio, na.rm = T))
+  
+  df_r = df %>% 
+    subset(REGION == regions[r]) %>% 
+    mutate(LATITUDE = round(LATITUDE, 2),
+           LONGITUDE = round(LONGITUDE, 2)) %>% 
+    # subset(TotFishBio > 0) %>%
+    # select(LONGITUDE, LATITUDE, DEPTH, OBS_YEAR, TotFishBio) %>% 
+    # na.omit() %>%
+    group_by(LONGITUDE, LATITUDE) %>% 
+    summarise(sd = sd(TotFishBio, na.rm = T),
+              var = var(TotFishBio, na.rm = T)) %>% 
+    as.data.frame()
+  
+  # qplot(df_r$LONGITUDE, df_r$LATITUDE, color = log10(df_r$var + 1)) + scale_color_viridis_c()
+  
+  # par(mfrow = c(1,2))
+  # hist(df_r$var)
+  # hist(df_r$sd)
+  # dev.off()
+  
+  zone <- (floor((df_r$LONGITUDE[1] + 180)/6) %% 60) + 1
+  
+  df_r = cbind(df_r, LongLatToUTM(df_r$LONGITUDE, df_r$LATITUDE, zone))
+  colnames(df_r)[6:7] = c("x", "y")
+  
+  g = gam(var ~ s(x, y),
+          # + s(DEPTH) + OBS_YEAR, 
+          family = "tw(theta = NULL, link = 'log', a = 1.01, b = 1.99)", 
+          gamma = 1.4,
+          data = df_r)
+  
+  summary(g)
+  vis.gam(g, too.far = 0.005, n.grid = 100, plot.type = "contour", type = "response", axes = F, pch = ".")
+  axis(1); axis(2)
+  # gam.check(g)
+  
+  save(g, file = paste0("data/rea/modeled_survey_variability_", regions[r], ".RData"))
+  
+  print(regions[r])
+  
+}
