@@ -15,7 +15,7 @@ library(SimSurvey)
 library(sf)
 library(readr)
 
-utm = read_csv('data/ncrmp_utm_zones.csv')
+utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
 islands = c("gua", "rot", "sai", "tin", "agu"); region = "S.MARIAN"                           # South Mariana Islands
 islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "N.MARIAN"             # North Mariana Islands
@@ -26,7 +26,7 @@ islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "N.MARIAN
 
 for (isl in 1:length(islands)) {
   
-  # isl = 3
+  # isl = 1
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
