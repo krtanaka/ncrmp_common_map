@@ -13,6 +13,7 @@ library(tidyr)
 library(patchwork)
 library(SimSurvey)
 library(sf)
+library(readr)
 
 utm = read_csv('data/ncrmp_utm_zones.csv')
 
