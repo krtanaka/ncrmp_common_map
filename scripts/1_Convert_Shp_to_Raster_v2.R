@@ -1,9 +1,10 @@
-library(raster)
+library(raster) # need to be version 3.4-13, not the latest version
 library(rgdal)
 library(rgeos)
 library(dplyr)
 library(readr)
 library(colorRamps)
+library(ggplot2)
 
 rm(list = ls())
 
@@ -11,7 +12,7 @@ spatial_resolution = 100 # spatial resolution in m
 
 shp_path = "L:/ktanaka/GIS" # pc
 
-utm = read_csv('data/ncrmp_utm_zones.csv')
+utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
 # Hard/Soft Bottom Substrate ----------------------------------------------
 
@@ -217,12 +218,20 @@ for (shp_i in 1:length(shp_list)) {
   rat$IDs <- nam_df$ID
   levels(r) <- rat
   
-  rasterVis::levelplot(r)
-  plot(r, col = rainbow(length(unique(r))))
-  
   raster = readAll(r)
   
   table = nam_df
+  
+  r_df <- as.data.frame(rasterToPoints(r))
+  colnames(r_df) <- c("x", "y", "ID")
+  r_df = merge(r_df, table)
+  r_df_label = r_df %>% group_by(nam) %>% summarise(x = median(x), y = median(y))
+  
+  ggplot() +  
+    geom_raster(data = r_df, aes(x, y, fill = nam), show.legend = F) + 
+    geom_text_repel(data = r_df_label, aes(x, y, label = nam)) + 
+    coord_equal() + 
+    theme_void()
   
   raster_and_table = list(raster, table)
   
