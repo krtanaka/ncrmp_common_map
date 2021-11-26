@@ -5,6 +5,7 @@ library(dplyr)
 library(readr)
 library(colorRamps)
 library(ggplot2)
+library(ggrepel)
 
 rm(list = ls())
 
@@ -23,7 +24,7 @@ for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  # shp_i = 27
+  # shp_i = 7
   
   island_name = tolower(substr(shp_list[shp_i], 25, 27)); island_name
   
@@ -68,12 +69,18 @@ for (shp_i in 1:length(shp_list)) {
   rat$IDs <- nam_df$ID
   levels(r) <- rat
   
-  # rasterVis::levelplot(r)
-  plot(r, col = matlab.like(length(unique(r))))
-  
   raster = readAll(r)
   
   table = nam_df
+  
+  r_df <- as.data.frame(rasterToPoints(r))
+  colnames(r_df) <- c("x", "y", "ID")
+  r_df = merge(r_df, table)
+  
+  ggplot() +  
+    geom_raster(data = r_df, aes(x, y, fill = nam), show.legend = T) + 
+    coord_equal() + 
+    theme_void()
   
   raster_and_table = list(raster, table)
   
@@ -96,7 +103,7 @@ for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  shp_i = 16
+  # shp_i = 1
   
   island_name = tolower(substr(shp_list[shp_i], 25, 27)); island_name
   
@@ -145,12 +152,18 @@ for (shp_i in 1:length(shp_list)) {
   rat$IDs <- nam_df$ID
   levels(r) <- rat
   
-  # rasterVis::levelplot(r)
-  plot(r, col = matlab.like(length(unique(r))))
-  
   raster = readAll(r)
   
   table = nam_df
+  
+  r_df <- as.data.frame(rasterToPoints(r))
+  colnames(r_df) <- c("x", "y", "ID")
+  r_df = merge(r_df, table)
+  
+  ggplot() +  
+    geom_raster(data = r_df, aes(x, y, fill = nam), show.legend = T) + 
+    coord_equal() + 
+    theme_void()
   
   raster_and_table = list(raster, table)
   
