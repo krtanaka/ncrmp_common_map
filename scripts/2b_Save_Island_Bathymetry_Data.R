@@ -67,16 +67,16 @@ for (isl in 1:length(islands)) {
   
 }
 
-load('data/gis_bathymetry/raster/ala.RData')
+load('data/gis_bathymetry/tut.RData')
 
-wireframe(unclass(as.bathy(topo)), 
+wireframe(unclass(as.bathy(topo_i)), 
           shade = T,
-          aspect = c(length(unique(topo$y))/length(unique(topo$x)), 0.01),
+          aspect = c(dim(topo_i)[1]/dim(topo_i)[2], 0.005),
           par.box = c(col = "transparent"),
           scales = list(arrows = FALSE, col = "transparent"), # col="black" is required
           par.settings = list(axis.line = list(col = 'transparent')),
           light.source = c(10,0,10),
-          zlab = "", 
+          zlab = "",
           xlab = "",
           ylab = "",
           perspective = T,
