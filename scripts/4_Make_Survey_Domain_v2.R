@@ -166,8 +166,8 @@ for (isl in 1:length(islands)) {
       ggdark::dark_theme_minimal())
   
   df = df %>%
-    # subset(sector_id != "GUA_LAND") %>% # filter sector
-    # subset(reef_id %in% c( "Forereef")) %>% # filter land and Reef Crest/Reef Flat
+    subset(sector_id != "GUA_LAND") %>% # filter sector
+    subset(reef_id %in% c( "forereef")) %>% # filter land and Reef Crest/Reef Flat
     subset(hardsoft_id %in% c("hard", "unknown")) # filter for sector
   
   df$strat = paste(df$depth_bin, 
@@ -185,10 +185,8 @@ for (isl in 1:length(islands)) {
   tab$depth_bin_value = ifelse(tab$depth_bin == 1, "SHAL", tab$depth_bin_value) 
   tab$depth_bin_value = ifelse(tab$depth_bin == 2, "MIDD", tab$depth_bin_value) 
   tab$depth_bin_value = ifelse(tab$depth_bin == 3, "DEEP", tab$depth_bin_value) 
-  
   tab <- tab %>% dplyr::select(sector_id,reef_id,strat,depth_bin_value)
   tab <- tab %>% filter(!duplicated(tab))
-  
   save(tab,file = paste0("outputs/sector_key_", islands[isl], ".RData"))
   
   (strata = df %>% 
