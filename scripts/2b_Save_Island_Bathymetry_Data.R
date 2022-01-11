@@ -9,8 +9,8 @@ library(lattice)
 
 # need to connect to pifsc VPN
 
-# islands = c("gua", "rot", "sai", "tin", "agu")                              # South Mariana Islands
-# islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar")                # North Mariana Islands
+islands = c("gua", "rot", "sai", "tin", "agu")                              # South Mariana Islands
+islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar")                # North Mariana Islands
 islands = c("ofu", "ros", "swa", "tau", "tut")                              # American Samoa
 # islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak")                # Pacific Remote Island Areas
 # islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")  # Main Hawaiian Islands

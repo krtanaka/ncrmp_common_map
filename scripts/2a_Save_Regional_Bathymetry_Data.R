@@ -34,7 +34,7 @@ topo$depth = as.numeric(as.character(topo$depth))
 
 for (i in 1:length(islands)) {
   
-  i = 5
+  # i = 1
   
   box = island_names_codes_boxes %>% subset(Island_Code == islands[i])
 
