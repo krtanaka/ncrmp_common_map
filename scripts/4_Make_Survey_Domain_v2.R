@@ -40,9 +40,9 @@ for (isl in 1:length(islands)) {
     
     load(paste0("data/gis_sector/", islands[isl], ".RData"))
     sector = raster_and_table[[1]]; sector_name = raster_and_table[[2]]
-    remove_id = sector_name %>% subset(sector_name$nam %in% c("Land"))
-    remove_id = remove_id$ID
-    sector[sector %in% remove_id] <- NA
+    # remove_id = sector_name %>% subset(sector_name$nam %in% c("Land"))
+    # remove_id = remove_id$ID
+    # sector[sector %in% remove_id] <- NA
     
   } else {
     
@@ -58,9 +58,9 @@ for (isl in 1:length(islands)) {
     
     load(paste0("data/gis_reef/", islands[isl], ".RData"))
     reef = raster_and_table[[1]]; reef_name = raster_and_table[[2]]
-    remove_id = reef_name %>% subset(reef_name$nam %in% c("Land", "Land", "Reef Crest/Reef Flat"))
-    remove_id = remove_id$ID
-    reef[reef %in% remove_id] <- NA
+    # remove_id = reef_name %>% subset(reef_name$nam %in% c("Land", "Land", "Reef Crest/Reef Flat"))
+    # remove_id = remove_id$ID
+    # reef[reef %in% remove_id] <- NA
     
   } else {
     
@@ -76,9 +76,9 @@ for (isl in 1:length(islands)) {
     
     load(paste0("data/gis_hardsoft/", islands[isl], ".RData"))
     hardsoft = raster_and_table[[1]]; hardsoft_name = raster_and_table[[2]]
-    remove_id = hardsoft_name %>% subset(hardsoft_name$nam %in% c("Land", "Other", "Soft"))
-    remove_id = remove_id$ID
-    hardsoft[hardsoft %in% remove_id] <- NA
+    # remove_id = hardsoft_name %>% subset(hardsoft_name$nam %in% c("Land", "Other", "Soft"))
+    # remove_id = remove_id$ID
+    # hardsoft[hardsoft %in% remove_id] <- NA
     
   } else {
     
