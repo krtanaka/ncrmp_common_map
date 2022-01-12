@@ -18,13 +18,14 @@ islands = c("ofu", "ros", "swa", "tau", "tut")                              # Am
 
 for (isl in 1:length(islands)) {
   
-  # isl = 3
+  # isl = 5
   
   if (islands[isl] == "gua") topo = raster("L:/ktanaka/GIS/bathymetry/gua_nthmp_dem_10m_mosaic.tif") # Guam
   if (islands[isl] == "rot") topo = raster("L:/ktanaka/GIS/bathymetry/Rota_5m_bathymetry.asc") # Rota
   if (islands[isl] == "sai") topo = raster("L:/ktanaka/GIS/bathymetry/sai_mb_5m.tif") # Saipan
   if (islands[isl] == "tin") topo = raster("L:/ktanaka/GIS/bathymetry/tinian_5m.asc") # Tinian
-  # if (islands[isl] == "agu") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/agr_inpoo_new/w001001.adf") # Aguijan
+  if (islands[isl] == "agu") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/agr_inpoo_new/w001001.adf") # Aguijan
+
   if (islands[isl] == "agr") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/agr_inpoo_new/w001001.adf") 
   if (islands[isl] == "ala") topo = raster("N:/GIS/Projects/SeafloorCalc/Workspace/Alamagan/ala_inpo_mbik/w001001.adf") # Alamagan
   if (islands[isl] == "asc") topo = raster("N:/GIS/Projects/SeafloorCalc/Workspace/Asuncion/asc_inpo/w001001.adf") # 
@@ -37,15 +38,20 @@ for (isl in 1:length(islands)) {
   if (islands[isl] == "ros") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/ros_inpo/w001001.adf") # 
   if (islands[isl] == "swa") topo = raster("T:/Fish/GIS/Projects/Gridding/SWA/swa_inpo/w001001.adf") #
   if (islands[isl] == "tau") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/tau_inpo/w001001.adf") # 
-  if (islands[isl] == "tut") topo = raster("T:/Fish/GIS/Projects/Gridding/TUT/tut_inpo/w001001.adf") #
+  # if (islands[isl] == "tut") topo = raster("T:/Fish/GIS/Projects/Gridding/TUT/tut_inpo/w001001.adf") # decided not to use because it's in lat lon format and resolutions are weird, run 2_Save_Regional_Bathymetry.R instead
   
   if (islands[isl] == "jar") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/jar_inpo_land/w001001.adf") # 
   if (islands[isl] == "joh") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/JOH/joh_inpo/w001001.adf") # 
   if (islands[isl] == "kin") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/kingman3/w001001.adf") # 
   if (islands[isl] == "pal") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/pal_inpo/w001001.adf") # 
   
-  topo[topo <= -30] <- NA
-  topo[topo >= 0] <- NA
+  # if depth raster files contains no below sea-level cells (e.g. Swa), don't subset them
+  if(min(values(topo), na.rm = T) < 0) {
+    
+    topo[topo <= -30] <- NA
+    topo[topo >= 0] <- NA  
+    
+  }
   
   topo <- aggregate(topo, fact = 100/res(topo))
   res(topo)
