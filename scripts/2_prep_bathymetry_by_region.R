@@ -10,7 +10,7 @@ library(readr)
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
-islands = c("gua", "rot", "sai", "tin", "agu"); region = "MARIAN"                           # South Mariana Islands
+islands = c("gua", "rot", "sai", "tin", "agu")[5]; region = "MARIAN"                           # South Mariana Islands
 islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "MARIAN"             # North Mariana Islands
 islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                            # American Samoa
 # islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"              # Pacific Remote Island Areas
@@ -32,9 +32,29 @@ topo = as.data.frame(rasterToPoints(topo))
 colnames(topo)[3] = "depth"
 topo$depth = as.numeric(as.character(topo$depth))
 
+df = topo %>% 
+  mutate(x = round(x, 2), 
+         y = round(y, 2)) %>% 
+  group_by(x, y) %>% 
+  summarise(d = mean(depth))
+
+wireframe(unclass(as.bathy(df)), 
+          shade = T,
+          aspect = c(length(unique(df$y))/length(unique(df$x)), 0.05),
+          par.box = c(col = "transparent"),
+          scales = list(arrows = FALSE, col = "transparent"), # col="black" is required
+          par.settings = list(axis.line = list(col = 'transparent')),
+          light.source = c(10, 0, 10),
+          zlab = "", 
+          xlab = "",
+          ylab = "",
+          perspective = T,
+          screen = list(z = 10, x = -50, y = 10),
+          zoom = 1.2)
+
 for (i in 1:length(islands)) {
   
-  i = 3
+  # i = 5
   
   box = island_names_codes_boxes %>% subset(Island_Code == islands[i])
 
@@ -59,16 +79,4 @@ for (i in 1:length(islands)) {
   
 }
 
-wireframe(unclass(as.bathy(topo)), 
-          shade = T,
-          aspect = c(length(unique(topo$y))/length(unique(topo$x)), 0.01),
-          par.box = c(col = "transparent"),
-          scales = list(arrows = FALSE, col = "transparent"), # col="black" is required
-          par.settings = list(axis.line = list(col = 'transparent')),
-          light.source = c(10,0,10),
-          zlab = "", 
-          xlab = "",
-          ylab = "",
-          perspective = T,
-          screen = list(z = 10, x = -40, y = 10),
-          zoom = 1.1)
+
