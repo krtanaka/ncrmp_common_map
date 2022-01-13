@@ -47,7 +47,7 @@ resample_cells = F
 load('data/misc/survey_effort_ncrmp_2000-2020.RData')
 island_name_code = read_csv('data/misc/island_name_code.csv')
 survey_effort = data.frame(Island = survey_effort$Island, Effort = survey_effort[[effort_level]])
-survey_effort = merge(island_name_code, survey_effort); head(survey_effort)
+survey_effort = merge(island_name_code, survey_effort); head(survey_effort); tail(survey_effort)
 
 
 #################################################################
@@ -123,55 +123,67 @@ for (i in 1:length(islands)) {
     mutate(id = id) %>% 
     dplyr::select(id, x, y, longitude, latitude, depth, strat)
   
+  sets$depth_bin = ""
+  sets$depth_bin = ifelse(sets$depth >= 0  & sets$depth <= 6, "SHAL", sets$depth_bin) 
+  sets$depth_bin = ifelse(sets$depth > 6  & sets$depth <= 18, "MID", sets$depth_bin) 
+  sets$depth_bin = ifelse(sets$depth > 18, "DEEP", sets$depth_bin) 
+  
   readr::write_csv(sets, file = paste0("outputs/survey_table_", islands[i], "_", effort_level, ".csv"))
   
   (bathymetry = cells %>% 
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = depth)) + 
-      scale_fill_gradientn(colours = matlab.like(100), "Depth (m)") + 
+      scale_fill_gradientn(colours = matlab.like(30), "Depth (m)") + 
       ylab("Northings (km)") + xlab("Eastings (km)") + 
       coord_fixed() +
-      theme_bw() +
+      theme_light() +
       theme(legend.position = "right"))
   
   (strata = cells %>% 
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = factor(strat))) + 
-      scale_fill_viridis_d("Strata") + 
+      scale_fill_discrete("Strata") + 
       ylab("Northings (km)") + xlab("Eastings (km)") + 
       coord_fixed() +
-      theme_bw() +
+      theme_light() +
       theme(legend.position = "right"))
   
   (variability = cells %>% 
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = sd)) + 
-      scale_fill_gradientn(colours = matlab.like(100), "Var(Biomass)") + 
+      scale_fill_gradientn(colours = matlab.like(100), "var(total_fish_density)") + 
       ylab("Northings (km)") + xlab("Eastings (km)") +
       coord_fixed() +
-      theme_bw() +
+      theme_light() +
       theme(legend.position = "right"))
   
   (area = cells %>% 
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = strat_area )) + 
-      scale_fill_viridis_c("Area (sq.km)") + 
+      scale_fill_gradientn(colours = matlab.like(100), "Area (sq.km)") + 
       ylab("Northings (km)") + xlab("Eastings (km)") +
       coord_fixed() +
-      theme_minimal() + 
+      theme_light() +
       theme(legend.position = "right"))
   
-  (bathymetry + area) / (variability + strata)
+  # (bathymetry + area) / (variability + strata)
 
   (site_location = 
       ggplot() + 
-      geom_point(data = sets, aes(x, y)) +  
-      geom_text_repel(data = sets, aes(x, y, label = id), max.overlaps = Inf) + 
-      geom_raster(data = cells, aes(x, y, fill = factor(strat)), alpha = 0.5) + 
-      coord_fixed() +
+      # geom_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin)) +  
+      # geom_text_repel(data = sets, aes(longitude, latitude, label = id), max.overlaps = Inf) +
+      # geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.5, width = 0.001, height = 0.001) +
+      # ylab("Latitude (dec deg)") + xlab("Longitude (dec deg)") +
+      geom_point(data = sets, aes(x, y, shape = depth_bin, color = depth_bin)) +
+      geom_text_repel(data = sets, aes(x, y, label = id), max.overlaps = Inf) +
+      geom_raster(data = cells, aes(x, y, fill = factor(strat)), alpha = 0.5) +
       ylab("Northings (km)") + xlab("Eastings (km)") +
-      scale_fill_viridis_d("Strata") + 
-      theme_minimal() + 
+      coord_fixed() +
+      # scale_x_continuous(sec.axis = dup_axis()) +
+      # scale_y_continuous(sec.axis = dup_axis()) + 
+      
+      scale_fill_discrete("Strata") + 
+      theme_light() +
       theme(legend.position = "right") + 
       labs(
         title = "",
