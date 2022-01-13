@@ -16,6 +16,7 @@ library(ggrepel)
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
+
 ##################################
 ###  select islands & regions  ###
 ##################################
@@ -27,30 +28,35 @@ islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "N.MARIAN
 # islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI"  # Main Hawaiian Islands
 # islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"               # Northern Hawaiian Islands
 
+
 ########################################################################
 ### do some parameter settings to simulate stratified random surveys ###
 ########################################################################
+
 # n_sims = 100 # number of simulations
 effort_level = c("low", "mid", "high")[2] # define sampling effort (low, mid, high)
 min_sets = 1 # minimum number of sets per strat
 trawl_dim = c(0.01, 0.0353) # 0.000353 sq.km (353 sq.m) from two 15-m diameter survey cylinders
 resample_cells = F
 
+
 ##################################################################
 ### determine number of sites you want to deploy @ each island ###
 ##################################################################
+
 load('data/misc/survey_effort_ncrmp_2000-2020.RData')
 island_name_code = read_csv('data/misc/island_name_code.csv')
-survey_effort = data.frame(Island = survey_effort$Island, 
-                           Effort = survey_effort[[effort_level]])
+survey_effort = data.frame(Island = survey_effort$Island, Effort = survey_effort[[effort_level]])
 survey_effort = merge(island_name_code, survey_effort); head(survey_effort)
+
 
 #################################################################
 ### Generate survey site tables & maps, check outputs/ folder ###
 #################################################################
+
 for (i in 1:length(islands)) {
   
-  # i = 5
+  # i = 1
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData")) 
@@ -72,7 +78,7 @@ for (i in 1:length(islands)) {
   cells <- data.table(rasterToPoints(survey_grid_ncrmp))
   
   # add modeled trophic biomass variability, summarize by strata
-  load(paste0("data/rea/modeled_survey_variability_", region, ".RData")) # modeled at grid scale
+  load(paste0("data/rea/modeled_survey_variability_", region, ".RData")) # modeled at original grid scale
   cells$sd = predict(g, cells); sd = cells[,c("strat", "sd")]; sd = sd %>% group_by(strat) %>% summarise(sd = mean(sd, na.rm = T))
   
   strat_det <- cells[, list(strat_cells = .N), by = "strat"]; strat_det
@@ -85,7 +91,7 @@ for (i in 1:length(islands)) {
   strat_det$weight = abs(strat_det$strat_area * strat_det$sd); strat_det
   strat_det$strat_sets = round((total_sample * strat_det$weight) / sum(strat_det$weight), 0); strat_det
   
-  # allocate sampling units by area
+  ## allocate sampling units by area
   # strat_det$strat_sets = round((total_sample * strat_det$strat_area) / sum(strat_det$strat_area), 0); strat_det
   
   # make sure minimum number of sets per strat is not 0 or 1
