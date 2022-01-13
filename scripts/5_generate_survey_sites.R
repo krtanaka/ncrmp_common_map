@@ -69,7 +69,7 @@ for (i in 1:length(islands)) {
 
   }else {
     
-    total_sample = total_sample$Effort
+    total_sample = total_sample$Effort*5
     
   }
 
@@ -114,7 +114,7 @@ for (i in 1:length(islands)) {
                 by = c("strat")]
   
   id <- seq(1,dim(sets)[1],1)
-  id = sprintf("site_%02d", id)
+  id = sprintf("s%03d", id)
   
   # count number of distinct sim*year*cell combinations
   sets[, `:=`(cell_sets, .N), by = c("cell")]
@@ -170,15 +170,25 @@ for (i in 1:length(islands)) {
 
   (site_location = 
       ggplot() + 
+      
       # geom_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin)) +  
       # geom_text_repel(data = sets, aes(longitude, latitude, label = id), max.overlaps = Inf) +
       # geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.5, width = 0.001, height = 0.001) +
       # ylab("Latitude (dec deg)") + xlab("Longitude (dec deg)") +
+      
       geom_point(data = sets, aes(x, y, shape = depth_bin, color = depth_bin)) +
-      geom_text_repel(data = sets, aes(x, y, label = id), max.overlaps = Inf) +
+      geom_text_repel(data = sets, aes(x, y, label = id),
+                      max.overlaps = Inf, 
+                      segment.size = 0.2,
+                      box.padding = unit(0.3, "lines"),
+                      point.padding = unit(0.3, "lines"),
+                      nudge_y = 1,
+                      nudge_x = 1) +
       geom_raster(data = cells, aes(x, y, fill = factor(strat)), alpha = 0.5) +
       ylab("Northings (km)") + xlab("Eastings (km)") +
+      
       coord_fixed() +
+      
       # scale_x_continuous(sec.axis = dup_axis()) +
       # scale_y_continuous(sec.axis = dup_axis()) + 
       
