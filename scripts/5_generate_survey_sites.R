@@ -128,10 +128,10 @@ for (i in 1:length(islands)) {
   (bathymetry = cells %>% 
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = depth)) + 
-      scale_fill_viridis_c("Depth (m)") + 
+      scale_fill_gradientn(colours = matlab.like(100), "Depth (m)") + 
       ylab("Northings (km)") + xlab("Eastings (km)") + 
       coord_fixed() +
-      theme_minimal() + 
+      theme_bw() +
       theme(legend.position = "right"))
   
   (strata = cells %>% 
@@ -140,16 +140,16 @@ for (i in 1:length(islands)) {
       scale_fill_viridis_d("Strata") + 
       ylab("Northings (km)") + xlab("Eastings (km)") + 
       coord_fixed() +
-      theme_minimal() + 
+      theme_bw() +
       theme(legend.position = "right"))
   
   (variability = cells %>% 
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = sd)) + 
-      scale_fill_viridis_c("Var(Biomass)") + 
+      scale_fill_gradientn(colours = matlab.like(100), "Var(Biomass)") + 
       ylab("Northings (km)") + xlab("Eastings (km)") +
       coord_fixed() +
-      theme_minimal() + 
+      theme_bw() +
       theme(legend.position = "right"))
   
   (area = cells %>% 
