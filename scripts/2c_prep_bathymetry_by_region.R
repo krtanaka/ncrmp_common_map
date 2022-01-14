@@ -33,8 +33,8 @@ colnames(topo)[3] = "depth"
 topo$depth = as.numeric(as.character(topo$depth))
 
 df = topo %>% 
-  mutate(x = round(x, 2), 
-         y = round(y, 2)) %>% 
+  mutate(x = round(x, 1), 
+         y = round(y, 1)) %>% 
   group_by(x, y) %>% 
   summarise(d = mean(depth))
 
