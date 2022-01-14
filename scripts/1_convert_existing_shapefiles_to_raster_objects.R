@@ -180,7 +180,7 @@ for (shp_i in 1:length(shp_list)) {
 # Sub-Island Sector -------------------------------------------------------
 
 shp_list = list.files(path = paste0(shp_path, "/sector/"), pattern = "\\.shp$", full.names = T); shp_list
-shp_list = shp_list[c(1:9, 11:12)]; shp_list # process NMSAS_PY separately for now
+shp_list = shp_list[c(1:9, 11:12)]; shp_list # process NMSAS_PY (A. Samoa) separately for now
 
 for (shp_i in 1:length(shp_list)) {
   
@@ -244,7 +244,7 @@ for (shp_i in 1:length(shp_list)) {
     geom_raster(data = r_df, aes(x, y, fill = nam), show.legend = F) + 
     geom_text_repel(data = r_df_label, aes(x, y, label = nam)) + 
     coord_equal() + 
-    theme_void()
+    theme_light()
   
   raster_and_table = list(raster, table)
   

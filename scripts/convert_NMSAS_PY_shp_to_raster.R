@@ -17,74 +17,84 @@ shp_list = list.files(path = paste0(shp_path, "/sector/"), pattern = "\\.shp$", 
 
 island_name = tolower(substr(shp_list[10], 23, 30)); island_name
 
-utm_i = utm %>% subset(Island_Code == island_name)
+dat <- shapefile(shp_list[10], verbose = T); plot(dat); axis(1); axis(2)
+nmsas <- as.data.frame(dat)
+nmsas = nmsas$Label
 
-dat <- shapefile(shp_list[10], verbose = T)
+for (i in 1:length(nmsas)) {
+  
+  start = Sys.time()
+  
+  # i = 3
+  
+  dat_i = subset(dat, Label == nmsas[i]); plot(dat_i); axis(1); axis(2)
+  
+  dat_i_fortify = fortify(dat_i)
+  zone <- (floor((dat_i_fortify$long[1] + 180)/6) %% 60) + 1
+  
+  dat_i <- spTransform(dat_i, CRS(paste0('+proj=utm +zone=', zone, ' +datum=WGS84 +units=m +no_defs')))
+  
+  dat_i = dat_i[c(names(dat_i) %in% c("Label"))]
+  
+  names(dat_i) = "Sector"
+  
+  # get names
+  nam <- unique(dat_i$Sector)
+  
+  # create a data.frame
+  nam_df <- data.frame(ID = 1:length(nam), nam = nam)
+  
+  # Place IDs
+  dat_i$ID <- nam_df$ID[match(dat_i$Sector, nam_df$nam)]
+  
+  # Define RasterLayer object
+  r.raster <- raster()
+  
+  # Define raster extent
+  extent(r.raster) <- extent(dat_i)
+  
+  # Define pixel size
+  res(r.raster) <- spatial_resolution
+  
+  # rasterize
+  ras <- rasterize(x = dat_i, y = r.raster, field = "ID")
+  
+  # ratify raster
+  r <- ratify(ras)
+  
+  # Create levels
+  rat <- levels(r)[[1]]
+  rat$names <- nam_df$nam
+  rat$IDs <- nam_df$ID
+  levels(r) <- rat
+  
+  raster = readAll(r)
+  
+  table = nam_df
+  
+  r_df <- as.data.frame(rasterToPoints(r))
+  colnames(r_df) <- c("x", "y", "ID")
+  r_df = merge(r_df, table)
+  r_df_label = r_df %>% group_by(nam) %>% summarise(x = median(x), y = median(y))
+  
+  ggplot() +  
+    geom_raster(data = r_df, aes(x, y, fill = nam), show.legend = F) + 
+    geom_text_repel(data = r_df_label, aes(x, y, label = nam)) + 
+    coord_equal() + 
+    theme_light()
+  
+  raster_and_table = list(raster, table)
+  
+  nmsas_name = gsub(" ", "_", nmsas[i])
+  nmsas_name = gsub("/", "_", nmsas_name)
+  nmsas_name = gsub("'", "", nmsas_name)
 
-dat_fortify = fortify(dat)
-
-
-dat.df <- as.data.frame(dat)
-dat.df$.id <- as.numeric(rownames(dat.df )) 
-
-
-
-r <- raster(ncol=100, nrow=100)
-r.polys <- rasterize(dat, r, field = dat@data[1,4], fun = "mean", 
-                     update = TRUE, updateValue = "NA")
-plot(r.polys)
-
-dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs')))
-# dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84'))
-
-dat = dat[c(names(dat) %in% c("SEC_NAME", "Sanctuary"))]
-
-names(dat) = "Sector"
-
-# get names
-nam <- unique(dat$Sector)
-
-# create a data.frame
-nam_df <- data.frame(ID = 1:length(nam), nam = nam)
-
-# Place IDs
-dat$ID <- nam_df$ID[match(dat$Sector, nam_df$nam)]
-
-# Define RasterLayer object
-r.raster <- raster()
-
-# Define raster extent
-extent(r.raster) <- extent(dat)
-
-# Define pixel size
-res(r.raster) <- spatial_resolution
-
-# rasterize
-ras <- rasterize(x = dat, y = r.raster, field = "ID")
-
-# ratify raster
-r <- ratify(ras)
-
-# Create levels
-rat <- levels(r)[[1]]
-rat$names <- nam_df$nam
-rat$IDs <- nam_df$ID
-levels(r) <- rat
-
-# rasterVis::levelplot(r)
-plot(r, col = matlab.like(length(unique(r))))
-
-raster = readAll(r)
-
-table = nam_df
-
-raster_and_table = list(raster, table)
-
-save(raster_and_table, file = paste0("data/gis_sector/", island_name, ".RData"))
-
-end = Sys.time()
-
-time = end - start
-
-print(paste0(island_name, "...done...took ", time, "..."))
-
+  save(raster_and_table, file = paste0("data/gis_sector/", nmsas_name, "_NMSAS.RData"))
+  
+  end = Sys.time()
+  
+  time = end - start
+  
+  print(paste0(nmsas[i], "...done...took ", time, "..."))
+  
+}
