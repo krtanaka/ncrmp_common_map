@@ -18,7 +18,7 @@ islands = c("ofu", "ros", "swa", "tau", "tut")                              # Am
 
 for (isl in 1:length(islands)) {
   
-  # isl = 1
+  # isl = 2
   
   if (islands[isl] == "gua") topo = raster("L:/ktanaka/GIS/bathymetry/gua_nthmp_dem_10m_mosaic.tif") # Guam
   if (islands[isl] == "rot") topo = raster("L:/ktanaka/GIS/bathymetry/Rota_5m_bathymetry.asc") # Rota
@@ -67,7 +67,7 @@ for (isl in 1:length(islands)) {
   #   coord_fixed() +
   #   theme(axis.title = element_blank())
   
-  # topo_i = readAll(topo)
+  topo_i = readAll(topo)
   plot(topo_i)
   print( islands[isl])
   

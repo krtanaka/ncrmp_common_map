@@ -28,7 +28,7 @@ dim(df)
 ###############
 
 unique(df$REGION)
-region = unique(df$REGION)[4]
+region = unique(df$REGION)[3]
 
 df %>%
   subset(REGION == region) %>%

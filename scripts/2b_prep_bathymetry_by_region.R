@@ -10,12 +10,12 @@ library(readr)
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
-islands = c("gua", "rot", "sai", "tin", "agu")[5]; region = "MARIAN"                           # South Mariana Islands
-islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "MARIAN"             # North Mariana Islands
-islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                            # American Samoa
-# islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"              # Pacific Remote Island Areas
-# islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI"  # Main Hawaiian Islands
-# islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"               # Northern Hawaiian Islands
+islands = c("gua", "rot", "sai", "tin", "agu")[5]; region = "MARIAN" # South Mariana Islands
+islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "MARIAN" # North Mariana Islands
+islands = c("ofu", "ros", "swa", "tau", "tut")[5]; region = "SAMOA" # American Samoa, but Swa is not included
+# islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs" # Pacific Remote Island Areas
+# islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI" # Main Hawaiian Islands
+# islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI" # Northern Hawaiian Islands
 
 island_boxes = read_csv("data/misc/Island_Extents.csv") # Updated Bounding boxes 2021
 island_names_codes = read_csv("data/misc/island_name_code.csv")
@@ -54,7 +54,7 @@ wireframe(unclass(as.bathy(df)),
 
 for (i in 1:length(islands)) {
   
-  # i = 5
+  # i = 1
   
   box = island_names_codes_boxes %>% subset(Island_Code == islands[i])
 
