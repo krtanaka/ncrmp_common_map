@@ -25,7 +25,7 @@ for (i in 1:length(nmsas)) {
   
   start = Sys.time()
   
-  # i = 6
+  # i = 7
   
   dat_i = subset(dat, Label == nmsas[i]); plot(dat_i); axis(1); axis(2)
   
@@ -88,8 +88,17 @@ for (i in 1:length(nmsas)) {
   nmsas_name = gsub(" ", "_", nmsas[i])
   nmsas_name = gsub("/", "_", nmsas_name)
   nmsas_name = gsub("'", "", nmsas_name)
-
-  save(raster_and_table, file = paste0("data/gis_sector/", nmsas_name, "_NMSAS.RData"))
+  
+  if (nmsas_name == "Muliava_Sanctuary_Unit") isl_name = "ros"
+  if (nmsas_name == "Swains_Island_Sanctuary_Unit") isl_name = "swa"
+  if (nmsas_name == "Fagalua_Fogamaa_Sanctuary_Unit") isl_name = "tut_a"
+  if (nmsas_name == "Fagatele_Bay_Sanctuary_Unit") isl_name = "tut_b"
+  if (nmsas_name == "Tau_Sanctuary_Unit") isl_name = "tau"
+  if (nmsas_name == "Aunuu_Sanctuary_Unit_B") isl_name = "tut_c"
+  if (nmsas_name == "Aunuu_Sanctuary_Unit_A") isl_name = "tut_d"
+  
+  # save(raster_and_table, file = paste0("data/gis_sector/", nmsas_name, "_NMSAS.RData"))
+  save(raster_and_table, file = paste0("data/gis_sector/", isl_name, ".RData"))
   
   end = Sys.time()
   
