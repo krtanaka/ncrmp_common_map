@@ -11,16 +11,18 @@ library(lattice)
 
 # South Mariana Islands
 islands = c("gua", "rot", "sai", "tin") 
-            # "agu") # run 2c
+# "agu") # run 2c
 
 # North Mariana Islands
 islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar")
 
 # American Samoa
-islands = c("ofu", "ros", 
-            # "swa", # run 2b
-            "tau") 
-            # "tut") # run 2b
+islands = c(
+  # "ofu", # run 2b
+  "ros", 
+  # "swa", # run 2b
+  "tau") 
+# "tut") # run 2b
 
 # islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak")                # Pacific Remote Island Areas
 # islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")  # Main Hawaiian Islands
@@ -35,7 +37,7 @@ for (isl in 1:length(islands)) {
   if (islands[isl] == "sai") topo = raster("L:/ktanaka/GIS/bathymetry/sai_mb_5m.tif") # Saipan
   if (islands[isl] == "tin") topo = raster("L:/ktanaka/GIS/bathymetry/tinian_5m.asc") # Tinian
   # if (islands[isl] == "agu") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/FILE_NOT_AVAILAVLE") # Aguijan bathymetry file not availale, use data from Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c. 
-
+  
   if (islands[isl] == "agr") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/agr_inpoo_new/w001001.adf")
   if (islands[isl] == "ala") topo = raster("N:/GIS/Projects/SeafloorCalc/Workspace/Alamagan/ala_inpo_mbik/w001001.adf")
   if (islands[isl] == "asc") topo = raster("N:/GIS/Projects/SeafloorCalc/Workspace/Asuncion/asc_inpo/w001001.adf")
@@ -44,7 +46,7 @@ for (isl in 1:length(islands)) {
   if (islands[isl] == "mau") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/mau_inpo/w001001.adf")
   if (islands[isl] == "sar") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/sar_inpo/w001001.adf")
   
-  if (islands[isl] == "ofu") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/ofu_inpo/w001001.adf")
+  # if (islands[isl] == "ofu") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/ofu_inpo/w001001.adf") # decided not to use existing ship file because it was lat lon format and resolution was off. Run 2b script instead.
   if (islands[isl] == "ros") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/ros_inpo/w001001.adf")
   # if (islands[isl] == "swa") topo = raster("L:/ktanaka/GIS/bathymetry/pibhmc_bathy_40m_swains_ce56_bee8_9b67.nc")# decided not to use existing ship file because it was lat lon format and resolution was off. Run 2b script instead.
   if (islands[isl] == "tau") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/tau_inpo/w001001.adf")

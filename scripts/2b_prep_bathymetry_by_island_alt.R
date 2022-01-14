@@ -3,14 +3,15 @@ rm(list = ls())
 library(raster)
 library(dplyr)
 
-islands = c("swa", "tut")
+islands = c("swa", "tut", "ofu")
 
 for (i in 1:length(islands)) {
   
-  # i = 2
+  # i = 3
   
   if (islands[i] == "swa") topo = raster("L:/ktanaka/GIS/bathymetry/pibhmc_bathy_40m_swains_ce56_bee8_9b67.nc") #Swain island
   if (islands[i] == "tut") topo = raster("L:/ktanaka/GIS/bathymetry/ngdc_bathy_10m_tutuila_1a99_4a20_d29e.nc") #Tutuila island
+  if (islands[i] == "ofu") topo = raster("L:/ktanaka/GIS/bathymetry/pibhmc_bathy_5m_ofuolosega_98c9_b4c8_bba3.nc") #Ofu And Olosega island
   
   default_proj = crs(topo)
   
