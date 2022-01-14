@@ -25,7 +25,7 @@ for (i in 1:length(nmsas)) {
   
   start = Sys.time()
   
-  # i = 3
+  # i = 6
   
   dat_i = subset(dat, Label == nmsas[i]); plot(dat_i); axis(1); axis(2)
   
