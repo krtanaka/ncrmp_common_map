@@ -10,16 +10,17 @@ library(lattice)
 # need to connect to pifsc VPN if you are not at IRC
 
 # South Mariana Islands
-islands = c("gua", "rot", "sai", "tin", "agu")                              
+islands = c("gua", "rot", "sai", "tin") 
+            # "agu") # run 2c
 
 # North Mariana Islands
 islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar")
 
 # American Samoa
 islands = c("ofu", "ros", 
-            # "swa", 
+            # "swa", # run 2b
             "tau") 
-            # "tut")                             
+            # "tut") # run 2b
 
 # islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak")                # Pacific Remote Island Areas
 # islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")  # Main Hawaiian Islands
@@ -33,7 +34,7 @@ for (isl in 1:length(islands)) {
   if (islands[isl] == "rot") topo = raster("L:/ktanaka/GIS/bathymetry/Rota_5m_bathymetry.asc") # Rota
   if (islands[isl] == "sai") topo = raster("L:/ktanaka/GIS/bathymetry/sai_mb_5m.tif") # Saipan
   if (islands[isl] == "tin") topo = raster("L:/ktanaka/GIS/bathymetry/tinian_5m.asc") # Tinian
-  # if (islands[isl] == "agu") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/FILE_NOT_AVAILAVLE") # Aguijan bathymetry file not availale, use data from Mariana Trench 6 arc-second Bathymetric Digital Elevation Model
+  # if (islands[isl] == "agu") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/FILE_NOT_AVAILAVLE") # Aguijan bathymetry file not availale, use data from Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c. 
 
   if (islands[isl] == "agr") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/agr_inpoo_new/w001001.adf")
   if (islands[isl] == "ala") topo = raster("N:/GIS/Projects/SeafloorCalc/Workspace/Alamagan/ala_inpo_mbik/w001001.adf")
@@ -84,11 +85,11 @@ for (isl in 1:length(islands)) {
   
 }
 
-load('data/gis_bathymetry/agu.RData')
+load('data/gis_bathymetry/swa.RData')
 
 wireframe(unclass(as.bathy(topo_i)), 
           shade = T,
-          aspect = c(dim(topo_i)[1]/dim(topo_i)[2], 0.005),
+          aspect = c(dim(topo_i)[1]/dim(topo_i)[2], 0.001),
           par.box = c(col = "transparent"),
           scales = list(arrows = FALSE, col = "transparent"), # col="black" is required
           par.settings = list(axis.line = list(col = 'transparent')),
