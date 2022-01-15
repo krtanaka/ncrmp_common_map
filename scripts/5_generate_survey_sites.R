@@ -23,7 +23,7 @@ utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
 islands = c("gua", "rot", "sai", "tin", "agu"); region = "S.MARIAN"                         # South Mariana Islands
 islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "N.MARIAN"           # North Mariana Islands
-# islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                            # American Samoa
+islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                            # American Samoa
 # islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"              # Pacific Remote Island Areas
 # islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI"  # Main Hawaiian Islands
 # islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"               # Northern Hawaiian Islands
@@ -56,7 +56,7 @@ survey_effort = merge(island_name_code, survey_effort); head(survey_effort); tai
 
 for (i in 1:length(islands)) {
   
-  # i = 1
+  # i = 3
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData")) 
@@ -69,7 +69,7 @@ for (i in 1:length(islands)) {
 
   }else {
     
-    total_sample = total_sample$Effort*5
+    total_sample = total_sample$Effort
     
   }
 

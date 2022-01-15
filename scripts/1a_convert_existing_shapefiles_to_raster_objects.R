@@ -24,7 +24,7 @@ for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  # shp_i = 19
+  # shp_i = 20
   
   island_name = tolower(substr(shp_list[shp_i], 25, 27)); island_name
   
@@ -32,8 +32,9 @@ for (shp_i in 1:length(shp_list)) {
   
   dat <- shapefile(shp_list[shp_i], verbose = T)
   
-  dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs')))
-  # dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84'))
+  # proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2)
+  dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2)
+  dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs'))); plot(dat); axis(1); axis(2)
   
   dat = dat[c(names(dat) %in% c("HardSoft"))]
   
@@ -103,7 +104,7 @@ for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  # shp_i = 9
+  # shp_i = 10
   
   island_name = tolower(substr(shp_list[shp_i], 25, 27)); island_name
   
@@ -111,9 +112,10 @@ for (shp_i in 1:length(shp_list)) {
   
   dat <- shapefile(shp_list[shp_i], verbose = T)
   
-  dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs')))
-  # dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84'))
-  
+  # proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2)
+  dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2)
+  dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs'))); plot(dat); axis(1); axis(2)
+
   dat = dat[c(names(dat) %in% c("Zone", "REEF_ZONE"))]
   
   names(dat) = "Reef"
@@ -180,7 +182,7 @@ for (shp_i in 1:length(shp_list)) {
 # Sub-Island Sector -------------------------------------------------------
 
 shp_list = list.files(path = paste0(shp_path, "/sector/"), pattern = "\\.shp$", full.names = T); shp_list
-shp_list = shp_list[c(1:9, 11:12)]; shp_list # process NMSAS_PY (A. Samoa) separately for now
+shp_list = shp_list[c(1:9, 11:12)]; shp_list # process NMSAS_PY (A. Samoa) separately, see 1b
 
 for (shp_i in 1:length(shp_list)) {
   
@@ -194,8 +196,9 @@ for (shp_i in 1:length(shp_list)) {
   
   dat <- shapefile(shp_list[shp_i], verbose = T)
   
-  dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs')))
-  # dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84'))
+  # proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2)
+  dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2)
+  dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs'))); plot(dat); axis(1); axis(2)
   
   dat = dat[c(names(dat) %in% c("SEC_NAME", "Sanctuary"))]
   

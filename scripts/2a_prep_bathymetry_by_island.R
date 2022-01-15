@@ -19,7 +19,7 @@ islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar")
 # American Samoa
 islands = c(
   # "ofu", # run 2b
-  "ros", 
+  # "ros", # run 2b
   # "swa", # run 2b
   "tau") 
 # "tut") # run 2b

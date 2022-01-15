@@ -11,28 +11,39 @@ spatial_resolution = 100 # spatial resolution in m
 
 shp_path = "L:/ktanaka/GIS" # pc
 
-utm = read_csv('data/misc/ncrmp_utm_zones.csv')
-
 shp_list = list.files(path = paste0(shp_path, "/sector/"), pattern = "\\.shp$", full.names = T); shp_list
 
 island_name = tolower(substr(shp_list[10], 23, 30)); island_name
 
-dat <- shapefile(shp_list[10], verbose = T); plot(dat); axis(1); axis(2)
+dat <- shapefile(shp_list[10], verbose = T); plot(dat); degAxis(1); degAxis(2)
 nmsas <- as.data.frame(dat)
 nmsas = nmsas$Label
+nmsas = nmsas[c(1, 2, 5)]; nmsas # take out Tutulia sectors
+
+dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2)
+proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2)
+
+utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
 for (i in 1:length(nmsas)) {
   
   start = Sys.time()
   
-  # i = 7
+  # i = 1
+
+  if (nmsas[i] == "Muliava Sanctuary Unit") island_name = "ros"
+  if (nmsas[i] == "Swains Island Sanctuary Unit") island_name = "swa"
+  if (nmsas[i] == "Fagalua/Fogama'a Sanctuary Unit") island_name = "tut"
+  if (nmsas[i] == "Fagatele Bay Sanctuary Unit") island_name = "tut"
+  if (nmsas[i] == "Ta'u Sanctuary Unit") island_name = "tau"
+  if (nmsas[i] == "Aunu'u Sanctuary Unit B") island_name = "tut"
+  if (nmsas[i] == "Aunu'u Sanctuary Unit A") island_name = "tut"
   
-  dat_i = subset(dat, Label == nmsas[i]); plot(dat_i); axis(1); axis(2)
+  utm_i = utm %>% subset(Island_Code == island_name)
   
-  dat_i_fortify = fortify(dat_i)
-  zone <- (floor((dat_i_fortify$long[1] + 180)/6) %% 60) + 1
-  
-  dat_i <- spTransform(dat_i, CRS(paste0('+proj=utm +zone=', zone, ' +datum=WGS84 +units=m +no_defs')))
+  dat_i = subset(dat, Label == nmsas[i])
+
+  dat_i <- spTransform(dat_i, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs'))); plot(dat_i); axis(1); axis(2)
   
   dat_i = dat_i[c(names(dat_i) %in% c("Label"))]
   
@@ -89,16 +100,8 @@ for (i in 1:length(nmsas)) {
   nmsas_name = gsub("/", "_", nmsas_name)
   nmsas_name = gsub("'", "", nmsas_name)
   
-  if (nmsas_name == "Muliava_Sanctuary_Unit") isl_name = "ros"
-  if (nmsas_name == "Swains_Island_Sanctuary_Unit") isl_name = "swa"
-  if (nmsas_name == "Fagalua_Fogamaa_Sanctuary_Unit") isl_name = "tut_a"
-  if (nmsas_name == "Fagatele_Bay_Sanctuary_Unit") isl_name = "tut_b"
-  if (nmsas_name == "Tau_Sanctuary_Unit") isl_name = "tau"
-  if (nmsas_name == "Aunuu_Sanctuary_Unit_B") isl_name = "tut_c"
-  if (nmsas_name == "Aunuu_Sanctuary_Unit_A") isl_name = "tut_d"
-  
   # save(raster_and_table, file = paste0("data/gis_sector/", nmsas_name, "_NMSAS.RData"))
-  save(raster_and_table, file = paste0("data/gis_sector/", isl_name, ".RData"))
+  save(raster_and_table, file = paste0("data/gis_sector/", island_name, ".RData"))
   
   end = Sys.time()
   
