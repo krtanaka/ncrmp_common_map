@@ -50,13 +50,20 @@ survey_effort = data.frame(Island = survey_effort$Island, Effort = survey_effort
 survey_effort = merge(island_name_code, survey_effort); head(survey_effort); tail(survey_effort)
 
 
+#################################
+### Read in Island Boundaries ###
+#################################
+load('data/gis_island_boundaries/ncrmp_islands_shp.RData')
+crs(ISL_bounds) = "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
+
+
 #################################################################
 ### Generate survey site tables & maps, check outputs/ folder ###
 #################################################################
 
 for (i in 1:length(islands)) {
   
-  # i = 3
+  # i = 1
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData")) 
@@ -168,29 +175,45 @@ for (i in 1:length(islands)) {
   
   # (bathymetry + area) / (variability + strata)
 
+  isl_shp = island_name_code %>% subset(Island_Code == islands[i])
+  
+  # Read in Island Boundaries
+   ISL_this = ISL_bounds[which(ISL_bounds$ISLAND %in% toupper(isl_shp)),]
+  # ISL_this_utm = spTransform(ISL_this,CRS(paste0("+proj=utm +units=km +zone=", zone)))
+  # ISL_this_sf = st_transform(st_as_sf(ISL_this), crs = paste0("+proj=utm +units=km +zone=", zone))
+  
   (site_location = 
       ggplot() + 
+
+      # geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.1, color = "darkgrey") + 
+      geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.5) + 
       
-      # geom_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin)) +  
-      # geom_text_repel(data = sets, aes(longitude, latitude, label = id), max.overlaps = Inf) +
-      # geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.5, width = 0.001, height = 0.001) +
-      # ylab("Latitude (dec deg)") + xlab("Longitude (dec deg)") +
-      
-      geom_point(data = sets, aes(x, y, shape = depth_bin, color = depth_bin)) +
-      geom_text_repel(data = sets, aes(x, y, label = id),
-                      max.overlaps = Inf, 
+      geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.3, width = 0.001, height = 0.001) +
+      geom_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin)) +
+      geom_text_repel(data = sets, aes(longitude, latitude, label = id),
+                      max.overlaps = Inf,
                       segment.size = 0.2,
+                      nudge_y = 0.002,
+                      nudge_x = 0.002,
                       box.padding = unit(0.3, "lines"),
-                      point.padding = unit(0.3, "lines"),
-                      nudge_y = 1,
-                      nudge_x = 1) +
-      geom_raster(data = cells, aes(x, y, fill = factor(strat)), alpha = 0.5) +
-      ylab("Northings (km)") + xlab("Eastings (km)") +
+                      point.padding = unit(0.3, "lines")) +
+      ylab("Latitude (dec deg)") + xlab("Longitude (dec deg)") +
+      
+      # geom_raster(data = cells, aes(x, y, fill = factor(strat)), alpha = 0.5) +
+      # geom_point(data = sets, aes(x, y, shape = depth_bin, color = depth_bin)) +
+      # geom_text_repel(data = sets, aes(x, y, label = id),
+      #                 max.overlaps = Inf,
+      #                 segment.size = 0.2,
+      #                 nudge_y = 0.2,
+      #                 nudge_x = 0.2,
+      #                 box.padding = unit(0.3, "lines"),
+      #                 point.padding = unit(0.3, "lines")) +
+      # ylab("Northings (km)") + xlab("Eastings (km)") +
       
       coord_fixed() +
       
-      # scale_x_continuous(sec.axis = dup_axis()) +
-      # scale_y_continuous(sec.axis = dup_axis()) + 
+      scale_x_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20)) +
+      scale_y_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20)) +
       
       scale_fill_discrete("Strata") + 
       theme_light() +

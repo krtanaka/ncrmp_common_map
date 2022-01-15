@@ -1,57 +1,57 @@
-Island,Island_Code
-Agrihan,agr
-Aguijan,agu
-Alamagan,ala
-Anatahan,ana
-Arakane,ara
-Asuncion,asc
-Baker,bak
-Farallon_de_Pajaros,fdp
-French_Frigate,ffs
-Gardner,gar
-Guam,gua
-Guguan,gug
-Hawaii,haw
-Howland,how
-Jarvis,jar
-Johnston,joh
-Kahoolawe,kah
-Kanton,k
-Kauai,kau
-Kaula,kal
-Kingman,kin
-Kure,kur
-Lanai,lan
-Laysan,lay
-Lehua,leh
-Lisianski,lis
-Maro,mar
-Maug,mau
-Maui,mai
-Midway,mid
-Molokai,mol
-Molokini,moi
-Necker,nec
-New_Britain,kim
-Nihoa,nih
-Niihau,nii
-Nikumaroro,n
-Oahu,oah
-Ofu_&_Olosega,ofu
-Pagan,pag
-Palmyra,pal
-Pathfinder,pat
-Pearl_&_Hermes,phr
-Rose,ros
-Rota,rot
-Saipan,sai
-Santa_Rosa,srr
-Sarigan,sar
-South_Bank,sob
-Stingray,sti
-Supply,sup
-Swains,swa
-Tau,tau
-Tinian,tin
-Tutuila,tut
-Wake,wak
+Island,Island_Code,Island_Shp_Name
+Agrihan,agr,AGRIHAN
+Aguijan,agu,AGUIJAN
+Alamagan,ala,ALAMAGAN
+Anatahan,ana,ANATAHAN
+Arakane,ara,
+Asuncion,asc,ASUNCION
+Baker,bak,BAKER
+Farallon_de_Pajaros,fdp,FARALLON DE PAJAROS
+French_Frigate,ffs,FRENCH FRIGATE SHOALS
+Gardner,gar,GARDNER PINNACLES
+Guam,gua,GUAM
+Guguan,gug,GUGUAN
+Hawaii,haw,HAWAII
+Howland,how,HOWLAND
+Jarvis,jar,JARVIS
+Johnston,joh,JOHNSTON ATOLL
+Kahoolawe,kah,KAHOOLAWE
+Kanton,k,
+Kauai,kau,KAUAI
+Kaula,kal,KAULA ROCK
+Kingman,kin,KINGMAN REEF
+Kure,kur,KURE ATOLL
+Lanai,lan,LANAI
+Laysan,lay,LAYSAN
+Lehua,leh,LEHUA
+Lisianski,lis,LISIANSKI / NEVA SHOALS
+Maro,mar,
+Maug,mau,MAUG
+Maui,mai,MAUI
+Midway,mid,MIDWAY
+Molokai,mol,MOLOKAI
+Molokini,moi,MOLOKINI
+Necker,nec,NECKER
+New_Britain,kim,
+Nihoa,nih,NIHOA
+Niihau,nii,NIIHAU
+Nikumaroro,n,
+Oahu,oah,OAHU
+Ofu_&_Olosega,ofu,OFU
+Pagan,pag,PAGAN
+Palmyra,pal,PALMYRA ATOLL
+Pathfinder,pat,
+Pearl_&_Hermes,phr,PEARL AND HERMES REEF
+Rose,ros,ROSE
+Rota,rot,ROTA
+Saipan,sai,SAIPAN
+Santa_Rosa,srr,
+Sarigan,sar,SARIGAN
+South_Bank,sob,
+Stingray,sti,
+Supply,sup,
+Swains,swa,SWAINS
+Tau,tau,TAU
+Tinian,tin,TINIAN
+Tutuila,tut,TUTUILA
+Wake,wak,WAKE
