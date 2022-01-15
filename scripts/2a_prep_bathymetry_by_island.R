@@ -17,12 +17,7 @@ islands = c("gua", "rot", "sai", "tin")
 islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar")
 
 # American Samoa
-islands = c(
-  # "ofu", # run 2b
-  # "ros", # run 2b
-  # "swa", # run 2b
-  "tau") 
-# "tut") # run 2b
+# islands = c("ofu", "ros", "swa", "tau", "tut") # none of existing island bathy files worked, run 2b
 
 # islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak")                # Pacific Remote Island Areas
 # islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")  # Main Hawaiian Islands
@@ -47,9 +42,9 @@ for (isl in 1:length(islands)) {
   if (islands[isl] == "sar") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/sar_inpo/w001001.adf")
   
   # if (islands[isl] == "ofu") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/ofu_inpo/w001001.adf") # decided not to use existing ship file because it was lat lon format and resolution was off. Run 2b script instead.
-  if (islands[isl] == "ros") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/ros_inpo/w001001.adf")
+  # if (islands[isl] == "ros") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/ros_inpo/w001001.adf")# decided not to use existing ship file because it was lat lon format and resolution was off. Run 2b script instead.
   # if (islands[isl] == "swa") topo = raster("L:/ktanaka/GIS/bathymetry/pibhmc_bathy_40m_swains_ce56_bee8_9b67.nc")# decided not to use existing ship file because it was lat lon format and resolution was off. Run 2b script instead.
-  if (islands[isl] == "tau") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/tau_inpo/w001001.adf")
+  # if (islands[isl] == "tau") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/tau_inpo/w001001.adf")# decided not to use existing ship file because it was lat lon format and resolution was off. Run 2b script instead.
   # if (islands[isl] == "tut") topo = raster("L:/ktanaka/GIS/bathymetry/ngdc_bathy_10m_tutuila_1a99_4a20_d29e.nc") # decided not to use existing ship file because it was lat lon format and resolution was off. Run 2b script instead.
   
   if (islands[isl] == "jar") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/jar_inpo_land/w001001.adf") # 

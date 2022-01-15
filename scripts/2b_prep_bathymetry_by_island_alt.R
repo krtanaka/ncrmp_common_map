@@ -3,16 +3,17 @@ rm(list = ls())
 library(raster)
 library(dplyr)
 
-islands = c("swa", "tut", "ofu", "ros")
+islands = c("ofu", "ros", "swa", "tau", "tut")
 
 for (i in 1:length(islands)) {
   
   # i = 4
   
-  if (islands[i] == "swa") topo = raster("L:/ktanaka/GIS/bathymetry/pibhmc_bathy_40m_swains_ce56_bee8_9b67.nc") #Swain island
-  if (islands[i] == "tut") topo = raster("L:/ktanaka/GIS/bathymetry/ngdc_bathy_10m_tutuila_1a99_4a20_d29e.nc") #Tutuila island
   if (islands[i] == "ofu") topo = raster("L:/ktanaka/GIS/bathymetry/pibhmc_bathy_5m_ofuolosega_98c9_b4c8_bba3.nc") #Ofu And Olosega island
   if (islands[i] == "ros") topo = raster("L:/ktanaka/GIS/bathymetry/pibhmc_bathy_40m_rose_1488_4a6e_4b0d.nc") #Rose Atoll
+  if (islands[i] == "swa") topo = raster("L:/ktanaka/GIS/bathymetry/pibhmc_bathy_40m_swains_ce56_bee8_9b67.nc") #Swain island
+  if (islands[i] == "tau") topo = raster("L:/ktanaka/GIS/bathymetry/pibhmc_bathy_5m_tau_82ff_d595_4f15.nc") #Tau island
+  if (islands[i] == "tut") topo = raster("L:/ktanaka/GIS/bathymetry/ngdc_bathy_10m_tutuila_1a99_4a20_d29e.nc") #Tutuila island
   
   default_proj = crs(topo)
   

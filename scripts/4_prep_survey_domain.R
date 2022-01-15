@@ -26,7 +26,7 @@ islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                
 
 for (isl in 1:length(islands)) {
   
-  # isl = 2
+  # isl = 5
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -144,24 +144,28 @@ for (isl in 1:length(islands)) {
   (depth = df %>% 
       ggplot( aes(longitude, latitude, fill = depth_bin)) + 
       geom_raster() + 
+      coord_fixed() + 
       scale_fill_discrete( "depth_bins") +
       ggdark::dark_theme_minimal())
   
   (sector = df %>% 
       ggplot( aes(longitude, latitude, fill = sector_id)) + 
       geom_raster() +
+      coord_fixed() + 
       scale_fill_discrete("sector") +
       ggdark::dark_theme_minimal())
   
   (reef = df %>% 
       ggplot( aes(longitude, latitude, fill = reef_id)) + 
       geom_raster() +
+      coord_fixed() + 
       scale_fill_discrete("reef") +
       ggdark::dark_theme_minimal())
   
   (hardsoft = df %>% 
       ggplot( aes(longitude, latitude, fill = hardsoft_id)) + 
       geom_raster() +
+      coord_fixed() + 
       scale_fill_discrete("hardsoft") +
       ggdark::dark_theme_minimal())
   
@@ -192,6 +196,7 @@ for (isl in 1:length(islands)) {
   (strata = df %>% 
       ggplot( aes(longitude, latitude, fill = factor(strat))) + 
       geom_raster() +
+      coord_fixed() + 
       scale_fill_discrete("Strata") +
       ggdark::dark_theme_minimal())
   
