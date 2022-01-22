@@ -26,7 +26,7 @@ islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                
 
 for (isl in 1:length(islands)) {
   
-  # isl = 5
+  # isl = 1
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -95,15 +95,54 @@ for (isl in 1:length(islands)) {
     
   }
   
+  ### 5km buffer ###
+  if (file.exists(paste0("data/gis_5km_buffer/", islands[isl], ".RData"))) {
+    
+    load(paste0("data/gis_5km_buffer/", islands[isl], ".RData"))
+    buffer = raster_and_table[[1]]; buffer_name = raster_and_table[[2]]
+    # remove_id = hardsoft_name %>% subset(hardsoft_name$nam %in% c("Land", "Other", "Soft"))
+    # remove_id = remove_id$ID
+    # hardsoft[hardsoft %in% remove_id] <- NA
+    
+  } else {
+    
+    # using bathymetry raster as a placeholder bc there is no reef data for this island
+    load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
+    buffer = topo_i
+    buffer[buffer <= 0] <- 1
+    buffer_name = data.frame(ID = 1L, 
+                               nam = paste0(islands[isl], "_5km_buffer"))
+    
+  }
+  
+  ### survey boxes ###
+  if (file.exists(paste0("data/gis_survey_boxes/", islands[isl], ".RData"))) {
+    
+    load(paste0("data/gis_survey_boxes/", islands[isl], ".RData"))
+    boxes = raster_and_table[[1]]; boxes_name = raster_and_table[[2]]
+
+  } else {
+    
+    # using bathymetry raster as a placeholder bc there is no reef data for this island
+    load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
+    buffer = topo_i
+    buffer[buffer <= 0] <- 1
+    buffer_name = data.frame(ID = 1L, 
+                             nam = paste0(islands[isl], "_5km_buffer"))
+    
+  }
+  
   hardsoft = resample(hardsoft, topo_i, method = "ngb") 
   sector = resample(sector, topo_i, method = "ngb") 
   reef = resample(reef, topo_i, method = "ngb") 
   bathymetry = resample(topo_i, topo_i, method = "ngb") 
+  buffer = resample(buffer, topo_i, method = "ngb") 
+  boxes = resample(boxes, topo_i, method = "ngb") 
   
-  df = stack(hardsoft, sector, reef, bathymetry)
+  df = stack(hardsoft, sector, reef, bathymetry, buffer)
   df = as.data.frame(rasterToPoints(df))
   
-  colnames(df) = c("longitude", "latitude", "hardsoft", "sector", "reef", "depth")
+  colnames(df) = c("longitude", "latitude", "hardsoft", "sector", "reef", "depth", "buffer")
   
   df = na.omit(df)
   
