@@ -76,7 +76,7 @@ for (i in 1:length(islands)) {
 
   }else {
     
-    total_sample = total_sample$Effort
+    total_sample = total_sample$Effort*6
     
   }
 
@@ -158,7 +158,7 @@ for (i in 1:length(islands)) {
   (variability = cells %>% 
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = sd)) + 
-      scale_fill_gradientn(colours = matlab.like(100), "var(total_fish_density)") + 
+      scale_fill_gradientn(colours = matlab.like(100), "var") + 
       ylab("Northings (km)") + xlab("Eastings (km)") +
       coord_fixed() +
       theme_light() +
@@ -185,10 +185,10 @@ for (i in 1:length(islands)) {
   (site_location = 
       ggplot() + 
 
-      # geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.1, color = "darkgrey") + 
+      geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.1, color = "darkgrey") +
       geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.5) + 
       
-      geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.3, width = 0.001, height = 0.001) +
+      # geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.3, width = 0.001, height = 0.001) +
       geom_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin)) +
       geom_text_repel(data = sets, aes(longitude, latitude, label = id),
                       max.overlaps = Inf,
@@ -217,7 +217,8 @@ for (i in 1:length(islands)) {
       
       scale_fill_discrete("Strata") + 
       theme_light() +
-      theme(legend.position = "right") + 
+      theme(legend.position = "right",
+            axis.text=element_text(size = 5),) + 
       labs(
         title = "",
         subtitle = paste0(paste0("Island = ", toupper(islands[i]),"\n", 
@@ -229,7 +230,7 @@ for (i in 1:length(islands)) {
   # print((bathymetry + strata) / (area + variability))
   # dev.off()
   
-  pdf(paste0("outputs/survey_location_", islands[i], "_", effort_level, ".pdf"), height = 10, width = 10)
+  pdf(paste0("outputs/survey_geo_ref_", islands[i], "_", effort_level, ".pdf"), height = 15, width = 15)
   print(site_location)
   dev.off()
   
