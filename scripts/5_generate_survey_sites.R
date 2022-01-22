@@ -174,30 +174,31 @@ for (i in 1:length(islands)) {
       theme(legend.position = "right"))
   
   # (bathymetry + area) / (variability + strata)
-
+  
   isl_shp = island_name_code %>% subset(Island_Code == islands[i])
   
   # Read in Island Boundaries
-   ISL_this = ISL_bounds[which(ISL_bounds$ISLAND %in% toupper(isl_shp)),]
+  ISL_this = ISL_bounds[which(ISL_bounds$ISLAND %in% toupper(isl_shp)),]
   # ISL_this_utm = spTransform(ISL_this,CRS(paste0("+proj=utm +units=km +zone=", zone)))
   # ISL_this_sf = st_transform(st_as_sf(ISL_this), crs = paste0("+proj=utm +units=km +zone=", zone))
-  
+
   (site_location = 
       ggplot() + 
 
-      geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.1, color = "darkgrey") +
-      geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.5) + 
+      # geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.1, color = "darkgrey") +
+      # geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.5) + 
       
       # geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.3, width = 0.001, height = 0.001) +
-      geom_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin)) +
-      geom_text_repel(data = sets, aes(longitude, latitude, label = id),
-                      max.overlaps = Inf,
-                      segment.size = 0.2,
-                      nudge_y = 0.002,
-                      nudge_x = 0.002,
-                      box.padding = unit(0.3, "lines"),
-                      point.padding = unit(0.3, "lines")) +
-      ylab("Latitude (dec deg)") + xlab("Longitude (dec deg)") +
+      # geom_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin)) +
+      # geom_text_repel(data = sets, aes(longitude, latitude, label = id),
+      #                 max.overlaps = Inf,
+      #                 segment.size = 0.2,
+      #                 nudge_y = 0.002,
+      #                 nudge_x = 0.002,
+      #                 box.padding = unit(0.3, "lines"),
+      #                 point.padding = unit(0.3, "lines")) +
+      # ylab("Latitude (dec deg)") + xlab("Longitude (dec deg)") +
+      geom_tile(data = bf, aes(x, y, fill = factor(strat)), alpha = 0.5) +
       
       # geom_raster(data = cells, aes(x, y, fill = factor(strat)), alpha = 0.5) +
       # geom_point(data = sets, aes(x, y, shape = depth_bin, color = depth_bin)) +
