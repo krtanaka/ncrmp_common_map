@@ -120,15 +120,15 @@ for (isl in 1:length(islands)) {
     
     load(paste0("data/gis_survey_boxes/", islands[isl], ".RData"))
     boxes = raster_and_table[[1]]; boxes_name = raster_and_table[[2]]
-
+    
   } else {
     
     # using bathymetry raster as a placeholder bc there is no reef data for this island
     load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
-    buffer = topo_i
-    buffer[buffer <= 0] <- 1
-    buffer_name = data.frame(ID = 1L, 
-                             nam = paste0(islands[isl], "_5km_buffer"))
+    boxes = topo_i
+    boxes[boxes <= 0] <- 1
+    boxes_name = data.frame(ID = 1L, 
+                            nam = paste0(islands[isl], "_box"))
     
   }
   
@@ -136,8 +136,8 @@ for (isl in 1:length(islands)) {
   sector = resample(sector, topo_i, method = "ngb") 
   reef = resample(reef, topo_i, method = "ngb") 
   bathymetry = resample(topo_i, topo_i, method = "ngb") 
-  buffer = resample(buffer, topo_i, method = "ngb") 
-  boxes = resample(boxes, topo_i, method = "ngb") 
+  buffer = resample(buffer, topo_i, method = "ngb"); buffer = readAll(buffer); save(buffer, file = paste0('data/gis_5km_buffer/', islands[isl], '_res_adjusted.RData'))
+  boxes = resample(boxes, topo_i, method = "ngb"); boxes = readAll(boxes); save(boxes, file = paste0('data/gis_survey_boxes/', islands[isl], '_res_adjusted.RData'))
   
   df = stack(hardsoft, sector, reef, bathymetry, buffer)
   df = as.data.frame(rasterToPoints(df))

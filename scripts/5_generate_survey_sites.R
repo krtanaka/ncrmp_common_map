@@ -76,7 +76,7 @@ for (i in 1:length(islands)) {
 
   }else {
     
-    total_sample = total_sample$Effort*6
+    total_sample = total_sample$Effort
     
   }
 
@@ -137,6 +137,11 @@ for (i in 1:length(islands)) {
   
   readr::write_csv(sets, file = paste0("outputs/survey_table_", islands[i], "_", effort_level, ".csv"))
   
+  library(gridExtra)
+  pdf(paste0("outputs/survey_table_", islands[i], "_", effort_level, ".pdf"), height = 12, width = 10)
+  grid.table(sets)
+  dev.off()
+  
   (bathymetry = cells %>% 
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = depth)) + 
@@ -181,24 +186,45 @@ for (i in 1:length(islands)) {
   ISL_this = ISL_bounds[which(ISL_bounds$ISLAND %in% toupper(isl_shp)),]
   # ISL_this_utm = spTransform(ISL_this,CRS(paste0("+proj=utm +units=km +zone=", zone)))
   # ISL_this_sf = st_transform(st_as_sf(ISL_this), crs = paste0("+proj=utm +units=km +zone=", zone))
+  
+  load('data/gis_5km_buffer/gua_res_adjusted.RData')
+  buffer <- data.table(rasterToPoints(buffer))
+  utmcoor <- SpatialPoints(cbind(buffer$x, buffer$y), proj4string = CRS(paste0("+proj=utm +units=m +zone=", utm_i$UTM_Zone)))
+  longlatcoor <- spTransform(utmcoor,CRS("+proj=longlat"))
+  buffer$longitude <- coordinates(longlatcoor)[,1]
+  buffer$latitude <- coordinates(longlatcoor)[,2]
+  buffer = buffer %>% mutate(longitude = round(longitude, 3), latitude = round(latitude, 3)) %>% group_by(longitude, latitude) %>% summarise(buffer = 1)
+  
+  load('data/gis_survey_boxes/gua.RData'); boxes_name = raster_and_table[[2]]
+  load('data/gis_survey_boxes/gua_res_adjusted.RData')
+  boxes <- data.table(rasterToPoints(boxes)); colnames(boxes)[3] = "ID"
+  utmcoor <- SpatialPoints(cbind(boxes$x, boxes$y), proj4string = CRS(paste0("+proj=utm +units=m +zone=", utm_i$UTM_Zone)))
+  longlatcoor <- spTransform(utmcoor,CRS("+proj=longlat"))
+  boxes$longitude <- coordinates(longlatcoor)[,1]
+  boxes$latitude <- coordinates(longlatcoor)[,2]
+  boxes = merge(boxes, boxes_name)
 
   (site_location = 
       ggplot() + 
-
-      # geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.1, color = "darkgrey") +
-      # geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.5) + 
       
       # geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.3, width = 0.001, height = 0.001) +
-      # geom_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin)) +
-      # geom_text_repel(data = sets, aes(longitude, latitude, label = id),
-      #                 max.overlaps = Inf,
-      #                 segment.size = 0.2,
-      #                 nudge_y = 0.002,
-      #                 nudge_x = 0.002,
-      #                 box.padding = unit(0.3, "lines"),
-      #                 point.padding = unit(0.3, "lines")) +
-      # ylab("Latitude (dec deg)") + xlab("Longitude (dec deg)") +
-      geom_tile(data = bf, aes(x, y, fill = factor(strat)), alpha = 0.5) +
+      geom_tile(data = buffer, aes(longitude, latitude), fill = "darkgrey", width = 0.001, height = 0.001, alpha = 0.1, show.legend = F) +
+      geom_tile(data = boxes, aes(longitude, latitude, fill = nam), width = 0.001, height = 0.001, alpha = 0.2) +
+      
+      geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.05, color = "darkgrey") +
+      geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) +
+      
+      geom_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin)) +
+      
+      geom_text_repel(data = sets, 
+                      aes(longitude, latitude, label = id),
+                      size = 5,
+                      max.overlaps = Inf,
+                      segment.size = 0.2,
+                      nudge_y = 0.005,
+                      nudge_x = 0.005,
+                      box.padding = unit(0.8, "lines"),
+                      point.padding = unit(0.3, "lines")) +
       
       # geom_raster(data = cells, aes(x, y, fill = factor(strat)), alpha = 0.5) +
       # geom_point(data = sets, aes(x, y, shape = depth_bin, color = depth_bin)) +
@@ -213,13 +239,14 @@ for (i in 1:length(islands)) {
       
       coord_fixed() +
       
-      scale_x_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20)) +
-      scale_y_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20)) +
+      scale_x_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20), "Longitude (dec deg)") +
+      scale_y_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20), "Latitude (dec deg)") +
       
-      scale_fill_discrete("Strata") + 
+      scale_fill_discrete("") + 
       theme_light() +
       theme(legend.position = "right",
-            axis.text=element_text(size = 5),) + 
+            axis.text = element_text(size = 5),
+            axis.title = element_text(size = 5)) + 
       labs(
         title = "",
         subtitle = paste0(paste0("Island = ", toupper(islands[i]),"\n", 
@@ -234,6 +261,9 @@ for (i in 1:length(islands)) {
   pdf(paste0("outputs/survey_geo_ref_", islands[i], "_", effort_level, ".pdf"), height = 15, width = 15)
   print(site_location)
   dev.off()
+  
+  library(pdftools)
+  pdf_combine(c("outputs/survey_geo_ref_gua_mid.pdf", "outputs/survey_table_gua_mid.pdf"), output = "outputs/survey_map_sites.pdf")
   
   # (Area = cells %>% 
   #     group_by(strat) %>% 
