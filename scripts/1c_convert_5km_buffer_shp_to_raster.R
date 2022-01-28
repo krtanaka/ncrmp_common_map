@@ -29,7 +29,7 @@ for (i in 1:length(island_name)) {
   
   start = Sys.time()
   
-  # i = 84
+  # i = 2
  
   utm_i = utm %>% subset(Island_Code == island_name[i])
   
@@ -37,18 +37,18 @@ for (i in 1:length(island_name)) {
   
   dat_i <- spTransform(dat_i, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs'))); plot(dat_i); axis(1); axis(2)
   
-  dat_i = dat_i[c(names(dat_i) %in% c("ISLAND_CD"))]
+  dat_i = dat_i[c(names(dat_i) %in% c("SEC_NAME"))]
   
-  names(dat_i) = "5km_buffer"
+  names(dat_i) = "SEC_NAME"
   
   # get names
-  nam <- unique(dat_i$`5km_buffer`)
+  nam <- unique(dat_i$SEC_NAME)
   
   # create a data.frame
   nam_df <- data.frame(ID = 1:length(nam), nam = nam)
   
   # Place IDs
-  dat_i$ID <- nam_df$ID[match(dat_i$`5km_buffer`, nam_df$nam)]
+  dat_i$ID <- nam_df$ID[match(dat_i$SEC_NAME, nam_df$nam)]
   
   # Define RasterLayer object
   r.raster <- raster()
