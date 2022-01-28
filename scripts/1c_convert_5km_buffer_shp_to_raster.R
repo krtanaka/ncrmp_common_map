@@ -4,6 +4,8 @@ library(rgeos)
 library(dplyr)
 library(readr)
 library(colorRamps)
+library(ggplot2)
+library(ggrepel)
 
 rm(list = ls())
 
@@ -29,7 +31,7 @@ for (i in 1:length(island_name)) {
   
   start = Sys.time()
   
-  # i = 2
+  # i = 84
  
   utm_i = utm %>% subset(Island_Code == island_name[i])
   
@@ -80,11 +82,19 @@ for (i in 1:length(island_name)) {
   r_df = merge(r_df, table)
   r_df_label = r_df %>% group_by(nam) %>% summarise(x = median(x), y = median(y))
   
-  ggplot() +  
-    geom_raster(data = r_df, aes(x, y, fill = nam), show.legend = F) + 
-    geom_text_repel(data = r_df_label, aes(x, y, label = nam)) + 
-    coord_equal() + 
-    theme_light()
+  # ggplot() +  
+  #   geom_raster(data = r_df, aes(x, y, fill = nam), show.legend = F) + 
+  #   geom_text_repel(data = r_df_label, aes(x, y, label = nam)) + 
+  #   coord_equal() + 
+  #   theme_light()
+  
+  if (file.exists(paste0("data/gis_bathymetry/", island_name[i], ".RData"))) {
+    
+    load(paste0("data/gis_bathymetry/", island_name[i], ".RData"))
+    raster = resample(raster, topo_i, method = "ngb")
+    raster = readAll(raster)
+    
+  }
   
   raster_and_table = list(raster, table)
   
