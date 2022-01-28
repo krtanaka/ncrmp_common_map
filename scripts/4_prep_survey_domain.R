@@ -136,8 +136,8 @@ for (isl in 1:length(islands)) {
   sector = resample(sector, topo_i, method = "ngb") 
   reef = resample(reef, topo_i, method = "ngb") 
   bathymetry = resample(topo_i, topo_i, method = "ngb") 
-  buffer = resample(buffer, topo_i, method = "ngb"); buffer = readAll(buffer); save(buffer, file = paste0('data/gis_5km_buffer/', islands[isl], '_res_adjusted.RData'))
-  boxes = resample(boxes, topo_i, method = "ngb"); boxes = readAll(boxes); save(boxes, file = paste0('data/gis_survey_boxes/', islands[isl], '_res_adjusted.RData'))
+  buffer = resample(buffer, topo_i, method = "ngb")
+  boxes = resample(boxes, topo_i, method = "ngb")
   
   df = stack(hardsoft, sector, reef, bathymetry, buffer)
   df = as.data.frame(rasterToPoints(df))

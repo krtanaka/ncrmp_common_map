@@ -182,40 +182,69 @@ for (i in 1:length(islands)) {
   
   isl_shp = island_name_code %>% subset(Island_Code == islands[i])
   
-  # Read in Island Boundaries
+  #######################################
+  ### Read Island shape and coastline ###
+  #######################################
   ISL_this = ISL_bounds[which(ISL_bounds$ISLAND %in% toupper(isl_shp)),]
   # ISL_this_utm = spTransform(ISL_this,CRS(paste0("+proj=utm +units=km +zone=", zone)))
   # ISL_this_sf = st_transform(st_as_sf(ISL_this), crs = paste0("+proj=utm +units=km +zone=", zone))
   
-  load('data/gis_5km_buffer/gua_res_adjusted.RData')
+  ######################################
+  ### Read Island 5km buffer sectors ###
+  ######################################
+  load('data/gis_5km_buffer/gua.RData')
+  buffer = raster_and_table[[1]]
+  buffer_name = raster_and_table[[2]]
   buffer <- data.table(rasterToPoints(buffer))
   utmcoor <- SpatialPoints(cbind(buffer$x, buffer$y), proj4string = CRS(paste0("+proj=utm +units=m +zone=", utm_i$UTM_Zone)))
   longlatcoor <- spTransform(utmcoor,CRS("+proj=longlat"))
   buffer$longitude <- coordinates(longlatcoor)[,1]
   buffer$latitude <- coordinates(longlatcoor)[,2]
-  buffer = buffer %>% mutate(longitude = round(longitude, 3), latitude = round(latitude, 3)) %>% group_by(longitude, latitude) %>% summarise(buffer = 1)
+  colnames(buffer)[3] = "ID"
+  buffer = merge(buffer, buffer_name)
+  buffer = buffer %>%
+    mutate(longitude = round(longitude, 3), 
+           latitude = round(latitude, 3)) %>% 
+    select(longitude, latitude, nam) %>% 
+    unique()
+  buffer_label = buffer %>% group_by(nam) %>% summarise(longitude = median(longitude), latitude = median(latitude))
   
-  load('data/gis_survey_boxes/gua.RData'); boxes_name = raster_and_table[[2]]
-  load('data/gis_survey_boxes/gua_res_adjusted.RData')
+  ######################################
+  ### Read Island 5km buffer sectors ###
+  ######################################
+  load('data/gis_survey_boxes/gua.RData')
+  boxes = raster_and_table[[1]]
+  boxes_name = raster_and_table[[2]]
   boxes <- data.table(rasterToPoints(boxes)); colnames(boxes)[3] = "ID"
   utmcoor <- SpatialPoints(cbind(boxes$x, boxes$y), proj4string = CRS(paste0("+proj=utm +units=m +zone=", utm_i$UTM_Zone)))
   longlatcoor <- spTransform(utmcoor,CRS("+proj=longlat"))
   boxes$longitude <- coordinates(longlatcoor)[,1]
   boxes$latitude <- coordinates(longlatcoor)[,2]
   boxes = merge(boxes, boxes_name)
+  boxes_label = boxes %>% group_by(nam) %>% summarise(longitude = median(longitude), latitude = median(latitude))
+  
+  labels = rbind(boxes_label, buffer_label)
+  
+  # ggplot() +  
+  #   geom_raster(data = r_df, aes(x, y, fill = nam), show.legend = F) + 
+  #   geom_text_repel(data = r_df_label, aes(x, y, label = nam)) + 
+  #   coord_equal() + 
+  #   theme_light()
 
   (site_location = 
       ggplot() + 
       
       # geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.3, width = 0.001, height = 0.001) +
-      geom_tile(data = buffer, aes(longitude, latitude), fill = "darkgrey", width = 0.001, height = 0.001, alpha = 0.1, show.legend = F) +
-      geom_tile(data = boxes, aes(longitude, latitude, fill = nam), width = 0.001, height = 0.001, alpha = 0.2) +
+      geom_tile(data = buffer, aes(longitude, latitude, fill = nam), width = 0.001, height = 0.001, alpha = 0.1, show.legend = F) +
+      geom_tile(data = boxes, aes(longitude, latitude, fill = nam), width = 0.001, height = 0.001, alpha = 0.2, show.legend = F) +
       
       geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.05, color = "darkgrey") +
       geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) +
       
       geom_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin)) +
       
+      geom_text_repel(data = labels, aes(longitude, latitude, label = nam), max.overlaps = Inf) +
+
       geom_text_repel(data = sets, 
                       aes(longitude, latitude, label = id),
                       size = 5,
