@@ -267,11 +267,12 @@ for (i in 1:length(islands)) {
       # ylab("Northings (km)") + xlab("Eastings (km)") +
       
       coord_fixed() +
-      
+
       scale_x_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20), "Longitude (dec deg)") +
       scale_y_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20), "Latitude (dec deg)") +
       
       scale_fill_discrete("") + 
+
       theme_light() +
       theme(legend.position = "right",
             axis.text = element_text(size = 5),
