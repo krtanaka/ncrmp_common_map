@@ -84,6 +84,14 @@ for (i in 1:length(island_name)) {
     geom_text_repel(data = r_df_label, aes(x, y, label = nam)) + 
     coord_equal()
   
+  if (file.exists(paste0("data/gis_bathymetry/", island_name[i], ".RData"))) {
+    
+    load(paste0("data/gis_bathymetry/", island_name[i], ".RData"))
+    raster = resample(raster, topo_i, method = "ngb")
+    raster = readAll(raster)
+    
+  }
+  
   raster_and_table = list(raster, table)
 
   save(raster_and_table, file = paste0("data/gis_survey_boxes/", utm_i$Island_Code, ".RData"))
