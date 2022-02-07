@@ -231,13 +231,20 @@ for (i in 1:length(islands)) {
   #   coord_equal() + 
   #   theme_light()
 
+  # Convex hulls.
+  df <- boxes
+  find_hull <- function(boxes) boxes[chull(boxes$latitude, boxes$longitude), ]
+  hulls <- ddply(df, "nam", find_hull)
+  
   (site_location = 
       ggplot() + 
       
       # geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.3, width = 0.001, height = 0.001) +
       geom_tile(data = buffer, aes(longitude, latitude, fill = nam), width = 0.001, height = 0.001, alpha = 0.1, show.legend = F) +
-      geom_tile(data = boxes, aes(longitude, latitude, fill = nam), width = 0.001, height = 0.001, alpha = 0.2, show.legend = F) +
+      # geom_tile(data = boxes, aes(longitude, latitude, fill = nam), width = 0.001, height = 0.001, alpha = 0.2, show.legend = F) +
       
+      geom_polygon(data = hulls, aes(longitude, latitude, fill = nam, color = nam), alpha = 0.01, size = 2) +
+    
       geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.05, color = "darkgrey") +
       geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) +
       
