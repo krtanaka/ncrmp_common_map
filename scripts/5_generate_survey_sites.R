@@ -207,7 +207,8 @@ for (i in 1:length(islands)) {
            latitude = round(latitude, 3)) %>% 
     select(longitude, latitude, nam) %>% 
     unique()
-  buffer_label = buffer %>% group_by(nam) %>% summarise(longitude = median(longitude), latitude = median(latitude))
+  colnames(buffer)[3] = "sector_nam"
+  buffer_label = buffer %>% group_by(sector_nam) %>% summarise(longitude = median(longitude), latitude = median(latitude))
   
   ######################################
   ### Read Island 5km buffer sectors ###
@@ -221,43 +222,51 @@ for (i in 1:length(islands)) {
   boxes$longitude <- coordinates(longlatcoor)[,1]
   boxes$latitude <- coordinates(longlatcoor)[,2]
   boxes = merge(boxes, boxes_name)
-  boxes_label = boxes %>% group_by(nam) %>% summarise(longitude = median(longitude), latitude = median(latitude))
+  colnames(boxes)[6] = "boxes_nam"
+  boxes_label = boxes %>% group_by(boxes_nam) %>% summarise(longitude = median(longitude), latitude = median(latitude))
   
-  labels = rbind(boxes_label, buffer_label)
-  
-  # ggplot() +  
-  #   geom_raster(data = r_df, aes(x, y, fill = nam), show.legend = F) + 
-  #   geom_text_repel(data = r_df_label, aes(x, y, label = nam)) + 
-  #   coord_equal() + 
-  #   theme_light()
-
   # Convex hulls for survey boxes
   ddply = plyr::ddply
   df <- boxes
   find_hull <- function(boxes) boxes[chull(boxes$latitude, boxes$longitude), ]
-  hulls <- ddply(df, "nam", find_hull)
+  hulls <- ddply(df, "boxes_nam", find_hull)
   
   (site_location = 
+      
       ggplot() + 
       
-      # geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.3, width = 0.001, height = 0.001) + # Stratum
+      geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "darkgrey") + # coastline
+      geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
       
-      geom_tile(data = buffer, aes(longitude, latitude, fill = nam), width = 0.001, height = 0.001, alpha = 0.1, show.legend = F) + # island sectors
-      # geom_tile(data = boxes, aes(longitude, latitude, fill = nam), width = 0.001, height = 0.001, alpha = 0.2, show.legend = F) +
+      # geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.3, width = 0.001, height = 0.001) + # stratum
       
-      geom_polygon(data = hulls, aes(longitude, latitude, fill = nam, color = nam), alpha = 0.01, size = 2, show.legend = F) +
-
-      geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.05, color = "darkgrey") +
-      geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) +
+      geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.1, show.legend = F) + # island sectors
+      geom_label_repel(data = buffer_label, aes(longitude, latitude, label = sector_nam, color = "white", fill = sector_nam, fontface = 'bold'), max.overlaps = Inf, show.legend = F) +
+      
+      scale_fill_discrete() + 
+      scale_color_discrete() + 
       
       new_scale_color() +
-      geom_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin)) +
+      new_scale_fill() +
       
-      geom_text_repel(data = labels, aes(longitude, latitude, label = nam), max.overlaps = Inf) +
+      # geom_tile(data = boxes, aes(longitude, latitude, fill = boxes_nam), width = 0.001, height = 0.001, alpha = 0.2, show.legend = F) + # survey boxes fill
+      geom_polygon(data = hulls, aes(longitude, latitude, fill = boxes_nam, color = boxes_nam), alpha = 0.01, size = 1, show.legend = F) + # survey boxes hull
+      geom_text_repel(data = boxes_label, aes(longitude, latitude, label = boxes_nam, color = boxes_nam, fontface = 'bold'), max.overlaps = Inf, show.legend = F) +
+      
+      scale_fill_discrete() + 
+      scale_color_discrete() + 
+      
+      new_scale_color() +
+      new_scale_fill() +
+      
+      geom_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin)) +
+
+      new_scale_color() +
+      new_scale_fill() +      
 
       geom_text_repel(data = sets, 
                       aes(longitude, latitude, label = id),
-                      size = 5,
+                      size = 2,
                       max.overlaps = Inf,
                       segment.size = 0.2,
                       nudge_y = 0.005,
@@ -280,10 +289,9 @@ for (i in 1:length(islands)) {
 
       scale_x_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20), "Longitude (dec deg)") +
       scale_y_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20), "Latitude (dec deg)") +
-      
-      scale_fill_discrete("") + 
 
       theme_light() +
+      
       theme(legend.position = "right",
             axis.text = element_text(size = 5),
             axis.title = element_text(size = 5)) + 
