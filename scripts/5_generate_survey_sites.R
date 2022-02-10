@@ -13,6 +13,7 @@ library(ggdark)
 library(colorRamps)
 library(readr)
 library(ggrepel)
+library(ggnewscale)
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
@@ -135,7 +136,7 @@ for (i in 1:length(islands)) {
   sets$depth_bin = ifelse(sets$depth > 6  & sets$depth <= 18, "MID", sets$depth_bin) 
   sets$depth_bin = ifelse(sets$depth > 18, "DEEP", sets$depth_bin) 
   
-  readr::write_csv(sets, file = paste0("outputs/survey_table_", islands[i], "_", effort_level, ".csv"))
+  readr::write_csv(sets, path = paste0("outputs/survey_table_", islands[i], "_", effort_level, ".csv"))
   
   library(gridExtra)
   pdf(paste0("outputs/survey_table_", islands[i], "_", effort_level, ".pdf"), height = 12, width = 10)
@@ -241,7 +242,7 @@ for (i in 1:length(islands)) {
       # geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.3, width = 0.001, height = 0.001) + # stratum
       
       geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.1, show.legend = F) + # island sectors
-      geom_label_repel(data = buffer_label, aes(longitude, latitude, label = sector_nam, color = "white", fill = sector_nam, fontface = 'bold'), max.overlaps = Inf, show.legend = F) +
+      geom_label_repel(data = buffer_label, aes(longitude, latitude, label = sector_nam,  fill = sector_nam, fontface = 'bold'), color = "white", show.legend = F) +
       
       scale_fill_discrete() + 
       scale_color_discrete() + 
