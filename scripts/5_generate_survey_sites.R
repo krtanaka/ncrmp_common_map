@@ -122,7 +122,8 @@ for (i in 1:length(islands)) {
                 by = c("strat")]
   
   id <- seq(1,dim(sets)[1],1)
-  id = sprintf("s%03d", id)
+  id = sprintf("s_%04d", id)
+  id = gsub("s",  islands[i], id)
   
   # count number of distinct sim*year*cell combinations
   sets[, `:=`(cell_sets, .N), by = c("cell")]
@@ -193,7 +194,7 @@ for (i in 1:length(islands)) {
   ######################################
   ### Read Island 5km buffer sectors ###
   ######################################
-  load('data/gis_5km_buffer/gua.RData')
+  load(paste0('data/gis_5km_buffer/', islands[i], '.RData'))
   buffer = raster_and_table[[1]]
   buffer_name = raster_and_table[[2]]
   buffer <- data.table(rasterToPoints(buffer))
@@ -211,10 +212,10 @@ for (i in 1:length(islands)) {
   colnames(buffer)[3] = "sector_nam"
   buffer_label = buffer %>% group_by(sector_nam) %>% summarise(longitude = median(longitude), latitude = median(latitude))
   
-  ######################################
-  ### Read Island 5km buffer sectors ###
-  ######################################
-  load('data/gis_survey_boxes/gua.RData')
+  ################################
+  ### Read Island survey boxes ###
+  ################################
+  load(paste0('data/gis_survey_boxes/', islands[i], '.RData'))
   boxes = raster_and_table[[1]]
   boxes_name = raster_and_table[[2]]
   boxes <- data.table(rasterToPoints(boxes)); colnames(boxes)[3] = "ID"
@@ -241,7 +242,7 @@ for (i in 1:length(islands)) {
       
       # geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.3, width = 0.001, height = 0.001) + # stratum
       
-      geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.1, show.legend = F) + # island sectors
+      geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.3, show.legend = F) + # island sectors
       geom_label_repel(data = buffer_label, aes(longitude, latitude, label = sector_nam,  fill = sector_nam, fontface = 'bold'), color = "white", show.legend = F) +
       
       scale_fill_discrete() + 
@@ -262,18 +263,22 @@ for (i in 1:length(islands)) {
       
       geom_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin)) +
 
-      new_scale_color() +
-      new_scale_fill() +      
+      # new_scale_color() +
+      # new_scale_fill() +      
 
-      geom_text_repel(data = sets, 
-                      aes(longitude, latitude, label = id),
-                      size = 2,
-                      max.overlaps = Inf,
-                      segment.size = 0.2,
-                      nudge_y = 0.005,
-                      nudge_x = 0.005,
-                      box.padding = unit(0.8, "lines"),
-                      point.padding = unit(0.3, "lines")) +
+      geom_label_repel(data = sets, 
+                       aes(longitude, latitude, label = id),
+                       size = 2,
+                       label.size = NA, 
+                       alpha = 0.75, 
+                       fontface = 'bold', 
+                       color = 'black',
+                       max.overlaps = Inf,
+                       segment.size = 0.2,
+                       nudge_y = 0.005,
+                       nudge_x = 0.005,
+                       box.padding = unit(0.8, "lines"),
+                       point.padding = unit(0.3, "lines")) +
       
       # geom_raster(data = cells, aes(x, y, fill = factor(strat)), alpha = 0.5) +
       # geom_point(data = sets, aes(x, y, shape = depth_bin, color = depth_bin)) +
@@ -291,7 +296,7 @@ for (i in 1:length(islands)) {
       scale_x_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20), "Longitude (dec deg)") +
       scale_y_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20), "Latitude (dec deg)") +
 
-      theme_light() +
+      theme_classic() +
       
       theme(legend.position = "right",
             axis.text = element_text(size = 5),
