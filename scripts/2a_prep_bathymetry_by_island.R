@@ -14,7 +14,7 @@ islands = c("gua", "rot", "sai", "tin")
 # "agu") # run 2c
 
 # North Mariana Islands
-islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar")
+islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar", "pag")
 
 # American Samoa
 # islands = c("ofu", "ros", "swa", "tau", "tut") # none of existing island bathy files worked, run 2b
@@ -25,7 +25,7 @@ islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar")
 
 for (isl in 1:length(islands)) {
   
-  # isl = 1
+  # isl = 8
   
   if (islands[isl] == "gua") topo = raster("L:/ktanaka/GIS/bathymetry/gua_nthmp_dem_10m_mosaic.tif") # Guam
   if (islands[isl] == "rot") topo = raster("L:/ktanaka/GIS/bathymetry/Rota_5m_bathymetry.asc") # Rota
@@ -40,6 +40,8 @@ for (isl in 1:length(islands)) {
   if (islands[isl] == "fdp") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/fdp_inpo/w001001.adf")
   if (islands[isl] == "mau") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/mau_inpo/w001001.adf")
   if (islands[isl] == "sar") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/sar_inpo/w001001.adf")
+  if (islands[isl] == "pag") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/pag_inpo/w001001.adf")
+  
   
   # if (islands[isl] == "ofu") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/ofu_inpo/w001001.adf") # decided not to use existing ship file because it was lat lon format and resolution was off. Run 2b script instead.
   # if (islands[isl] == "ros") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/ros_inpo/w001001.adf")# decided not to use existing ship file because it was lat lon format and resolution was off. Run 2b script instead.
