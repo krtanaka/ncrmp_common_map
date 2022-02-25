@@ -84,7 +84,7 @@ for (isl in 1:length(islands)) {
   
 }
 
-load('data/gis_bathymetry/swa.RData')
+load('data/gis_bathymetry/pag.RData')
 
 wireframe(unclass(as.bathy(topo_i)), 
           shade = T,
