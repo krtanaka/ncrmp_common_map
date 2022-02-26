@@ -261,7 +261,9 @@ for (i in 1:length(islands)) {
       new_scale_color() +
       new_scale_fill() +
       
-      geom_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin)) +
+      # geom_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin)) +
+      geom_spatial_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin),  crs = 4326) + 
+      annotation_scale(location = "br", width_hint = 0.2) +
 
       # new_scale_color() +
       # new_scale_fill() +      
@@ -291,8 +293,10 @@ for (i in 1:length(islands)) {
       #                 point.padding = unit(0.3, "lines")) +
       # ylab("Northings (km)") + xlab("Eastings (km)") +
       
-      coord_fixed() +
-
+      # coord_fixed() +
+      # coord_map() + 
+      coord_sf(crs = 4326) + 
+      
       scale_x_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20), "Longitude (dec deg)") +
       scale_y_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20), "Latitude (dec deg)") +
 
