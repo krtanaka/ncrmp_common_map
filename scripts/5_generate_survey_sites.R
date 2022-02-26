@@ -300,14 +300,14 @@ for (i in 1:length(islands)) {
       # scale_x_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20), "Longitude (dec deg)") +
       # scale_y_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20), "Latitude (dec deg)") +
 
-      theme_classic() +
+      theme_bw() +
       
       theme(legend.position = "right",
             axis.text = element_text(size = 5),
             axis.title = element_text(size = 5)) + 
       labs(
         title = "",
-        subtitle = paste0(paste0("Island = ", toupper(islands[i]),"\n", 
+        subtitle = paste0(paste0("Island = ", toupper(as.character(isl_shp[1])),"\n", 
                                  "Number of strata = ", length(unique(cells$strat)), "\n", 
                                  "Target survey effort = ", total_sample, " sites \n",
                                  "Total survey effort = ", sum(strat_det$strat_sets), " sites"))))
