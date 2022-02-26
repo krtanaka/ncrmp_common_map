@@ -233,11 +233,6 @@ for (i in 1:length(islands)) {
   find_hull <- function(boxes) boxes[chull(boxes$latitude, boxes$longitude), ]
   boxes_hulls <- ddply(df, "boxes_nam", find_hull)
   
-  # Convex hulls for island sectors
-  df <- buffer
-  find_hull <- function(buffer) boxes[chull(buffer$latitude, buffer$longitude), ]
-  sector_hulls <- ddply(df, "sector_nam", find_hull)
-  
   (site_location = 
       
       ggplot() + 
@@ -257,7 +252,7 @@ for (i in 1:length(islands)) {
       new_scale_fill() +
       
       # geom_tile(data = boxes, aes(longitude, latitude, fill = boxes_nam), width = 0.001, height = 0.001, alpha = 0.2, show.legend = F) + # survey boxes fill
-      geom_polygon(data = hulls, aes(longitude, latitude, fill = boxes_nam, color = boxes_nam), alpha = 0.01, size = 1, show.legend = F) + # survey boxes hull
+      geom_polygon(data = boxes_hulls, aes(longitude, latitude, fill = boxes_nam, color = boxes_nam), alpha = 0.01, size = 1, show.legend = F) + # survey boxes hull
       geom_text_repel(data = boxes_label, aes(longitude, latitude, label = boxes_nam, color = boxes_nam, fontface = 'bold'), max.overlaps = Inf, show.legend = F) +
       
       scale_fill_discrete() + 
