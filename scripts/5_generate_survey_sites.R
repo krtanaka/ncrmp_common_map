@@ -231,12 +231,12 @@ for (i in 1:length(islands)) {
   ddply = plyr::ddply
   df <- boxes
   find_hull <- function(boxes) boxes[chull(boxes$latitude, boxes$longitude), ]
-  hulls <- ddply(df, "boxes_nam", find_hull)
+  boxes_hulls <- ddply(df, "boxes_nam", find_hull)
   
   # Convex hulls for island sectors
   df <- buffer
   find_hull <- function(buffer) boxes[chull(buffer$latitude, buffer$longitude), ]
-  hulls <- ddply(df, "sector_nam", find_hull)
+  sector_hulls <- ddply(df, "sector_nam", find_hull)
   
   (site_location = 
       
