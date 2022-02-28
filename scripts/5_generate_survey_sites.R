@@ -75,13 +75,13 @@ for (i in 1:length(islands)) {
   if (dim(total_sample)[1] == 0){
     
     total_sample = 10
-
+    
   }else {
     
     total_sample = total_sample$Effort
     
   }
-
+  
   n <- id <- division <- strat <- N <- strat_sets <- cell_sets <- NULL
   
   cells <- data.table(rasterToPoints(survey_grid_ncrmp))
@@ -216,23 +216,35 @@ for (i in 1:length(islands)) {
   ################################
   ### Read Island survey boxes ###
   ################################
-  load(paste0('data/gis_survey_boxes/', islands[i], '.RData'))
-  boxes = raster_and_table[[1]]
-  boxes_name = raster_and_table[[2]]
-  boxes <- data.table(rasterToPoints(boxes)); colnames(boxes)[3] = "ID"
-  utmcoor <- SpatialPoints(cbind(boxes$x, boxes$y), proj4string = CRS(paste0("+proj=utm +units=m +zone=", utm_i$UTM_Zone)))
-  longlatcoor <- spTransform(utmcoor,CRS("+proj=longlat"))
-  boxes$longitude <- coordinates(longlatcoor)[,1]
-  boxes$latitude <- coordinates(longlatcoor)[,2]
-  boxes = merge(boxes, boxes_name)
-  colnames(boxes)[6] = "boxes_nam"
-  boxes_label = boxes %>% group_by(boxes_nam) %>% summarise(longitude = median(longitude), latitude = median(latitude))
+  if (file.exists(paste0('data/gis_survey_boxes/', islands[i], '.RData'))) {
+    
+    load(paste0('data/gis_survey_boxes/', islands[i], '.RData'))
+    boxes = raster_and_table[[1]]
+    boxes_name = raster_and_table[[2]]
+    boxes <- data.table(rasterToPoints(boxes)); colnames(boxes)[3] = "ID"
+    utmcoor <- SpatialPoints(cbind(boxes$x, boxes$y), proj4string = CRS(paste0("+proj=utm +units=m +zone=", utm_i$UTM_Zone)))
+    longlatcoor <- spTransform(utmcoor,CRS("+proj=longlat"))
+    boxes$longitude <- coordinates(longlatcoor)[,1]
+    boxes$latitude <- coordinates(longlatcoor)[,2]
+    boxes = merge(boxes, boxes_name)
+    colnames(boxes)[6] = "boxes_nam"
+    boxes_label = boxes %>% group_by(boxes_nam) %>% summarise(longitude = median(longitude), latitude = median(latitude))
+    
+    # Convex hulls for survey boxes
+    ddply = plyr::ddply
+    df <- boxes
+    find_hull <- function(boxes) boxes[chull(boxes$latitude, boxes$longitude), ]
+    boxes_hulls <- ddply(df, "boxes_nam", find_hull)
+    
+    Switch = T
+    
+  } else {
+    
+    
+    Switch = F
+
+  }
   
-  # Convex hulls for survey boxes
-  ddply = plyr::ddply
-  df <- boxes
-  find_hull <- function(boxes) boxes[chull(boxes$latitude, boxes$longitude), ]
-  boxes_hulls <- ddply(df, "boxes_nam", find_hull)
   
   (site_location = 
       
@@ -253,22 +265,20 @@ for (i in 1:length(islands)) {
       new_scale_fill() +
       
       # geom_tile(data = boxes, aes(longitude, latitude, fill = boxes_nam), width = 0.001, height = 0.001, alpha = 0.2, show.legend = F) + # survey boxes fill
-      geom_polygon(data = boxes_hulls, aes(longitude, latitude, fill = boxes_nam, color = boxes_nam), alpha = 0.01, size = 1, show.legend = F) + # survey boxes hull
-      geom_text_repel(data = boxes_label, aes(longitude, latitude, label = boxes_nam, color = boxes_nam, fontface = 'bold'), max.overlaps = Inf, show.legend = F) +
-      
-      scale_fill_discrete() + 
-      scale_color_discrete() + 
-      
-      new_scale_color() +
-      new_scale_fill() +
-      
+      {if(Switch) geom_polygon(data = boxes_hulls, aes(longitude, latitude, fill = boxes_nam, color = boxes_nam), alpha = 0.01, size = 1, show.legend = F)} + # survey boxes hull
+      {if(Switch) geom_text_repel(data = boxes_label, aes(longitude, latitude, label = boxes_nam, color = boxes_nam, fontface = 'bold'), max.overlaps = Inf, show.legend = F)} +
+      {if(Switch) scale_fill_discrete()} + 
+      {if(Switch) scale_color_discrete()} + 
+      {if(Switch) new_scale_color()} +
+      {if(Switch) new_scale_fill()} +
+  
       # geom_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin)) +
       geom_spatial_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin),  crs = 4326) + 
       annotation_scale(location = "br", width_hint = 0.2) +
-
+      
       # new_scale_color() +
       # new_scale_fill() +      
-
+      
       geom_label_repel(data = sets, 
                        aes(longitude, latitude, label = id),
                        size = 2,
@@ -283,24 +293,16 @@ for (i in 1:length(islands)) {
                        box.padding = unit(0.8, "lines"),
                        point.padding = unit(0.3, "lines")) +
       
-      # geom_raster(data = cells, aes(x, y, fill = factor(strat)), alpha = 0.5) +
-      # geom_point(data = sets, aes(x, y, shape = depth_bin, color = depth_bin)) +
-      # geom_text_repel(data = sets, aes(x, y, label = id),
-      #                 max.overlaps = Inf,
-      #                 segment.size = 0.2,
-      #                 nudge_y = 0.2,
-      #                 nudge_x = 0.2,
-      #                 box.padding = unit(0.3, "lines"),
-      #                 point.padding = unit(0.3, "lines")) +
-      # ylab("Northings (km)") + xlab("Eastings (km)") +
-      
-      # coord_fixed() +
-      # coord_map() + 
-      coord_sf(crs = 4326) + 
+    # coord_fixed() +
+    # coord_map() + 
+    coord_sf(crs = 4326) + 
       
       # scale_x_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20), "Longitude (dec deg)") +
       # scale_y_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20), "Latitude (dec deg)") +
-
+      
+      scale_x_continuous(sec.axis = dup_axis(), "") +
+      scale_y_continuous(sec.axis = dup_axis(), "") +
+      
       theme_bw() +
       
       theme(legend.position = "right",
@@ -317,12 +319,14 @@ for (i in 1:length(islands)) {
   # print((bathymetry + strata) / (area + variability))
   # dev.off()
   
-  pdf(paste0("outputs/survey_geo_ref_", islands[i], "_", effort_level, ".pdf"), height = 15, width = 15)
+  pdf(paste0("outputs/survey_geo_ref_", islands[i], "_", effort_level, ".pdf"), height = 10, width = 10)
   print(site_location)
   dev.off()
   
   library(pdftools)
-  pdf_combine(c("outputs/survey_geo_ref_gua_mid.pdf", "outputs/survey_table_gua_mid.pdf"), output = "outputs/survey_map_sites.pdf")
+  pdf_combine(c(paste0("outputs/survey_geo_ref_", islands[i], "_mid.pdf"), 
+                paste0("outputs/survey_table_", islands[i], "_mid.pdf")), 
+              output = paste0("outputs/survey_map_sites_", islands[i], ".pdf"))
   
   # (Area = cells %>% 
   #     group_by(strat) %>% 
@@ -355,4 +359,3 @@ for (i in 1:length(islands)) {
   #     theme_minimal())
   
 }
-
