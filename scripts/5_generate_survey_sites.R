@@ -74,11 +74,11 @@ for (i in 1:length(islands)) {
   
   if (dim(total_sample)[1] == 0){
     
-    total_sample = 10
+    total_sample = 100
     
   }else {
     
-    total_sample = total_sample$Effort
+    total_sample = total_sample$Effort*3
     
   }
   
@@ -138,10 +138,12 @@ for (i in 1:length(islands)) {
   sets$depth_bin = ifelse(sets$depth > 6  & sets$depth <= 18, "MID", sets$depth_bin) 
   sets$depth_bin = ifelse(sets$depth > 18, "DEEP", sets$depth_bin) 
   
-  readr::write_csv(sets, path = paste0("outputs/survey_table_", islands[i], "_", effort_level, ".csv"))
+  readr::write_csv(sets, path = paste0("outputs/table/survey_table_", region, "_", islands[i], ".csv"))
+  
+  page_height = ifelse(dim(sets)[1] > 30, dim(sets)[1]/3, 30)
   
   library(gridExtra)
-  pdf(paste0("outputs/survey_table_", islands[i], "_", effort_level, ".pdf"), height = 12, width = 10)
+  pdf(paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf"), height = page_height, width = 10)
   grid.table(sets)
   dev.off()
   
@@ -255,8 +257,8 @@ for (i in 1:length(islands)) {
       
       # geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.3, width = 0.001, height = 0.001) + # stratum
       
-      geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.005, height = 0.005, alpha = 0.3, show.legend = F) + # island sectors
-      geom_label_repel(data = buffer_label, aes(longitude, latitude, label = sector_nam,  fill = sector_nam, fontface = 'bold'), color = "white", show.legend = F) +
+      geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.3, show.legend = F) + # island sectors
+      geom_label_repel(data = buffer_label, aes(longitude, latitude, label = sector_nam, fill = sector_nam, fontface = 'bold'), color = "white", max.overlaps = Inf, show.legend = F) +
       
       scale_fill_discrete() + 
       scale_color_discrete() + 
@@ -288,8 +290,9 @@ for (i in 1:length(islands)) {
                        color = 'black',
                        max.overlaps = Inf,
                        segment.size = 0.2,
-                       nudge_y = 0.005,
-                       nudge_x = 0.005,
+                       direction = "both", 
+                       # nudge_y = 0.005,
+                       # nudge_x = 0.005,
                        box.padding = unit(0.8, "lines"),
                        point.padding = unit(0.3, "lines")) +
       
@@ -307,7 +310,8 @@ for (i in 1:length(islands)) {
       
       theme(legend.position = "right",
             axis.text = element_text(size = 10),
-            axis.title = element_text(size = 10)) + 
+            axis.title = element_text(size = 10),
+            panel.grid = element_blank()) + 
       
       labs(
         title = "",
@@ -320,14 +324,14 @@ for (i in 1:length(islands)) {
   # print((bathymetry + strata) / (area + variability))
   # dev.off()
   
-  pdf(paste0("outputs/survey_geo_ref_", islands[i], "_", effort_level, ".pdf"), height = 10, width = 10)
+  pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), height = 30, width = 20)
   print(site_location)
   dev.off()
   
   library(pdftools)
-  pdf_combine(c(paste0("outputs/survey_geo_ref_", islands[i], "_mid.pdf"), 
-                paste0("outputs/survey_table_", islands[i], "_mid.pdf")), 
-              output = paste0("outputs/survey_map_sites_", islands[i], ".pdf"))
+  pdf_combine(c(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), 
+                paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf")), 
+              output = paste0("outputs/survey_map_table_", region, "_", islands[i], ".pdf"))
   
   # (Area = cells %>% 
   #     group_by(strat) %>% 
@@ -360,3 +364,4 @@ for (i in 1:length(islands)) {
   #     theme_minimal())
   
 }
+
