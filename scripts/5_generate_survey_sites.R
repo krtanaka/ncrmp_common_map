@@ -255,7 +255,7 @@ for (i in 1:length(islands)) {
       
       # geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.3, width = 0.001, height = 0.001) + # stratum
       
-      geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.3, show.legend = F) + # island sectors
+      geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.005, height = 0.005, alpha = 0.3, show.legend = F) + # island sectors
       geom_label_repel(data = buffer_label, aes(longitude, latitude, label = sector_nam,  fill = sector_nam, fontface = 'bold'), color = "white", show.legend = F) +
       
       scale_fill_discrete() + 
@@ -293,9 +293,9 @@ for (i in 1:length(islands)) {
                        box.padding = unit(0.8, "lines"),
                        point.padding = unit(0.3, "lines")) +
       
-    # coord_fixed() +
-    # coord_map() + 
-    coord_sf(crs = 4326) + 
+      # coord_fixed() +
+      # coord_map() + 
+      coord_sf(crs = 4326) + 
       
       # scale_x_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20), "Longitude (dec deg)") +
       # scale_y_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20), "Latitude (dec deg)") +
@@ -306,8 +306,9 @@ for (i in 1:length(islands)) {
       theme_bw() +
       
       theme(legend.position = "right",
-            axis.text = element_text(size = 5),
-            axis.title = element_text(size = 5)) + 
+            axis.text = element_text(size = 10),
+            axis.title = element_text(size = 10)) + 
+      
       labs(
         title = "",
         subtitle = paste0(paste0("Island = ", toupper(as.character(isl_shp[1])),"\n", 
