@@ -65,7 +65,7 @@ crs(ISL_bounds) = "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
 
 for (i in 1:length(islands)) {
   
-  # i = 3
+  # i = 1
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData")) 
@@ -78,7 +78,7 @@ for (i in 1:length(islands)) {
     
   }else {
     
-    total_sample = total_sample$Effort*3
+    total_sample = total_sample$Effort*2
     
   }
   
@@ -140,7 +140,7 @@ for (i in 1:length(islands)) {
   
   readr::write_csv(sets, path = paste0("outputs/table/survey_table_", region, "_", islands[i], ".csv"))
   
-  page_height = ifelse(dim(sets)[1] > 30, dim(sets)[1]/3, 30)
+  page_height = ifelse(dim(sets)[1] > 30, dim(sets)[1]/3, dim(sets)[1])
   
   library(gridExtra)
   pdf(paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf"), height = page_height, width = 10)
@@ -213,7 +213,7 @@ for (i in 1:length(islands)) {
     select(longitude, latitude, nam) %>% 
     unique()
   colnames(buffer)[3] = "sector_nam"
-  buffer_label = buffer %>% group_by(sector_nam) %>% summarise(longitude = median(longitude), latitude = median(latitude))
+  buffer_label = buffer %>% group_by(sector_nam) %>% summarise(longitude = quantile(longitude, 0.9), latitude = quantile(latitude, 0.9))
   
   ################################
   ### Read Island survey boxes ###
@@ -303,21 +303,20 @@ for (i in 1:length(islands)) {
       # scale_x_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20), "Longitude (dec deg)") +
       # scale_y_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20), "Latitude (dec deg)") +
       
-      scale_x_continuous(sec.axis = dup_axis(), "") +
-      scale_y_continuous(sec.axis = dup_axis(), "") +
+      scale_x_continuous(sec.axis = dup_axis(), "", limits = range(pretty(buffer$longitude))) +
+      scale_y_continuous(sec.axis = dup_axis(), "", limits = range(pretty(buffer$latitude))) +
       
       theme_bw() +
       
-      theme(legend.position = "right",
+      theme(legend.position = "bottom",
             axis.text = element_text(size = 10),
             axis.title = element_text(size = 10),
-            panel.grid = element_blank()) + 
-      
+            panel.grid = element_blank()) +   
       labs(
         title = "",
-        subtitle = paste0(paste0("Island = ", toupper(as.character(isl_shp[1])),"\n", 
-                                 "Number of strata = ", length(unique(cells$strat)), "\n", 
-                                 "Target survey effort = ", total_sample, " sites \n",
+        subtitle = paste0(paste0("Island = ", toupper(as.character(isl_shp[1])),"\n",
+                                 # "Number of strata = ", length(unique(cells$strat)), "\n",
+                                 # "Target survey effort = ", total_sample, " sites \n",
                                  "Total survey effort = ", sum(strat_det$strat_sets), " sites"))))
   
   # pdf(paste0("outputs/survey_layers_", islands[i], ".pdf"), height = 10, width = 10)
@@ -326,7 +325,7 @@ for (i in 1:length(islands)) {
   
   total_area = unique(cells$cell_area)*dim(cells)[1]
   
-  size = ifelse(total_area < 10, 10, round(total_area/2))
+  size = ifelse(total_area < 15, 15, round(total_area/3))
   
   pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), height = size, width = size)
   print(site_location)
@@ -368,4 +367,3 @@ for (i in 1:length(islands)) {
   #     theme_minimal())
   
 }
-
