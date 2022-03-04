@@ -324,7 +324,7 @@ for (i in 1:length(islands)) {
   # print((bathymetry + strata) / (area + variability))
   # dev.off()
   
-  pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), height = 30, width = 20)
+  pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), height = 15, width = 15)
   print(site_location)
   dev.off()
   
