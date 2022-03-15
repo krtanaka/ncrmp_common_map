@@ -37,7 +37,8 @@ islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"  
 
 # n_sims = 100 # number of simulations
 effort_level = c("low", "mid", "high")[2] # define sampling effort (low, mid, high)
-min_sets = 1 # minimum number of sets per strat
+min_sets = 10 # minimum number of sets per strat
+max_sets = 30
 trawl_dim = c(0.01, 0.0353) # 0.000353 sq.km (353 sq.m) from two 15-m diameter survey cylinders
 resample_cells = F
 
@@ -76,9 +77,9 @@ for (i in 1:length(islands)) {
     
     total_sample = 100
     
-  }else {
+  } else {
     
-    total_sample = total_sample$Effort*2
+    total_sample = total_sample$Effort*3
     
   }
   
@@ -105,6 +106,8 @@ for (i in 1:length(islands)) {
   
   # make sure minimum number of sets per strat is not 0 or 1
   strat_det$strat_sets[strat_det$strat_sets < min_sets] <- min_sets; strat_det
+  strat_det$strat_sets[strat_det$strat_sets > max_sets] <- max_sets; strat_det
+  
   strat_table = strat_det %>% dplyr::select(strat, strat_sets); strat_table
   
   # add "strat" "strat_cells" "tow_area" ...
