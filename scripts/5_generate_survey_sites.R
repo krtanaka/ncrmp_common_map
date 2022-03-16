@@ -104,9 +104,9 @@ for (i in 1:length(islands)) {
   ## allocate sampling units by area
   # strat_det$strat_sets = round((total_sample * strat_det$strat_area) / sum(strat_det$strat_area), 0); strat_det
   
-  # make sure minimum number of sets per strat is not 0 or 1
+  # make sure minimum number of sets per strat is not 0.
   strat_det$strat_sets[strat_det$strat_sets < min_sets] <- min_sets; strat_det
-  strat_det$strat_sets[strat_det$strat_sets > max_sets] <- max_sets; strat_det
+  # strat_det$strat_sets[strat_det$strat_sets > max_sets] <- max_sets; strat_det
   
   strat_table = strat_det %>% dplyr::select(strat, strat_sets); strat_table
   
