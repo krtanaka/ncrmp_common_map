@@ -66,7 +66,7 @@ crs(ISL_bounds) = "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
 
 for (i in 1:length(islands)) {
   
-  # i = 4
+  # i = 1
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData")) 
@@ -250,7 +250,32 @@ for (i in 1:length(islands)) {
 
   }
   
-  ISL_this <- crop(ISL_this, extent(144.6, 144.9, 13.2, 13.4))
+  ISL_this <- crop(ISL_this, extent(144.62, 144.71, 13.24, 13.65))
+  
+  buffer = buffer %>% subset(longitude > 144.62 &  
+                             longitude < 144.71 & 
+                             latitude > 13.24 & 
+                             latitude < 13.65)
+  
+  buffer_label = buffer_label %>% subset(longitude > 144.62 &  
+                                     longitude < 144.71 & 
+                                     latitude > 13.24 & 
+                                     latitude < 13.65)
+  
+  boxes_hulls = boxes_hulls %>% subset(longitude > 144.62 &  
+                                    longitude < 144.71 & 
+                                    latitude > 13.24 & 
+                                    latitude < 13.65)
+  
+  boxes_label = boxes_label %>% subset(longitude > 144.62 &  
+                                         longitude < 144.71 & 
+                                         latitude > 13.24 & 
+                                         latitude < 13.65)
+  
+  sets = sets %>% subset(longitude > 144.62 &  
+                             longitude < 144.71 & 
+                             latitude > 13.24 & 
+                             latitude < 13.65)
   
   (site_location = 
       
