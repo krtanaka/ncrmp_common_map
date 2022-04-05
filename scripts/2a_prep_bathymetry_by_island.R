@@ -14,7 +14,7 @@ islands = c(
   "gua",
   "rot", # in-house bathymetry file cannot represent eastern side of the island, use Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c.
   "sai", # in-house bathymetry file cannot represent shallow areas around the island, use Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c.
-  "tin", # in-house bathymetry file cannot represent shallow areas around the island, use Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c.
+  "tin", 
   "agu") # in-house bathymetry file not available, Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c.
 
 # North Mariana Islands
@@ -35,7 +35,7 @@ for (isl in 1:length(islands)) {
   if (islands[isl] == "rot") topo = raster("L:/ktanaka/GIS/bathymetry/Rota_5m_bathymetry.asc") # Rota - run 2c.
   if (islands[isl] == "sai") topo = raster("L:/ktanaka/GIS/bathymetry/saipan_5m.asc") # Saipan - run 2c.
   if (islands[isl] == "tin") topo = raster("L:/ktanaka/GIS/bathymetry/tinmblidbmos.asc") # Tinian
-  if (islands[isl] == "agu") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/FILE_NOT_AVAILAVLE") # file not available
+  if (islands[isl] == "agu") topo = raster("FILE_NOT_AVAILAVLE") # file not available
   
   if (islands[isl] == "agr") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/agr_inpoo_new/w001001.adf")
   if (islands[isl] == "ala") topo = raster("N:/GIS/Projects/SeafloorCalc/Workspace/Alamagan/ala_inpo_mbik/w001001.adf")
