@@ -10,7 +10,7 @@ library(readr)
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
-islands = c("gua", "rot", "sai", "tin", "agu")[2]; region = "MARIAN" # South Mariana Islands
+islands = c("gua", "rot", "sai", "tin", "agu")[4]; region = "MARIAN" # South Mariana Islands
 islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "MARIAN" # North Mariana Islands
 islands = c("ofu", "ros", "swa", "tau", "tut")[5]; region = "SAMOA" # American Samoa, but Swa is not included
 # islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs" # Pacific Remote Island Areas
@@ -71,7 +71,7 @@ for (i in 1:length(islands)) {
   topo_i <- projectRaster(topo_i, crs = sr)
   
   # topo_i = readAll(topo_i)
-  topo_i <- aggregate(topo_i, fact = 100/res(topo_i))
+  topo_i <- aggregate(topo_i, fact = 100/res(topo_i)); res(topo_i)
   plot(topo_i)
   print( islands[i])
   
