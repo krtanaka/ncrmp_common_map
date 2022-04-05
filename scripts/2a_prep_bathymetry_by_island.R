@@ -10,11 +10,12 @@ library(lattice)
 # need to connect to pifsc VPN if you are not at IRC
 
 # South Mariana Islands
-islands = c("gua", 
-           # "rot", # in-house bathymetry file cannot represent eastern side of the island, Run 2c. 
-            "sai", 
-            "tin") 
-# "agu") # Aguijan bathymetry file not available, use data from Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c. 
+islands = c(
+  "gua",
+  "rot", # in-house bathymetry file cannot represent eastern side of the island, use Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c.
+  "sai", # in-house bathymetry file cannot represent shallow areas around the island, use Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c.
+  "tin", # in-house bathymetry file cannot represent shallow areas around the island, use Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c.
+  "agu") # in-house bathymetry file not available, Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c.
 
 # North Mariana Islands
 islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar", "pag")
@@ -28,12 +29,12 @@ islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar", "pag")
 
 for (isl in 1:length(islands)) {
   
-  isl = 2
+  isl = 4
   
   if (islands[isl] == "gua") topo = raster("L:/ktanaka/GIS/bathymetry/gua_nthmp_dem_10m_mosaic.tif") # Guam
   if (islands[isl] == "rot") topo = raster("L:/ktanaka/GIS/bathymetry/Rota_5m_bathymetry.asc") # Rota - run 2c.
-  if (islands[isl] == "sai") topo = raster("L:/ktanaka/GIS/bathymetry/sai_mb_5m.tif") # Saipan
-  if (islands[isl] == "tin") topo = raster("L:/ktanaka/GIS/bathymetry/tinian_5m.asc") # Tinian
+  if (islands[isl] == "sai") topo = raster("L:/ktanaka/GIS/bathymetry/saipan_5m.asc") # Saipan - run 2c.
+  if (islands[isl] == "tin") topo = raster("L:/ktanaka/GIS/bathymetry/tinmblidbmos.asc") # Tinian
   if (islands[isl] == "agu") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/FILE_NOT_AVAILAVLE") # file not available
   
   if (islands[isl] == "agr") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/agr_inpoo_new/w001001.adf")
@@ -44,7 +45,6 @@ for (isl in 1:length(islands)) {
   if (islands[isl] == "mau") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/mau_inpo/w001001.adf")
   if (islands[isl] == "sar") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/sar_inpo/w001001.adf")
   if (islands[isl] == "pag") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/pag_inpo/w001001.adf")
-  
   
   # if (islands[isl] == "ofu") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/ofu_inpo/w001001.adf") # decided not to use existing shp file because it was lat lon format and resolution was off. Run 2b script instead.
   # if (islands[isl] == "ros") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/ros_inpo/w001001.adf")# decided not to use existing shp file because it was lat lon format and resolution was off. Run 2b script instead.
@@ -58,13 +58,12 @@ for (isl in 1:length(islands)) {
   if (islands[isl] == "pal") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/pal_inpo/w001001.adf") # 
   
   # if depth raster files contains no below sea-level cells (e.g. Swa), don't subset them
-  if(min(values(topo), na.rm = T) < 0) {
+  if(min(values(topo), na.rm = T) <= 0) {
     
     topo[topo <= -30] <- NA
     topo[topo >= 0] <- NA  
     
   }
-  
   
   if (islands[isl] %in% c("rot", "sai", "tin")) {
     
@@ -82,6 +81,7 @@ for (isl in 1:length(islands)) {
   # colnames(topo) = c("x", "y", "depth")
   # 
   # topo %>%
+  #   # subset(depth <= 0 & depth >= -6) %>%
   #   ggplot(aes(x, y, fill = depth)) +
   #   geom_raster() +
   #   scale_fill_viridis_c("") +

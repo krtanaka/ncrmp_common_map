@@ -66,7 +66,7 @@ crs(ISL_bounds) = "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
 
 for (i in 1:length(islands)) {
   
-  # i = 1
+  i = 4
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData")) 
@@ -276,6 +276,8 @@ for (i in 1:length(islands)) {
   #                          longitude < 144.71 & 
   #                          latitude > 13.24 & 
   #                          latitude < 13.65)
+  
+  ggdark::invert_geom_defaults()
   
   (site_location = 
       

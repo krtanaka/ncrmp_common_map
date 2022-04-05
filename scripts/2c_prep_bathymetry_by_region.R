@@ -10,7 +10,7 @@ library(readr)
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
-islands = c("gua", "rot", "sai", "tin", "agu")[4]; region = "MARIAN" # South Mariana Islands
+islands = c("gua", "rot", "sai", "tin", "agu")[2:5]; region = "MARIAN" # South Mariana Islands
 islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "MARIAN" # North Mariana Islands
 islands = c("ofu", "ros", "swa", "tau", "tut")[5]; region = "SAMOA" # American Samoa, but Swa is not included
 # islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs" # Pacific Remote Island Areas
