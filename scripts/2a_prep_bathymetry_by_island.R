@@ -29,11 +29,11 @@ islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar", "pag")
 
 for (isl in 1:length(islands)) {
   
-  isl = 4
+  isl = 3
   
   if (islands[isl] == "gua") topo = raster("L:/ktanaka/GIS/bathymetry/gua_nthmp_dem_10m_mosaic.tif") # Guam
   if (islands[isl] == "rot") topo = raster("L:/ktanaka/GIS/bathymetry/Rota_5m_bathymetry.asc") # Rota - run 2c.
-  if (islands[isl] == "sai") topo = raster("L:/ktanaka/GIS/bathymetry/saipan_5m.asc") # Saipan - run 2c.
+  if (islands[isl] == "sai") topo = raster("L:/ktanaka/GIS/bathymetry/sai_mb_li_db.asc") # Saipan - run 2c.
   if (islands[isl] == "tin") topo = raster("L:/ktanaka/GIS/bathymetry/tinmblidbmos.asc") # Tinian
   if (islands[isl] == "agu") topo = raster("FILE_NOT_AVAILAVLE") # file not available
   
