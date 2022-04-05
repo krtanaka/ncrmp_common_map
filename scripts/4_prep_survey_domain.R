@@ -26,7 +26,7 @@ islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                
 
 for (isl in 1:length(islands)) {
   
-  # isl = 1
+  # isl = 2
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
