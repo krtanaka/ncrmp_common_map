@@ -13,7 +13,7 @@ library(lattice)
 islands = c(
   "gua",
   "rot", # in-house bathymetry file cannot represent eastern side of the island, use Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c.
-  "sai", # in-house bathymetry file cannot represent shallow areas around the island, use Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c.
+  "sai", 
   "tin", 
   "agu") # in-house bathymetry file not available, Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c.
 
@@ -29,10 +29,10 @@ islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar", "pag")
 
 for (isl in 1:length(islands)) {
   
-  isl = 3
+  # isl = 2
   
   if (islands[isl] == "gua") topo = raster("L:/ktanaka/GIS/bathymetry/gua_nthmp_dem_10m_mosaic.tif") # Guam
-  if (islands[isl] == "rot") topo = raster("L:/ktanaka/GIS/bathymetry/Rota_5m_bathymetry.asc") # Rota - run 2c.
+  if (islands[isl] == "rot") topo = raster("L:/ktanaka/GIS/bathymetry/Rota_60m.asc") # Rota - run 2c.
   if (islands[isl] == "sai") topo = raster("L:/ktanaka/GIS/bathymetry/sai_mb_li_db.asc") # Saipan - run 2c.
   if (islands[isl] == "tin") topo = raster("L:/ktanaka/GIS/bathymetry/tinmblidbmos.asc") # Tinian
   if (islands[isl] == "agu") topo = raster("FILE_NOT_AVAILAVLE") # file not available
@@ -81,7 +81,7 @@ for (isl in 1:length(islands)) {
   # colnames(topo) = c("x", "y", "depth")
   # 
   # topo %>%
-  #   # subset(depth <= 0 & depth >= -6) %>%
+  #   subset(depth <= 0 & depth >= -6) %>%
   #   ggplot(aes(x, y, fill = depth)) +
   #   geom_raster() +
   #   scale_fill_viridis_c("") +
