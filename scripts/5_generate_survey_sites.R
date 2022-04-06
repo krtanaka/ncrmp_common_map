@@ -66,7 +66,7 @@ crs(ISL_bounds) = "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
 
 for (i in 1:length(islands)) {
   
-  i = 3
+  i = 4
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData")) 
@@ -79,7 +79,7 @@ for (i in 1:length(islands)) {
     
   } else {
     
-    total_sample = total_sample$Effort*3
+    total_sample = total_sample$Effort*5
     
   }
   
@@ -154,9 +154,7 @@ for (i in 1:length(islands)) {
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = depth)) + 
       scale_fill_gradientn(colours = matlab.like(30), "Depth (m)") + 
-      ylab("Northings (km)") + xlab("Eastings (km)") + 
       coord_fixed() +
-      theme_light() +
       theme(legend.position = "right"))
   
   (strata = cells %>% 
@@ -277,7 +275,7 @@ for (i in 1:length(islands)) {
   #                          latitude > 13.24 & 
   #                          latitude < 13.65)
   
-  ggdark::invert_geom_defaults()
+  # ggdark::invert_geom_defaults()
   
   (site_location = 
       
@@ -356,7 +354,7 @@ for (i in 1:length(islands)) {
   
   total_area = unique(cells$cell_area)*dim(cells)[1]
   
-  size = ifelse(total_area < 15, 15, round(total_area/3))
+  size = ifelse(total_area < 18, 15, round(total_area/3))
   
   pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), height = size, width = size)
   print(site_location)
