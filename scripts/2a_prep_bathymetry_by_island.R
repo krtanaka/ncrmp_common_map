@@ -12,20 +12,26 @@ library(lattice)
 # South Mariana Islands
 islands = c(
   "gua",
-  "rot", # in-house bathymetry file cannot represent eastern side of the island, use Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c.
+  # "rot", # in-house bathymetry file cannot represent eastern side of the island, use Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c_prep_bathymetry_by_region.
   "sai", 
-  "tin", 
-  "agu") # in-house bathymetry file not available, Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c.
+  "tin"
+  # "agu" # in-house bathymetry file cannot represent eastern side of the island, use Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c_prep_bathymetry_by_region.
+)
 
 # North Mariana Islands
 islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar", "pag")
 
 # American Samoa
-# islands = c("ofu", "ros", "swa", "tau", "tut") # none of existing island bathy files worked, run 2b
+islands = c("ofu", "ros", "swa", "tau", "tut") # none of in-house bahytmetry files worked. Run 2b_prep_bathymetry_by_island_alt.R
 
-# islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak")                # Pacific Remote Island Areas
-# islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")  # Main Hawaiian Islands
-# islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr")                # Northern Hawaiian Islands
+# Pacific Remote Island Areas
+islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak")
+
+# Main Hawaiian Islands
+islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")
+
+# Northern Hawaiian Islands
+islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr")
 
 for (isl in 1:length(islands)) {
   

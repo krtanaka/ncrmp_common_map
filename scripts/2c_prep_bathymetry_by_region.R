@@ -22,9 +22,9 @@ island_names_codes = read_csv("data/misc/island_name_code.csv")
 island_names_codes_boxes = merge(island_names_codes, island_boxes)
 rm(island_names_codes, island_boxes)
 
-if(region == "MARIAN") topo = raster("L:/ktanaka/GIS/bathymetry/mariana_trench_6_msl_2012.nc") # Mariana 
-if(region == "SAMOA") topo = raster("L:/ktanaka/GIS/bathymetry/pago_pago_3_mhw_2009.nc") # American Samoa
-if(region == "MHI") topo = raster("L:/ktanaka/GIS/bathymetry/usgsCeCrm10.nc") # Main Hawaiian Islands
+if(region == "MARIAN") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/mariana_trench_6_msl_2012.nc") # Mariana 
+if(region == "SAMOA") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/pago_pago_3_mhw_2009.nc") # American Samoa
+if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/usgsCeCrm10.nc") # Main Hawaiian Islands
 
 default_proj = crs(topo)
 
