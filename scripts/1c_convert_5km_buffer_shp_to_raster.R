@@ -15,7 +15,8 @@ rm(list = ls())
 
 spatial_resolution = 100 # spatial resolution in m
 
-shp_path = "L:/ktanaka/GIS" # pc
+shp_path = "L:/ktanaka/GIS"
+shp_path = "N:/GIS/Projects/CommonMaps"
 
 shp_list = list.files(path = paste0(shp_path, "/5km_buffer/"), pattern = "\\.shp$", full.names = T); shp_list
 dat <- shapefile(shp_list, verbose = T); plot(dat); degAxis(1); degAxis(2)
@@ -86,11 +87,10 @@ for (i in 1:length(island_name)) {
   r_df = merge(r_df, table)
   r_df_label = r_df %>% group_by(nam) %>% summarise(x = median(x), y = median(y))
   
-  # ggplot() +  
-  #   geom_raster(data = r_df, aes(x, y, fill = nam), show.legend = F) + 
-  #   geom_text_repel(data = r_df_label, aes(x, y, label = nam)) + 
-  #   coord_equal() + 
-  #   theme_light()
+  ggplot() +
+    geom_raster(data = r_df, aes(x, y, fill = nam), show.legend = F) +
+    geom_text_repel(data = r_df_label, aes(x, y, label = nam)) +
+    coord_equal()
   
   if (file.exists(paste0("data/gis_bathymetry/", island_name[i], ".RData"))) {
     
