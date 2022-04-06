@@ -1,3 +1,7 @@
+###################################################################
+### Prep island bathymetry data using external island GIS files ###
+###################################################################
+
 rm(list = ls())
 
 library(raster)
