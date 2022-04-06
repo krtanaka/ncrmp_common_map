@@ -193,7 +193,7 @@ for (shp_i in 1:length(shp_list)) {
   
   # shp_i = 1
   
-  island_name = tolower(substr(shp_list[shp_i], 23, 25)); island_name
+  island_name = tolower(substr(shp_list[shp_i], 35, 37)); island_name
   
   utm_i = utm %>% subset(Island_Code == island_name)
   
@@ -248,9 +248,7 @@ for (shp_i in 1:length(shp_list)) {
   
   ggplot() +  
     geom_raster(data = r_df, aes(x, y, fill = nam), show.legend = F) + 
-    geom_text_repel(data = r_df_label, aes(x, y, label = nam)) + 
-    coord_equal() + 
-    theme_light()
+    geom_text_repel(data = r_df_label, aes(x, y, label = nam))
   
   raster_and_table = list(raster, table)
   
