@@ -37,11 +37,11 @@ for (isl in 1:length(islands)) {
   
   # isl = 2
   
-  if (islands[isl] == "gua") topo = raster("L:/ktanaka/GIS/bathymetry/gua_nthmp_dem_10m_mosaic.tif") # Guam
-  if (islands[isl] == "rot") topo = raster("L:/ktanaka/GIS/bathymetry/Rota_60m.asc") # Rota - run 2c.
-  if (islands[isl] == "sai") topo = raster("L:/ktanaka/GIS/bathymetry/sai_mb_li_db.asc") # Saipan - run 2c.
-  if (islands[isl] == "tin") topo = raster("L:/ktanaka/GIS/bathymetry/tinmblidbmos.asc") # Tinian
-  if (islands[isl] == "agu") topo = raster("FILE_NOT_AVAILAVLE") # file not available
+  if (islands[isl] == "gua") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/gua_nthmp_dem_10m_mosaic.tif") # Guam
+  # if (islands[isl] == "rot") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Rota_60m.asc") # Rota - run 2c.
+  if (islands[isl] == "sai") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/sai_mb_li_db.asc") # Saipan - run 2c.
+  if (islands[isl] == "tin") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/tinmblidbmos.asc") # Tinian
+  # if (islands[isl] == "agu") topo = raster("FILE_NOT_AVAILAVLE") # file not available
   
   if (islands[isl] == "agr") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/agr_inpoo_new/w001001.adf")
   if (islands[isl] == "ala") topo = raster("N:/GIS/Projects/SeafloorCalc/Workspace/Alamagan/ala_inpo_mbik/w001001.adf")
