@@ -13,11 +13,12 @@ rm(list = ls())
 
 spatial_resolution = 100 # spatial resolution in m
 
-shp_path = "L:/ktanaka/GIS" # pc
+shp_path = "L:/ktanaka/GIS"
+shp_path = "N:/GIS/Projects/CommonMaps"
 
 shp_list = list.files(path = paste0(shp_path, "/sector/"), pattern = "\\.shp$", full.names = T); shp_list
 
-island_name = tolower(substr(shp_list[10], 23, 30)); island_name
+island_name = tolower(substr(shp_list[10], 35, 42)); island_name
 
 dat <- shapefile(shp_list[10], verbose = T); plot(dat); degAxis(1); degAxis(2)
 nmsas <- as.data.frame(dat)

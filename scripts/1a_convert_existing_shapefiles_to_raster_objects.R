@@ -15,8 +15,8 @@ rm(list = ls())
 
 spatial_resolution = 100 # spatial resolution in m
 
-shp_path = "L:/ktanaka/GIS" # pc
-shp_path = "N:/GIS/Projects/CommonMaps" # pc
+shp_path = "L:/ktanaka/GIS"
+shp_path = "N:/GIS/Projects/CommonMaps"
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
