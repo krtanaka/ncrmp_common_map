@@ -16,6 +16,7 @@ rm(list = ls())
 spatial_resolution = 100 # spatial resolution in m
 
 shp_path = "L:/ktanaka/GIS" # pc
+shp_path = "N:/GIS/Projects/CommonMaps" # pc
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
@@ -30,7 +31,7 @@ for (shp_i in 1:length(shp_list)) {
   
   # shp_i = 20
   
-  island_name = tolower(substr(shp_list[shp_i], 25, 27)); island_name
+  island_name = tolower(substr(shp_list[shp_i], 37, 39)); island_name
   
   utm_i = utm %>% subset(Island_Code == island_name)
   
@@ -84,8 +85,7 @@ for (shp_i in 1:length(shp_list)) {
   
   ggplot() +  
     geom_raster(data = r_df, aes(x, y, fill = nam), show.legend = T) + 
-    coord_equal() + 
-    theme_void()
+    coord_equal()
   
   raster_and_table = list(raster, table)
   
