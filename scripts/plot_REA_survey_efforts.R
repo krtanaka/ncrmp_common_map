@@ -43,7 +43,7 @@ save(survey_effort, file = "data/misc/survey_effort_ncrmp_2000-2020.RData")
     geom_point(show.legend = F) +
     geom_line(show.legend = F) + 
     # facet_grid(SEC_NAME~DEPTH_BIN ) +
-    facet_grid(~ISLAND) + 
+    facet_grid(~ISLAND) +
     theme_minimal() + 
     theme(axis.title.x = element_blank(),
           axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)))
