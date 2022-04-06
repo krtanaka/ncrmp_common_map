@@ -1,3 +1,7 @@
+############################################
+### Convert NMSAS_PY shapefile to raster ###
+############################################
+
 library(raster)
 library(rgdal)
 library(rgeos)

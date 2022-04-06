@@ -1,3 +1,7 @@
+###############################################
+### Convert 5km-buffer shapefiles to raster ###
+###############################################
+
 library(raster)
 library(rgdal)
 library(rgeos)
