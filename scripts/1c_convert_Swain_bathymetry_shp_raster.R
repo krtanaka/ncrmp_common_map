@@ -73,4 +73,4 @@ ggplot() +
 
 raster_and_table = list(raster, table)
 
-save(raster_and_table, file = paste0("data/gis_hardsoft/", island_name, ".RData"))
+save(raster_and_table, file = paste0("data/gis_bathymetry/", island_name, "_alt.RData"))
