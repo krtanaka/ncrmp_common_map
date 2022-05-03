@@ -132,10 +132,10 @@ for (isl in 1:length(islands)) {
     
   }
   
-  if (islands[i] == "swa") {
+  if (islands[isl] == "swa") {
     
-    load(paste0("data/gis_survey_boxes/", islands[isl], ".RData"))
-    boxes = raster_and_table[[1]]; boxes_name = raster_and_table[[2]]
+    load("data/gis_bathymetry/swa_alt.RData")
+    bathymetry_new = raster_and_table[[1]]; bathymetry_new_name = raster_and_table[[2]]
     
   }
   
@@ -143,14 +143,18 @@ for (isl in 1:length(islands)) {
   sector = resample(sector, topo_i, method = "ngb") 
   reef = resample(reef, topo_i, method = "ngb") 
   bathymetry = resample(topo_i, topo_i, method = "ngb") 
+  if (islands[isl] == "swa") bathymetry_new = resample(bathymetry_new, topo_i, method = "ngb") 
   buffer = resample(buffer, topo_i, method = "ngb")
   boxes = resample(boxes, topo_i, method = "ngb")
   
   df = stack(hardsoft, sector, reef, bathymetry, buffer)
+  if (islands[isl] == "swa") df = stack(hardsoft, sector, reef, bathymetry, bathymetry_new, buffer)
+  
   df = as.data.frame(rasterToPoints(df))
   
   colnames(df) = c("longitude", "latitude", "hardsoft", "sector", "reef", "depth", "buffer")
-  
+  if (islands[isl] == "swa") colnames(df) = c("longitude", "latitude", "hardsoft", "sector", "reef", "depth", "depth_new", "buffer")
+
   df = na.omit(df)
   
   df$cell = 1:dim(df)[1]; df$cell = as.numeric(df$cell)
@@ -160,6 +164,7 @@ for (isl in 1:length(islands)) {
   df$depth_bin = ifelse(df$depth <= 0  & df$depth >= -6, 1L, df$depth_bin) 
   df$depth_bin = ifelse(df$depth < -6  & df$depth >= -18, 2L, df$depth_bin) 
   df$depth_bin = ifelse(df$depth < -18, 3L, df$depth_bin) 
+  if (islands[isl] == "swa") df$depth_bin = as.character(df$depth_new)
   
   df$hardsoft = round(df$hardsoft, 0)
   df$reef = round(df$reef, 0)

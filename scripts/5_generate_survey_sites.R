@@ -69,7 +69,7 @@ for (i in 1:length(islands)) {
   # i = 4
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
-  load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData")) 
+  load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData")); plot(survey_grid_ncrmp)
   
   total_sample = survey_effort %>% subset(Island_Code == islands[i])
   
