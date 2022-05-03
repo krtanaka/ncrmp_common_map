@@ -38,12 +38,12 @@ for (i in 1:length(nmsas)) {
 
   if (nmsas[i] == "Muliava Sanctuary Unit") island_name = "ros"
   if (nmsas[i] == "Swains Island Sanctuary Unit") island_name = "swa"
+  if (nmsas[i] == "Swains Open") island_name = "swa"
   if (nmsas[i] == "Fagalua/Fogama'a Sanctuary Unit") island_name = "tut"
   if (nmsas[i] == "Fagatele Bay Sanctuary Unit") island_name = "tut"
-  if (nmsas[i] == "Ta'u Sanctuary Unit") island_name = "tau"
   if (nmsas[i] == "Aunu'u Sanctuary Unit B") island_name = "tut"
   if (nmsas[i] == "Aunu'u Sanctuary Unit A") island_name = "tut"
-  if (nmsas[i] == "Swains Open") island_name = "swa"
+  if (nmsas[i] == "Ta'u Sanctuary Unit") island_name = "tau"
   if (nmsas[i] == "Tau Open") island_name = "tau"
   
   utm_i = utm %>% subset(Island_Code == island_name)
@@ -106,6 +106,17 @@ for (i in 1:length(nmsas)) {
   nmsas_name = gsub(" ", "_", nmsas[i])
   nmsas_name = gsub("/", "_", nmsas_name)
   nmsas_name = gsub("'", "", nmsas_name)
+  
+  if (nmsas[i] == "Swains Island Sanctuary Unit") island_name = "swa_a"
+  if (nmsas[i] == "Swains Open") island_name = "swa_b"
+  
+  if (nmsas[i] == "Fagalua/Fogama'a Sanctuary Unit") island_name = "tut_a"
+  if (nmsas[i] == "Fagatele Bay Sanctuary Unit") island_name = "tut_b"
+  if (nmsas[i] == "Aunu'u Sanctuary Unit B") island_name = "tut_c"
+  if (nmsas[i] == "Aunu'u Sanctuary Unit A") island_name = "tut_d"
+  
+  if (nmsas[i] == "Ta'u Sanctuary Unit") island_name = "tau_a"
+  if (nmsas[i] == "Tau Open") island_name = "tau_b"
   
   # save(raster_and_table, file = paste0("data/gis_sector/", nmsas_name, "_NMSAS.RData"))
   save(raster_and_table, file = paste0("data/gis_sector/", island_name, ".RData"))
