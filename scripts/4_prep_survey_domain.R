@@ -132,6 +132,13 @@ for (isl in 1:length(islands)) {
     
   }
   
+  if (islands[i] == "swa") {
+    
+    load(paste0("data/gis_survey_boxes/", islands[isl], ".RData"))
+    boxes = raster_and_table[[1]]; boxes_name = raster_and_table[[2]]
+    
+  }
+  
   hardsoft = resample(hardsoft, topo_i, method = "ngb") 
   sector = resample(sector, topo_i, method = "ngb") 
   reef = resample(reef, topo_i, method = "ngb") 
