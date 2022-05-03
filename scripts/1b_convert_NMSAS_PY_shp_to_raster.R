@@ -22,8 +22,8 @@ island_name = tolower(substr(shp_list[10], 35, 42)); island_name
 
 dat <- shapefile(shp_list[10], verbose = T); plot(dat); degAxis(1); degAxis(2)
 nmsas <- as.data.frame(dat)
-nmsas = nmsas$Label
-nmsas = nmsas[c(1, 2, 5)]; nmsas # take out Tutulia sectors
+nmsas = nmsas$Label; nmsas
+# nmsas = nmsas[c(1, 2, 5)]; nmsas # take out Tutulia sectors
 
 dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2)
 proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2)
@@ -43,6 +43,8 @@ for (i in 1:length(nmsas)) {
   if (nmsas[i] == "Ta'u Sanctuary Unit") island_name = "tau"
   if (nmsas[i] == "Aunu'u Sanctuary Unit B") island_name = "tut"
   if (nmsas[i] == "Aunu'u Sanctuary Unit A") island_name = "tut"
+  if (nmsas[i] == "Swains Open") island_name = "swa"
+  if (nmsas[i] == "Tau Open") island_name = "tau"
   
   utm_i = utm %>% subset(Island_Code == island_name)
   
