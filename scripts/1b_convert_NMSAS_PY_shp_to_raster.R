@@ -30,25 +30,22 @@ proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); de
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
-for (i in 1:length(nmsas)) {
+island_name = c("ros", "swa", "tut", "tau")
+
+for (i in 1:length(island_name)) {
   
   start = Sys.time()
   
   # i = 1
+  
+  if (island_name[i] == "ros") island_sector = "Muliava Sanctuary Unit"
+  if (island_name[i] == "swa") island_sector = c("Swains Island Sanctuary Unit", "Swains Open")
+  if (island_name[i] == "tut") island_sector = c("Fagalua/Fogama'a Sanctuary Unit", "Fagatele Bay Sanctuary Unit", "Aunu'u Sanctuary Unit B", "Aunu'u Sanctuary Unit A")
+  if (island_name[i] == "tau") island_sector = c("Ta'u Sanctuary Unit", "Tau Open")
 
-  if (nmsas[i] == "Muliava Sanctuary Unit") island_name = "ros"
-  if (nmsas[i] == "Swains Island Sanctuary Unit") island_name = "swa"
-  if (nmsas[i] == "Swains Open") island_name = "swa"
-  if (nmsas[i] == "Fagalua/Fogama'a Sanctuary Unit") island_name = "tut"
-  if (nmsas[i] == "Fagatele Bay Sanctuary Unit") island_name = "tut"
-  if (nmsas[i] == "Aunu'u Sanctuary Unit B") island_name = "tut"
-  if (nmsas[i] == "Aunu'u Sanctuary Unit A") island_name = "tut"
-  if (nmsas[i] == "Ta'u Sanctuary Unit") island_name = "tau"
-  if (nmsas[i] == "Tau Open") island_name = "tau"
+  utm_i = utm %>% subset(Island_Code == island_name[i])
   
-  utm_i = utm %>% subset(Island_Code == island_name)
-  
-  dat_i = subset(dat, Label == nmsas[i])
+  dat_i = subset(dat, Label %in% island_sector)
 
   dat_i <- spTransform(dat_i, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs'))); plot(dat_i); axis(1); axis(2)
   
@@ -107,19 +104,7 @@ for (i in 1:length(nmsas)) {
   nmsas_name = gsub("/", "_", nmsas_name)
   nmsas_name = gsub("'", "", nmsas_name)
   
-  if (nmsas[i] == "Swains Island Sanctuary Unit") island_name = "swa_a"
-  if (nmsas[i] == "Swains Open") island_name = "swa_b"
-  
-  if (nmsas[i] == "Fagalua/Fogama'a Sanctuary Unit") island_name = "tut_a"
-  if (nmsas[i] == "Fagatele Bay Sanctuary Unit") island_name = "tut_b"
-  if (nmsas[i] == "Aunu'u Sanctuary Unit B") island_name = "tut_c"
-  if (nmsas[i] == "Aunu'u Sanctuary Unit A") island_name = "tut_d"
-  
-  if (nmsas[i] == "Ta'u Sanctuary Unit") island_name = "tau_a"
-  if (nmsas[i] == "Tau Open") island_name = "tau_b"
-  
-  # save(raster_and_table, file = paste0("data/gis_sector/", nmsas_name, "_NMSAS.RData"))
-  save(raster_and_table, file = paste0("data/gis_sector/", island_name, ".RData"))
+  save(raster_and_table, file = paste0("data/gis_sector/", island_name[i], ".RData"))
   
   end = Sys.time()
   
