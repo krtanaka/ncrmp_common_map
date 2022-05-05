@@ -16,7 +16,7 @@ rm(list = ls())
 spatial_resolution = 100 # spatial resolution in m
 
 shp_path = "L:/ktanaka/GIS"
-shp_path = "N:/GIS/Projects/CommonMaps"
+shp_path = "X:/GIS/Projects/CommonMaps"
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
@@ -185,13 +185,13 @@ for (shp_i in 1:length(shp_list)) {
 # Sub-Island Sector -------------------------------------------------------
 
 shp_list = list.files(path = paste0(shp_path, "/sector/"), pattern = "\\.shp$", full.names = T); shp_list
-shp_list = shp_list[c(1:9, 11:12)]; shp_list # process NMSAS_PY (A. Samoa) separately, see 1b
+shp_list = shp_list[c(1:9, 11:13)]; shp_list # process NMSAS_PY (A. Samoa) separately, see 1b
 
 for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  # shp_i = 1
+  # shp_i = 13
   
   island_name = tolower(substr(shp_list[shp_i], 35, 37)); island_name
   

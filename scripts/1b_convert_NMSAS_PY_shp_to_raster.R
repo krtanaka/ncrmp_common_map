@@ -30,7 +30,7 @@ proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); de
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
-island_name = c("ros", "swa", "tut", "tau")
+island_name = c("ros", "swa", "tau")
 
 for (i in 1:length(island_name)) {
   
@@ -40,7 +40,6 @@ for (i in 1:length(island_name)) {
   
   if (island_name[i] == "ros") island_sector = "Muliava Sanctuary Unit"
   if (island_name[i] == "swa") island_sector = c("Swains Island Sanctuary Unit", "Swains Open")
-  if (island_name[i] == "tut") island_sector = c("Fagalua/Fogama'a Sanctuary Unit", "Fagatele Bay Sanctuary Unit", "Aunu'u Sanctuary Unit B", "Aunu'u Sanctuary Unit A")
   if (island_name[i] == "tau") island_sector = c("Ta'u Sanctuary Unit", "Tau Open")
 
   utm_i = utm %>% subset(Island_Code == island_name[i])
