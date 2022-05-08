@@ -59,6 +59,7 @@ survey_effort = merge(island_name_code, survey_effort); head(survey_effort); tai
 load('data/gis_island_boundaries/ncrmp_islands_shp.RData')
 crs(ISL_bounds) = "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
 
+set.seed(2022)
 
 #################################################################
 ### Generate survey site tables & maps, check outputs/ folder ###
