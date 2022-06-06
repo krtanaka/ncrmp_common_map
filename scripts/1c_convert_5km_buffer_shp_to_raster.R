@@ -19,7 +19,7 @@ shp_path = "L:/ktanaka/GIS"
 shp_path = "N:/GIS/Projects/CommonMaps"
 
 shp_list = list.files(path = paste0(shp_path, "/5km_buffer/"), pattern = "\\.shp$", full.names = T); shp_list
-dat <- shapefile(shp_list, verbose = T); plot(dat); degAxis(1); degAxis(2)
+dat <- shapefile(shp_list, verbose = T); plot(dat, col = 2, pch = 20); degAxis(1); degAxis(2)
 
 island_name <- as.data.frame(dat)
 island_name = island_name$ISLAND_CD
