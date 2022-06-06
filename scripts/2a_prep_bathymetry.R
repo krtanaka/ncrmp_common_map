@@ -39,14 +39,16 @@ islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr")
 
 for (isl in 1:length(islands)) {
   
-  # isl = 2
+  # isl = 1
   
+  # South Mariana Islands
   if (islands[isl] == "gua") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/gua_nthmp_dem_10m_mosaic.tif")
   # if (islands[isl] == "rot") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Rota_60m.asc")
   if (islands[isl] == "sai") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/sai_mb_li_db.asc")
   if (islands[isl] == "tin") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/tinmblidbmos.asc")
   # if (islands[isl] == "agu") topo = raster("FILE_NOT_AVAILAVLE") # file not available
   
+  # North Mariana Islands
   if (islands[isl] == "agr") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/agr_inpoo_new/w001001.adf")
   if (islands[isl] == "ala") topo = raster("N:/GIS/Projects/SeafloorCalc/Workspace/Alamagan/ala_inpo_mbik/w001001.adf")
   if (islands[isl] == "asc") topo = raster("N:/GIS/Projects/SeafloorCalc/Workspace/Asuncion/asc_inpo/w001001.adf")
@@ -56,16 +58,21 @@ for (isl in 1:length(islands)) {
   if (islands[isl] == "sar") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/sar_inpo/w001001.adf")
   if (islands[isl] == "pag") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/pag_inpo/w001001.adf")
   
+  # American Samoa
   # if (islands[isl] == "ofu") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/ofu_inpo/w001001.adf") # decided not to use existing shp file because it was lat lon format and resolution was off. Run 2b script instead.
   # if (islands[isl] == "ros") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/ros_inpo/w001001.adf")# decided not to use existing shp file because it was lat lon format and resolution was off. Run 2b script instead.
   # if (islands[isl] == "swa") topo = raster("L:/ktanaka/GIS/bathymetry/pibhmc_bathy_40m_swains_ce56_bee8_9b67.nc")# decided not to use existing shp file because it was lat lon format and resolution was off. Run 2b script instead.
   # if (islands[isl] == "tau") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/tau_inpo/w001001.adf")# decided not to use existing shp file because it was lat lon format and resolution was off. Run 2b script instead.
   # if (islands[isl] == "tut") topo = raster("L:/ktanaka/GIS/bathymetry/ngdc_bathy_10m_tutuila_1a99_4a20_d29e.nc") # decided not to use existing shp file because it was lat lon format and resolution was off. Run 2b script instead.
   
-  if (islands[isl] == "jar") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/jar_inpo_land/w001001.adf") # 
-  if (islands[isl] == "joh") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/JOH/joh_inpo/w001001.adf") # 
-  if (islands[isl] == "kin") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/kingman3/w001001.adf") # 
-  if (islands[isl] == "pal") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/pal_inpo/w001001.adf") # 
+  # Pacific Remote Island Areas
+  if (islands[isl] == "bak") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/bak_dbmb_5m.asc") # 
+  if (islands[isl] == "how") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Howland_5m.asc") #
+  if (islands[isl] == "jar") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Jarvis_5m.asc") #
+  if (islands[isl] == "joh") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/johdballblend.asc") #
+  if (islands[isl] == "kin") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/kin_dbmb.asc") #
+  if (islands[isl] == "pal") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/pal_dbmb.asc") # 
+  if (islands[isl] == "wak") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/wake_10m.asc") # 
   
   # if depth raster files contains no below sea-level cells (e.g. Swa), don't subset them
   if(min(values(topo), na.rm = T) <= 0) {
@@ -107,7 +114,7 @@ for (isl in 1:length(islands)) {
   
 }
 
-load('data/gis_bathymetry/sai.RData')
+load('data/gis_bathymetry/bak.RData')
 
 wireframe(unclass(as.bathy(topo_i)), 
           shade = T,
