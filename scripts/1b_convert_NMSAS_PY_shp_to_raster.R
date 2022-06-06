@@ -18,9 +18,12 @@ shp_path = "N:/GIS/Projects/CommonMaps"
 
 shp_list = list.files(path = paste0(shp_path, "/sector/"), pattern = "\\.shp$", full.names = T); shp_list
 
-island_name = tolower(substr(shp_list[10], 35, 42)); island_name # shp_list[10] is new nmsas shapefile, shp_list[11] is old nmsas shapefile
+# shp_list[10] is new nmsas shapefile
+# shp_list[11] is old nmsas shapefile
 
-dat <- shapefile(shp_list[10], verbose = T); plot(dat); degAxis(1); degAxis(2) # shp_list[10] is new nmsas shapefile, shp_list[11] is old nmsas shapefile
+island_name = tolower(substr(shp_list[10], 35, 42)); island_name
+dat <- shapefile(shp_list[10], verbose = T); plot(dat); degAxis(1); degAxis(2)
+
 nmsas <- as.data.frame(dat)
 nmsas = nmsas$Label; nmsas
 # nmsas = nmsas[c(1, 2, 5)]; nmsas # take out Tutulia sectors
