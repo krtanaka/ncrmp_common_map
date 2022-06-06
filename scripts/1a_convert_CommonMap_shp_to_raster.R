@@ -15,9 +15,12 @@ rm(list = ls())
 
 spatial_resolution = 100 # spatial resolution in m
 
+# path to GIS Common Map shapefiles 
 shp_path = "L:/ktanaka/GIS"
 shp_path = "X:/GIS/Projects/CommonMaps"
+shp_path = "N:/GIS/Projects/CommonMaps"
 
+# UTM zones for each island
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
 # Hard/Soft Bottom Substrate ----------------------------------------------
