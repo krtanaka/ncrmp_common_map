@@ -22,7 +22,7 @@ shp_list = list.files(path = paste0(shp_path, "/sector/"), pattern = "\\.shp$", 
 # shp_list[11] is old nmsas shapefile
 
 island_name = tolower(substr(shp_list[10], 35, 42)); island_name
-dat <- shapefile(shp_list[10], verbose = T); plot(dat); degAxis(1); degAxis(2)
+dat <- shapefile(shp_list[10], verbose = T); plot(dat); degAxis(1); degAxis(2); maps::map(add = T, fill = T)
 
 nmsas <- as.data.frame(dat)
 nmsas = nmsas$Label; nmsas
