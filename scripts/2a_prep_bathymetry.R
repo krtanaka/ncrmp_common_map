@@ -39,7 +39,7 @@ islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr")
 
 for (isl in 1:length(islands)) {
   
-  # isl = 1
+  # isl = 6
   
   # South Mariana Islands
   if (islands[isl] == "gua") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/gua_nthmp_dem_10m_mosaic.tif")
@@ -74,6 +74,15 @@ for (isl in 1:length(islands)) {
   if (islands[isl] == "pal") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/pal_dbmb.asc") # 
   if (islands[isl] == "wak") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/wake_10m.asc") # 
   
+  # Northern Hawaiian Islands
+  if (islands[isl] == "ffs") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/FFS-5m.grd.asc") # 
+  if (islands[isl] == "kur") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Kure_5m.asc") #
+  if (islands[isl] == "lay") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/NHamLays_20m.asc") #
+  if (islands[isl] == "lis") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Lisianski_20m.asc") #
+  if (islands[isl] == "mar") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Maro_20m.asc") #
+  if (islands[isl] == "mid") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Midway_1m.grd.asc") # 
+  if (islands[isl] == "phr") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/PH_5m.asc") # 
+  
   # if depth raster files contains no below sea-level cells (e.g. Swa), don't subset them
   if(min(values(topo), na.rm = T) <= 0) {
     
@@ -93,18 +102,6 @@ for (isl in 1:length(islands)) {
     res(topo)
     
   }
-  
-  # topo = as.data.frame(rasterToPoints(topo)) %>% drop_na()
-  # colnames(topo) = c("x", "y", "depth")
-  # 
-  # topo %>%
-  #   subset(depth <= 0 & depth >= -6) %>%
-  #   ggplot(aes(x, y, fill = depth)) +
-  #   geom_raster() +
-  #   scale_fill_viridis_c("") +
-  #   ggdark::dark_theme_minimal() +
-  #   coord_fixed() +
-  #   theme(axis.title = element_blank())
   
   topo_i = readAll(topo)
   plot(topo_i)
