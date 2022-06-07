@@ -111,7 +111,7 @@ for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  # shp_i = 10
+  # shp_i = 5
   
   island_name = tolower(substr(shp_list[shp_i], 37, 39)); island_name
   
