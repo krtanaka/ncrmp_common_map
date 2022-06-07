@@ -26,7 +26,7 @@ islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"  
 
 for (isl in 1:length(islands)) {
   
-  isl = 3
+  isl = 6
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
