@@ -199,30 +199,22 @@ for (isl in 1:length(islands)) {
   (depth = df %>% 
       ggplot( aes(longitude, latitude, fill = depth_bin)) + 
       geom_raster() + 
-      coord_fixed() + 
-      scale_fill_discrete( "depth_bins") +
-      ggdark::dark_theme_minimal())
+      coord_fixed())
   
   (sector = df %>% 
       ggplot( aes(longitude, latitude, fill = sector_id)) + 
       geom_raster() +
-      coord_fixed() + 
-      scale_fill_discrete("sector") +
-      ggdark::dark_theme_minimal())
+      coord_fixed())
   
   (reef = df %>% 
       ggplot( aes(longitude, latitude, fill = reef_id)) + 
       geom_raster() +
-      coord_fixed() + 
-      scale_fill_discrete("reef") +
-      ggdark::dark_theme_minimal())
+      coord_fixed())
   
   (hardsoft = df %>% 
       ggplot( aes(longitude, latitude, fill = hardsoft_id)) + 
       geom_raster() +
-      coord_fixed() + 
-      scale_fill_discrete("hardsoft") +
-      ggdark::dark_theme_minimal())
+      coord_fixed())
   
   df = df %>%
     subset(sector_id != "GUA_LAND") %>% # filter sector
@@ -251,9 +243,7 @@ for (isl in 1:length(islands)) {
   (strata = df %>% 
       ggplot( aes(longitude, latitude, fill = factor(strat))) + 
       geom_raster() +
-      coord_fixed() + 
-      scale_fill_discrete("Strata") +
-      ggdark::dark_theme_minimal())
+      coord_fixed())
   
   cell = rasterFromXYZ(df[,c("longitude", "latitude", "cell")]); plot(cell)
   division = rasterFromXYZ(df[,c("longitude", "latitude", "division")]); plot(division)

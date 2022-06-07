@@ -156,36 +156,22 @@ for (i in 1:length(islands)) {
   (bathymetry = cells %>% 
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = depth)) + 
-      scale_fill_gradientn(colours = matlab.like(30), "Depth (m)") + 
-      coord_fixed() +
-      theme(legend.position = "right"))
+      coord_fixed())
   
   (strata = cells %>% 
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = factor(strat))) + 
-      scale_fill_discrete("Strata") + 
-      ylab("Northings (km)") + xlab("Eastings (km)") + 
-      coord_fixed() +
-      theme_light() +
-      theme(legend.position = "right"))
+      coord_fixed())
   
   (variability = cells %>% 
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = sd)) + 
-      scale_fill_gradientn(colours = matlab.like(100), "var") + 
-      ylab("Northings (km)") + xlab("Eastings (km)") +
-      coord_fixed() +
-      theme_light() +
-      theme(legend.position = "right"))
+      coord_fixed())
   
   (area = cells %>% 
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = strat_area )) + 
-      scale_fill_gradientn(colours = matlab.like(100), "Area (sq.km)") + 
-      ylab("Northings (km)") + xlab("Eastings (km)") +
-      coord_fixed() +
-      theme_light() +
-      theme(legend.position = "right"))
+      coord_fixed())
   
   # (bathymetry + area) / (variability + strata)
   
@@ -214,7 +200,7 @@ for (i in 1:length(islands)) {
   buffer = buffer %>%
     mutate(longitude = round(longitude, 3), 
            latitude = round(latitude, 3)) %>% 
-    select(longitude, latitude, nam) %>% 
+    dplyr::select(longitude, latitude, nam) %>% 
     unique()
   colnames(buffer)[3] = "sector_nam"
   buffer_label = buffer %>% group_by(sector_nam) %>% summarise(longitude = quantile(longitude, 0.9), latitude = quantile(latitude, 0.9))
@@ -277,8 +263,6 @@ for (i in 1:length(islands)) {
   #                          longitude < 144.71 & 
   #                          latitude > 13.24 & 
   #                          latitude < 13.65)
-  
-  ggdark::invert_geom_defaults()
   
   (site_location = 
       
