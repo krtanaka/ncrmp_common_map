@@ -78,7 +78,7 @@ for (isl in 1:length(islands)) {
   if (islands[isl] == "ffs") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/FFS-5m.grd.asc") # 
   if (islands[isl] == "kur") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Kure_5m.asc") #
   if (islands[isl] == "lay") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/NHamLays_20m.asc") #
-  if (islands[isl] == "lis") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/Projects/CommonMaps/Bathymetry/Lisianski_20m.asc") #
+  if (islands[isl] == "lis") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Lisianski_20m.asc") #
   if (islands[isl] == "mar") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Maro_20m.asc") #
   if (islands[isl] == "mid") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Midway_1m.grd.asc") # 
   if (islands[isl] == "phr") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/PH_5m.asc") # 
