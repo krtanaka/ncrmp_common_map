@@ -13,9 +13,9 @@ library(ggrepel)
 
 rm(list = ls())
 
-spatial_resolution = 100 # spatial resolution in m
+spatial_resolution = 100 # target spatial resolution in m
 
-shp_path = "L:/ktanaka/GIS"
+# shp_path = "L:/ktanaka/GIS"
 shp_path = "N:/GIS/Projects/CommonMaps"
 
 shp_list = list.files(path = paste0(shp_path, "/5km_buffer/"), pattern = "\\.shp$", full.names = T); shp_list
