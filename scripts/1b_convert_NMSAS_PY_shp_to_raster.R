@@ -11,18 +11,18 @@ library(colorRamps)
 
 rm(list = ls())
 
-spatial_resolution = 100 # spatial resolution in m
+spatial_resolution = 100 # target spatial resolution in m
 
-shp_path = "L:/ktanaka/GIS"
+# shp_path = "L:/ktanaka/GIS"
 shp_path = "N:/GIS/Projects/CommonMaps"
 
 shp_list = list.files(path = paste0(shp_path, "/sector/"), pattern = "\\.shp$", full.names = T); shp_list
 
-# shp_list[10] is new nmsas shapefile
-# shp_list[11] is old nmsas shapefile
+# shp_list[10]: "NMSAS_PY.shp" is new nmsas shapefile
+# shp_list[11]: "NMSAS_PY_original.shp" is old nmsas shapefile
 
 island_name = tolower(substr(shp_list[10], 35, 42)); island_name
-dat <- shapefile(shp_list[10], verbose = T); plot(dat); degAxis(1); degAxis(2); maps::map(add = T, fill = T)
+dat <- shapefile(shp_list[10], verbose = T); plot(dat); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T)
 
 nmsas <- as.data.frame(dat)
 nmsas = nmsas$Label; nmsas
