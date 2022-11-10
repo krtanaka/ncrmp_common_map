@@ -89,7 +89,7 @@ for (i in 1:length(island_name)) {
   
   ggplot() +
     geom_raster(data = r_df, aes(x, y, fill = nam), show.legend = F) +
-    geom_text_repel(data = r_df_label, aes(x, y, label = nam)) +
+    geom_text_repel(data = r_df_label, aes(x, y, label = nam), box.padding = 3) +
     coord_equal()
   
   if (file.exists(paste0("data/gis_bathymetry/", island_name[i], ".RData"))) {
