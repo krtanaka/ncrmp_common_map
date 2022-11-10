@@ -96,9 +96,8 @@ for (i in 1:length(island_name)) {
   
   ggplot() +  
     geom_raster(data = r_df, aes(x, y, fill = nam), show.legend = F) + 
-    geom_text_repel(data = r_df_label, aes(x, y, label = nam)) + 
-    coord_equal() + 
-    theme_light()
+    geom_text_repel(data = r_df_label, aes(x, y, label = nam), box.padding = 2) + 
+    coord_equal()
   
   raster_and_table = list(raster, table)
   
