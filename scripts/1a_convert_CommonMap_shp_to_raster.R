@@ -2,7 +2,7 @@
 ### Convert Hardsoft, Reefzones, Island sector shapefiles to raster ###
 #######################################################################
 
-library(raster) # need to be version 3.4-13, not the latest version
+library(raster)
 library(rgdal)
 library(rgeos)
 library(dplyr)
