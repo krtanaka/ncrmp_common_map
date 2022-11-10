@@ -11,7 +11,7 @@ islands = c("ofu", "ros", "swa", "tau", "tut")
 
 for (i in 1:length(islands)) {
   
-  # i = 4
+  # i = 1
   
   if (islands[i] == "ofu") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/pibhmc_bathy_5m_ofuolosega_98c9_b4c8_bba3.nc") #Ofu And Olosega island
   if (islands[i] == "ros") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/pibhmc_bathy_40m_rose_1488_4a6e_4b0d.nc") #Rose Atoll
@@ -33,7 +33,10 @@ for (i in 1:length(islands)) {
   topo_i = rasterFromXYZ(topo_i[,c("lon", "lat", "depth")]); plot(topo_i)
   crs(topo_i) = default_proj
   
-  sr = paste0('+proj=utm +zone=', zone, '+ellps=GRS80 +datum=NAD83 +units=m +no_defs')
+  # determine northern or southern hemisphere
+  if (mean(extent(topo_i)[3:4]) > 0) sr = paste0('+proj=utm +zone=', zone, '+ellps=GRS80 +datum=NAD83 +units=m +no_defs +north')
+  if (mean(extent(topo_i)[3:4]) < 0) sr = paste0('+proj=utm +zone=', zone, '+ellps=GRS80 +datum=NAD83 +units=m +no_defs +south')
+  
   # sr = paste0('+proj=utm +zone=', zone, '+datum=WGS84 +units=m +no_defs')
   
   topo_i <- projectRaster(topo_i, crs = sr); plot(topo_i)
