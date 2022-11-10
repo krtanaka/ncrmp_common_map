@@ -188,7 +188,7 @@ for (shp_i in 1:length(shp_list)) {
 # Sub-Island Sector -------------------------------------------------------
 
 shp_list = list.files(path = paste0(shp_path, "/sector/"), pattern = "\\.shp$", full.names = T); shp_list
-shp_list = shp_list[c(1:9, 11:13)]; shp_list # process NMSAS_PY (A. Samoa) separately, see 1b
+shp_list = shp_list[!shp_list %in% grep(paste0('NMSAS_PY', collapse = "|"), shp_list, value = T)]; shp_list # process NMSAS_PY (A. Samoa) separately, see 1b
 
 for (shp_i in 1:length(shp_list)) {
   
