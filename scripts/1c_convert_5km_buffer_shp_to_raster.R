@@ -42,7 +42,11 @@ for (i in 1:length(island_name)) {
   
   dat_i = subset(dat, ISLAND_CD == toupper(island_name[i]))
   
-  dat_i <- spTransform(dat_i, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs'))); plot(dat_i); axis(1); axis(2)
+  # determine northern or southern hemisphere
+  if (median((dat_i@bbox[1,])) > 0) dat_i <- spTransform(dat_i, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +north')))
+  if (median((dat_i@bbox[1,])) < 0) dat_i <- spTransform(dat_i, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +south')))
+  
+  plot(dat_i); axis(1); axis(2)
   
   dat_i = dat_i[c(names(dat_i) %in% c("SEC_NAME"))]
   
