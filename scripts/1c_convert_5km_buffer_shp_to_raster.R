@@ -43,8 +43,8 @@ for (i in 1:length(island_name)) {
   dat_i = subset(dat, ISLAND_CD == toupper(island_name[i]))
   
   # determine northern or southern hemisphere
-  if (median((dat_i@bbox[1,])) > 0) dat_i <- spTransform(dat_i, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs')))
-  if (median((dat_i@bbox[1,])) < 0) dat_i <- spTransform(dat_i, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +south')))
+  if (median((dat_i@bbox[2,])) > 0) dat_i <- spTransform(dat_i, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +north')))
+  if (median((dat_i@bbox[2,])) < 0) dat_i <- spTransform(dat_i, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +south')))
   
   plot(dat_i); axis(1); axis(2)
   
