@@ -80,7 +80,7 @@ for (isl in 1:length(islands)) {
   if (islands[isl] == "lay") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/NHamLays_20m.asc") #
   if (islands[isl] == "lis") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Lisianski_20m.asc") #
   if (islands[isl] == "mar") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Maro_20m.asc") #
-  if (islands[isl] == "mid") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Midway_1m.grd.asc") # 
+  if (islands[isl] == "mid") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Midway_5m.asc") # 
   if (islands[isl] == "phr") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/PH_5m.asc") # 
   
   # if depth raster files contains no below sea-level cells (e.g. Swa), don't subset them
