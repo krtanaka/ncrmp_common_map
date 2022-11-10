@@ -42,7 +42,7 @@ for (isl in 1:length(islands)) {
   # isl = 6
   
   # South Mariana Islands
-  if (islands[isl] == "gua") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/gua_nthmp_dem_10m_mosaic.tif")
+  if (islands[isl] == "gua") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/ngdc_bathy_10m_guam_3111_dbef_9895.nc")
   # if (islands[isl] == "rot") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Rota_60m.asc")
   if (islands[isl] == "sai") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/sai_mb_li_db.asc")
   if (islands[isl] == "tin") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/tinmblidbmos.asc")
@@ -59,16 +59,16 @@ for (isl in 1:length(islands)) {
   if (islands[isl] == "pag") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/pag_inpo/w001001.adf")
   
   # American Samoa
-  if (islands[isl] == "ofu") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/ofu_inpo/w001001.adf") # decided not to use existing shp file because it was lat lon format and resolution was off. Run 2b script instead.
-  # if (islands[isl] == "ros") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/ros_inpo/w001001.adf")# decided not to use existing shp file because it was lat lon format and resolution was off. Run 2b script instead.
-  # if (islands[isl] == "swa") topo = raster("L:/ktanaka/GIS/bathymetry/pibhmc_bathy_40m_swains_ce56_bee8_9b67.nc")# decided not to use existing shp file because it was lat lon format and resolution was off. Run 2b script instead.
-  # if (islands[isl] == "tau") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/tau_inpo/w001001.adf")# decided not to use existing shp file because it was lat lon format and resolution was off. Run 2b script instead.
-  # if (islands[isl] == "tut") topo = raster("L:/ktanaka/GIS/bathymetry/ngdc_bathy_10m_tutuila_1a99_4a20_d29e.nc") # decided not to use existing shp file because it was lat lon format and resolution was off. Run 2b script instead.
+  if (islands[isl] == "ofu") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/oo_dbmb_mos4.asc")
+  if (islands[isl] == "ros") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/rose_5m_dbmb.asc")
+  if (islands[isl] == "swa") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/swa_dball_2m.asc")
+  if (islands[isl] == "tau") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/tau_dbmb_mos.asc")
+  if (islands[isl] == "tut") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/tut_dball.asc")
   
   # Pacific Remote Island Areas
   if (islands[isl] == "bak") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/bak_dbmb_5m.asc") # 
   if (islands[isl] == "how") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Howland_5m.asc") #
-  if (islands[isl] == "jar") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/jarvis_20m.asc") #
+  if (islands[isl] == "jar") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Jarvis_5m.asc") #
   if (islands[isl] == "joh") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/johdballblend.asc") #
   if (islands[isl] == "kin") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/kin_dbmb.asc") #
   if (islands[isl] == "pal") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/pal_dbmb.asc") # 
