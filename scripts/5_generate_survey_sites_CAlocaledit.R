@@ -194,7 +194,7 @@ crs(ISL_bounds) = "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
   cells$latitude <- coordinates(longlatcoor)[,2]
   
   # Subset "cells" to create site locations
-  sets <- cells[, .SD[sample(.N, strat_sets, replace = resample_cells)], 
+  sets <- cells[, .SD[sample(.N, size = unique(strat_sets), replace = resample_cells)], 
                 by = c("strat")] 
   
   
