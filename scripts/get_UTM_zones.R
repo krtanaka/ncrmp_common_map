@@ -12,13 +12,17 @@ ncrmp_utm_zones = df %>%
   group_by(ISLAND, Island_Code) %>% 
   summarise(Lon = median(LONGITUDE_LOV, na.rm = T),
             Lat = median(LATITUDE_LOV, na.rm = T)) %>% 
-  mutate(UTM_Zone = (floor((Lon + 180)/6) %% 60) + 1) %>% 
-  dplyr::select(ISLAND, Island_Code, UTM_Zone) %>% 
+  na.omit() %>% 
+  mutate(UTM_Zone = (floor((Lon + 180)/6) %% 60) + 1,
+         Hemisphere = ifelse(Lat > 0, "N", "S")) %>% 
+  dplyr::select(ISLAND, Island_Code, UTM_Zone, Hemisphere) %>% 
   as.data.frame()
 
-colnames(ncrmp_utm_zones) = c("Island", "Island_Code", "UTM_Zone")
+colnames(ncrmp_utm_zones) = c("Island", "Island_Code", "UTM_Zone", "Hemishpere")
 
 ncrmp_utm_zones$Island_Code = tolower(as.character(ncrmp_utm_zones$Island_Code))
 ncrmp_utm_zones$Island = gsub(" " , "_", ncrmp_utm_zones$Island)
 
-write_csv(ncrmp_utm_zones, file = 'data/ncrmp_utm_zones.csv')
+ncrmp_utm_zones$UTM_Zone = ifelse(ncrmp_utm_zones$Island == "Lisianski", 1L, ncrmp_utm_zones$UTM_Zone)
+
+write_csv(ncrmp_utm_zones, file = 'data/misc/ncrmp_utm_zones.csv')

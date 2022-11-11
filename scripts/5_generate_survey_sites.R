@@ -61,6 +61,7 @@ survey_effort = merge(island_name_code, survey_effort); head(survey_effort); tai
 load('data/gis_island_boundaries/ncrmp_islands_shp.RData')
 crs(ISL_bounds) = "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
 
+
 set.seed(2022)
 
 #################################################################
@@ -172,8 +173,6 @@ for (i in 1:length(islands)) {
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = strat_area )) + 
       coord_fixed())
-  
-  # (bathymetry + area) / (variability + strata)
   
   isl_shp = island_name_code %>% subset(Island_Code == islands[i])
   
@@ -326,8 +325,7 @@ for (i in 1:length(islands)) {
       
       theme(legend.position = "bottom",
             axis.text = element_text(size = 10),
-            axis.title = element_text(size = 10),
-            panel.grid = element_blank()) +   
+            axis.title = element_text(size = 10)) +   
       labs(
         title = "",
         subtitle = paste0(paste0("Island = ", toupper(as.character(isl_shp[1])),"\n",
