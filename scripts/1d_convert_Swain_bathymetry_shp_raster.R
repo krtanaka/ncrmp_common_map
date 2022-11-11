@@ -27,7 +27,7 @@ dat <- shapefile("N:/GIS/Projects/CommonMaps/Bathymetry/Swains_depth_bins.shp", 
 
 # proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2)
 dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2)
-dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs'))); plot(dat); axis(1); axis(2)
+dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs + south'))); plot(dat); axis(1); axis(2)
 
 dat = subset(dat, Contour != "coral reef awash LW")
 

@@ -48,8 +48,12 @@ for (i in 1:length(island_name)) {
   utm_i = utm %>% subset(Island_Code == island_name[i])
   
   dat_i = subset(dat, Label %in% island_sector)
+  
+  # determine northern or southern hemisphere
+  if (median((dat_i@bbox[2,])) > 0) dat_i <- spTransform(dat_i,  CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +north')))
+  if (median((dat_i@bbox[2,])) < 0) dat_i <- spTransform(dat_i,  CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +south')))
 
-  dat_i <- spTransform(dat_i, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs'))); plot(dat_i); axis(1); axis(2)
+  plot(dat_i); axis(1); axis(2)
   
   dat_i = dat_i[c(names(dat_i) %in% c("Label"))]
   
@@ -96,8 +100,7 @@ for (i in 1:length(island_name)) {
   
   ggplot() +  
     geom_raster(data = r_df, aes(x, y, fill = nam), show.legend = F) + 
-    geom_text_repel(data = r_df_label, aes(x, y, label = nam), box.padding = 2) + 
-    coord_equal()
+    geom_text_repel(data = r_df_label, aes(x, y, label = nam), box.padding = 2)
   
   raster_and_table = list(raster, table)
   
