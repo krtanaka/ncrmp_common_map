@@ -19,7 +19,7 @@ utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
 #islands = c("gua", "rot", "sai", "tin", "agu"); region = "S.MARIAN"                           # South Mariana Islands
 #islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "pag", "sar"); region = "N.MARIAN"      # North Mariana Islands
-# islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                              # American Samoa
+islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                              # American Samoa
 
 islands = c("bak", "how", 
             # "jar", # shapeifle projections do not match with bathymetry projections
@@ -30,7 +30,7 @@ islands = c("bak", "how",
 
 for (isl in 1:length(islands)) {
   
-  # isl = 6
+  # isl = 1
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
