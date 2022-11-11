@@ -43,19 +43,19 @@ df = topo %>%
   group_by(x, y) %>% 
   summarise(d = mean(depth))
 
-wireframe(unclass(as.bathy(df)), 
-          shade = T,
-          aspect = c(length(unique(df$y))/length(unique(df$x)), 0.05),
-          par.box = c(col = "transparent"),
-          scales = list(arrows = FALSE, col = "transparent"), # col="black" is required
-          par.settings = list(axis.line = list(col = 'transparent')),
-          light.source = c(10, 0, 10),
-          zlab = "", 
-          xlab = "",
-          ylab = "",
-          perspective = T,
-          screen = list(z = 10, x = -50, y = 10),
-          zoom = 1.2)
+# wireframe(unclass(as.bathy(df)), 
+#           shade = T,
+#           aspect = c(length(unique(df$y))/length(unique(df$x)), 0.05),
+#           par.box = c(col = "transparent"),
+#           scales = list(arrows = FALSE, col = "transparent"), # col="black" is required
+#           par.settings = list(axis.line = list(col = 'transparent')),
+#           light.source = c(10, 0, 10),
+#           zlab = "", 
+#           xlab = "",
+#           ylab = "",
+#           perspective = T,
+#           screen = list(z = 10, x = -50, y = 10),
+#           zoom = 1.2)
 
 for (i in 1:length(islands)) {
   
