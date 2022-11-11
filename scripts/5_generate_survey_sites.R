@@ -125,7 +125,7 @@ for (i in 1:length(islands)) {
   cells$latitude <- coordinates(longlatcoor)[,2]
   
   # subset "cells" to create site locations
-  sets <- cells[, .SD[sample(.N, strat_sets, replace = resample_cells)], 
+  sets <- cells[, .SD[sample(.N, size = unique(strat_sets), replace = resample_cells)], 
                 by = c("strat")]
   
   id <- seq(1,dim(sets)[1],1)
