@@ -72,7 +72,11 @@ for (i in 1:length(islands)) {
   crs(topo_i) = default_proj
   
   utm_i = utm %>% subset(Island_Code == islands[i])
-  sr = paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs')
+  
+  # determine northern or southern hemisphere
+  if (mean(extent(topo_i)[3:4]) > 0) sr = paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +north')
+  if (mean(extent(topo_i)[3:4]) < 0) sr = paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +south')
+  
   topo_i <- projectRaster(topo_i, crs = sr)
   
   # topo_i = readAll(topo_i)

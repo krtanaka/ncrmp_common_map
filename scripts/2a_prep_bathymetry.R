@@ -26,7 +26,7 @@ islands = c(
 islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar", "pag")
 
 # American Samoa
-islands = c("ofu", "ros", "swa", "tau", "tut") # none of in-house bahytmetry files worked. Run 2b_prep_bathymetry.R
+islands = c("ofu", "ros", "swa", "tau", "tut")
 
 # Pacific Remote Island Areas
 islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak")
