@@ -120,7 +120,7 @@ for (i in 1:length(islands)) {
   
   utm_i = utm %>% subset(Island_Code == islands[i])
   
-  utmcoor <- SpatialPoints(cbind(cells$x, cells$y), proj4string = CRS(paste0("+proj=utm +units=km +zone=", utm_i$UTM_Zone)))
+  utmcoor <- SpatialPoints(cbind(cells$x, cells$y), proj4string = CRS(paste0("+proj=utm +units=km +zone=", utm_i$UTM_Zone, " ", utm_i$Hemishpere)))
   longlatcoor <- spTransform(utmcoor,CRS("+proj=longlat"))
   cells$longitude <- coordinates(longlatcoor)[,1]
   cells$latitude <- coordinates(longlatcoor)[,2]
@@ -190,7 +190,7 @@ for (i in 1:length(islands)) {
   buffer = raster_and_table[[1]]
   buffer_name = raster_and_table[[2]]
   buffer <- data.table(rasterToPoints(buffer))
-  utmcoor <- SpatialPoints(cbind(buffer$x, buffer$y), proj4string = CRS(paste0("+proj=utm +units=m +zone=", utm_i$UTM_Zone)))
+  utmcoor <- SpatialPoints(cbind(buffer$x, buffer$y), proj4string = CRS(paste0("+proj=utm +units=m +zone=", utm_i$UTM_Zone, " ", utm_i$Hemishpere)))
   longlatcoor <- spTransform(utmcoor,CRS("+proj=longlat"))
   buffer$longitude <- coordinates(longlatcoor)[,1]
   buffer$latitude <- coordinates(longlatcoor)[,2]
@@ -213,7 +213,7 @@ for (i in 1:length(islands)) {
     boxes = raster_and_table[[1]]
     boxes_name = raster_and_table[[2]]
     boxes <- data.table(rasterToPoints(boxes)); colnames(boxes)[3] = "ID"
-    utmcoor <- SpatialPoints(cbind(boxes$x, boxes$y), proj4string = CRS(paste0("+proj=utm +units=m +zone=", utm_i$UTM_Zone)))
+    utmcoor <- SpatialPoints(cbind(boxes$x, boxes$y), proj4string = CRS(paste0("+proj=utm +units=m +zone=", utm_i$UTM_Zone, " ", utm_i$Hemishpere)))
     longlatcoor <- spTransform(utmcoor,CRS("+proj=longlat"))
     boxes$longitude <- coordinates(longlatcoor)[,1]
     boxes$latitude <- coordinates(longlatcoor)[,2]

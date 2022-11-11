@@ -14,7 +14,7 @@ ncrmp_utm_zones = df %>%
             Lat = median(LATITUDE_LOV, na.rm = T)) %>% 
   na.omit() %>% 
   mutate(UTM_Zone = (floor((Lon + 180)/6) %% 60) + 1,
-         Hemisphere = ifelse(Lat > 0, "N", "S")) %>% 
+         Hemisphere = ifelse(Lat > 0, "+north", "+south")) %>% 
   dplyr::select(ISLAND, Island_Code, UTM_Zone, Hemisphere) %>% 
   as.data.frame()
 
