@@ -69,7 +69,7 @@ set.seed(2022)
 
 for (i in 1:length(islands)) {
   
-  # i = 4
+  # i = 5
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData")); plot(survey_grid_ncrmp)
@@ -145,6 +145,48 @@ for (i in 1:length(islands)) {
   sets$depth_bin = ifelse(sets$depth > 18, "DEEP", sets$depth_bin) 
   
   readr::write_csv(sets, path = paste0("outputs/table/survey_table_", region, "_", islands[i], ".csv"))
+  
+  #########################################
+  ## Export set table as two columns pdf ##
+  #########################################
+  
+  # Add additional row to sets with odd numbers so they can be evenly split
+  if(nrow(sets) %% 2 == 1){     
+    
+    blankrow <- data.frame(matrix(ncol = 8, nrow = 1))
+    colnames(blankrow) <- colnames(sets)
+    sets <- rbind(sets, blankrow)
+    
+  }
+  
+  # Format and split sets to create two columns   
+  sets$depth <- round(sets$depth, digits = 2)
+  sets_print <- select(sets, "id", "longitude","latitude","depth","strat","depth_bin")
+  
+  sets1 <- data.frame(split(sets_print, factor(sort(rank(row.names(sets_print))%%2))))
+  sets1 <- sets1[,1:6]
+  colnames(sets1) <- colnames(sets_print)
+  sets2 <- anti_join(sets_print, sets1)
+  list = seq.int((nrow(sets2) + 1 ), nrow(sets))
+  
+  # Print table  
+  if(dim(sets1)[1] < 30) {
+    
+    page_height = dim(sets)[1]/6.5 # Margins for larger site lists i.e. Guam 
+    
+  } else {
+    
+    page_height = dim(sets)[1]/7 # Margins for smaller site lists i.e Rota
+    
+  }
+  
+  pdf(paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf"), height = page_height, width = 16)
+  sets1 <- tableGrob(sets1)
+  sets2 <- tableGrob(sets2, rows = list)
+  grid.arrange(rectGrob(), rectGrob(), ncol = 2)
+  grid.arrange(sets1, sets2, nrow=1, ncol = 2, newpage = FALSE)
+  dev.off()
+  
   
   page_height = ifelse(dim(sets)[1] > 30, dim(sets)[1]/3, dim(sets)[1])
   
@@ -232,7 +274,7 @@ for (i in 1:length(islands)) {
     
     
     Switch = F
-
+    
   }
   
   # ISL_this <- crop(ISL_this, extent(144.62, 144.71, 13.24, 13.65))
@@ -287,7 +329,7 @@ for (i in 1:length(islands)) {
       {if(Switch) scale_color_discrete()} + 
       {if(Switch) new_scale_color()} +
       {if(Switch) new_scale_fill()} +
-  
+      
       # geom_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin)) +
       geom_spatial_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin),  crs = 4326) + 
       annotation_scale(location = "br", width_hint = 0.2) +
@@ -348,5 +390,5 @@ for (i in 1:length(islands)) {
   pdf_combine(c(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), 
                 paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf")), 
               output = paste0("outputs/survey_map_table_", region, "_", islands[i], ".pdf"))
-
+  
 }
