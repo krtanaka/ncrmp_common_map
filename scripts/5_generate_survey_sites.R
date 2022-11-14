@@ -61,7 +61,6 @@ survey_effort = merge(island_name_code, survey_effort); head(survey_effort); tai
 load('data/gis_island_boundaries/ncrmp_islands_shp.RData')
 crs(ISL_bounds) = "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
 
-
 set.seed(2022)
 
 #################################################################
@@ -321,7 +320,7 @@ for (i in 1:length(islands)) {
       scale_x_continuous(sec.axis = dup_axis(), "", limits = range(pretty(buffer$longitude))) +
       scale_y_continuous(sec.axis = dup_axis(), "", limits = range(pretty(buffer$latitude))) +
       
-      theme_bw() +
+      # theme_bw() +
       
       theme(legend.position = "bottom",
             axis.text = element_text(size = 10),
@@ -349,35 +348,5 @@ for (i in 1:length(islands)) {
   pdf_combine(c(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), 
                 paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf")), 
               output = paste0("outputs/survey_map_table_", region, "_", islands[i], ".pdf"))
-  
-  # (Area = cells %>% 
-  #     group_by(strat) %>% 
-  #     summarise(strat_area = mean(strat_area))%>% 
-  #     ggplot(aes(x = factor(strat), y = as.numeric(as.character(strat_area)), fill = strat_area)) +
-  #     geom_bar(stat = "identity", position = position_dodge(), show.legend = F) + 
-  #     xlab("Strat") + ylab("Strat_Area (sq.km)") + 
-  #     scale_fill_viridis_c() + 
-  #     coord_flip() + 
-  #     theme_minimal())
-  # 
-  # (SD = cells %>% 
-  #     group_by(strat) %>% 
-  #     summarise(sd = mean(sd))%>% 
-  #     ggplot(aes(x = factor(strat), y = as.numeric(as.character(sd)), fill = sd)) +
-  #     geom_bar(stat = "identity", position = position_dodge(), show.legend = F) + 
-  #     scale_fill_viridis_c() + 
-  #     xlab("Strat") + ylab("S.D.") + 
-  #     coord_flip() + 
-  #     theme_minimal())
-  # 
-  # (Site_allocation = cells %>% 
-  #     group_by(strat) %>% 
-  #     summarise(strat_sets  = mean(strat_sets ))%>% 
-  #     ggplot(aes(x = factor(strat), y = as.numeric(as.character(strat_sets )), fill = factor(strat_sets))) +
-  #     geom_bar(stat = "identity", position = position_dodge(), show.legend = F) + 
-  #     scale_fill_viridis_d() + 
-  #     xlab("Strat") + ylab("Site_allocation") + 
-  #     coord_flip() + 
-  #     theme_minimal())
-  
+
 }

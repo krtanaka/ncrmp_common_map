@@ -6,8 +6,6 @@ library(ggplot2)
 
 rm(list = ls())
 
-set.seed(2022)
-
 load("data/rea/fish_site_data.Rdata"); df = wsd; rm(wsd)
 
 #Function
