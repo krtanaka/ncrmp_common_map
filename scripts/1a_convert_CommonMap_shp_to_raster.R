@@ -44,8 +44,7 @@ for (shp_i in 1:length(shp_list)) {
   dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2)
   
   # determine northern or southern hemisphere
-  if (median((dat@bbox[2,])) > 0) dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +north')))
-  if (median((dat@bbox[2,])) < 0) dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +south')))
+  dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs', utm_i$Hemishpere)))
   
   plot(dat); axis(1); axis(2)
   
@@ -128,8 +127,7 @@ for (shp_i in 1:length(shp_list)) {
   dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2)
   
   # determine northern or southern hemisphere
-  if (median((dat@bbox[2,])) > 0) dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +north')))
-  if (median((dat@bbox[2,])) < 0) dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +south')))
+  dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs', utm_i$Hemishpere)))
   
   plot(dat); axis(1); axis(2)
 
@@ -216,8 +214,7 @@ for (shp_i in 1:length(shp_list)) {
   dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2)
   
   # determine northern or southern hemisphere
-  if (median((dat@bbox[2,])) > 0) dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +north')))
-  if (median((dat@bbox[2,])) < 0) dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +south')))
+   dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs', utm_i$Hemishpere)))
   
   plot(dat); axis(1); axis(2)
   
