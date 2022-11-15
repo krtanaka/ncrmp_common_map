@@ -180,21 +180,14 @@ for (i in 1:length(islands)) {
     
   }
   
+  library(grid)
   pdf(paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf"), height = page_height, width = 16)
   sets1 <- tableGrob(sets1)
   sets2 <- tableGrob(sets2, rows = list)
   grid.arrange(rectGrob(), rectGrob(), ncol = 2)
   grid.arrange(sets1, sets2, nrow=1, ncol = 2, newpage = FALSE)
   dev.off()
-  
-  
-  page_height = ifelse(dim(sets)[1] > 30, dim(sets)[1]/3, dim(sets)[1])
-  
-  library(gridExtra)
-  pdf(paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf"), height = page_height, width = 10)
-  grid.table(sets)
-  dev.off()
-  
+
   (bathymetry = cells %>% 
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = depth)) + 
@@ -277,33 +270,6 @@ for (i in 1:length(islands)) {
     
   }
   
-  # ISL_this <- crop(ISL_this, extent(144.62, 144.71, 13.24, 13.65))
-  # 
-  # buffer = buffer %>% subset(longitude > 144.62 &  
-  #                              longitude < 144.71 & 
-  #                              latitude > 13.24 & 
-  #                              latitude < 13.65)
-  # 
-  # buffer_label = buffer_label %>% subset(longitude > 144.62 &  
-  #                                          longitude < 144.71 & 
-  #                                          latitude > 13.24 & 
-  #                                          latitude < 13.65)
-  # 
-  # boxes_hulls = boxes_hulls %>% subset(longitude > 144.62 &  
-  #                                        longitude < 144.71 & 
-  #                                        latitude > 13.24 & 
-  #                                        latitude < 13.65)
-  # 
-  # boxes_label = boxes_label %>% subset(longitude > 144.62 &  
-  #                                        longitude < 144.71 & 
-  #                                        latitude > 13.24 & 
-  #                                        latitude < 13.65)
-  # 
-  # sets = sets %>% subset(longitude > 144.62 &  
-  #                          longitude < 144.71 & 
-  #                          latitude > 13.24 & 
-  #                          latitude < 13.65)
-  
   (site_location = 
       
       ggplot() + 
@@ -374,13 +340,9 @@ for (i in 1:length(islands)) {
                                  # "Target survey effort = ", total_sample, " sites \n",
                                  "Total survey effort = ", sum(strat_det$strat_sets), " sites"))))
   
-  # pdf(paste0("outputs/survey_layers_", islands[i], ".pdf"), height = 10, width = 10)
-  # print((bathymetry + strata) / (area + variability))
-  # dev.off()
-  
   total_area = unique(cells$cell_area)*dim(cells)[1]
   
-  size = ifelse(total_area < 18, 15, round(total_area/3))
+  size = ifelse(total_area < 18, 15, 18)
   
   pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), height = size, width = size)
   print(site_location)
