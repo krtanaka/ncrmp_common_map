@@ -17,10 +17,9 @@ library(readr)
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
-#islands = c("gua", "rot", "sai", "tin", "agu"); region = "S.MARIAN"                           # South Mariana Islands
-#islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "pag", "sar"); region = "N.MARIAN"      # North Mariana Islands
+islands = c("gua", "rot", "sai", "tin", "agu"); region = "S.MARIAN"                           # South Mariana Islands
+islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "pag", "sar"); region = "N.MARIAN"      # North Mariana Islands
 islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                              # American Samoa
-
 islands = c("bak", "how", 
             # "jar", # shapeifle projections do not match with bathymetry projections
             "joh", "kin", "pal", "wak"); region = "PRIAs"                # Pacific Remote Island Areas
