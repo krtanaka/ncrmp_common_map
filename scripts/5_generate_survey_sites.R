@@ -188,7 +188,7 @@ for (i in 1:length(islands)) {
   grid.arrange(rectGrob(), rectGrob(), ncol = 2)
   grid.arrange(sets1, sets2, nrow=1, ncol = 2, newpage = FALSE)
   dev.off()
-
+  
   (bathymetry = cells %>% 
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = depth)) + 
@@ -271,22 +271,100 @@ for (i in 1:length(islands)) {
     
   }
   
+  total_area = unique(cells$cell_area)*dim(cells)[1]
+  
+  size = ifelse(total_area < 18, 15, 18)
+  
+  map_direction = c("NW", "NE", "SW", "SE")
+  
+  map_list = list()
+  
+  for (d in 1:length(map_direction)) {
+    
+    # d = 3
+    
+    map_i = map_direction[d]
+    
+    space = 0
+    
+    if (map_direction[d] == "NW") ext = c(min(sets$longitude, na.rm = T)-space, median(sets$longitude, na.rm = T), median(sets$latitude, na.rm = T), max(sets$latitude, na.rm = T)+space)
+    if (map_direction[d] == "NE") ext = c(median(sets$longitude, na.rm = T), max(sets$longitude, na.rm = T)+space, median(sets$latitude, na.rm = T), max(sets$latitude, na.rm = T)+space)
+    if (map_direction[d] == "SW") ext = c(min(sets$longitude, na.rm = T)-space, median(sets$longitude, na.rm = T), min(sets$latitude, na.rm = T)-space, median(sets$latitude, na.rm = T))
+    if (map_direction[d] == "SE") ext = c(median(sets$longitude, na.rm = T), max(sets$longitude, na.rm = T)+space, min(sets$latitude, na.rm = T)-space, median(sets$latitude, na.rm = T))
+    
+    tryCatch({ISL_this_i <- crop(ISL_this, extent(ext)); plot(ISL_this_i)},
+             error = function(e){
+               print("No land shp available in this extent. Use full extent instead")
+               ISL_this_i <- crop(ISL_this, extent(ISL_this)); plot(ISL_this_i)
+             })
+    
+    map_i = ggplot() + 
+      
+      geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
+      
+      geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.3, show.legend = T) + # island sectors
+      # geom_label_repel(data = buffer_label, aes(longitude, latitude, label = sector_nam, fill = sector_nam, fontface = 'bold'), 
+      #                  alpha = 0.5, 
+      #                  color = "white", max.overlaps = Inf,
+      #                  show.legend = F) +
+      
+      scale_fill_discrete("") + 
+      scale_color_discrete("") + 
+      
+      new_scale_color() +
+      new_scale_fill() +
+      
+      geom_spatial_point(data = sets, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 3, crs = 4326) + 
+      scale_fill_manual(name = "Depth", values = c("red", "goldenrod1", "green3"), na.translate = F) + # in geom_spatial_point make size = 9 ONLY for Guam
+      scale_shape_manual(name = "Depth", values = c(24, 22, 21), na.translate = F) +
+      annotation_scale(location = "br", width_hint = 0.2) +
+      
+      geom_label_repel(data = sets, 
+                       aes(longitude, latitude, label = id),
+                       size = 4,
+                       label.size = NA, 
+                       alpha = 0.75, 
+                       fontface = 'bold', 
+                       color = 'black',
+                       max.overlaps = Inf,
+                       segment.size = 0.2,
+                       box.padding = unit(0.8, "lines"),
+                       point.padding = unit(0.3, "lines")) +
+      
+      coord_sf(crs = 4326) + 
+      
+      scale_x_continuous(sec.axis = dup_axis(), "", limits = ext[1:2], expand = c(0.01,0)) +
+      scale_y_continuous(sec.axis = dup_axis(), "", limits = ext[3:4], expand = c(0.01,0)) 
+    
+    pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], "_", map_direction[d], ".pdf"), height = size, width = size)
+    print(map_i)
+    dev.off()
+    
+    map_list[[length(map_list)+1]] = map_i
+    
+  }
   
   
-  (site_location = 
+  (whole_map = 
       
       ggplot() + 
       
       geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "darkgrey") + # coastline
       geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
       
-      # geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.3, width = 0.001, height = 0.001) + # stratum
+      geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.5, width = 0.001, height = 0.001) + # stratum
       
-      geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.3, show.legend = F) + # island sectors
+      scale_fill_viridis_d("Strata") + 
+      scale_color_viridis_d("Strata") + 
+      
+      new_scale_color() +
+      new_scale_fill() +
+      
+      geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.1, show.legend = F) + # island sectors
       geom_label_repel(data = buffer_label, aes(longitude, latitude, label = sector_nam, fill = sector_nam, fontface = 'bold'), color = "white", max.overlaps = Inf, show.legend = F) +
       
-      scale_fill_discrete() + 
-      scale_color_discrete() + 
+      scale_fill_discrete("") + 
+      scale_color_discrete("") + 
       
       new_scale_color() +
       new_scale_fill() +
@@ -300,26 +378,26 @@ for (i in 1:length(islands)) {
       {if(Switch) new_scale_fill()} +
       
       # geom_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin)) +
-      geom_spatial_point(data = sets, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 3, crs = 4326) + 
-      scale_fill_manual(name = "Depth", values = c("red", "goldenrod1", "green3"), na.translate = F) + # in geom_spatial_point make size = 9 ONLY for Guam
-      scale_shape_manual(name = "Depth", values = c(24, 22, 21), na.translate = F) +
+      # geom_spatial_point(data = sets, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 3, crs = 4326) + 
+      # scale_fill_manual(name = "Depth", values = c("red", "goldenrod1", "green3"), na.translate = F) + # in geom_spatial_point make size = 9 ONLY for Guam
+      # scale_shape_manual(name = "Depth", values = c(24, 22, 21), na.translate = F) +
       annotation_scale(location = "br", width_hint = 0.2) +  # new_scale_color() +
       # new_scale_fill() +      
       
-      geom_label_repel(data = sets, 
-                       aes(longitude, latitude, label = id),
-                       size = 2,
-                       label.size = NA, 
-                       alpha = 0.75, 
-                       fontface = 'bold', 
-                       color = 'black',
-                       max.overlaps = Inf,
-                       segment.size = 0.2,
-                       direction = "both", 
-                       # nudge_y = 0.005,
-                       # nudge_x = 0.005,
-                       box.padding = unit(0.8, "lines"),
-                       point.padding = unit(0.3, "lines")) +
+      # geom_label_repel(data = sets, 
+      #                  aes(longitude, latitude, label = id),
+      #                  size = 2,
+      #                  label.size = NA, 
+      #                  alpha = 0.75, 
+      #                  fontface = 'bold', 
+      #                  color = 'black',
+      #                  max.overlaps = Inf,
+      #                  segment.size = 0.2,
+      #                  direction = "both", 
+      #                  # nudge_y = 0.005,
+      #                  # nudge_x = 0.005,
+      #                  box.padding = unit(0.8, "lines"),
+      #                  point.padding = unit(0.3, "lines")) +
       
       # coord_fixed() +
       # coord_map() + 
@@ -343,16 +421,16 @@ for (i in 1:length(islands)) {
                                  # "Target survey effort = ", total_sample, " sites \n",
                                  "Total survey effort = ", sum(strat_det$strat_sets), " sites"))))
   
-  total_area = unique(cells$cell_area)*dim(cells)[1]
-  
-  size = ifelse(total_area < 18, 15, 18)
-  
   pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), height = size, width = size)
-  print(site_location)
+  print(whole_map)
   dev.off()
   
   library(pdftools)
   pdf_combine(c(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), 
+                paste0("outputs/map/survey_map_", region, "_", islands[i], "_NE.pdf"),
+                paste0("outputs/map/survey_map_", region, "_", islands[i], "_NW.pdf"),
+                paste0("outputs/map/survey_map_", region, "_", islands[i], "_SE.pdf"),
+                paste0("outputs/map/survey_map_", region, "_", islands[i], "_SW.pdf"),
                 paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf")), 
               output = paste0("outputs/survey_map_table_", region, "_", islands[i], ".pdf"))
   
