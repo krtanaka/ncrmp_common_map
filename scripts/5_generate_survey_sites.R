@@ -69,7 +69,7 @@ set.seed(2022)
 
 for (i in 1:length(islands)) {
   
-  # i = 5
+  # i = 2
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData")); plot(survey_grid_ncrmp)
@@ -181,6 +181,7 @@ for (i in 1:length(islands)) {
   }
   
   library(grid)
+  library(gridExtra)
   pdf(paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf"), height = page_height, width = 16)
   sets1 <- tableGrob(sets1)
   sets2 <- tableGrob(sets2, rows = list)
