@@ -281,7 +281,7 @@ for (i in 1:length(islands)) {
     
     map_i = map_direction[d]
     
-    space = 0.005
+    space = 0
     
     if (map_direction[d] == "NW") ext = c(min(sets$longitude, na.rm = T)-space, median(sets$longitude, na.rm = T), median(sets$latitude, na.rm = T), max(sets$latitude, na.rm = T)+space)
     if (map_direction[d] == "NE") ext = c(median(sets$longitude, na.rm = T), max(sets$longitude, na.rm = T)+space, median(sets$latitude, na.rm = T), max(sets$latitude, na.rm = T)+space)
@@ -302,7 +302,7 @@ for (i in 1:length(islands)) {
                    maptype = "satellite",
                    # zoom = 11,
                    # color = "bw",
-                   force = T)
+                   force = F)
     
     map_i = 
       
@@ -323,14 +323,14 @@ for (i in 1:length(islands)) {
       new_scale_color() +
       new_scale_fill() +
       
-      geom_spatial_point(data = sets, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 3, crs = 4326) + 
+      geom_spatial_point(data = sets, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 5, crs = 4326) + 
       scale_fill_manual(name = "Depth", values = c("red", "goldenrod1", "green3"), na.translate = F) + # in geom_spatial_point make size = 9 ONLY for Guam
       scale_shape_manual(name = "Depth", values = c(24, 22, 21), na.translate = F) +
       # annotation_scale(location = "br", width_hint = 0.2) +
       
       geom_label_repel(data = sets, 
                        aes(longitude, latitude, label = id),
-                       size = 8,
+                       size = 10,
                        label.size = NA, 
                        alpha = 0.75, 
                        fontface = 'bold', 
@@ -355,7 +355,9 @@ for (i in 1:length(islands)) {
   
   # Get map
   ext = c(min(sets$longitude, na.rm = T) - 0.01, max(sets$longitude, na.rm = T) + 0.01, min(sets$latitude, na.rm = T) - 0.01, max(sets$latitude, na.rm = T) + 0.01)
-  map <- get_map(location = c(left = ext[1], bottom = ext[3], right = ext[2], top = ext[4]), maptype = 'satellite')
+  # map <- get_map(location = c(left = ext[1], bottom = ext[3], right = ext[2], top = ext[4]), maptype = 'satellite')
+  map <- get_map(location = c(mean(sets$longitude, na.rm = T), mean(sets$latitude, na.rm = T)), maptype = 'satellite')
+  
   
   (whole_map = 
       
@@ -440,6 +442,15 @@ for (i in 1:length(islands)) {
                 paste0("outputs/map/survey_map_", region, "_", islands[i], "_SE.pdf"),
                 paste0("outputs/map/survey_map_", region, "_", islands[i], "_SW.pdf"),
                 paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf")), 
-              output = paste0("outputs/survey_map_table_", region, "_", islands[i], ".pdf"))
+              output = paste0("outputs/map/survey_map_table_", region, "_", islands[i], ".pdf"))
+  
+  file.remove(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"))
+  file.remove(paste0("outputs/map/survey_map_", region, "_", islands[i], "_NE.pdf"))
+  file.remove(paste0("outputs/map/survey_map_", region, "_", islands[i], "_NW.pdf"))
+  file.remove(paste0("outputs/map/survey_map_", region, "_", islands[i], "_SE.pdf"))
+  file.remove(paste0("outputs/map/survey_map_", region, "_", islands[i], "_SW.pdf"))
+  file.remove(paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf"))
+  
+  
   
 }
