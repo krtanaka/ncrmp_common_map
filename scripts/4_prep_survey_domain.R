@@ -238,7 +238,7 @@ for (isl in 1:length(islands)) {
   tab$depth_bin_value = ifelse(tab$depth_bin == 3, "DEEP", tab$depth_bin_value) 
   tab <- tab %>% dplyr::select(sector_id,reef_id,strat,depth_bin_value)
   tab <- tab %>% filter(!duplicated(tab))
-  save(tab,file = paste0("outputs/sector_key_", islands[isl], ".RData"))
+  save(tab,file = paste0("outputs/sector_key/", islands[isl], ".RData"))
   
   (strata = df %>% 
       ggplot( aes(longitude, latitude, fill = factor(strat))) + 
