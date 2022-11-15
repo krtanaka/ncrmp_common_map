@@ -19,20 +19,6 @@ library(ggspatial)
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
 
-##################################
-###  select islands & regions  ###
-##################################
-
-islands = c("gua", "rot", "sai", "tin", "agu"); region = "S.MARIAN"                           # South Mariana Islands
-islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "pag", "sar"); region = "N.MARIAN"      # North Mariana Islands
-islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                              # American Samoa
-islands = c("bak", "how", 
-            # "jar", # shapeifle projections do not match with bathymetry projections
-            "joh", "kin", "pal", "wak"); region = "PRIAs"                # Pacific Remote Island Areas
-# islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI"  # Main Hawaiian Islands
-# islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"               # Northern Hawaiian Islands
-
-
 ########################################################################
 ### do some parameter settings to simulate stratified random surveys ###
 ########################################################################
@@ -44,7 +30,6 @@ max_sets = 30
 trawl_dim = c(0.01, 0.0353) # 0.000353 sq.km (353 sq.m) from two 15-m diameter survey cylinders
 resample_cells = F
 
-
 ##################################################################
 ### determine number of sites you want to deploy @ each island ###
 ##################################################################
@@ -54,12 +39,22 @@ island_name_code = read_csv('data/misc/island_name_code.csv')
 survey_effort = data.frame(Island = survey_effort$Island, Effort = survey_effort[[effort_level]])
 survey_effort = merge(island_name_code, survey_effort); head(survey_effort); tail(survey_effort)
 
-
 #################################
 ### Read in Island Boundaries ###
 #################################
 load('data/gis_island_boundaries/ncrmp_islands_shp.RData')
 crs(ISL_bounds) = "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
+
+##################################
+###  select islands & regions  ###
+##################################
+
+islands = c("gua", "rot", "sai", "tin", "agu"); region = "S.MARIAN"                           # South Mariana Islands
+islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "pag", "sar"); region = "N.MARIAN"      # North Mariana Islands
+islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                              # American Samoa
+islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"                # Pacific Remote Island Areas
+# islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI"  # Main Hawaiian Islands
+# islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"               # Northern Hawaiian Islands
 
 set.seed(2022)
 
