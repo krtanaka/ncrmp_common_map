@@ -281,7 +281,7 @@ for (i in 1:length(islands)) {
     
     map_i = map_direction[d]
     
-    space = 0
+    space = 0.005
     
     if (map_direction[d] == "NW") ext = c(min(sets$longitude, na.rm = T)-space, median(sets$longitude, na.rm = T), median(sets$latitude, na.rm = T), max(sets$latitude, na.rm = T)+space)
     if (map_direction[d] == "NE") ext = c(median(sets$longitude, na.rm = T), max(sets$longitude, na.rm = T)+space, median(sets$latitude, na.rm = T), max(sets$latitude, na.rm = T)+space)
@@ -294,9 +294,15 @@ for (i in 1:length(islands)) {
                ISL_this_i <- crop(ISL_this, extent(ISL_this)); plot(ISL_this_i)
              })
     
-    map_i = ggplot() + 
+    # Get map
+    map <- get_map(location = c(left = ext[1], bottom = ext[3], right = ext[2], top = ext[4]), maptype = 'satellite')
+    
+    map_i = 
       
-      geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
+      # ggplot() + 
+      ggmap(map, extent="normal") + 
+      
+      # geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
       
       geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.3, show.legend = T) + # island sectors
       # geom_label_repel(data = buffer_label, aes(longitude, latitude, label = sector_nam, fill = sector_nam, fontface = 'bold'), 
@@ -313,7 +319,7 @@ for (i in 1:length(islands)) {
       geom_spatial_point(data = sets, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 3, crs = 4326) + 
       scale_fill_manual(name = "Depth", values = c("red", "goldenrod1", "green3"), na.translate = F) + # in geom_spatial_point make size = 9 ONLY for Guam
       scale_shape_manual(name = "Depth", values = c(24, 22, 21), na.translate = F) +
-      annotation_scale(location = "br", width_hint = 0.2) +
+      # annotation_scale(location = "br", width_hint = 0.2) +
       
       geom_label_repel(data = sets, 
                        aes(longitude, latitude, label = id),
@@ -340,13 +346,17 @@ for (i in 1:length(islands)) {
     
   }
   
+  # Get map
+  ext = c(min(sets$longitude, na.rm = T) - 0.01, max(sets$longitude, na.rm = T) + 0.01, min(sets$latitude, na.rm = T) - 0.01, max(sets$latitude, na.rm = T) + 0.01)
+  map <- get_map(location = c(left = ext[1], bottom = ext[3], right = ext[2], top = ext[4]), maptype = 'satellite')
   
   (whole_map = 
       
-      ggplot() + 
+     # ggplot() + 
+     ggmap(map, darken = 0.5) + 
       
-      geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "darkgrey") + # coastline
-      geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
+      # geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "darkgrey") + # coastline
+      # geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
       
       geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.5, width = 0.001, height = 0.001) + # stratum
       
@@ -356,7 +366,7 @@ for (i in 1:length(islands)) {
       new_scale_color() +
       new_scale_fill() +
       
-      geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.1, show.legend = F) + # island sectors
+      geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.3, show.legend = F) + # island sectors
       geom_label_repel(data = buffer_label, aes(longitude, latitude, label = sector_nam, fill = sector_nam, fontface = 'bold'), color = "white", max.overlaps = Inf, show.legend = F) +
       
       scale_fill_discrete("") + 
@@ -399,13 +409,8 @@ for (i in 1:length(islands)) {
       # coord_map() + 
       coord_sf(crs = 4326) + 
       
-      # scale_x_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20), "Longitude (dec deg)") +
-      # scale_y_continuous(sec.axis = dup_axis(), breaks = scales::pretty_breaks(n = 20), "Latitude (dec deg)") +
-      
       scale_x_continuous(sec.axis = dup_axis(), "", limits = range(pretty(buffer$longitude))) +
       scale_y_continuous(sec.axis = dup_axis(), "", limits = range(pretty(buffer$latitude))) +
-      
-      # theme_bw() +
       
       theme(legend.position = "bottom",
             axis.text = element_text(size = 10),
