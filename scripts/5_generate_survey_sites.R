@@ -270,6 +270,8 @@ for (i in 1:length(islands)) {
     
   }
   
+  
+  
   (site_location = 
       
       ggplot() + 
@@ -297,10 +299,10 @@ for (i in 1:length(islands)) {
       {if(Switch) new_scale_fill()} +
       
       # geom_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin)) +
-      geom_spatial_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin),  crs = 4326) + 
-      annotation_scale(location = "br", width_hint = 0.2) +
-      
-      # new_scale_color() +
+      geom_spatial_point(data = sets, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 3, crs = 4326) + 
+      scale_fill_manual(name = "Depth", values = c("red", "goldenrod1", "green3"), na.translate = F) + # in geom_spatial_point make size = 9 ONLY for Guam
+      scale_shape_manual(name = "Depth", values = c(24, 22, 21), na.translate = F) +
+      annotation_scale(location = "br", width_hint = 0.2) +  # new_scale_color() +
       # new_scale_fill() +      
       
       geom_label_repel(data = sets, 
