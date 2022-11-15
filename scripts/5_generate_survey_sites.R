@@ -15,6 +15,7 @@ library(readr)
 library(ggrepel)
 library(ggnewscale)
 library(ggspatial)
+library(ggmap)
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
@@ -139,7 +140,7 @@ for (i in 1:length(islands)) {
   sets$depth_bin = ifelse(sets$depth > 6  & sets$depth <= 18, "MID", sets$depth_bin) 
   sets$depth_bin = ifelse(sets$depth > 18, "DEEP", sets$depth_bin) 
   
-  readr::write_csv(sets, path = paste0("outputs/table/survey_table_", region, "_", islands[i], ".csv"))
+  readr::write_csv(sets, file = paste0("outputs/table/survey_table_", region, "_", islands[i], ".csv"))
   
   #########################################
   ## Export set table as two columns pdf ##
