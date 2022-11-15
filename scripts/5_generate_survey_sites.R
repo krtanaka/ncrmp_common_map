@@ -294,13 +294,20 @@ for (i in 1:length(islands)) {
                ISL_this_i <- crop(ISL_this, extent(ISL_this)); plot(ISL_this_i)
              })
     
+    sets_i = sets %>% subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4])
+    
     # Get map
-    map <- get_map(location = c(left = ext[1], bottom = ext[3], right = ext[2], top = ext[4]), maptype = 'satellite')
+    map <- get_map(location = c(mean(sets_i$longitude, na.rm = T), mean(sets_i$latitude, na.rm = T)),
+                   # location = c(left = ext[1], bottom = ext[3], right = ext[2], top = ext[4]), 
+                   maptype = "satellite",
+                   # zoom = 11,
+                   # color = "bw",
+                   force = T)
     
     map_i = 
       
       # ggplot() + 
-      ggmap(map, extent="normal") + 
+      ggmap(map, extent = "panel") + 
       
       # geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
       
@@ -323,7 +330,7 @@ for (i in 1:length(islands)) {
       
       geom_label_repel(data = sets, 
                        aes(longitude, latitude, label = id),
-                       size = 4,
+                       size = 8,
                        label.size = NA, 
                        alpha = 0.75, 
                        fontface = 'bold', 
