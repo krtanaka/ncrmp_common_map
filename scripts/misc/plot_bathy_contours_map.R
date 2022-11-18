@@ -31,7 +31,7 @@ islands = c("Kauai", #1
             # "Kahoolawe", #10
             "Hawaii")
 
-load("data/MHI_islands_shp.RData")
+load("data/misc/MHI_islands_shp.RData")
 crs(ISL_bounds) = "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
 world = ISL_bounds[which(ISL_bounds$ISLAND %in% toupper(islands)),]
 world = st_transform(st_as_sf(world))
@@ -78,6 +78,6 @@ map <- ggplot(data = world) +
     # legend.position = c(0.1, 0.3))
 
 # pdf('/Users/Kisei.Tanaka/Desktop/MHI_200m_Bathy_Countour.pdf', height = 5, width = 7)
-png('/Users/Kisei.Tanaka/Desktop/MHI_200m_Bathy_Countour.png', height = 5, width = 7, res = 100, units = "in")
+png('/Users/kisei.tanaka/Desktop/MHI_200m_Bathy_Countour.png', height = 5, width = 7, res = 100, units = "in")
 print(map)
 dev.off()
