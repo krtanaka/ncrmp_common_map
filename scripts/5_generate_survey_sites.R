@@ -59,8 +59,6 @@ islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"  
 
 set.seed(2022)
 
-ggmap::register_google("AIzaSyDpirvA5gB7bmbEbwB1Pk__6jiV4SXAEcY")
-
 #################################################################
 ### Generate survey site tables & maps, check outputs/ folder ###
 #################################################################
