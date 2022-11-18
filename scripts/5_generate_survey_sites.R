@@ -25,7 +25,7 @@ utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 ########################################################################
 
 # n_sims = 100 # number of simulations
-effort_level = c("low", "mid", "high")[2] # define sampling effort (low, mid, high)
+effort_level = c("low", "mid", "high")[3] # define sampling effort (low, mid, high)
 min_sets = 1 # minimum number of sets per strat
 max_sets = 30
 trawl_dim = c(0.01, 0.0353) # 0.000353 sq.km (353 sq.m) from two 15-m diameter survey cylinders
@@ -58,6 +58,8 @@ islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"  
 # islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"               # Northern Hawaiian Islands
 
 set.seed(2022)
+
+ggmap::register_google("AIzaSyDpirvA5gB7bmbEbwB1Pk__6jiV4SXAEcY")
 
 #################################################################
 ### Generate survey site tables & maps, check outputs/ folder ###
@@ -354,12 +356,15 @@ for (i in 1:length(islands)) {
                        box.padding = unit(0.8, "lines"),
                        point.padding = unit(0.3, "lines")) +
       
+      ggtitle(paste0(map_direction[d])) + 
+      theme(plot.title = element_text(size = 20, face = "bold")) + 
+      
       coord_sf(crs = 4326) + 
       
       scale_x_continuous(sec.axis = dup_axis(), "", limits = ext[1:2]) +
       scale_y_continuous(sec.axis = dup_axis(), "", limits = ext[3:4]) 
     
-    pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], "_", map_direction[d], ".pdf"), height = size, width = size)
+    pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], "_", map_direction[d], ".pdf"), height = 14.5, width = 10.5)
     print(map_i)
     dev.off()
     
@@ -448,7 +453,7 @@ for (i in 1:length(islands)) {
                                  # "Target survey effort = ", total_sample, " sites \n",
                                  "Total survey effort = ", sum(strat_det$strat_sets), " sites"))))
   
-  pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), height = size, width = size)
+  pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), height = 14.5, width = 10.5)
   print(whole_map)
   dev.off()
   
