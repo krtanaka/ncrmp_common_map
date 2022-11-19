@@ -25,6 +25,6 @@ ncrmp_utm_zones$Island = gsub(" " , "_", ncrmp_utm_zones$Island)
 
 ncrmp_utm_zones$UTM_Zone = ifelse(ncrmp_utm_zones$Island == "Lisianski", 1L, ncrmp_utm_zones$UTM_Zone)
 
-ncrmp_utm_zones$big_island = ifelse(ncrmp_utm_zones$Island %in% c("Guam", "Tutuila"), "Yes", "No")
+ncrmp_utm_zones$Satellite = ifelse(ncrmp_utm_zones$Island %in% c("Guam", "Tutuila"), 14, 15)
 
 write_csv(ncrmp_utm_zones, file = 'data/misc/ncrmp_utm_zones.csv')

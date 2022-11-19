@@ -59,13 +59,15 @@ islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"  
 
 set.seed(2022)
 
+ggmap::register_google("AIzaSyDpirvA5gB7bmbEbwB1Pk__6jiV4SXAEcY")
+
 #################################################################
 ### Generate survey site tables & maps, check outputs/ folder ###
 #################################################################
 
 for (i in 1:length(islands)) {
   
-  # i = 2
+  # i = 3
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData")); plot(survey_grid_ncrmp)
@@ -168,21 +170,25 @@ for (i in 1:length(islands)) {
   # Print table  
   if(dim(sets1)[1] < 30) {
     
-    page_height = dim(sets)[1]/6.5 # Margins for larger site lists i.e. Guam 
+    page_height = 14.5 # Margins for smaller site lists i.e Rota 
+    page_height = 10.5 # Margins for smaller site lists i.e Rota
+    
     
   } else {
     
-    page_height = dim(sets)[1]/7 # Margins for smaller site lists i.e Rota
+    page_height = 21.75 # Margins for larger site lists i.e. Guam 
+    page_width = 15.75 # Margins for larger site lists i.e. Guam 
+    
     
   }
   
   library(grid)
   library(gridExtra)
-  pdf(paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf"), height = page_height, width = 16)
+  pdf(paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf"), height = page_height, width = page_width)
   sets1 <- tableGrob(sets1)
   sets2 <- tableGrob(sets2, rows = list)
   grid.arrange(rectGrob(), rectGrob(), ncol = 2)
-  grid.arrange(sets1, sets2, nrow=1, ncol = 2, newpage = FALSE)
+  grid.arrange(sets1, sets2, nrow = 1, ncol = 2, newpage = F)
   dev.off()
   
   (bathymetry = cells %>% 
@@ -269,8 +275,6 @@ for (i in 1:length(islands)) {
   
   total_area = unique(cells$cell_area)*dim(cells)[1]
   
-  size = ifelse(total_area < 18, 15, 18)
-  
   map_direction = c("NW", "NE", "SW", "SE")
   
   map_list = list()
@@ -288,20 +292,26 @@ for (i in 1:length(islands)) {
     if (map_direction[d] == "SW") ext = c(min(sets$longitude, na.rm = T) - space, median(sets$longitude, na.rm = T) + space, min(sets$latitude, na.rm = T) - space, median(sets$latitude, na.rm = T) + space)
     if (map_direction[d] == "SE") ext = c(median(sets$longitude, na.rm = T) - space, max(sets$longitude, na.rm = T) + space, min(sets$latitude, na.rm = T) - space, median(sets$latitude, na.rm = T) + space)
     
-    # tryCatch({
-    #   ISL_this_i <- crop(ISL_this, extent(ext)); plot(ISL_this_i)
-    # }, error = function(e){
-    #   print("No land shp available in this extent. Use full extent instead")
-    #   ISL_this_i <- crop(ISL_this, extent(ISL_this)); plot(ISL_this_i)
-    # })
+    sets_i = sets %>% subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4])
     
-    # Get map
+    # use coastline shp file
+    tryCatch({
+      
+      ISL_this_i <- crop(ISL_this, extent(ext)); plot(ISL_this_i)
+      
+    }, error = function(e){
+      
+      print("No land shp available in this extent. Use full extent instead")
+      ISL_this_i <- crop(ISL_this, extent(ISL_this)); plot(ISL_this_i)
+      
+    })
+    
+    # use ggmap
     tryCatch({
       
       map = get_map(location = c(mean(sets_i$longitude, na.rm = T), mean(sets_i$latitude, na.rm = T)),
-                    # location = c(left = ext[1], bottom = ext[3], right = ext[2], top = ext[4]), 
                     maptype = "satellite",
-                    # zoom = 14,
+                    zoom = utm_i$Satellite,
                     # color = "bw",
                     force = T)
       
@@ -309,40 +319,45 @@ for (i in 1:length(islands)) {
       
       print("No sets available in this extent. Use full extent instead")
       map <- get_map(location = c(mean(sets$longitude, na.rm = T), mean(sets$latitude, na.rm = T)),
-                     # location = c(left = ext[1], bottom = ext[3], right = ext[2], top = ext[4]), 
                      maptype = "satellite",
-                     # zoom = 11,
+                     zoom = utm_i$Satellite,
                      # color = "bw",
                      force = T)
     })
     
-    sets_i = sets %>% subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4])
     
     map_i = 
       
-      # ggplot() + 
-      ggmap(map, extent = "panel") + 
+      # ggplot() +
+      ggmap(map) +
       
       # geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
       
-      geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.3, show.legend = T) + # island sectors
-      # geom_label_repel(data = buffer_label, aes(longitude, latitude, label = sector_nam, fill = sector_nam, fontface = 'bold'),
-      #                  alpha = 0.5,
-      #                  color = "white", max.overlaps = Inf,
-      #                  show.legend = F) +
+      # display if there is more than 1 island sector
+      {if (length(unique(buffer$sector_nam)) > 1) {
+        
+        geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.3, show.legend = T)
+        geom_label_repel(data = buffer_label, aes(longitude, latitude, label = sector_nam, fill = sector_nam, fontface = 'bold'),
+                         alpha = 0.5,
+                         color = "white", max.overlaps = Inf,
+                         show.legend = F) +
+          
+          scale_fill_discrete("") +
+          scale_color_discrete("") +
+          
+          new_scale_color() +
+          new_scale_fill() 
+        
+      }} +
       
-      scale_fill_discrete("") + 
-      scale_color_discrete("") + 
+      geom_spatial_point(data = sets_i, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 5, crs = 4326) +
+      # geom_point(data = sets_i, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 5) + 
       
-      new_scale_color() +
-      new_scale_fill() +
-      
-      geom_spatial_point(data = sets, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 5, crs = 4326) + 
-      scale_fill_manual(name = "Depth", values = c("red", "goldenrod1", "green3"), na.translate = F) + # in geom_spatial_point make size = 9 ONLY for Guam
+      scale_fill_manual(name = "Depth", values = c("red", "goldenrod1", "green3"), na.translate = F) + 
       scale_shape_manual(name = "Depth", values = c(24, 22, 21), na.translate = F) +
-      # annotation_scale(location = "br", width_hint = 0.2) +
+      annotation_scale(location = "br", width_hint = 0.2) +
       
-      geom_label_repel(data = sets, 
+      geom_label_repel(data = sets_i, 
                        aes(longitude, latitude, label = id),
                        size = 5,
                        label.size = NA, 
@@ -355,14 +370,14 @@ for (i in 1:length(islands)) {
                        point.padding = unit(0.3, "lines")) +
       
       ggtitle(paste0(map_direction[d])) + 
-      theme(plot.title = element_text(size = 20, face = "bold")) + 
+      theme(plot.title = element_text(size = 30, face = "bold")) + 
       
       coord_sf(crs = 4326) + 
       
       scale_x_continuous(sec.axis = dup_axis(), "", limits = ext[1:2]) +
       scale_y_continuous(sec.axis = dup_axis(), "", limits = ext[3:4]) 
     
-    pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], "_", map_direction[d], ".pdf"), height = 14.5, width = 10.5)
+    pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], "_", map_direction[d], ".pdf"), height = 21.75, width = 15.75)
     print(map_i)
     dev.off()
     
@@ -375,14 +390,13 @@ for (i in 1:length(islands)) {
   # map <- get_map(location = c(left = ext[1], bottom = ext[3], right = ext[2], top = ext[4]), maptype = 'satellite')
   map <- get_map(location = c(mean(sets$longitude, na.rm = T),
                               mean(sets$latitude, na.rm = T)), 
-                 zoom = 14,
+                 zoom = utm_i$satellite,
                  maptype = 'satellite')
-  
   
   (whole_map = 
       
       # ggplot() + 
-      ggmap(map, darken = 0.5) + 
+      ggmap(map) + 
       
       # geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "darkgrey") + # coastline
       # geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
@@ -395,8 +409,8 @@ for (i in 1:length(islands)) {
       new_scale_color() +
       new_scale_fill() +
       
-      geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.3, show.legend = F) + # island sectors
-      geom_label_repel(data = buffer_label, aes(longitude, latitude, label = sector_nam, fill = sector_nam, fontface = 'bold'), color = "white", max.overlaps = Inf, show.legend = F) +
+      if ( length(unique(buffer$sector_nam)) > 1) geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.3, show.legend = F) + # island sectors
+      if ( length(unique(buffer$sector_nam)) > 1) geom_label_repel(data = buffer_label, aes(longitude, latitude, label = sector_nam, fill = sector_nam, fontface = 'bold'), color = "white", max.overlaps = Inf, show.legend = F) +
       
       scale_fill_discrete("") + 
       scale_color_discrete("") + 
@@ -451,7 +465,7 @@ for (i in 1:length(islands)) {
                                  # "Target survey effort = ", total_sample, " sites \n",
                                  "Total survey effort = ", sum(strat_det$strat_sets), " sites"))))
   
-  pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), height = 14.5, width = 10.5)
+  pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), height = 21.75, width = 15.75)
   print(whole_map)
   dev.off()
   
