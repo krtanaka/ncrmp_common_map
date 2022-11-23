@@ -17,8 +17,7 @@ library(lattice)
 islands = c(
   "gua",
   # "rot", # in-house bathymetry file cannot represent eastern side of the island. Use Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c_prep_bathymetry_by_region.
-  "sai", 
-  "tin"
+  "sai", "tin"
   # "agu" # in-house bathymetry file cannot represent the island. Use Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c_prep_bathymetry_by_region.
 )
 
