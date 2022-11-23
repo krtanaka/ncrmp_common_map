@@ -43,10 +43,10 @@ for (isl in 1:length(islands)) {
   
   # South Mariana Islands
   if (islands[isl] == "gua") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/ngdc_bathy_10m_guam_3111_dbef_9895.nc")
-  # if (islands[isl] == "rot") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Rota_60m.asc")
+  if (islands[isl] == "rot") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Rota_60m.asc")
   if (islands[isl] == "sai") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/sai_mb_li_db.asc")
   if (islands[isl] == "tin") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/tinmblidbmos.asc")
-  # if (islands[isl] == "agu") topo = raster("FILE_NOT_AVAILAVLE") # file not available
+  if (islands[isl] == "agu") topo = raster("FILE_NOT_AVAILAVLE") # file not available
   
   # North Mariana Islands
   if (islands[isl] == "agr") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/agr_inpoo_new/w001001.adf")
