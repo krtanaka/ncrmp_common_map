@@ -15,7 +15,7 @@ library(lattice)
 
 # South Mariana Islands
 islands = c(
-  # "gua", # run 
+  # "gua", # run 2b_prep_bathymetry_Guam to process ngdc_bathy_10m_guam file separately 
   # "rot", # in-house bathymetry file cannot represent eastern side of the island. Use Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c_prep_bathymetry_by_region.
   "sai", "tin"
   # "agu" # in-house bathymetry file cannot represent the island. Use Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c_prep_bathymetry_by_region.
