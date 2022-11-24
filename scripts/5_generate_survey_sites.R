@@ -173,12 +173,10 @@ for (i in 1:length(islands)) {
     page_height = 14.5 # Margins for smaller site lists i.e Rota 
     page_height = 10.5 # Margins for smaller site lists i.e Rota
     
-    
   } else {
     
     page_height = 21.75 # Margins for larger site lists i.e. Guam 
     page_width = 15.75 # Margins for larger site lists i.e. Guam 
-    
     
   }
   
@@ -328,27 +326,32 @@ for (i in 1:length(islands)) {
     
     map_i = 
       
-      # ggplot() +
+      # gglot() +
       ggmap(map) +
       
-      # geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
+      geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
       
       # display if there is more than 1 island sector
+      
       {if (length(unique(buffer$sector_nam)) > 1) {
         
-        geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.3, show.legend = T)
-        geom_label_repel(data = buffer_label, aes(longitude, latitude, label = sector_nam, fill = sector_nam, fontface = 'bold'),
-                         alpha = 0.5,
-                         color = "white", max.overlaps = Inf,
-                         show.legend = F) +
-          
-          scale_fill_discrete("") +
-          scale_color_discrete("") +
-          
-          new_scale_color() +
-          new_scale_fill() 
+        geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.3, show.legend = T)}
         
-      }} +
+      } + 
+      
+      {if (length(unique(buffer$sector_nam)) > 1) {
+        
+        geom_label_repel(data = buffer_label, 
+                         aes(longitude, latitude, label = sector_nam, fill = sector_nam, fontface = 'bold'), 
+                         alpha = 0.5, color = "white", max.overlaps = Inf, show.legend = F)}
+        
+      } + 
+      
+      scale_fill_discrete("") +
+      scale_color_discrete("") +
+      
+      new_scale_color() +
+      new_scale_fill() + 
       
       geom_spatial_point(data = sets_i, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 5, crs = 4326) +
       # geom_point(data = sets_i, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 5) + 
@@ -390,7 +393,7 @@ for (i in 1:length(islands)) {
   # map <- get_map(location = c(left = ext[1], bottom = ext[3], right = ext[2], top = ext[4]), maptype = 'satellite')
   map <- get_map(location = c(mean(sets$longitude, na.rm = T),
                               mean(sets$latitude, na.rm = T)), 
-                 zoom = utm_i$satellite,
+                 zoom = utm_i$Satellite,
                  maptype = 'satellite')
   
   (whole_map = 
@@ -409,8 +412,18 @@ for (i in 1:length(islands)) {
       new_scale_color() +
       new_scale_fill() +
       
-      if ( length(unique(buffer$sector_nam)) > 1) geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.3, show.legend = F) + # island sectors
-      if ( length(unique(buffer$sector_nam)) > 1) geom_label_repel(data = buffer_label, aes(longitude, latitude, label = sector_nam, fill = sector_nam, fontface = 'bold'), color = "white", max.overlaps = Inf, show.legend = F) +
+      {if ( length(unique(buffer$sector_nam)) > 1) {
+        
+        geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.3, show.legend = F)}
+        
+      } + 
+      
+      # island sectors
+      {if ( length(unique(buffer$sector_nam)) > 1) {
+        
+        geom_label_repel(data = buffer_label, aes(longitude, latitude, label = sector_nam, fill = sector_nam, fontface = 'bold'), color = "white", max.overlaps = Inf, show.legend = F)}
+        
+      } +
       
       scale_fill_discrete("") + 
       scale_color_discrete("") + 
