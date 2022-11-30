@@ -3,3 +3,5 @@
 # Common_Maps_GIS_Directory https://docs.google.com/spreadsheets/d/1ubvirPEe6gf9Ub-KEIw9bThGtvlkvzY5_09mdaUtlQo/edit?usp=sharing
 # To do: 
 # redo MHI before Jan 24
+# Benthic-Samoa by mid-Feb
+# test 10% hardsoft
