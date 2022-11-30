@@ -31,6 +31,8 @@ regions = as.character(unique(df$REGION))
 
 par(mfrow = c(2,3))
 
+set.seed(2022)
+
 for (r in 1:length(regions)) {
   
   # r = 1
