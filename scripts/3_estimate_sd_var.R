@@ -31,8 +31,6 @@ regions = as.character(unique(df$REGION))
 
 par(mfrow = c(2,3))
 
-set.seed(2022)
-
 for (r in 1:length(regions)) {
   
   # r = 1
@@ -52,14 +50,12 @@ for (r in 1:length(regions)) {
     mutate(LATITUDE = round(LATITUDE, 2),
            LONGITUDE = round(LONGITUDE, 2)) %>% 
     # subset(TotFishBio > 0) %>%
-    # select(LONGITUDE, LATITUDE, DEPTH, OBS_YEAR, TotFishBio) %>% 
-    # na.omit() %>%
     group_by(LONGITUDE, LATITUDE) %>% 
     summarise(sd = sd(TotFishBio, na.rm = T),
               var = var(TotFishBio, na.rm = T)) %>% 
     as.data.frame()
   
-  # qplot(df_r$LONGITUDE, df_r$LATITUDE, color = log10(df_r$var + 1)) + scale_color_viridis_c()
+  # qplot(df_r$LONGITUDE, df_r$LATITUDE, color = log10(df_r$sd + 1)) + scale_color_viridis_c()
   
   # par(mfrow = c(1,2))
   # hist(df_r$var)
@@ -71,14 +67,14 @@ for (r in 1:length(regions)) {
   df_r = cbind(df_r, LongLatToUTM(df_r$LONGITUDE, df_r$LATITUDE, zone))
   colnames(df_r)[6:7] = c("x", "y")
   
-  g = gam(var ~ s(x, y),
+  g = gam(sd ~ s(x, y),
           # + s(DEPTH) + OBS_YEAR, 
           family = "tw(theta = NULL, link = 'log', a = 1.01, b = 1.99)", 
           gamma = 1.4,
           data = df_r)
   
   summary(g)
-  vis.gam(g, too.far = 0.005, n.grid = 100, plot.type = "contour", type = "response", axes = F, pch = ".")
+  vis.gam(g, too.far = 0.01, n.grid = 100, plot.type = "contour", type = "response", axes = F, pch = ".")
   axis(1); axis(2)
   # gam.check(g)
   
