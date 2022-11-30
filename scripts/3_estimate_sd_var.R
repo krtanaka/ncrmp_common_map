@@ -1,3 +1,7 @@
+##################################################################################
+### estimate functional fish group biomass variabilities w/ simple Tweedie GAM ###
+##################################################################################
+
 library(dplyr)
 library(mgcv)
 library(sp)
