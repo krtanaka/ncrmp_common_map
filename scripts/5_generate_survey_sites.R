@@ -19,7 +19,6 @@ library(ggmap)
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
-
 ########################################################################
 ### do some parameter settings to simulate stratified random surveys ###
 ########################################################################
@@ -67,7 +66,7 @@ ggmap::register_google("AIzaSyDpirvA5gB7bmbEbwB1Pk__6jiV4SXAEcY")
 
 for (i in 1:length(islands)) {
   
-  # i = 3
+  # i = 1
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData")); plot(survey_grid_ncrmp)
@@ -80,7 +79,7 @@ for (i in 1:length(islands)) {
     
   } else {
     
-    total_sample = total_sample$Effort*2
+    total_sample = total_sample$Effort
     
   }
   
@@ -89,14 +88,44 @@ for (i in 1:length(islands)) {
   cells <- data.table(rasterToPoints(survey_grid_ncrmp))
   
   # add modeled trophic biomass variability, summarize by strata
-  load(paste0("data/rea/modeled_survey_variability_", region, ".RData")) # modeled at original grid scale
-  cells$sd = predict(g, cells); sd = cells[,c("strat", "sd")]; sd = sd %>% group_by(strat) %>% summarise(sd = mean(sd, na.rm = T))
+  load(paste0("data/rea/modeled_piscivore_variability_", region, ".RData")) # modeled at original grid scale
+  load(paste0("data/rea/modeled_planktivore_variability_", region, ".RData")) # modeled at original grid scale
+  load(paste0("data/rea/modeled_secondary_variability_", region, ".RData")) # modeled at original grid scale
+  load(paste0("data/rea/modeled_primary_variability_", region, ".RData")) # modeled at original grid scale
+  load(paste0("data/rea/modeled_total_variability_", region, ".RData")) # modeled at original grid scale
   
+  cells$sd_piscivore = predict(g_piscivore, cells)
+  sd_piscivore = cells[,c("strat", "sd_piscivore")]
+  sd_piscivore = sd_piscivore %>% group_by(strat) %>% summarise(sd_piscivore = mean(sd_piscivore, na.rm = T))
+  
+  cells$sd_planktivore = predict(g_planktivore, cells)
+  sd_planktivore = cells[,c("strat", "sd_planktivore")]
+  sd_planktivore = sd_planktivore %>% group_by(strat) %>% summarise(sd_planktivore = mean(sd_planktivore, na.rm = T))
+  
+  cells$sd_primary = predict(g_primary, cells); sd = cells[,c("strat", "sd_primary")]
+  sd_primary = cells[,c("strat", "sd_primary")]
+  sd_primary = sd_primary %>% group_by(strat) %>% summarise(sd_primary = mean(sd_primary, na.rm = T))
+  
+  cells$sd_secondary = predict(g_secondary, cells); sd = cells[,c("strat", "sd_secondary")]
+  sd_secondary = cells[,c("strat", "sd_secondary")]
+  sd_secondary = sd_secondary %>% group_by(strat) %>% summarise(sd_secondary = mean(sd_secondary, na.rm = T))
+  
+  cells$sd_total = predict(g_total, cells)
+  sd_total = cells[,c("strat", "sd_total")]
+  sd_total = sd_total %>% group_by(strat) %>% summarise(sd_total = mean(sd_total, na.rm = T))
+
   strat_det <- cells[, list(strat_cells = .N), by = "strat"]; strat_det
   strat_det$tow_area <- prod(trawl_dim); strat_det
   strat_det$cell_area <- prod(res(survey_grid_ncrmp)); strat_det
   strat_det$strat_area <- strat_det$strat_cells * prod(res(survey_grid_ncrmp)); strat_det
-  strat_det = right_join(strat_det, sd); strat_det
+  
+  strat_det = right_join(strat_det, sd_piscivore); strat_det
+  strat_det = right_join(strat_det, sd_planktivore); strat_det
+  strat_det = right_join(strat_det, sd_primary); strat_det
+  strat_det = right_join(strat_det, sd_secondary); strat_det
+  strat_det = right_join(strat_det, sd_total); strat_det
+  
+  strat_det$sd = rowMeans(strat_det[, 6:10])
   
   ## allocate sampling units by area * sd
   strat_det$weight = abs(strat_det$strat_area * strat_det$sd); strat_det
