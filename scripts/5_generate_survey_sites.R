@@ -60,6 +60,8 @@ set.seed(2022)
 
 ggmap::register_google("AIzaSyDpirvA5gB7bmbEbwB1Pk__6jiV4SXAEcY")
 
+select = dplyr::select
+
 #################################################################
 ### Generate survey site tables & maps, check outputs/ folder ###
 #################################################################
@@ -125,7 +127,7 @@ for (i in 1:length(islands)) {
   strat_det = right_join(strat_det, sd_secondary); strat_det
   strat_det = right_join(strat_det, sd_total); strat_det
   
-  strat_det$sd = rowMeans(strat_det[, 6:10])
+  strat_det$sd = rowMeans(strat_det[, 6:10]); strat_det
   
   ## allocate sampling units by area * sd
   strat_det$weight = abs(strat_det$strat_area * strat_det$sd); strat_det
@@ -141,7 +143,7 @@ for (i in 1:length(islands)) {
   strat_table = strat_det %>% dplyr::select(strat, strat_sets); strat_table
   
   # add "strat" "strat_cells" "tow_area" ...
-  strat_det = strat_det[,c("strat", "strat_cells", "tow_area", "cell_area", "strat_area", "strat_sets")]
+  strat_det = strat_det[, c("strat", "strat_cells", "tow_area", "cell_area", "strat_area", "strat_sets")]
   cells <- merge(cells, strat_det, by = c("strat")) 
   
   utm_i = utm %>% subset(Island_Code == islands[i])
@@ -200,7 +202,7 @@ for (i in 1:length(islands)) {
   if(dim(sets1)[1] < 30) {
     
     page_height = 14.5 # Margins for smaller site lists i.e Rota 
-    page_height = 10.5 # Margins for smaller site lists i.e Rota
+    page_width = 10.5 # Margins for smaller site lists i.e Rota
     
   } else {
     
