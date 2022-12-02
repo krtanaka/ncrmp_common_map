@@ -3,24 +3,22 @@
 ################################################
 # MUST CONNECT TO THE T DRIVE AND X DRIVE
 
-rm(list=ls())
+rm(list = ls())
+
 library(readr)
 library(rgdal)    # needed for working with shapefiles
 library(tidyr)
+library(dplyr)
+library(ggplot2)
 
 # READ IN DATA ------------------------
-x<-read.csv("T:/DataManagement/NCEI Archive Packages/Fish REA nSPC (NCRMP)/Data/V0_FISH_REA_MARIAN_2022.csv")
-
-# ADD SECTOR INFO ---------------------
-
-survey<-x %>% select(OBS_YEAR, REGION, REGION_NAME, ISLAND, SITE, DATE_, REEF_ZONE, DEPTH_BIN, LATITUDE, LONGITUDE, SITEVISITID, METHOD)
-survey<- distinct(survey, SITEVISITID, .keep_all = TRUE)
-df = survey
+df = read.csv("data/rea/Cleaned_sitevisit_112322.csv")
+df = df[,2:51]
 
 # re-project in correct utm zone 
 # For Guam, UTM 55 
-zone <- (floor((df$LONGITUDE[1] + 180)/6) %% 60) + 1
-xy_utm = as.data.frame(cbind(utm = project(as.matrix(df[, c("LONGITUDE", "LATITUDE")]), paste0("+proj=utm +units=m +zone=", zone))))
+zone <- (floor((df$LONGITUDE_SV[1] + 180)/6) %% 60) + 1
+xy_utm = as.data.frame(cbind(utm = project(as.matrix(df[, c("LONGITUDE_SV", "LATITUDE_SV")]), paste0("+proj=utm +units=m +zone=", zone))))
 colnames(xy_utm) = c("X", "Y")
 df = cbind(df, xy_utm)
 
@@ -29,7 +27,14 @@ latlon = df[,c("X", "Y")]
 coordinates(latlon) = ~X+Y
 
 # read shp file, assign same projection attribute
-shp <- rgdal::readOGR("X:/GIS/Projects/CommonMaps/01_Preprocess/MARI/GUA/sector/gua_base_land_openwater_mpa_finalize.shp")
+shp <- rgdal::readOGR("N:/GIS/Projects/CommonMaps/Sector/gua_base_land_openwater_mpa_finalize.shp")
+CRS.new <- CRS("+proj=utm +zone=55 +datum=WGS84 +units=m +no_defs")
+proj4string(latlon) <- CRS.new
+proj4string(shp) <- CRS.new # WARNING MESSAGE OK
+area <- over(latlon,shp)
+
+# read shp file, assign same projection attribute
+shp <- rgdal::readOGR("N:/GIS/Projects/CommonMaps/Sector/tut_sector.shp")
 CRS.new <- CRS("+proj=utm +zone=55 +datum=WGS84 +units=m +no_defs")
 proj4string(latlon) <- CRS.new
 proj4string(shp) <- CRS.new # WARNING MESSAGE OK
@@ -38,12 +43,12 @@ area <- over(latlon,shp)
 # combine with site data
 df = cbind(df, as.data.frame(area))
 
-df %>%
-  ggplot(aes(X, Y, color = SEC_NAME)) +
-  geom_point()
-
 # if sites do not fall into a sector, create island name as the sector name
-df<-df %>% mutate(SEC_NAME = ifelse(is.na(SEC_NAME), ISLAND, SEC_NAME))
-df$SEC_NAME<-toupper(df$SEC_NAME)
+df = df %>% mutate(SEC_NAME = ifelse(is.na(SEC_NAME), ISLAND, SEC_NAME))
+df$SEC_NAME = toupper(df$SEC_NAME)
 
-x<-merge(x, df[,c("SITEVISITID", "SEC_NAME")], by="SITEVISITID", all.x=TRUE) 
+df %>%
+  subset(REGION == "MARIAN") %>%
+  ggplot(aes(LONGITUDE_SV , LATITUDE_SV, fill = SEC_NAME)) +
+  annotation_map(map_data("world")) + 
+  geom_point(shape = 21)
