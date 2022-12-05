@@ -257,8 +257,8 @@ for (isl in 1:length(islands)) {
   # default_proj = "+init=epsg:4326 +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"
   # crs(survey_grid_ncrmp) = default_proj
 
-  p <- raster::rasterToPolygons(survey_grid$strat, dissolve = TRUE); sp::plot(p)
-  p <- raster::rasterToPolygons(survey_grid_ncrmp$strat, dissolve = TRUE); sp::plot(p)
+  # p <- raster::rasterToPolygons(survey_grid$strat, dissolve = TRUE); sp::plot(p)
+  # p <- raster::rasterToPolygons(survey_grid_ncrmp$strat, dissolve = TRUE); sp::plot(p)
   
   survey_grid_ncrmp = readAll(survey_grid_ncrmp)
   save(survey_grid_ncrmp, file = paste0("data/survey_grid_ncrmp/survey_grid_", islands[isl], ".RData"))
