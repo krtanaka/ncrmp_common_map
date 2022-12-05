@@ -1,12 +1,12 @@
 ################################################
 ### add sector information to site visit #######
 ################################################
-# MUST CONNECT TO THE T DRIVE AND X DRIVE
+# MUST CONNECT TO THE N DRIVE 
 
 rm(list = ls())
 
 library(readr)
-library(rgdal)    # needed for working with shapefiles
+library(rgdal) # needed for working with shapefiles
 library(tidyr)
 library(dplyr)
 library(ggplot2)
@@ -14,6 +14,8 @@ library(ggplot2)
 # READ IN DATA ------------------------
 df = read.csv("data/rea/Cleaned_sitevisit_112322.csv")
 df = df[,2:51]
+plot(df$LONGITUDE_LOS, df$LATITUDE_LOS, pch = 20, col = 2); map(add = T)
+plot(df$LONGITUDE_SV, df$LATITUDE_SV, pch = 20, col = 2); map(add = T)
 
 # re-project in correct utm zone 
 # For Guam, UTM 55 
