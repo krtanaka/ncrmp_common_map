@@ -56,7 +56,7 @@ islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"  
 # islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI"  # Main Hawaiian Islands
 # islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"               # Northern Hawaiian Islands
 
-set.seed(2022)
+set.seed(2023)
 
 ggmap::register_google("AIzaSyDpirvA5gB7bmbEbwB1Pk__6jiV4SXAEcY")
 
@@ -68,7 +68,7 @@ select = dplyr::select
 
 for (i in 1:length(islands)) {
   
-  # i = 1
+  # i = 3
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData")); plot(survey_grid_ncrmp)
@@ -90,11 +90,11 @@ for (i in 1:length(islands)) {
   cells <- data.table(rasterToPoints(survey_grid_ncrmp))
   
   # add modeled trophic biomass variability, summarize by strata
-  load(paste0("data/rea/modeled_piscivore_variability_", region, ".RData")) # modeled at original grid scale
-  load(paste0("data/rea/modeled_planktivore_variability_", region, ".RData")) # modeled at original grid scale
-  load(paste0("data/rea/modeled_secondary_variability_", region, ".RData")) # modeled at original grid scale
-  load(paste0("data/rea/modeled_primary_variability_", region, ".RData")) # modeled at original grid scale
-  load(paste0("data/rea/modeled_total_variability_", region, ".RData")) # modeled at original grid scale
+  load(paste0("data/spc/modeled_piscivore_variability_", region, ".RData")) # modeled at original grid scale
+  load(paste0("data/spc/modeled_planktivore_variability_", region, ".RData")) # modeled at original grid scale
+  load(paste0("data/spc/modeled_secondary_variability_", region, ".RData")) # modeled at original grid scale
+  load(paste0("data/spc/modeled_primary_variability_", region, ".RData")) # modeled at original grid scale
+  load(paste0("data/spc/modeled_total_variability_", region, ".RData")) # modeled at original grid scale
   
   cells$sd_piscivore = predict(g_piscivore, cells)
   sd_piscivore = cells[,c("strat", "sd_piscivore")]
@@ -232,7 +232,7 @@ for (i in 1:length(islands)) {
   
   (variability = cells %>% 
       ggplot(aes(x, y)) +
-      geom_raster(aes(fill = sd)) + 
+      geom_raster(aes(fill = sd_total)) + 
       coord_fixed())
   
   (area = cells %>% 
@@ -360,7 +360,7 @@ for (i in 1:length(islands)) {
       # gglot() +
       ggmap(map) +
       
-      geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
+      # geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
       
       # display if there is more than 1 island sector
       
@@ -403,7 +403,7 @@ for (i in 1:length(islands)) {
                        box.padding = unit(0.8, "lines"),
                        point.padding = unit(0.3, "lines")) +
       
-      ggtitle(paste0(map_direction[d])) + 
+      # ggtitle(paste0(map_direction[d])) + 
       theme(plot.title = element_text(size = 30, face = "bold")) + 
       
       coord_sf(crs = 4326) + 
@@ -411,8 +411,15 @@ for (i in 1:length(islands)) {
       scale_x_continuous(sec.axis = dup_axis(), "", limits = ext[1:2]) +
       scale_y_continuous(sec.axis = dup_axis(), "", limits = ext[3:4]) 
     
+    map_full =     
+      ggplot() +
+      geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) +
+      geom_rect(aes(xmin =  ext[1], xmax =  ext[2], ymin =  ext[3], ymax =  ext[4]), color = "red", fill = NA) +
+      coord_sf(crs = "+proj=lonlat +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs") + 
+      labs(x = "", y = "")
+    
     pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], "_", map_direction[d], ".pdf"), height = 21.75, width = 15.75)
-    print(map_i)
+    print(map_full / map_i)
     dev.off()
     
     map_list[[length(map_list)+1]] = map_i
@@ -437,8 +444,8 @@ for (i in 1:length(islands)) {
       
       geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.5, width = 0.001, height = 0.001) + # stratum
       
-      scale_fill_viridis_d("Strata") + 
-      scale_color_viridis_d("Strata") + 
+      scale_fill_discrete("Strata") + 
+      scale_color_discrete("Strata") + 
       
       new_scale_color() +
       new_scale_fill() +

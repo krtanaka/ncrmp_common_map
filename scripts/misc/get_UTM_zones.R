@@ -1,7 +1,7 @@
 library(dplyr)
 library(readr)
 
-load('data/rea/SURVEY MASTER.RData'); df = SURVEY_MASTER
+load('data/spc/SURVEY MASTER.RData'); df = SURVEY_MASTER
 dat = as.data.frame(do.call('rbind', strsplit(as.character(df$SITE),'-',fixed = TRUE)))[1]
 
 colnames(dat) = "Island_Code"
@@ -25,6 +25,9 @@ ncrmp_utm_zones$Island = gsub(" " , "_", ncrmp_utm_zones$Island)
 
 ncrmp_utm_zones$UTM_Zone = ifelse(ncrmp_utm_zones$Island == "Lisianski", 1L, ncrmp_utm_zones$UTM_Zone)
 
-ncrmp_utm_zones$Satellite = ifelse(ncrmp_utm_zones$Island %in% c("Guam", "Tutuila"), 12, 13)
+ncrmp_utm_zones$Satellite = 13
+
+ncrmp_utm_zones$Satellite = ifelse(ncrmp_utm_zones$Island %in% c("Guam", "Tutuila"), 12, ncrmp_utm_zones$Satellite)
+ncrmp_utm_zones$Satellite = ifelse(ncrmp_utm_zones$Island %in% c("Jarvis"), 12, ncrmp_utm_zones$Satellite)
 
 write_csv(ncrmp_utm_zones, file = 'data/misc/ncrmp_utm_zones.csv')
