@@ -24,7 +24,7 @@ utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 ########################################################################
 
 # n_sims = 100 # number of simulations
-effort_level = c("low", "mid", "high")[2] # define sampling effort (low, mid, high)
+effort_level = c("low", "mid", "high")[3] # define sampling effort (low, mid, high)
 min_sets = 1 # minimum number of sets per strat
 max_sets = 30
 trawl_dim = c(0.01, 0.0353) # 0.000353 sq.km (353 sq.m) from two 15-m diameter survey cylinders
@@ -81,7 +81,7 @@ for (i in 1:length(islands)) {
     
   } else {
     
-    total_sample = total_sample$Effort
+    total_sample = total_sample$Effort*2
     
   }
   
