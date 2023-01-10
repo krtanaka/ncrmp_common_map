@@ -24,7 +24,7 @@ utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 ########################################################################
 
 # n_sims = 100 # number of simulations
-effort_level = c("low", "mid", "high")[3] # define sampling effort (low, mid, high)
+effort_level = c("low", "mid", "high")[2] # define sampling effort (low, mid, high)
 min_sets = 1 # minimum number of sets per strat
 max_sets = 30
 trawl_dim = c(0.01, 0.0353) # 0.000353 sq.km (353 sq.m) from two 15-m diameter survey cylinders
@@ -68,7 +68,7 @@ select = dplyr::select
 
 for (i in 1:length(islands)) {
   
-  # i = 3
+  # i = 1
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData")); plot(survey_grid_ncrmp)
@@ -156,6 +156,35 @@ for (i in 1:length(islands)) {
   # subset "cells" to create site locations
   sets <- cells[, .SD[sample(.N, size = unique(strat_sets), replace = resample_cells)], 
                 by = c("strat")]
+  
+  # remove sites that are closer than 50 m
+  nearby_sites <- data.frame(longitude = sets$longitude, latitude = sets$latitude)
+  coordinates(nearby_sites) <- c('longitude', 'latitude')
+  proj4string(nearby_sites) <- CRS("+proj=longlat +ellps=WGS84 +datum=WGS84")
+  nearby_sites <- spTransform(nearby_sites, CRS("+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"))##
+  
+  plot(nearby_sites, pch = 20, col = 2, cex = 2)
+  
+  library(rgeos)
+  points_matrix <- gWithinDistance(nearby_sites, dist = 50, byid = T)
+  points_matrix[lower.tri(points_matrix, diag = T)] <- NA
+  points_matrix
+  
+  colSums(points_matrix, na.rm = T) == 0
+  
+  v <- colSums(points_matrix, na.rm = T) == 0
+  nearby_sites = nearby_sites[v, ]
+  points(nearby_sites, pch = 20, col = 4)
+  
+  nearby_sites <- spTransform(nearby_sites, CRS("+proj=longlat +ellps=WGS84 +datum=WGS84"))
+  nearby_sites = as.data.frame(nearby_sites)
+  
+  nearby_sites$latitude = round(nearby_sites$latitude, 4)
+  nearby_sites$longitude = round(nearby_sites$longitude, 4)
+  sets$latitude = round(sets$latitude, 4)
+  sets$longitude = round(sets$longitude, 4)
+  
+  sets = inner_join(sets, nearby_sites)
   
   id <- seq(1,dim(sets)[1],1)
   id = sprintf("s_%04d", id)
@@ -389,7 +418,7 @@ for (i in 1:length(islands)) {
       
       scale_fill_manual(name = "Depth", values = c("red", "goldenrod1", "green3"), na.translate = F) + 
       scale_shape_manual(name = "Depth", values = c(24, 22, 21), na.translate = F) +
-      annotation_scale(location = "br", width_hint = 0.2) +
+      annotation_scale(location = "br", width_hint = 0.2, text_col = "white", bar_cols = "white") +  # new_scale_color() +
       
       geom_label_repel(data = sets_i, 
                        aes(longitude, latitude, label = id),
@@ -442,7 +471,7 @@ for (i in 1:length(islands)) {
       # geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "darkgrey") + # coastline
       # geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
       
-      geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.5, width = 0.001, height = 0.001) + # stratum
+      geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.5, width = 0.00005, height = 0.00005) + # stratum
       
       scale_fill_discrete("Strata") + 
       scale_color_discrete("Strata") + 
@@ -481,7 +510,7 @@ for (i in 1:length(islands)) {
       # geom_spatial_point(data = sets, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 3, crs = 4326) + 
       # scale_fill_manual(name = "Depth", values = c("red", "goldenrod1", "green3"), na.translate = F) + # in geom_spatial_point make size = 9 ONLY for Guam
       # scale_shape_manual(name = "Depth", values = c(24, 22, 21), na.translate = F) +
-      annotation_scale(location = "br", width_hint = 0.2) +  # new_scale_color() +
+      annotation_scale(location = "br", width_hint = 0.2, text_col = "white", bar_cols = "white") +  # new_scale_color() +
       # new_scale_fill() +      
       
       # geom_label_repel(data = sets,

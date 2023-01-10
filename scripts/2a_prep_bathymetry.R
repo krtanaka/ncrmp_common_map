@@ -90,17 +90,17 @@ for (isl in 1:length(islands)) {
     
   }
   
-  if (islands[isl] %in% c("rot", "sai", "tin")) {
-    
-    topo <- aggregate(topo, fact = 50/res(topo))
-    res(topo)
-    
-  } else {
-    
-    topo <- aggregate(topo, fact = 100/res(topo))
-    res(topo)
-    
-  }
+  # if (islands[isl] %in% c("rot", "sai", "tin")) {
+  #   
+  #   topo <- aggregate(topo, fact = 50/res(topo))
+  #   res(topo)
+  #   
+  # } else {
+  #   
+  #   topo <- aggregate(topo, fact = 100/res(topo))
+  #   res(topo)
+  #   
+  # }
   
   topo_i = readAll(topo)
   plot(topo_i)

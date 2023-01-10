@@ -14,7 +14,7 @@ Guguan,gug,55,+north,13
 Hawaii,haw,5,+north,13
 Howland,how,1,+north,13
 Jarvis,jar,4,+south,12
-Johnston,joh,2,+north,13
+Johnston,joh,2,+north,12
 Kahoolawe,kah,4,+north,13
 Kauai,kau,4,+north,13
 Kaula,kal,4,+north,13
@@ -38,9 +38,9 @@ Oahu,oah,4,+north,13
 Ofu_&_Olosega,ofu,2,+south,13
 Ofu_&_Olosega,olo,2,+south,13
 Pagan,pag,55,+north,13
-Palmyra,fr,3,+north,13
-Palmyra,pal,3,+north,13
-Palmyra,rt,3,+north,13
+Palmyra,fr,3,+north,12
+Palmyra,pal,3,+north,12
+Palmyra,rt,3,+north,12
 Pathfinder,pat,54,+north,13
 Pearl_&_Hermes,phr,1,+north,13
 Philippines,art,51,+north,13
@@ -70,5 +70,5 @@ Timor_Leste,oec,51,+south,13
 Timor_Leste,vil,51,+south,13
 Tinian,tin,55,+north,13
 Tutuila,tut,2,+south,12
-Wake,wak,58,+north,13
+Wake,wak,58,+north,12
 Zealandia,zea,55,+north,13
