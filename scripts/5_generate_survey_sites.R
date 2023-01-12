@@ -174,7 +174,7 @@ for (i in 1:length(islands)) {
   
   v <- colSums(points_matrix, na.rm = T) == 0
   nearby_sites = nearby_sites[v, ]
-  points(nearby_sites, pch = 20, col = 4)
+  points(nearby_sites, pch = 20, col = 4); axis(1); axis(2)
   
   nearby_sites <- spTransform(nearby_sites, CRS("+proj=longlat +ellps=WGS84 +datum=WGS84"))
   nearby_sites = as.data.frame(nearby_sites)
@@ -429,6 +429,8 @@ for (i in 1:length(islands)) {
                        color = 'black',
                        max.overlaps = Inf,
                        segment.size = 0.2,
+                       segment.linetype = 6,
+                       segment.color = "white",
                        box.padding = unit(0.8, "lines"),
                        point.padding = unit(0.3, "lines")) +
       
