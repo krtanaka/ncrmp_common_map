@@ -115,7 +115,7 @@ for (i in 1:length(islands)) {
   cells$sd_total = predict(g_total, cells)
   sd_total = cells[,c("strat", "sd_total")]
   sd_total = sd_total %>% group_by(strat) %>% summarise(sd_total = mean(sd_total, na.rm = T))
-
+  
   strat_det <- cells[, list(strat_cells = .N), by = "strat"]; strat_det
   strat_det$tow_area <- prod(trawl_dim); strat_det
   strat_det$cell_area <- prod(res(survey_grid_ncrmp)); strat_det
@@ -428,8 +428,6 @@ for (i in 1:length(islands)) {
                        fontface = 'bold', 
                        color = 'black',
                        max.overlaps = Inf,
-                       segment.size = 0.2,
-                       segment.linetype = 6,
                        segment.color = "white",
                        box.padding = unit(0.8, "lines"),
                        point.padding = unit(0.3, "lines")) +
@@ -440,21 +438,25 @@ for (i in 1:length(islands)) {
       coord_sf(crs = 4326) + 
       
       scale_x_continuous(sec.axis = dup_axis(), "", limits = ext[1:2]) +
-      scale_y_continuous(sec.axis = dup_axis(), "", limits = ext[3:4]) 
+      scale_y_continuous(sec.axis = dup_axis(), "", limits = ext[3:4])
     
     map_full =     
       ggplot() +
       geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) +
       geom_rect(aes(xmin =  ext[1], xmax =  ext[2], ymin =  ext[3], ymax =  ext[4]), color = "red", fill = NA) +
       coord_sf(crs = "+proj=lonlat +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs") + 
-      labs(x = "", y = "")
+      theme_inset()
     
-    pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], "_", map_direction[d], ".pdf"), height = 21.75, width = 15.75)
-    print(map_full / map_i)
+    if(diff(ext[1:2]) < diff(ext[3:4])) pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], "_", map_direction[d], ".pdf"), height = 22, width = 17)
+    if(diff(ext[1:2]) > diff(ext[3:4])) pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], "_", map_direction[d], ".pdf"), height = 17, width = 22)
+    
+    # print(map_full / map_i + plot_layout(heights = c(1, 4)))
+    print(map_i + inset_element(map_full, left = 0, bottom = 0.8, right = 0.2, top = 1, align_to = 'full'))
+
     dev.off()
     
     map_list[[length(map_list)+1]] = map_i
-    
+
   }
   
   # Get map
@@ -465,7 +467,7 @@ for (i in 1:length(islands)) {
                  zoom = utm_i$Satellite,
                  maptype = 'satellite')
   
-  (whole_map = 
+  whole_map = 
       
       # ggplot() + 
       ggmap(map) + 
@@ -545,9 +547,10 @@ for (i in 1:length(islands)) {
         subtitle = paste0(paste0("Island = ", toupper(as.character(isl_shp[1])),"\n",
                                  # "Number of strata = ", length(unique(cells$strat)), "\n",
                                  # "Target survey effort = ", total_sample, " sites \n",
-                                 "Total survey effort = ", sum(strat_det$strat_sets), " sites"))))
+                                 "Total survey effort = ", sum(strat_det$strat_sets), " sites")))
   
-  pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), height = 21.75, width = 15.75)
+  if(diff(ext[1:2]) < diff(ext[3:4])) pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), height = 22, width = 17)
+  if(diff(ext[1:2]) > diff(ext[3:4])) pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), height = 17, width = 22)
   print(whole_map)
   dev.off()
   
