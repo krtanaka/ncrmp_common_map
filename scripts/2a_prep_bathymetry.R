@@ -38,7 +38,7 @@ islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr")
 
 for (isl in 1:length(islands)) {
   
-  # isl = 6
+  # isl = 2
   
   # South Mariana Islands
   if (islands[isl] == "gua") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/ngdc_bathy_10m_guam_049d_6725_8fc5.nc")
@@ -66,7 +66,7 @@ for (isl in 1:length(islands)) {
   
   # Pacific Remote Island Areas
   if (islands[isl] == "bak") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/bak_dbmb_5m.asc") # 
-  if (islands[isl] == "how") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Howland_5m.asc") #
+  if (islands[isl] == "how") load("N:/GIS/Projects/CommonMaps/Bathymetry/how_merged_5m.Rdata") # run misc/merge_two_Howland_bathy_files.R first
   if (islands[isl] == "jar") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Jarvis_5m.asc") #
   if (islands[isl] == "joh") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/johdballblend.asc") #
   if (islands[isl] == "kin") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/kin_dbmb.asc") #
@@ -110,7 +110,7 @@ for (isl in 1:length(islands)) {
   
 }
 
-load('data/gis_bathymetry/ofu.RData')
+load('data/gis_bathymetry/how.RData')
 
 wireframe(unclass(as.bathy(topo_i)), 
           shade = T,

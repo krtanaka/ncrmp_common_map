@@ -15,4 +15,6 @@ topo = mean(stack(how1, how2), na.rm = T)
 
 plot(topo)
 
+topo = readAll(topo)
+
 save(topo, file = "N:/GIS/Projects/CommonMaps/Bathymetry/how_merged_5m.Rdata")
