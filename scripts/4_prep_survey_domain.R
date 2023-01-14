@@ -212,10 +212,21 @@ for (isl in 1:length(islands)) {
       geom_raster() +
       coord_fixed())
   
-  df = df %>%
-    subset(sector_id != "GUA_LAND") %>% # filter sector
-    subset(reef_id %in% c( "forereef", "backreef", "lagoon", "protected slope")) %>% # filter land and Reef Crest/Reef Flat
-    subset(hardsoft_id %in% c("hard", "unknown")) # filter for sector
+  if (islands[isl] == "kin") {
+    
+    df = df %>%
+      subset(sector_id != "GUA_LAND") %>% # filter sector
+      subset(reef_id %in% c( "forereef", "backreef", "lagoon", "protected slope")) %>% # filter land and Reef Crest/Reef Flat
+      subset(hardsoft_id %in% c("hard", "unknown")) # filter for sector
+    
+  } else {
+    
+    df = df %>%
+      subset(sector_id != "GUA_LAND") %>% # filter sector
+      subset(reef_id %in% c( "forereef")) %>% # filter land and Reef Crest/Reef Flat
+      subset(hardsoft_id %in% c("hard", "unknown")) # filter for sector
+
+  }
   
   df$strat = paste(df$depth_bin, 
                    df$sector,
