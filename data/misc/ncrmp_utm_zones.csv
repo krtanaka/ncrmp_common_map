@@ -11,11 +11,11 @@ French_Frigate,ffs,3,+north,13
 Gardner,gar,2,+north,13
 Guam,gua,55,+north,12
 Guguan,gug,55,+north,13
-Hawaii,haw,5,+north,10
+Hawaii,haw,5,+north,9
 Howland,how,1,+north,13
 Jarvis,jar,4,+south,12
 Johnston,joh,2,+north,12
-Kahoolawe,kah,4,+north,13
+Kahoolawe,kah,4,+north,11
 Kauai,kau,4,+north,13
 Kaula,kal,4,+north,13
 Kingman,kin,3,+north,12
@@ -34,7 +34,7 @@ Necker,nec,3,+north,13
 New_Britain,kim,56,+south,13
 Nihoa,nih,4,+north,13
 Niihau,nii,4,+north,13
-Oahu,oah,4,+north,13
+Oahu,oah,4,+north,12
 Ofu_&_Olosega,ofu,2,+south,13
 Ofu_&_Olosega,olo,2,+south,13
 Pagan,pag,55,+north,13
