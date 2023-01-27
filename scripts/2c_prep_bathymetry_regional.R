@@ -19,7 +19,7 @@ islands = c("gua", "rot", "sai", "tin", "agu")[2:5]; region = "MARIAN" # South M
 # islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "MARIAN" # North Mariana Islands
 # islands = c("ofu", "ros", "swa", "tau", "tut")[5]; region = "SAMOA" # American Samoa, but Swa is not included
 # islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs" # Pacific Remote Island Areas
-# islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI" # Main Hawaiian Islands
+islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI" # Main Hawaiian Islands
 # islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI" # Northern Hawaiian Islands
 
 island_boxes = read_csv("data/misc/Island_Extents.csv") # Updated Bounding boxes 2021
@@ -79,10 +79,10 @@ for (i in 1:length(islands)) {
   
   topo_i <- projectRaster(topo_i, crs = sr)
   
-  # topo_i = readAll(topo_i)
-  topo_i <- aggregate(topo_i, fact = 100/res(topo_i)); res(topo_i)
+  topo_i = readAll(topo_i)
+  # topo_i <- aggregate(topo_i, fact = 100/res(topo_i)); res(topo_i)
   plot(topo_i)
-  print( islands[i])
+  print(islands[i])
   
   save(topo_i, file = paste0('data/gis_bathymetry/', islands[i], '.RData'))
   
