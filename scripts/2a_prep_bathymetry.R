@@ -66,7 +66,7 @@ for (isl in 1:length(islands)) {
   
   # Pacific Remote Island Areas
   if (islands[isl] == "bak") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/bak_dbmb_5m.asc") # 
-  if (islands[isl] == "how") load("N:/GIS/Projects/CommonMaps/Bathymetry/how_merged_5m.Rdata") # run misc/merge_two_Howland_bathy_files.R first
+  if (islands[isl] == "how") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/how_merged_5m.tif") # run misc/merge_two_Howland_bathy_files.R first
   if (islands[isl] == "jar") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Jarvis_5m.asc") #
   if (islands[isl] == "joh") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/johdballblend.asc") #
   if (islands[isl] == "kin") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/kin_dbmb.asc") #
