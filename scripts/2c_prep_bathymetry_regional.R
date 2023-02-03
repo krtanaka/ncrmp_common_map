@@ -30,6 +30,8 @@ rm(island_names_codes, island_boxes)
 if(region == "MARIAN") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/mariana_trench_6_msl_2012.nc") # Mariana 
 if(region == "SAMOA") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/pago_pago_3_mhw_2009.nc") # American Samoa
 if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/usgsCeCrm10.nc") # Main Hawaiian Islands
+if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged.tif") # Main Hawaiian Islands
+if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/mhi_mbsyn_bathyonly_50m_v21.nc") # Main Hawaiian Islands
 
 default_proj = crs(topo)
 
@@ -37,11 +39,11 @@ topo = as.data.frame(rasterToPoints(topo))
 colnames(topo)[3] = "depth"
 topo$depth = as.numeric(as.character(topo$depth))
 
-df = topo %>% 
-  mutate(x = round(x, 1), 
-         y = round(y, 1)) %>% 
-  group_by(x, y) %>% 
-  summarise(d = mean(depth))
+# df = topo %>% 
+#   mutate(x = round(x, 1), 
+#          y = round(y, 1)) %>% 
+#   group_by(x, y) %>% 
+#   summarise(d = mean(depth))
 
 # wireframe(unclass(as.bathy(df)), 
 #           shade = T,
@@ -64,7 +66,7 @@ for (i in 1:length(islands)) {
   box = island_names_codes_boxes %>% subset(Island_Code == islands[i])
 
   topo_i = topo %>%
-    subset(depth >= -30 & depth <= 0) %>%
+    subset(depth >= -50 & depth <= 0) %>%
     subset(x < box$xmax & x > box$xmin & y < box$ymax & y > box$ymin)
   
   topo_i = rasterFromXYZ(topo_i)
