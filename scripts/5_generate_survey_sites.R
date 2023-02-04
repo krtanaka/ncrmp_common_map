@@ -386,10 +386,10 @@ for (i in 1:length(islands)) {
     
     map_i = 
       
-      # gglot() +
-      ggmap(map) +
+      ggplot() +
+      # ggmap(map) +
       
-      # geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
+      geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
       
       # display if there is more than 1 island sector
       
@@ -452,11 +452,11 @@ for (i in 1:length(islands)) {
     
     # print(map_full / map_i + plot_layout(heights = c(1, 4)))
     print(map_i + inset_element(map_full, left = 0, bottom = 0.8, right = 0.2, top = 1, align_to = 'full'))
-
+    
     dev.off()
     
     map_list[[length(map_list)+1]] = map_i
-
+    
   }
   
   # Get map
@@ -468,86 +468,86 @@ for (i in 1:length(islands)) {
                  maptype = 'satellite')
   
   whole_map = 
-      
-      # ggplot() + 
-      ggmap(map) + 
-      
-      # geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "darkgrey") + # coastline
-      # geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
-      
-      geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.5, width = 0.00005, height = 0.00005) + # stratum
-      
-      scale_fill_discrete("Strata") + 
-      scale_color_discrete("Strata") + 
-      
-      new_scale_color() +
-      new_scale_fill() +
-      
-      {if ( length(unique(buffer$sector_nam)) > 1) {
-        
-        geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.3, show.legend = F)}
-        
-      } + 
-      
-      # island sectors
-      {if ( length(unique(buffer$sector_nam)) > 1) {
-        
-        geom_label_repel(data = buffer_label, aes(longitude, latitude, label = sector_nam, fill = sector_nam, fontface = 'bold'), color = "white", max.overlaps = Inf, show.legend = F)}
-        
-      } +
-      
-      scale_fill_discrete("") + 
-      scale_color_discrete("") + 
-      
-      new_scale_color() +
-      new_scale_fill() +
-      
-      # geom_tile(data = boxes, aes(longitude, latitude, fill = boxes_nam), width = 0.001, height = 0.001, alpha = 0.2, show.legend = F) + # survey boxes fill
-      {if(Switch) geom_polygon(data = boxes_hulls, aes(longitude, latitude, fill = boxes_nam, color = boxes_nam), alpha = 0.01, size = 1, show.legend = F)} + # survey boxes hull
-      {if(Switch) geom_text_repel(data = boxes_label, aes(longitude, latitude, label = boxes_nam, color = boxes_nam, fontface = 'bold'), max.overlaps = Inf, show.legend = F)} +
-      {if(Switch) scale_fill_discrete()} + 
-      {if(Switch) scale_color_discrete()} + 
-      {if(Switch) new_scale_color()} +
-      {if(Switch) new_scale_fill()} +
-      
-      # geom_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin)) +
-      # geom_spatial_point(data = sets, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 3, crs = 4326) + 
-      # scale_fill_manual(name = "Depth", values = c("red", "goldenrod1", "green3"), na.translate = F) + # in geom_spatial_point make size = 9 ONLY for Guam
-      # scale_shape_manual(name = "Depth", values = c(24, 22, 21), na.translate = F) +
-      annotation_scale(location = "br", width_hint = 0.2, text_col = "white", bar_cols = "white") +  # new_scale_color() +
-      # new_scale_fill() +      
-      
-      # geom_label_repel(data = sets,
-      #                  aes(longitude, latitude, label = id),
-      #                  size = 2,
-      #                  label.size = NA,
-      #                  alpha = 0.75,
-      #                  fontface = 'bold',
-      #                  color = 'black',
-      #                  max.overlaps = Inf,
-      #                  segment.size = 0.2,
-    #                  direction = "both",
-    #                  # nudge_y = 0.005,
-    #                  # nudge_x = 0.005,
-    #                  box.padding = unit(0.8, "lines"),
-    #                  point.padding = unit(0.3, "lines")) +
     
-    # coord_fixed() +
-    # coord_map() + 
-    coord_sf(crs = 4326) + 
+    ggplot() +
+    # ggmap(map) + 
+    
+    geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "darkgrey") + # coastline
+    geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
+    
+    geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.5, width = 0.00005, height = 0.00005) + # stratum
+    
+    scale_fill_discrete("Strata") + 
+    scale_color_discrete("Strata") + 
+    
+    new_scale_color() +
+    new_scale_fill() +
+    
+    {if ( length(unique(buffer$sector_nam)) > 1) {
       
-      scale_x_continuous(sec.axis = dup_axis(), "", limits = range(pretty(buffer$longitude))) +
-      scale_y_continuous(sec.axis = dup_axis(), "", limits = range(pretty(buffer$latitude))) +
+      geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.3, show.legend = F)}
       
-      theme(legend.position = "bottom",
-            axis.text = element_text(size = 10),
-            axis.title = element_text(size = 10)) +   
-      labs(
-        title = "",
-        subtitle = paste0(paste0("Island = ", toupper(as.character(isl_shp[1])),"\n",
-                                 # "Number of strata = ", length(unique(cells$strat)), "\n",
-                                 # "Target survey effort = ", total_sample, " sites \n",
-                                 "Total survey effort = ", sum(strat_det$strat_sets), " sites")))
+    } + 
+    
+    # island sectors
+    {if ( length(unique(buffer$sector_nam)) > 1) {
+      
+      geom_label_repel(data = buffer_label, aes(longitude, latitude, label = sector_nam, fill = sector_nam, fontface = 'bold'), color = "white", max.overlaps = Inf, show.legend = F)}
+      
+    } +
+    
+    scale_fill_discrete("") + 
+    scale_color_discrete("") + 
+    
+    new_scale_color() +
+    new_scale_fill() +
+    
+    # geom_tile(data = boxes, aes(longitude, latitude, fill = boxes_nam), width = 0.001, height = 0.001, alpha = 0.2, show.legend = F) + # survey boxes fill
+    {if(Switch) geom_polygon(data = boxes_hulls, aes(longitude, latitude, fill = boxes_nam, color = boxes_nam), alpha = 0.01, size = 1, show.legend = F)} + # survey boxes hull
+    {if(Switch) geom_text_repel(data = boxes_label, aes(longitude, latitude, label = boxes_nam, color = boxes_nam, fontface = 'bold'), max.overlaps = Inf, show.legend = F)} +
+    {if(Switch) scale_fill_discrete()} + 
+    {if(Switch) scale_color_discrete()} + 
+    {if(Switch) new_scale_color()} +
+    {if(Switch) new_scale_fill()} +
+    
+    # geom_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin)) +
+    # geom_spatial_point(data = sets, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 3, crs = 4326) + 
+    # scale_fill_manual(name = "Depth", values = c("red", "goldenrod1", "green3"), na.translate = F) + # in geom_spatial_point make size = 9 ONLY for Guam
+    # scale_shape_manual(name = "Depth", values = c(24, 22, 21), na.translate = F) +
+    annotation_scale(location = "br", width_hint = 0.2, text_col = "white", bar_cols = "white") +  # new_scale_color() +
+    # new_scale_fill() +      
+    
+    # geom_label_repel(data = sets,
+    #                  aes(longitude, latitude, label = id),
+    #                  size = 2,
+    #                  label.size = NA,
+    #                  alpha = 0.75,
+    #                  fontface = 'bold',
+    #                  color = 'black',
+    #                  max.overlaps = Inf,
+    #                  segment.size = 0.2,
+  #                  direction = "both",
+  #                  # nudge_y = 0.005,
+  #                  # nudge_x = 0.005,
+  #                  box.padding = unit(0.8, "lines"),
+  #                  point.padding = unit(0.3, "lines")) +
+  
+  # coord_fixed() +
+  # coord_map() + 
+  coord_sf(crs = 4326) + 
+    
+    scale_x_continuous(sec.axis = dup_axis(), "", limits = range(pretty(buffer$longitude))) +
+    scale_y_continuous(sec.axis = dup_axis(), "", limits = range(pretty(buffer$latitude))) +
+    
+    theme(legend.position = "bottom",
+          axis.text = element_text(size = 10),
+          axis.title = element_text(size = 10)) +   
+    labs(
+      title = "",
+      subtitle = paste0(paste0("Island = ", toupper(as.character(isl_shp[1])),"\n",
+                               # "Number of strata = ", length(unique(cells$strat)), "\n",
+                               # "Target survey effort = ", total_sample, " sites \n",
+                               "Total survey effort = ", sum(strat_det$strat_sets), " sites")))
   
   if(diff(ext[1:2]) < diff(ext[3:4])) pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), height = 22, width = 17)
   if(diff(ext[1:2]) > diff(ext[3:4])) pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), height = 17, width = 22)
