@@ -40,7 +40,7 @@ for (isl in 1:length(islands)) {
     
     load(paste0("data/gis_sector/", islands[isl], ".RData"))
     sector = raster_and_table[[1]]; sector_name = raster_and_table[[2]]
-     remove_id = sector_name %>% subset(sector_name$nam %in% c("TUT_PAGOPAGO"))
+     remove_id = sector_name %>% subset(sector_name$nam %in% c("TUT_PAGOPAGO", "TUT_LAND"))
      remove_id = remove_id$ID
      sector[sector %in% remove_id] <- NA
     
