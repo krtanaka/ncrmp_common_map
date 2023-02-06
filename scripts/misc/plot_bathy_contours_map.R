@@ -37,7 +37,7 @@ world = ISL_bounds[which(ISL_bounds$ISLAND %in% toupper(islands)),]
 world = st_transform(st_as_sf(world))
 world <- ms_simplify(world, keep = 0.1, keep_shapes = F)
 
-load("data/rea/ALL_REA_FISH_RAW_SST.RData")
+load("data/spc/ALL_REA_FISH_RAW_SST.RData")
 # df = df %>% 
 #   subset(REGION == "MHI" & ISLAND %in% islands) %>% 
 #   group_by(LONGITUDE, LATITUDE, OBS_YEAR) %>% 
