@@ -46,6 +46,12 @@ load('data/gis_island_boundaries/ncrmp_islands_shp.RData')
 crs(ISL_bounds) = "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
 
 ##################################
+### Read in GSHHG f Boundaries ###
+##################################
+load('data/gis_island_boundaries/gshhg_shp.RData')
+crs(ISL_bounds) = "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
+
+##################################
 ###  select islands & regions  ###
 ##################################
 
