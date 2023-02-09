@@ -26,7 +26,7 @@ islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); regi
 
 for (isl in 1:length(islands)) {
   
-  # isl = 1
+  # isl = 5
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -149,12 +149,24 @@ for (isl in 1:length(islands)) {
   
   df = stack(hardsoft, sector, reef, bathymetry, buffer)
   if (islands[isl] == "swa") df = stack(hardsoft, sector, reef, bathymetry, bathymetry_new, buffer)
+  if (islands[isl] == "tut") df =  stack(hardsoft, sector, reef, bathymetry)
   
   df = as.data.frame(rasterToPoints(df))
   
-  colnames(df) = c("longitude", "latitude", "hardsoft", "sector", "reef", "depth", "buffer")
-  if (islands[isl] == "swa") colnames(df) = c("longitude", "latitude", "hardsoft", "sector", "reef", "depth", "depth_new", "buffer")
-
+  if (islands[isl] == "swa"){
+    
+    colnames(df) = c("longitude", "latitude", "hardsoft", "sector", "reef", "depth", "depth_new", "buffer")
+    
+  } else if (islands[isl] == "tut") {
+    
+    colnames(df) = c("longitude", "latitude", "hardsoft", "sector", "reef", "depth")
+    
+  } else {
+    
+    colnames(df) = c("longitude", "latitude", "hardsoft", "sector", "reef", "depth", "buffer")
+    
+  }
+  
   df = na.omit(df)
   
   df$cell = 1:dim(df)[1]; df$cell = as.numeric(df$cell)
