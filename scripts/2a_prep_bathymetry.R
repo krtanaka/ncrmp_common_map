@@ -62,7 +62,7 @@ for (isl in 1:length(islands)) {
   if (islands[isl] == "ros") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/rose_5m_dbmb.asc")
   if (islands[isl] == "swa") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/swa_dball_2m.asc")
   if (islands[isl] == "tau") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/tau_dbmb_mos.asc")
-  if (islands[isl] == "tut") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/tut_dball.asc")
+  if (islands[isl] == "tut") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/tut_dbmb.asc")
   
   # Pacific Remote Island Areas
   if (islands[isl] == "bak") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/bak_dbmb_5m.asc") # 
