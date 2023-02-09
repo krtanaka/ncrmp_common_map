@@ -17,16 +17,16 @@ library(readr)
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
-islands = c("gua", "rot", "sai", "tin", "agu"); region = "S.MARIAN"                           # South Mariana Islands
-islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "pag", "sar"); region = "N.MARIAN"      # North Mariana Islands
-islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                              # American Samoa
-islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"                # Pacific Remote Island Areas
-islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI"  # Main Hawaiian Islands
+# islands = c("gua", "rot", "sai", "tin", "agu"); region = "S.MARIAN"                           # South Mariana Islands
+# islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "pag", "sar"); region = "N.MARIAN"      # North Mariana Islands
+# islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                              # American Samoa
+# islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"                # Pacific Remote Island Areas
+islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")[7]; region = "MHI"  # Main Hawaiian Islands
 # islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"               # Northern Hawaiian Islands
 
 for (isl in 1:length(islands)) {
   
-  # isl = 5
+  # isl = 1
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -40,9 +40,9 @@ for (isl in 1:length(islands)) {
     
     load(paste0("data/gis_sector/", islands[isl], ".RData"))
     sector = raster_and_table[[1]]; sector_name = raster_and_table[[2]]
-     remove_id = sector_name %>% subset(sector_name$nam %in% c("TUT_PAGOPAGO", "TUT_LAND"))
-     remove_id = remove_id$ID
-     sector[sector %in% remove_id] <- NA
+    remove_id = sector_name %>% subset(sector_name$nam %in% c("TUT_PAGOPAGO", "TUT_LAND"))
+    remove_id = remove_id$ID
+    sector[sector %in% remove_id] <- NA
     
   } else {
     
@@ -111,7 +111,7 @@ for (isl in 1:length(islands)) {
     buffer = topo_i
     buffer[buffer <= 0] <- 1
     buffer_name = data.frame(ID = 1L, 
-                               nam = paste0(islands[isl], "_5km_buffer"))
+                             nam = paste0(islands[isl], "_5km_buffer"))
     
   }
   
@@ -132,40 +132,18 @@ for (isl in 1:length(islands)) {
     
   }
   
-  if (islands[isl] == "swa") {
-    
-    load("data/gis_bathymetry/swa_alt.RData")
-    bathymetry_new = raster_and_table[[1]]; bathymetry_new_name = raster_and_table[[2]]
-    
-  }
-  
   hardsoft = resample(hardsoft, topo_i, method = "ngb") 
   sector = resample(sector, topo_i, method = "ngb") 
   reef = resample(reef, topo_i, method = "ngb") 
   bathymetry = resample(topo_i, topo_i, method = "ngb") 
-  if (islands[isl] == "swa") bathymetry_new = resample(bathymetry_new, topo_i, method = "ngb") 
   buffer = resample(buffer, topo_i, method = "ngb")
   boxes = resample(boxes, topo_i, method = "ngb")
   
   df = stack(hardsoft, sector, reef, bathymetry, buffer)
-  if (islands[isl] == "swa") df = stack(hardsoft, sector, reef, bathymetry, bathymetry_new, buffer)
-  if (islands[isl] == "tut") df =  stack(hardsoft, sector, reef, bathymetry)
   
   df = as.data.frame(rasterToPoints(df))
-  
-  if (islands[isl] == "swa"){
-    
-    colnames(df) = c("longitude", "latitude", "hardsoft", "sector", "reef", "depth", "depth_new", "buffer")
-    
-  } else if (islands[isl] == "tut") {
-    
-    colnames(df) = c("longitude", "latitude", "hardsoft", "sector", "reef", "depth")
-    
-  } else {
-    
-    colnames(df) = c("longitude", "latitude", "hardsoft", "sector", "reef", "depth", "buffer")
-    
-  }
+
+  colnames(df) = c("longitude", "latitude", "hardsoft", "sector", "reef", "depth", "buffer")
   
   df = na.omit(df)
   
@@ -173,11 +151,10 @@ for (isl in 1:length(islands)) {
   df$division = as.numeric(1)
   
   df$depth_bin = ""
-  df$depth_bin = ifelse(df$depth <= 0  & df$depth >= -6, 1L, df$depth_bin) 
-  df$depth_bin = ifelse(df$depth < -6  & df$depth >= -18, 2L, df$depth_bin) 
-  df$depth_bin = ifelse(df$depth < -18, 3L, df$depth_bin) 
-  if (islands[isl] == "swa") df$depth_bin = as.character(df$depth_new)
-  
+  df$depth_bin = ifelse(df$depth <= 0  & df$depth >= -6, "shallow", df$depth_bin) 
+  df$depth_bin = ifelse(df$depth < -6  & df$depth >= -18, "mid", df$depth_bin) 
+  df$depth_bin = ifelse(df$depth < -18, "deep", df$depth_bin) 
+
   df$hardsoft = round(df$hardsoft, 0)
   df$reef = round(df$reef, 0)
   df$sector = round(df$sector, 0)
@@ -204,6 +181,9 @@ for (isl in 1:length(islands)) {
   df = merge(df, reef_name)
   df = merge(df, hardsoft_name)
   
+  df = df %>% 
+    subset(longitude < 718 & longitude > 704 & latitude > 2341)
+    
   (depth = df %>% 
       ggplot( aes(longitude, latitude, fill = depth_bin)) + 
       geom_raster() + 
@@ -224,67 +204,18 @@ for (isl in 1:length(islands)) {
       geom_raster() +
       coord_fixed())
   
-  if (islands[isl] == "kin") {
-    
-    df = df %>%
-      subset(sector_id != "GUA_LAND") %>% # filter sector
-      subset(reef_id %in% c( "forereef", "backreef", "lagoon", "protected slope")) %>% # filter land and Reef Crest/Reef Flat
-      subset(hardsoft_id %in% c("hard", "unknown")) # filter for sector
-    
-  } else {
-    
-    df = df %>%
-      subset(sector_id != "GUA_LAND") %>% # filter sector
-      subset(reef_id %in% c( "forereef")) %>% # filter land and Reef Crest/Reef Flat
-      subset(hardsoft_id %in% c("hard", "unknown")) # filter for sector
-
-  }
-  
   df$strat = paste(df$depth_bin, 
-                   df$sector,
-                   df$reef,
+                   df$sector_id,
+                   df$reef_id,
                    sep = "_")
   
-  df$strat = as.numeric(as.factor(df$strat))
-  
-  ################################################################
-  ### create table to match strata to numbers for output table ###
-  ################################################################
-  tab <- df 
-  tab$depth_bin_value = ""
-  tab$depth_bin_value = ifelse(tab$depth_bin == 1, "SHAL", tab$depth_bin_value) 
-  tab$depth_bin_value = ifelse(tab$depth_bin == 2, "MIDD", tab$depth_bin_value) 
-  tab$depth_bin_value = ifelse(tab$depth_bin == 3, "DEEP", tab$depth_bin_value) 
-  tab <- tab %>% dplyr::select(sector_id,reef_id,strat,depth_bin_value)
-  tab <- tab %>% filter(!duplicated(tab))
-  save(tab,file = paste0("outputs/sector_key/", islands[isl], ".RData"))
-  
   (strata = df %>% 
-      ggplot( aes(longitude, latitude, fill = factor(strat))) + 
+      ggplot( aes(longitude, latitude, fill = strat)) + 
       geom_raster() +
       coord_fixed())
   
-  cell = rasterFromXYZ(df[,c("longitude", "latitude", "cell")]); plot(cell)
-  division = rasterFromXYZ(df[,c("longitude", "latitude", "division")]); plot(division)
-  strat = rasterFromXYZ(df[,c("longitude", "latitude", "strat")]); plot(strat)
-  depth = rasterFromXYZ(df[,c("longitude", "latitude", "depth")]); plot(depth)
-  
-  values = raster::values
-  
-  survey_grid_ncrmp = stack(cell, division, strat, depth)
-  survey_grid_ncrmp$strat = round(survey_grid_ncrmp$strat, digits = 0)
-  values(survey_grid_ncrmp$division) = ifelse(is.na(values(survey_grid_ncrmp$division)), NA, 1)
-  
-  survey_grid_ncrmp = readAll(survey_grid_ncrmp)
-  
-  # default_proj = "+init=epsg:4326 +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"
-  # crs(survey_grid_ncrmp) = default_proj
-
-  # p <- raster::rasterToPolygons(survey_grid$strat, dissolve = TRUE); sp::plot(p)
-  # p <- raster::rasterToPolygons(survey_grid_ncrmp$strat, dissolve = TRUE); sp::plot(p)
-  
-  survey_grid_ncrmp = readAll(survey_grid_ncrmp)
-  save(survey_grid_ncrmp, file = paste0("data/survey_grid_ncrmp/survey_grid_", islands[isl], ".RData"))
+  survey_grid_kalaupapa = df
+  save(survey_grid_kalaupapa, file = paste0("data/survey_grid_ncrmp/survey_grid_kalaupapa.RData"))
   
   print(paste0("... ", islands[isl], " survey domain generated ..."))
   
