@@ -24,7 +24,7 @@ utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 ########################################################################
 
 # n_sims = 100 # number of simulations
-effort_level = c("low", "mid", "high")[3] # define sampling effort (low, mid, high)
+effort_level = c("low", "mid", "high")[2] # define sampling effort (low, mid, high)
 min_sets = 1 # minimum number of sets per strat
 max_sets = 30
 trawl_dim = c(0.01, 0.0353) # 0.000353 sq.km (353 sq.m) from two 15-m diameter survey cylinders
@@ -43,12 +43,6 @@ survey_effort = merge(island_name_code, survey_effort); head(survey_effort); tai
 ### Read in Island Boundaries ###
 #################################
 load('data/gis_island_boundaries/ncrmp_islands_shp.RData')
-crs(ISL_bounds) = "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
-
-##################################
-### Read in GSHHG f Boundaries ###
-##################################
-load('data/gis_island_boundaries/gshhg_shp.RData')
 crs(ISL_bounds) = "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
 
 ##################################
@@ -281,6 +275,8 @@ for (i in 1:length(islands)) {
   ### Read Island shape and coastline ###
   #######################################
   ISL_this = ISL_bounds[which(ISL_bounds$ISLAND %in% toupper(isl_shp)),]
+  if (islands[i] == "tut") ISL_this = ISL_bounds[which(ISL_bounds$ISLAND %in% c(toupper(isl_shp), "AUNUU")),]
+  if (islands[i] == "ofu") ISL_this = ISL_bounds[which(ISL_bounds$ISLAND %in% c(toupper(isl_shp), "OLOSEGA")),]
   # ISL_this_utm = spTransform(ISL_this,CRS(paste0("+proj=utm +units=km +zone=", zone)))
   # ISL_this_sf = st_transform(st_as_sf(ISL_this), crs = paste0("+proj=utm +units=km +zone=", zone))
   
@@ -349,7 +345,7 @@ for (i in 1:length(islands)) {
     
     map_i = map_direction[d]
     
-    space = 0.001
+    space = 0.01
     
     if (map_direction[d] == "NW") ext = c(min(sets$longitude, na.rm = T) - space, median(sets$longitude, na.rm = T) + space, median(sets$latitude, na.rm = T) - space, max(sets$latitude, na.rm = T) + space)
     if (map_direction[d] == "NE") ext = c(median(sets$longitude, na.rm = T) - space, max(sets$longitude, na.rm = T) + space, median(sets$latitude, na.rm = T) - space, max(sets$latitude, na.rm = T) + space)
@@ -390,6 +386,45 @@ for (i in 1:length(islands)) {
     })
     
     
+    # remove sector label outside of extent
+    
+    if (map_direction[d] == "NW") {
+      
+      buffer_label_i = buffer %>% 
+        subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4]) %>% 
+        group_by(sector_nam) %>% 
+        summarise(longitude = quantile(longitude, 0.1), 
+                  latitude = quantile(latitude, 0.9))
+    }
+    
+    if (map_direction[d] == "NE") {
+      
+      buffer_label_i = buffer %>% 
+        subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4]) %>% 
+        group_by(sector_nam) %>% 
+        summarise(longitude = quantile(longitude, 0.9), 
+                  latitude = quantile(latitude, 0.9))
+    }
+    
+    if (map_direction[d] == "SW") {
+      
+      buffer_label_i = buffer %>% 
+        subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4]) %>% 
+        group_by(sector_nam) %>% 
+        summarise(longitude = quantile(longitude, 0.1), 
+                  latitude = quantile(latitude, 0.1))
+    }
+    
+    if (map_direction[d] == "SE") {
+      
+      buffer_label_i = buffer %>% 
+        subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4]) %>% 
+        group_by(sector_nam) %>% 
+        summarise(longitude = quantile(longitude, 0.9), 
+                  latitude = quantile(latitude, 0.1))
+    }
+    
+    
     map_i = 
       
       ggplot() +
@@ -401,15 +436,15 @@ for (i in 1:length(islands)) {
       
       {if (length(unique(buffer$sector_nam)) > 1) {
         
-        geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.3, show.legend = T)}
+        geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.3, show.legend = F)}
         
       } + 
       
       {if (length(unique(buffer$sector_nam)) > 1) {
         
-        geom_label_repel(data = buffer_label, 
+        geom_label_repel(data = buffer_label_i, 
                          aes(longitude, latitude, label = sector_nam, fill = sector_nam, fontface = 'bold'), 
-                         alpha = 0.5, color = "white", max.overlaps = Inf, show.legend = F)}
+                         alpha = 0.8, color = "white", size = 10, max.overlaps = Inf, show.legend = F)}
         
       } + 
       
@@ -424,7 +459,7 @@ for (i in 1:length(islands)) {
       
       scale_fill_manual(name = "Depth", values = c("red", "goldenrod1", "green3"), na.translate = F) + 
       scale_shape_manual(name = "Depth", values = c(24, 22, 21), na.translate = F) +
-      annotation_scale(location = "br", width_hint = 0.2, text_col = "white", bar_cols = "white") +  # new_scale_color() +
+      annotation_scale(location = "br", width_hint = 0.2, text_col = "black", bar_cols = "black", size = 5) +  # new_scale_color() +
       
       geom_label_repel(data = sets_i, 
                        aes(longitude, latitude, label = id),
@@ -438,7 +473,7 @@ for (i in 1:length(islands)) {
                        box.padding = unit(0.8, "lines"),
                        point.padding = unit(0.3, "lines")) +
       
-      # ggtitle(paste0(map_direction[d])) + 
+      # ggtitle(paste0(map_direction[d])) +
       theme(plot.title = element_text(size = 30, face = "bold")) + 
       
       coord_sf(crs = 4326) + 
@@ -449,7 +484,7 @@ for (i in 1:length(islands)) {
     map_full =     
       ggplot() +
       geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) +
-      geom_rect(aes(xmin =  ext[1], xmax =  ext[2], ymin =  ext[3], ymax =  ext[4]), color = "red", fill = NA) +
+      geom_rect(aes(xmin =  ext[1], xmax =  ext[2], ymin =  ext[3], ymax =  ext[4]), color = "red", fill = NA, size = 2) +
       coord_sf(crs = "+proj=lonlat +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs") + 
       theme_inset()
     
@@ -520,7 +555,7 @@ for (i in 1:length(islands)) {
     # geom_spatial_point(data = sets, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 3, crs = 4326) + 
     # scale_fill_manual(name = "Depth", values = c("red", "goldenrod1", "green3"), na.translate = F) + # in geom_spatial_point make size = 9 ONLY for Guam
     # scale_shape_manual(name = "Depth", values = c(24, 22, 21), na.translate = F) +
-    annotation_scale(location = "br", width_hint = 0.2, text_col = "white", bar_cols = "white") +  # new_scale_color() +
+    annotation_scale(location = "br", width_hint = 0.2, text_col = "black", bar_cols = "black", size = 5) +  # new_scale_color() +
     # new_scale_fill() +      
     
     # geom_label_repel(data = sets,
