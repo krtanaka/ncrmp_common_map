@@ -15,11 +15,11 @@ library(readr)
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
-islands = c("gua", "rot", "sai", "tin", "agu")[2:5]; region = "MARIAN" # South Mariana Islands
+# islands = c("gua", "rot", "sai", "tin", "agu")[2:5]; region = "MARIAN" # South Mariana Islands
 # islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "MARIAN" # North Mariana Islands
 # islands = c("ofu", "ros", "swa", "tau", "tut")[5]; region = "SAMOA" # American Samoa, but Swa is not included
 # islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs" # Pacific Remote Island Areas
-islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI" # Main Hawaiian Islands
+islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")[7]; region = "MHI" # Main Hawaiian Islands
 # islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI" # Northern Hawaiian Islands
 
 island_boxes = read_csv("data/misc/Island_Extents.csv") # Updated Bounding boxes 2021
@@ -29,8 +29,8 @@ rm(island_names_codes, island_boxes)
 
 if(region == "MARIAN") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/mariana_trench_6_msl_2012.nc") # Mariana 
 if(region == "SAMOA") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/pago_pago_3_mhw_2009.nc") # American Samoa
-if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/usgsCeCrm10.nc") # Main Hawaiian Islands
-if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged.tif") # Main Hawaiian Islands
+# if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/usgsCeCrm10.nc") # Main Hawaiian Islands
+# if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged.tif") # Main Hawaiian Islands # TOO HEAVY!
 if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/mhi_mbsyn_bathyonly_50m_v21.nc") # Main Hawaiian Islands
 
 default_proj = crs(topo)
