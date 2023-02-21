@@ -13,7 +13,7 @@ library(ggrepel)
 
 rm(list = ls())
 
-spatial_resolution = 100 # target spatial resolution in m
+spatial_resolution = 10 # target spatial resolution in m
 
 # path to GIS Common Map shapefiles 
 # shp_path = "L:/ktanaka/GIS"
@@ -32,7 +32,7 @@ for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  # shp_i = 18
+  # shp_i = 21
   
   island_name = tolower(substr(shp_list[shp_i], 37, 39)); island_name
   
@@ -116,7 +116,7 @@ for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  # shp_i = 5
+  # shp_i = 16
   
   island_name = tolower(substr(shp_list[shp_i], 37, 39)); island_name
   

@@ -38,7 +38,7 @@ islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr")
 
 for (isl in 1:length(islands)) {
   
-  # isl = 5
+  # isl = 2
   
   # South Mariana Islands
   if (islands[isl] == "gua") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/ngdc_bathy_10m_guam_049d_6725_8fc5.nc")
@@ -110,7 +110,7 @@ for (isl in 1:length(islands)) {
   
 }
 
-load('data/gis_bathymetry/how.RData')
+load('data/gis_bathymetry/swa_alt.RData')
 
 wireframe(unclass(as.bathy(topo_i)), 
           shade = T,

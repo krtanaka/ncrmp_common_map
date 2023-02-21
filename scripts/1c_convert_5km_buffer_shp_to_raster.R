@@ -13,7 +13,7 @@ library(ggrepel)
 
 rm(list = ls())
 
-spatial_resolution = 100 # target spatial resolution in m
+spatial_resolution = 10 # target spatial resolution in m
 
 # shp_path = "L:/ktanaka/GIS"
 shp_path = "N:/GIS/Projects/CommonMaps"
@@ -36,7 +36,7 @@ for (i in 1:length(island_name)) {
   
   start = Sys.time()
   
-  # i = 7
+  # i = 79
  
   utm_i = utm %>% subset(Island_Code == island_name[i])
   

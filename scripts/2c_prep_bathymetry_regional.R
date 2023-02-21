@@ -17,7 +17,7 @@ utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
 islands = c("gua", "rot", "sai", "tin", "agu")[2:5]; region = "MARIAN" # South Mariana Islands
 # islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "MARIAN" # North Mariana Islands
-# islands = c("ofu", "ros", "swa", "tau", "tut")[5]; region = "SAMOA" # American Samoa, but Swa is not included
+islands = c("ofu", "ros", "swa", "tau", "tut")[2]; region = "SAMOA" # American Samoa, but Swa is not included
 # islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs" # Pacific Remote Island Areas
 islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI" # Main Hawaiian Islands
 # islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI" # Northern Hawaiian Islands
@@ -66,7 +66,7 @@ for (i in 1:length(islands)) {
   box = island_names_codes_boxes %>% subset(Island_Code == islands[i])
 
   topo_i = topo %>%
-    subset(depth >= -50 & depth <= 0) %>%
+    subset(depth >= -30 & depth <= 0) %>%
     subset(x < box$xmax & x > box$xmin & y < box$ymax & y > box$ymin)
   
   topo_i = rasterFromXYZ(topo_i)

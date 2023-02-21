@@ -26,7 +26,7 @@ islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); regi
 
 for (isl in 1:length(islands)) {
   
-  # isl = 5
+  # isl = 2
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -132,35 +132,27 @@ for (isl in 1:length(islands)) {
     
   }
   
-  if (islands[isl] == "swa") {
-    
-    load("data/gis_bathymetry/swa_alt.RData")
-    bathymetry_new = raster_and_table[[1]]; bathymetry_new_name = raster_and_table[[2]]
-    
-  }
-  
-  hardsoft = resample(hardsoft, topo_i, method = "ngb") 
-  sector = resample(sector, topo_i, method = "ngb") 
+  hardsoft = resample(hardsoft, topo_i, method = "ngb")
+  sector = resample(sector, topo_i, method = "ngb")
   reef = resample(reef, topo_i, method = "ngb") 
-  bathymetry = resample(topo_i, topo_i, method = "ngb") 
-  if (islands[isl] == "swa") bathymetry_new = resample(bathymetry_new, topo_i, method = "ngb") 
+  bathymetry = resample(topo_i, topo_i, method = "ngb")
   buffer = resample(buffer, topo_i, method = "ngb")
   boxes = resample(boxes, topo_i, method = "ngb")
   
   df = stack(hardsoft, sector, reef, bathymetry, buffer)
-  if (islands[isl] == "swa") df = stack(hardsoft, sector, reef, bathymetry, bathymetry_new, buffer)
-  if (islands[isl] == "tut") df =  stack(hardsoft, sector, reef, bathymetry)
+  if (islands[isl] == "tut") df = stack(hardsoft, sector, reef, bathymetry)
+  if (islands[isl] == "ros") df = stack(hardsoft, reef, bathymetry, buffer)
   
   df = as.data.frame(rasterToPoints(df))
   
-  if (islands[isl] == "swa"){
-    
-    colnames(df) = c("longitude", "latitude", "hardsoft", "sector", "reef", "depth", "depth_new", "buffer")
-    
-  } else if (islands[isl] == "tut") {
+  if (islands[isl] == "tut") {
     
     colnames(df) = c("longitude", "latitude", "hardsoft", "sector", "reef", "depth")
     
+  } else if (islands[isl] == "ros") {
+    
+    colnames(df) = c("longitude", "latitude", "hardsoft", "reef", "depth", "buffer")
+
   } else {
     
     colnames(df) = c("longitude", "latitude", "hardsoft", "sector", "reef", "depth", "buffer")
@@ -176,8 +168,7 @@ for (isl in 1:length(islands)) {
   df$depth_bin = ifelse(df$depth <= 0  & df$depth >= -6, 1L, df$depth_bin) 
   df$depth_bin = ifelse(df$depth < -6  & df$depth >= -18, 2L, df$depth_bin) 
   df$depth_bin = ifelse(df$depth < -18, 3L, df$depth_bin) 
-  if (islands[isl] == "swa") df$depth_bin = as.character(df$depth_new)
-  
+
   df$hardsoft = round(df$hardsoft, 0)
   df$reef = round(df$reef, 0)
   df$sector = round(df$sector, 0)
@@ -231,6 +222,12 @@ for (isl in 1:length(islands)) {
       subset(reef_id %in% c( "forereef", "backreef", "lagoon", "protected slope")) %>% # filter land and Reef Crest/Reef Flat
       subset(hardsoft_id %in% c("hard", "unknown")) # filter for sector
     
+  } else if (islands[isl] == "ros") {
+    
+    df = df %>%
+      subset(reef_id %in% c( "forereef", "backreef", "lagoon", "protected slope")) %>% # filter land and Reef Crest/Reef Flat
+      subset(hardsoft_id %in% c("hard", "unknown")) # filter for sector
+    
   } else {
     
     df = df %>%
@@ -262,7 +259,9 @@ for (isl in 1:length(islands)) {
   (strata = df %>% 
       ggplot( aes(longitude, latitude, fill = factor(strat))) + 
       geom_raster() +
-      coord_fixed())
+      scale_fill_discrete("strata") + 
+      coord_fixed() + 
+      theme_void())
   
   cell = rasterFromXYZ(df[,c("longitude", "latitude", "cell")]); plot(cell)
   division = rasterFromXYZ(df[,c("longitude", "latitude", "division")]); plot(division)
