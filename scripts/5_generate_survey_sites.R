@@ -81,7 +81,7 @@ for (i in 1:length(islands)) {
     
   } else {
     
-    total_sample = 300
+    total_sample = total_sample$Effort*3
     
   }
   
