@@ -215,17 +215,16 @@ for (isl in 1:length(islands)) {
       geom_raster() +
       coord_fixed())
   
-  if (islands[isl] == "kin") {
+  if (islands[isl] %in% ("kin", "ros")) {
     
     df = df %>%
-      subset(sector_id != "GUA_LAND") %>% # filter sector
       subset(reef_id %in% c( "forereef", "backreef", "lagoon", "protected slope")) %>% # filter land and Reef Crest/Reef Flat
       subset(hardsoft_id %in% c("hard", "unknown")) # filter for sector
     
-  } else if (islands[isl] == "ros") {
+  } else if (islands[isl] == "swa") {
     
     df = df %>%
-      subset(reef_id %in% c( "forereef", "backreef", "lagoon", "protected slope")) %>% # filter land and Reef Crest/Reef Flat
+      subset(reef_id %in% c( "forereef", "forereef reef crest/reef flat")) %>% # filter land and Reef Crest/Reef Flat
       subset(hardsoft_id %in% c("hard", "unknown")) # filter for sector
     
   } else {
@@ -258,7 +257,7 @@ for (isl in 1:length(islands)) {
   
   (strata = df %>% 
       ggplot( aes(longitude, latitude, fill = factor(strat))) + 
-      geom_raster() +
+      geom_raster() + 
       scale_fill_discrete("strata") + 
       coord_fixed() + 
       theme_void())
