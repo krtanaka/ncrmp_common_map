@@ -68,7 +68,7 @@ select = dplyr::select
 
 for (i in 1:length(islands)) {
   
-  # i = 3
+  # i = 9
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData")); plot(survey_grid_ncrmp)
