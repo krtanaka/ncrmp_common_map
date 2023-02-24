@@ -26,7 +26,7 @@ islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); regi
 
 for (isl in 1:length(islands)) {
   
-  # isl = 2
+  # isl = 3
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -215,7 +215,7 @@ for (isl in 1:length(islands)) {
       geom_raster() +
       coord_fixed())
   
-  if (islands[isl] %in% ("kin", "ros")) {
+  if (islands[isl] %in% c("kin", "ros")) {
     
     df = df %>%
       subset(reef_id %in% c( "forereef", "backreef", "lagoon", "protected slope")) %>% # filter land and Reef Crest/Reef Flat
@@ -224,7 +224,7 @@ for (isl in 1:length(islands)) {
   } else if (islands[isl] == "swa") {
     
     df = df %>%
-      subset(reef_id %in% c( "forereef", "forereef reef crest/reef flat")) %>% # filter land and Reef Crest/Reef Flat
+      subset(reef_id %in% c( "forereef", "reef crest/reef flat")) %>% # keep reef crest/reef flat to emphasize east side of swain
       subset(hardsoft_id %in% c("hard", "unknown")) # filter for sector
     
   } else {
