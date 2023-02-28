@@ -159,7 +159,7 @@ for (i in 1:length(islands)) {
   
   # remove sites that are closer than 50 m
   nearby_sites <- data.frame(longitude = sets$longitude, latitude = sets$latitude)
-  plot(nearby_sites, pch = 21, col = 2, cex = 2)
+  plot(nearby_sites, pch = 20, col = 2, cex = 2)
   
   coordinates(nearby_sites) <- c('longitude', 'latitude')
   proj4string(nearby_sites) <- CRS("+proj=longlat +ellps=WGS84 +datum=WGS84")
@@ -177,7 +177,7 @@ for (i in 1:length(islands)) {
   
   nearby_sites <- spTransform(nearby_sites, CRS("+proj=longlat +ellps=WGS84 +datum=WGS84"))
   nearby_sites = as.data.frame(nearby_sites)
-  points(nearby_sites, pch = 20, col = 4); axis(1); axis(2)
+  points(nearby_sites, pch = 20, col = 4, cex = 2); axis(1); axis(2)
   
   nearby_sites$latitude = round(nearby_sites$latitude, 4)
   nearby_sites$longitude = round(nearby_sites$longitude, 4)
