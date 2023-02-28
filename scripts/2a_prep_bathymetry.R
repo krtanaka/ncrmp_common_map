@@ -36,51 +36,53 @@ islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")
 # Northern Hawaiian Islands
 islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr")
 
+letter = "N"
+
 for (isl in 1:length(islands)) {
   
   # isl = 2
   
   # South Mariana Islands
-  if (islands[isl] == "gua") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/ngdc_bathy_10m_guam_049d_6725_8fc5.nc")
-  if (islands[isl] == "rot") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Rota_60m.asc")
-  if (islands[isl] == "sai") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/sai_mb_li_db.asc")
-  if (islands[isl] == "tin") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/tinmblidbmos.asc")
+  if (islands[isl] == "gua") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/ngdc_bathy_10m_guam_049d_6725_8fc5.nc"))
+  if (islands[isl] == "rot") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/Rota_60m.asc"))
+  if (islands[isl] == "sai") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/sai_mb_li_db.asc"))
+  if (islands[isl] == "tin") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/tinmblidbmos.asc"))
   if (islands[isl] == "agu") topo = raster("FILE_NOT_AVAILAVLE") # file not available
   
   # North Mariana Islands
-  if (islands[isl] == "agr") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/agr_inpoo_new/w001001.adf")
-  if (islands[isl] == "ala") topo = raster("N:/GIS/Projects/SeafloorCalc/Workspace/Alamagan/ala_inpo_mbik/w001001.adf")
-  if (islands[isl] == "asc") topo = raster("N:/GIS/Projects/SeafloorCalc/Workspace/Asuncion/asc_inpo/w001001.adf")
-  if (islands[isl] == "gug") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/gug_inpo/w001001.adf")
-  if (islands[isl] == "fdp") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/fdp_inpo/w001001.adf")
-  if (islands[isl] == "mau") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/mau_inpo/w001001.adf")
-  if (islands[isl] == "sar") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/sar_inpo/w001001.adf")
-  if (islands[isl] == "pag") topo = raster("N:/GIS/Projects/SeafloorCalc/Final_Products/pag_inpo/w001001.adf")
+  if (islands[isl] == "agr") topo = raster(paste0(letter, ":/GIS/Projects/SeafloorCalc/Final_Products/agr_inpoo_new/w001001.adf"))
+  if (islands[isl] == "ala") topo = raster(paste0(letter, ":/GIS/Projects/SeafloorCalc/Workspace/Alamagan/ala_inpo_mbik/w001001.adf"))
+  if (islands[isl] == "asc") topo = raster(paste0(letter, ":/GIS/Projects/SeafloorCalc/Workspace/Asuncion/asc_inpo/w001001.adf"))
+  if (islands[isl] == "gug") topo = raster(paste0(letter, ":/GIS/Projects/SeafloorCalc/Final_Products/gug_inpo/w001001.adf"))
+  if (islands[isl] == "fdp") topo = raster(paste0(letter, ":/GIS/Projects/SeafloorCalc/Final_Products/fdp_inpo/w001001.adf"))
+  if (islands[isl] == "mau") topo = raster(paste0(letter, ":/GIS/Projects/SeafloorCalc/Final_Products/mau_inpo/w001001.adf"))
+  if (islands[isl] == "sar") topo = raster(paste0(letter, ":/GIS/Projects/SeafloorCalc/Final_Products/sar_inpo/w001001.adf"))
+  if (islands[isl] == "pag") topo = raster(paste0(letter, ":/GIS/Projects/SeafloorCalc/Final_Products/pag_inpo/w001001.adf"))
   
   # American Samoa
-  if (islands[isl] == "ofu") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/oo_dbmb_mos4.asc")
-  if (islands[isl] == "ros") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/rose_5m_dbmb.asc")
-  if (islands[isl] == "swa") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/swa_dball_2m.asc")
-  if (islands[isl] == "tau") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/tau_dbmb_mos.asc")
-  if (islands[isl] == "tut") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/tut_dbmb.asc")
+  if (islands[isl] == "ofu") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/oo_dbmb_mos4.asc"))
+  if (islands[isl] == "ros") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/rose_5m_dbmb.asc"))
+  if (islands[isl] == "swa") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/swa_dball_2m.asc"))
+  if (islands[isl] == "tau") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/tau_dbmb_mos.asc"))
+  if (islands[isl] == "tut") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/tut_dbmb.asc"))
   
   # Pacific Remote Island Areas
-  if (islands[isl] == "bak") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/bak_dbmb_5m.asc") # 
-  if (islands[isl] == "how") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/how_merged_5m.tif") # run misc/merge_two_Howland_bathy_files.R first
-  if (islands[isl] == "jar") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Jarvis_5m.asc") #
-  if (islands[isl] == "joh") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/johdballblend.asc") #
-  if (islands[isl] == "kin") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/kin_dbmb.asc") #
-  if (islands[isl] == "pal") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/pal_dbmb.asc") # 
-  if (islands[isl] == "wak") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/wake_10m.asc") # 
+  if (islands[isl] == "bak") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/bak_dbmb_5m.asc")) # 
+  if (islands[isl] == "how") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/how_merged_5m.tif")) # run misc/merge_two_Howland_bathy_files.R first
+  if (islands[isl] == "jar") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/Jarvis_5m.asc")) #
+  if (islands[isl] == "joh") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/johdballblend.asc")) #
+  if (islands[isl] == "kin") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/kin_dbmb.asc")) #
+  if (islands[isl] == "pal") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/pal_dbmb.asc")) # 
+  if (islands[isl] == "wak") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/wake_10m.asc")) # 
   
   # Northern Hawaiian Islands
-  if (islands[isl] == "ffs") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/FFS-5m.grd.asc") # 
-  if (islands[isl] == "kur") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Kure_5m.asc") #
-  if (islands[isl] == "lay") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/NHamLays_20m.asc") #
-  if (islands[isl] == "lis") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Lisianski_20m.asc") #
-  if (islands[isl] == "mar") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Maro_20m.asc") #
-  if (islands[isl] == "mid") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Midway_5m.asc") # 
-  if (islands[isl] == "phr") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/PH_5m.asc") # 
+  if (islands[isl] == "ffs") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/FFS-5m.grd.asc")) # 
+  if (islands[isl] == "kur") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/Kure_5m.asc")) #
+  if (islands[isl] == "lay") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/NHamLays_20m.asc")) #
+  if (islands[isl] == "lis") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/Lisianski_20m.asc")) #
+  if (islands[isl] == "mar") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/Maro_20m.asc")) #
+  if (islands[isl] == "mid") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/Midway_5m.asc")) # 
+  if (islands[isl] == "phr") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/PH_5m.asc")) # 
   
   # if depth raster files contains no below sea-level cells (e.g. Swa), don't subset them
   if(min(values(topo), na.rm = T) <= 0) {
