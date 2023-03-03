@@ -25,8 +25,8 @@ utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
 # n_sims = 100 # number of simulations
 effort_level = c("low", "mid", "high")[3] # define sampling effort (low, mid, high)
-min_sets = 1 # minimum number of sets per strat
-max_sets = 30
+min_sets = 6 # minimum number of sets per strat
+max_sets = 26
 trawl_dim = c(0.01, 0.0353) # 0.000353 sq.km (353 sq.m) from two 15-m diameter survey cylinders
 resample_cells = F
 
@@ -68,7 +68,7 @@ select = dplyr::select
 
 for (i in 1:length(islands)) {
   
-  # i = 9
+  # i = 5
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData")); plot(survey_grid_ncrmp)

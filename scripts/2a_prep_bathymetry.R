@@ -40,7 +40,7 @@ letter = "N"
 
 for (isl in 1:length(islands)) {
   
-  # isl = 2
+  # isl = 5
   
   # South Mariana Islands
   if (islands[isl] == "gua") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/ngdc_bathy_10m_guam_049d_6725_8fc5.nc"))
