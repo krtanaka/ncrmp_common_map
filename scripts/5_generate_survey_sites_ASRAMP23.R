@@ -283,16 +283,12 @@ select = dplyr::select
   sets <- cells[, .SD[sample(.N, size = unique(strat_sets), replace = resample_cells)], 
                 by = c("strat")]
   
-  
   #### Remove sites that are closer than 100 m ####
   sets_full <- sets
-  
-  nearby_sites <- data.frame(longitude = sets$longitude, latitude = sets$latitude)
-  plot(nearby_sites, pch = 20, col = 2)
+  nearby_sites <- data.frame(longitude = sets$longitude, latitude = sets$latitude); plot(nearby_sites, pch = 20, col = 2)
   coordinates(nearby_sites) <- c('longitude', 'latitude')
   proj4string(nearby_sites) <- CRS("+proj=longlat +ellps=WGS84 +datum=WGS84")
-  nearby_sites <- spTransform(nearby_sites, CRS("+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"))##
-  
+  nearby_sites <- spTransform(nearby_sites, CRS(paste0("+proj=utm +units=m +zone=", utm_i$UTM_Zone, " ", utm_i$Hemishpere)))##
   
   library(rgeos)
   points_matrix <- gWithinDistance(nearby_sites, dist = 100, byid = T)
