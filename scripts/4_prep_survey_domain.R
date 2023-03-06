@@ -152,6 +152,7 @@ for (isl in 1:length(islands)) {
   } else if (islands[isl] == "ros") {
     
     colnames(df) = c("longitude", "latitude", "hardsoft", "reef", "depth", "buffer")
+    df$sector = 1L
 
   } else {
     

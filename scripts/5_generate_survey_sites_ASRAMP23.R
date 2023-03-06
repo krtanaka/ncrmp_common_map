@@ -288,11 +288,11 @@ select = dplyr::select
   sets_full <- sets
   
   nearby_sites <- data.frame(longitude = sets$longitude, latitude = sets$latitude)
+  plot(nearby_sites, pch = 20, col = 2)
   coordinates(nearby_sites) <- c('longitude', 'latitude')
   proj4string(nearby_sites) <- CRS("+proj=longlat +ellps=WGS84 +datum=WGS84")
   nearby_sites <- spTransform(nearby_sites, CRS("+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"))##
   
-  plot(nearby_sites, pch = 20, col = 2, cex = 2)
   
   library(rgeos)
   points_matrix <- gWithinDistance(nearby_sites, dist = 100, byid = T)
@@ -303,10 +303,10 @@ select = dplyr::select
   
   v <- colSums(points_matrix, na.rm = T) == 0
   nearby_sites = nearby_sites[v, ]
-  points(nearby_sites, pch = 20, col = 4)
   
   nearby_sites <- spTransform(nearby_sites, CRS("+proj=longlat +ellps=WGS84 +datum=WGS84"))
   nearby_sites = as.data.frame(nearby_sites)
+  points(nearby_sites, pch = 20, col = 4)
   
   nearby_sites$latitude = round(nearby_sites$latitude, 4)
   nearby_sites$longitude = round(nearby_sites$longitude, 4)
