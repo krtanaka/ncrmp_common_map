@@ -81,7 +81,7 @@ for (i in 1:length(islands)) {
     
   } else {
     
-    total_sample = total_sample$Effort*3
+    total_sample = total_sample$Effort*2
     
   }
   
@@ -327,7 +327,6 @@ for (i in 1:length(islands)) {
     Switch = T
     
   } else {
-    
     
     Switch = F
     
