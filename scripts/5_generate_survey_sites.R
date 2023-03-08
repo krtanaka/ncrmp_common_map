@@ -25,8 +25,8 @@ utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
 # n_sims = 100 # number of simulations
 effort_level = c("low", "mid", "high")[3] # define sampling effort (low, mid, high)
-min_sets = 2 # minimum number of sets per strat
-max_sets = 30
+min_sets = 3 # minimum number of sets per strat
+max_sets = 39
 trawl_dim = c(0.01, 0.0353) # 0.000353 sq.km (353 sq.m) from two 15-m diameter survey cylinders
 resample_cells = F
 
@@ -81,7 +81,7 @@ for (i in 1:length(islands)) {
     
   } else {
     
-    total_sample = total_sample$Effort*2
+    total_sample = total_sample$Effort*5
     
   }
   
@@ -157,7 +157,7 @@ for (i in 1:length(islands)) {
   sets <- cells[, .SD[sample(.N, size = unique(strat_sets), replace = resample_cells)], 
                 by = c("strat")]
   
-  # remove sites that are closer than 50 m
+  # remove sites that are closer than 100 m
   nearby_sites <- data.frame(longitude = sets$longitude, latitude = sets$latitude)
   plot(nearby_sites, pch = 20, col = 2)
   
@@ -166,7 +166,7 @@ for (i in 1:length(islands)) {
   nearby_sites <- spTransform(nearby_sites, CRS(paste0("+proj=utm +units=m +zone=", utm_i$UTM_Zone, " ", utm_i$Hemishpere)))##
   
   library(rgeos)
-  points_matrix <- gWithinDistance(nearby_sites, dist = 50, byid = T)
+  points_matrix <- gWithinDistance(nearby_sites, dist = 100, byid = T)
   points_matrix[lower.tri(points_matrix, diag = T)] <- NA
   points_matrix
   

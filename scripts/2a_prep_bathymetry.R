@@ -92,12 +92,12 @@ for (isl in 1:length(islands)) {
     
   }
   
-  if (islands[isl] %in% c("tut")) {
+  # if (islands[isl] %in% c("tut")) {
 
-    topo <- aggregate(topo, fact = 51/res(topo)) # aggregate to 50m2 resolution
+    topo <- aggregate(topo, fact = 51/res(topo)) # aggregate to 51m resolution
     res(topo)
 
-  } 
+  # } 
   
   topo_i = readAll(topo)
   plot(topo_i)
