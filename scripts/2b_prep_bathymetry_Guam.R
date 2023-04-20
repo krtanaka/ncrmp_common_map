@@ -10,6 +10,7 @@ library(raster)
 library(tidyr)
 library(marmap)
 library(lattice)
+library(readr)
 
 island_boxes = read_csv("data/misc/Island_Extents.csv") # Updated Bounding boxes 2021
 island_names_codes = read_csv("data/misc/island_name_code.csv")
@@ -44,7 +45,8 @@ if (mean(extent(topo)[3:4]) < 0) sr = paste0('+proj=utm +zone=', utm_i$UTM_Zone,
 
 topo <- projectRaster(topo, crs = sr)
 
-topo_i <- aggregate(topo, fact = 100/res(topo)); res(topo_i)
-plot(topo_i)
+# topo_i <- aggregate(topo, fact = 100/res(topo))
+topo_i = topo
+plot(topo_i); res(topo_i)
 
 save(topo_i, file = 'data/gis_bathymetry/gua.RData')
