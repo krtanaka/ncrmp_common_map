@@ -14,6 +14,7 @@ library(patchwork)
 library(SimSurvey)
 library(sf)
 library(readr)
+library(concaveman)
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
@@ -26,7 +27,7 @@ islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); regi
 
 for (isl in 1:length(islands)) {
   
-  # isl = 3
+  # isl = 1
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -40,9 +41,9 @@ for (isl in 1:length(islands)) {
     
     load(paste0("data/gis_sector/", islands[isl], ".RData"))
     sector = raster_and_table[[1]]; sector_name = raster_and_table[[2]]
-     remove_id = sector_name %>% subset(sector_name$nam %in% c("TUT_PAGOPAGO", "TUT_LAND"))
-     remove_id = remove_id$ID
-     sector[sector %in% remove_id] <- NA
+    remove_id = sector_name %>% subset(sector_name$nam %in% c("TUT_PAGOPAGO", "TUT_LAND"))
+    remove_id = remove_id$ID
+    sector[sector %in% remove_id] <- NA
     
   } else {
     
@@ -111,7 +112,7 @@ for (isl in 1:length(islands)) {
     buffer = topo_i
     buffer[buffer <= 0] <- 1
     buffer_name = data.frame(ID = 1L, 
-                               nam = paste0(islands[isl], "_5km_buffer"))
+                             nam = paste0(islands[isl], "_5km_buffer"))
     
   }
   
@@ -153,7 +154,7 @@ for (isl in 1:length(islands)) {
     
     colnames(df) = c("longitude", "latitude", "hardsoft", "reef", "depth", "buffer")
     df$sector = 1L
-
+    
   } else {
     
     colnames(df) = c("longitude", "latitude", "hardsoft", "sector", "reef", "depth", "buffer")
@@ -166,10 +167,10 @@ for (isl in 1:length(islands)) {
   df$division = as.numeric(1)
   
   df$depth_bin = ""
-  df$depth_bin = ifelse(df$depth <= 0  & df$depth >= -6, 1L, df$depth_bin) 
-  df$depth_bin = ifelse(df$depth < -6  & df$depth >= -18, 2L, df$depth_bin) 
-  df$depth_bin = ifelse(df$depth < -18, 3L, df$depth_bin) 
-
+  df$depth_bin = ifelse(df$depth <= 0  & df$depth >= -6, "shallow", df$depth_bin) 
+  df$depth_bin = ifelse(df$depth < -6  & df$depth >= -18, "mid", df$depth_bin) 
+  df$depth_bin = ifelse(df$depth < -18, "deep", df$depth_bin) 
+  
   df$hardsoft = round(df$hardsoft, 0)
   df$reef = round(df$reef, 0)
   df$sector = round(df$sector, 0)
@@ -196,22 +197,22 @@ for (isl in 1:length(islands)) {
   df = merge(df, reef_name)
   df = merge(df, hardsoft_name)
   
-  (depth = df %>% 
+  (df %>% 
       ggplot( aes(longitude, latitude, fill = depth_bin)) + 
       geom_raster() + 
       coord_fixed())
   
-  (sector = df %>% 
+  (df %>% 
       ggplot( aes(longitude, latitude, fill = sector_id)) + 
       geom_raster() +
       coord_fixed())
   
-  (reef = df %>% 
+  (df %>% 
       ggplot( aes(longitude, latitude, fill = reef_id)) + 
       geom_raster() +
       coord_fixed())
   
-  (hardsoft = df %>% 
+  (df %>% 
       ggplot( aes(longitude, latitude, fill = hardsoft_id)) + 
       geom_raster() +
       coord_fixed())
@@ -234,24 +235,24 @@ for (isl in 1:length(islands)) {
       subset(sector_id != "GUA_LAND") %>% # filter sector
       subset(reef_id %in% c( "forereef")) %>% # filter land and Reef Crest/Reef Flat
       subset(hardsoft_id %in% c("hard", "unknown")) # filter for sector
-
+    
   }
   
   df$strat = paste(df$depth_bin, 
-                   df$sector,
-                   df$reef,
+                   df$sector_id,
+                   df$reef_id,
                    sep = "_")
   
-  df$strat = as.numeric(as.factor(df$strat))
+   df$strat = as.numeric(as.factor(df$strat))
   
   ################################################################
   ### create table to match strata to numbers for output table ###
   ################################################################
   tab <- df 
   tab$depth_bin_value = ""
-  tab$depth_bin_value = ifelse(tab$depth_bin == 1, "SHAL", tab$depth_bin_value) 
-  tab$depth_bin_value = ifelse(tab$depth_bin == 2, "MIDD", tab$depth_bin_value) 
-  tab$depth_bin_value = ifelse(tab$depth_bin == 3, "DEEP", tab$depth_bin_value) 
+  tab$depth_bin_value = ifelse(tab$depth_bin == "shallow", "SHAL", tab$depth_bin_value) 
+  tab$depth_bin_value = ifelse(tab$depth_bin == "mid", "MIDD", tab$depth_bin_value) 
+  tab$depth_bin_value = ifelse(tab$depth_bin == "deep", "DEEP", tab$depth_bin_value) 
   tab <- tab %>% dplyr::select(sector_id,reef_id,strat,depth_bin_value)
   tab <- tab %>% filter(!duplicated(tab))
   save(tab,file = paste0("outputs/sector_key/", islands[isl], ".RData"))
@@ -261,7 +262,8 @@ for (isl in 1:length(islands)) {
       geom_raster() + 
       scale_fill_discrete("strata") + 
       coord_fixed() + 
-      theme_void())
+      theme_void() + 
+      theme(panel.background = element_rect(fill = "gray10")))
   
   cell = rasterFromXYZ(df[,c("longitude", "latitude", "cell")]); plot(cell)
   division = rasterFromXYZ(df[,c("longitude", "latitude", "division")]); plot(division)
@@ -276,15 +278,25 @@ for (isl in 1:length(islands)) {
   
   survey_grid_ncrmp = readAll(survey_grid_ncrmp)
   
-  # default_proj = "+init=epsg:4326 +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"
-  # crs(survey_grid_ncrmp) = default_proj
-
-  # p <- raster::rasterToPolygons(survey_grid$strat, dissolve = TRUE); sp::plot(p)
-  # p <- raster::rasterToPolygons(survey_grid_ncrmp$strat, dissolve = TRUE); sp::plot(p)
-  
   survey_grid_ncrmp = readAll(survey_grid_ncrmp)
   save(survey_grid_ncrmp, file = paste0("data/survey_grid_ncrmp/survey_grid_", islands[isl], ".RData"))
   
   print(paste0("... ", islands[isl], " survey domain generated ..."))
+  
+  default_proj = "+init=epsg:4326 +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"
+  crs(survey_grid_ncrmp) = default_proj
+  
+  # export strata as shapefiles
+  # p <- raster::rasterToPolygons(survey_grid$strat, dissolve = TRUE); sp::plot(p)
+  p <- raster::rasterToPolygons(survey_grid_ncrmp$strat, dissolve = TRUE); sp::plot(p)
+  
+  # Convert the SpatialPolygonsDataFrame object to an sf object
+  sf_object <- st_as_sf(p)
+  
+  # Save the sf object as a shapefile
+  shapefile_name <- paste0("outputs/shapefiles/", islands[isl], "_strata.shp")
+  shapefile_dir <- dirname(shapefile_name)
+  if (!file.exists(shapefile_dir)) dir.create(shapefile_dir)
+  st_write(sf_object, dsn = shapefile_dir, layer = basename(shapefile_name), driver = "ESRI Shapefile")
   
 }

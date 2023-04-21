@@ -25,8 +25,8 @@ utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
 # n_sims = 100 # number of simulations
 effort_level = c("low", "mid", "high")[3] # define sampling effort (low, mid, high)
-min_sets = 3 # minimum number of sets per strat
-max_sets = 39
+min_sets = 1 # minimum number of sets per strat
+max_sets = 50
 trawl_dim = c(0.01, 0.0353) # 0.000353 sq.km (353 sq.m) from two 15-m diameter survey cylinders
 resample_cells = F
 
@@ -252,22 +252,34 @@ for (i in 1:length(islands)) {
   (bathymetry = cells %>% 
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = depth)) + 
-      coord_fixed())
+      coord_fixed() + 
+      scale_fill_viridis_c("") + 
+      theme_void() + 
+      theme(panel.background = element_rect(fill = "gray10")))
   
   (strata = cells %>% 
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = factor(strat))) + 
-      coord_fixed())
+      coord_fixed() + 
+      scale_fill_discrete("") + 
+      theme_void() + 
+      theme(panel.background = element_rect(fill = "gray10")))
   
   (variability = cells %>% 
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = sd_total)) + 
-      coord_fixed())
+      coord_fixed() + 
+      scale_fill_viridis_c("") + 
+      theme_void() + 
+      theme(panel.background = element_rect(fill = "gray10")))
   
   (area = cells %>% 
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = strat_area )) + 
-      coord_fixed())
+      coord_fixed() + 
+      scale_fill_viridis_c("") + 
+      theme_void() + 
+      theme(panel.background = element_rect(fill = "gray10")))
   
   isl_shp = island_name_code %>% subset(Island_Code == islands[i])
   
