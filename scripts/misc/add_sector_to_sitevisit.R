@@ -22,7 +22,7 @@ df_sec = NULL
 
 for (isl in 1:length(unique(df$ISLAND))) {
   
-  # isl = 12
+  # isl = 1
   
   df_i = df %>% subset(ISLAND == unique(df$ISLAND)[isl])
   plot(df_i$LONGITUDE_SV, df_i$LATITUDE_SV); map(add = T)
