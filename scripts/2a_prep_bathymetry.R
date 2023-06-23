@@ -10,6 +10,7 @@ library(raster)
 library(tidyr)
 library(marmap)
 library(lattice)
+library(colorRamps)
 
 # need to connect to pifsc VPN if you are not at IRC
 
