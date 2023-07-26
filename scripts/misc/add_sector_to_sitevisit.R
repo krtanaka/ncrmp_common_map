@@ -1,7 +1,7 @@
-################################################
-### add sector information to site visit #######
-################################################
-# MUST CONNECT TO THE N DRIVE 
+#####################################################
+### add sector information to site level data #######
+#####################################################
+# MUST CONNECT TO RELEVANT PIFSC DRIVES
 
 rm(list = ls())
 
