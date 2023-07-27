@@ -11,10 +11,10 @@ rm(list = ls())
 
 world <- ne_countries(scale = "large", returnclass = "sf")
 
-b = marmap::getNOAA.bathy(lon1 = min(-160.5),
-                          lon2 = max(-154.8),
-                          lat1 = min(18.91),
-                          lat2 = max(22.25),
+b = marmap::getNOAA.bathy(lon1 = min(-161),
+                          lon2 = max(-154),
+                          lat1 = min(18),
+                          lat2 = max(23),
                           resolution = 1)
 
 b = marmap::fortify.bathy(b)
@@ -49,23 +49,25 @@ label = df %>%
   summarise(lat = mean(LATITUDE),
             lon = mean(LONGITUDE))
 
-map <- ggplot(data = world) +
+# pdf('/Users/Kisei.Tanaka/Desktop/MHI_200m_Bathy_Countour.pdf', height = 5, width = 7)
+png('/Users/kisei.tanaka/Desktop/MHI_200m_Bathy_Countour.png', height = 5, width = 7, res = 100, units = "in")
+
+ggplot(data = world) +
   coord_sf(crs = st_crs(4135) # old hawaii projection code
            # xlim = c(-160.5, -154.8),
            # ylim = c(18.91, 22.25), expand = F
-           ) +
+  ) +
   geom_sf() +
   # scale_x_continuous(breaks = seq(-160.5, -154.8, by = 0.5)) +
   # scale_y_continuous(breaks = seq(18.91, 22.25, by = 0.5)) +
-  # geom_point(data = df, aes(LONGITUDE, LATITUDE, color = factor(OBS_YEAR))) + 
+  # geom_point(data = df, aes(LONGITUDE, LATITUDE, color = factor(OBS_YEAR))) +
   geom_contour(data = b,
-               aes(x = x, y = y, z = z),
-               breaks = seq(-8000, 0, by = 500),
-               size = c(0.05),
-               alpha = 0.8,
-               colour = grey.colors(17003, rev = T)) +
-  scale_fill_discrete("") + 
-  scale_color_discrete("") + 
+               aes(x = x, y = y, z = z, colour = stat(level)),
+               breaks = seq(-10000, 0, by = 50),
+               size = 0.1,
+               show.legend = F) +
+  scale_color_viridis_c() +
+  # scale_color_gradientn(colours = matlab.like(100)) +
   geom_text_repel(data = label, 
                   aes(x = lon, y = lat, label = ISLAND), 
                   fontface = "bold",   
@@ -74,10 +76,9 @@ map <- ggplot(data = world) +
   theme_minimal() + 
   theme(
     # axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+    # panel.background = element_rect(fill = "gray20"),
+    # panel.grid = element_line(color = "gray20"),
     axis.title = element_blank())
-    # legend.position = c(0.1, 0.3))
+# legend.position = c(0.1, 0.3))
 
-# pdf('/Users/Kisei.Tanaka/Desktop/MHI_200m_Bathy_Countour.pdf', height = 5, width = 7)
-png('/Users/kisei.tanaka/Desktop/MHI_200m_Bathy_Countour.png', height = 5, width = 7, res = 100, units = "in")
-print(map)
 dev.off()
