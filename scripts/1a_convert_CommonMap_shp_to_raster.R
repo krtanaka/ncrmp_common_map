@@ -103,7 +103,7 @@ for (shp_i in 1:length(shp_list)) {
   
   time = end - start
   
-  print(paste0(island_name, "...done...took ", time, "..."))
+  cat(paste0(island_name, "...done...took ", time, "...\n"))
   
 }
 
@@ -191,7 +191,7 @@ for (shp_i in 1:length(shp_list)) {
   
   time = end - start
   
-  print(paste0(island_name, "...done...took ", time, "..."))
+  cat(paste0(island_name, "...done...took ", time, "...\n"))
   
 }
 
@@ -276,6 +276,6 @@ for (shp_i in 1:length(shp_list)) {
   
   time = end - start
   
-  print(paste0(island_name, "...done...took ", time, "..."))
+  cat(paste0(island_name, "...done...took ", time, "...\n"))
   
 }
