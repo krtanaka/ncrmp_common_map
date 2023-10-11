@@ -9,10 +9,10 @@ rm(list = ls())
 
 spatial_resolution = 100 # spatial resolution in m
 
-shp_path = "L:/ktanaka/GIS" # pc
-shp_path = "N:/GIS/Projects/CommonMaps"
+shp_path = "L:/ktanaka/GIS/survey_boxes/" # pc
+shp_path = "N:/GIS/Projects/CommonMaps/survey_boxes/"
 
-shp_list = list.files(path = paste0(shp_path, "/survey_boxes/"), pattern = "\\.shp$", full.names = T); shp_list
+shp_list = list.files(path = shp_path, pattern = "\\.shp$", full.names = T); shp_list
 dat <- shapefile(shp_list, verbose = T); plot(dat); degAxis(1); degAxis(2)
 
 island_name <- as.data.frame(dat)

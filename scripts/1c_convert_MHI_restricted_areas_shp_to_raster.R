@@ -1,5 +1,5 @@
 ############################################
-### Convert NMSAS_PY shapefile to raster ###
+### Convert rstr_PY shapefile to raster ###
 ############################################
 
 library(raster)
@@ -14,26 +14,24 @@ rm(list = ls())
 spatial_resolution = 10 # target spatial resolution in m
 
 # shp_path = "L:/ktanaka/GIS"
-shp_path = "N:/GIS/Projects/CommonMaps/Sector/"
+shp_path = "N:/GIS/Projects/CommonMaps/Restricted areas_2016/"
 
 shp_list = list.files(path = shp_path, pattern = "\\.shp$", full.names = T); shp_list
 
-# shp_list[10]: "NMSAS_PY.shp" is new nmsas shapefile
-# shp_list[11]: "NMSAS_PY_original.shp" is old nmsas shapefile
+dat <- shapefile(shp_list[1], verbose = T); plot(dat, col = 2); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T)
+dat <- shapefile(shp_list[2], verbose = T); plot(dat, col = 2); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T)
+dat <- shapefile(shp_list[3], verbose = T); plot(dat, col = 2); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T)
+dat <- shapefile(shp_list[4], verbose = T); plot(dat, col = 2); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T)
 
-island_name = tolower(substr(shp_list[10], 35, 42)); island_name
-dat <- shapefile(shp_list[10], verbose = T); plot(dat); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T)
-
-nmsas <- as.data.frame(dat)
-nmsas = nmsas$Label; nmsas
-# nmsas = nmsas[c(1, 2, 5)]; nmsas # take out Tutulia sectors
+rstr <- as.data.frame(dat)
+rstr = rstr$Site_Label; rstr
 
 dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2)
 proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2)
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
-island_name = c("ros", "swa", "tau")
+island_name = c("nii", "kau", "oah", "mol", "lan", "kah", "mai", "haw")
 
 for (i in 1:length(island_name)) {
   
@@ -44,7 +42,7 @@ for (i in 1:length(island_name)) {
   if (island_name[i] == "ros") island_sector = "Muliava Sanctuary Unit"
   if (island_name[i] == "swa") island_sector = c("Swains Island Sanctuary Unit", "Swains Open")
   if (island_name[i] == "tau") island_sector = c("Ta'u Sanctuary Unit", "Tau Open")
-
+  
   utm_i = utm %>% subset(Island_Code == island_name[i])
   
   dat_i = subset(dat, Label %in% island_sector)
@@ -52,7 +50,7 @@ for (i in 1:length(island_name)) {
   # determine northern or southern hemisphere
   if (median((dat_i@bbox[2,])) > 0) dat_i <- spTransform(dat_i,  CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +north')))
   if (median((dat_i@bbox[2,])) < 0) dat_i <- spTransform(dat_i,  CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +south')))
-
+  
   plot(dat_i); axis(1); axis(2)
   
   dat_i = dat_i[c(names(dat_i) %in% c("Label"))]
@@ -104,9 +102,9 @@ for (i in 1:length(island_name)) {
   
   raster_and_table = list(raster, table)
   
-  nmsas_name = gsub(" ", "_", nmsas[i])
-  nmsas_name = gsub("/", "_", nmsas_name)
-  nmsas_name = gsub("'", "", nmsas_name)
+  rstr_name = gsub(" ", "_", rstr[i])
+  rstr_name = gsub("/", "_", rstr_name)
+  rstr_name = gsub("'", "", rstr_name)
   
   save(raster_and_table, file = paste0("data/gis_sector/", island_name[i], ".RData"))
   
@@ -114,6 +112,6 @@ for (i in 1:length(island_name)) {
   
   time = end - start
   
-  print(paste0(nmsas[i], "...done...took ", time, "..."))
+  print(paste0(rstr[i], "...done...took ", time, "..."))
   
 }
