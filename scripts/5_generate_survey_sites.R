@@ -16,6 +16,7 @@ library(ggrepel)
 library(ggnewscale)
 library(ggspatial)
 library(ggmap)
+library(mapview)
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
