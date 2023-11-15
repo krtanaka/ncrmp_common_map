@@ -243,7 +243,7 @@ for (isl in 1:length(islands)) {
                    df$reef_id,
                    sep = "_")
   
-   df$strat = as.numeric(as.factor(df$strat))
+  df$strat = as.numeric(as.factor(df$strat))
   
   ################################################################
   ### create table to match strata to numbers for output table ###
@@ -261,9 +261,7 @@ for (isl in 1:length(islands)) {
       ggplot( aes(longitude, latitude, fill = factor(strat))) + 
       geom_raster() + 
       scale_fill_discrete("strata") + 
-      coord_fixed() + 
-      theme_void() + 
-      theme(panel.background = element_rect(fill = "gray10")))
+      coord_fixed())
   
   cell = rasterFromXYZ(df[,c("longitude", "latitude", "cell")]); plot(cell)
   division = rasterFromXYZ(df[,c("longitude", "latitude", "division")]); plot(division)
@@ -282,21 +280,21 @@ for (isl in 1:length(islands)) {
   save(survey_grid_ncrmp, file = paste0("data/survey_grid_ncrmp/survey_grid_", islands[isl], ".RData"))
   
   print(paste0("... ", islands[isl], " survey domain generated ..."))
-  
-  default_proj = "+init=epsg:4326 +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"
-  crs(survey_grid_ncrmp) = default_proj
-  
-  # export strata as shapefiles
-  # p <- raster::rasterToPolygons(survey_grid$strat, dissolve = TRUE); sp::plot(p)
-  p <- raster::rasterToPolygons(survey_grid_ncrmp$strat, dissolve = TRUE); sp::plot(p)
-  
-  # Convert the SpatialPolygonsDataFrame object to an sf object
-  sf_object <- st_as_sf(p)
-  
-  # Save the sf object as a shapefile
-  shapefile_name <- paste0("outputs/shapefiles/", islands[isl], "_strata.shp")
-  shapefile_dir <- dirname(shapefile_name)
-  if (!file.exists(shapefile_dir)) dir.create(shapefile_dir)
-  st_write(sf_object, dsn = shapefile_dir, layer = basename(shapefile_name), driver = "ESRI Shapefile")
+
+  # default_proj = "+init=epsg:4326 +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"
+  # crs(survey_grid_ncrmp) = default_proj
+  # 
+  # # export strata as shapefiles
+  # # p <- raster::rasterToPolygons(survey_grid$strat, dissolve = TRUE); sp::plot(p)
+  # p <- raster::rasterToPolygons(survey_grid_ncrmp$strat, dissolve = TRUE); sp::plot(p)
+  # 
+  # # Convert the SpatialPolygonsDataFrame object to an sf object
+  # sf_object <- st_as_sf(p)
+  # 
+  # # Save the sf object as a shapefile
+  # shapefile_name <- paste0("outputs/shapefiles/", islands[isl], "_strata.shp")
+  # shapefile_dir <- dirname(shapefile_name)
+  # if (!file.exists(shapefile_dir)) dir.create(shapefile_dir)
+  # st_write(sf_object, dsn = shapefile_dir, layer = basename(shapefile_name), driver = "ESRI Shapefile")
   
 }
