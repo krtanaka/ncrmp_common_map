@@ -76,6 +76,17 @@ for (isl in 1:length(islands)) {
   if (islands[isl] == "pal") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/pal_dbmb.asc")) # 
   if (islands[isl] == "wak") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/wake_10m.asc")) # 
   
+  # Main Hawaiian Islands
+  if (islands[isl] == "haw") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/FFS-5m.grd.asc")) # 
+  if (islands[isl] == "kah") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/Kure_5m.asc")) #
+  if (islands[isl] == "kal") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/NHamLays_20m.asc")) #
+  if (islands[isl] == "kau") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/Lisianski_20m.asc")) #
+  if (islands[isl] == "lan") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/Maro_20m.asc")) #
+  if (islands[isl] == "mai") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/Midway_5m.asc")) # 
+  if (islands[isl] == "mol") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/PH_5m.asc")) # 
+  if (islands[isl] == "nii") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/PH_5m.asc")) # 
+  if (islands[isl] == "oah") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/PH_5m.asc")) # 
+
   # Northern Hawaiian Islands
   if (islands[isl] == "ffs") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/FFS-5m.grd.asc")) # 
   if (islands[isl] == "kur") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/Kure_5m.asc")) #
