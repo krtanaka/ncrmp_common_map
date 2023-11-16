@@ -31,9 +31,7 @@ if(region == "MARIAN") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/mari
 if(region == "SAMOA") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/pago_pago_3_mhw_2009.nc")
 if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/usgsCeCrm10.nc")
 if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/mhi_mbsyn_bathyonly_50m_v21.nc")
-
-topo[topo <= -30] <- NA
-topo[topo >= 0] <- NA  
+if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged.tif")
 
 default_proj = crs(topo)
 
