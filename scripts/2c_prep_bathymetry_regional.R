@@ -30,7 +30,7 @@ rm(island_names_codes, island_boxes)
 if(region == "MARIAN") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/mariana_trench_6_msl_2012.nc")
 if(region == "SAMOA") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/pago_pago_3_mhw_2009.nc")
 if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/usgsCeCrm10.nc")
-if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/mhi_mbsyn_bathyonly_50m_v21.nc")
+if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/mhi_mbsyn_bathyonly_50m_v21_0.001deg.tif")
 if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged.tif")
 
 default_proj = crs(topo)
@@ -60,7 +60,14 @@ topo$depth = as.numeric(as.character(topo$depth))
 
 for (i in 1:length(islands)) {
   
-  # i = 1
+  # i = 4
+  
+  if (file.exists(paste0('data/gis_bathymetry/', islands[i], '.RData'))) {
+    
+    cat("Bathymetry data for this island already exists, skipping this island...\n")
+    next
+    
+  }
   
   box = island_names_codes_boxes %>% subset(Island_Code == islands[i])
 
