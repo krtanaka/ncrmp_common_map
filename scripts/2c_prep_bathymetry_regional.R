@@ -34,7 +34,6 @@ if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/mhi_mbs
 if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged.tif")
 
 default_proj = crs(topo)
-
 topo = as.data.frame(rasterToPoints(topo))
 colnames(topo)[3] = "depth"
 topo$depth = as.numeric(as.character(topo$depth))
