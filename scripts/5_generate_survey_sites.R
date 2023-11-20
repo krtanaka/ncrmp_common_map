@@ -59,8 +59,6 @@ islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"   
 
 set.seed(2023)
 
-ggmap::register_google("AIzaSyDpirvA5gB7bmbEbwB1Pk__6jiV4SXAEcY")
-
 select = dplyr::select
 
 #################################################################
