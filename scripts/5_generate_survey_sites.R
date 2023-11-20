@@ -55,7 +55,7 @@ islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "pag", "sar"); region = "N
 islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                              # American Samoa
 islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"                # Pacific Remote Island Areas
 islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI"    # Main Hawaiian Islands
-# islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"               # Northern Hawaiian Islands
+islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"                 # Northern Hawaiian Islands
 
 set.seed(2023)
 
@@ -254,9 +254,10 @@ for (i in 1:length(islands)) {
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = depth)) + 
       coord_fixed() + 
-      scale_fill_viridis_c("") + 
+      scale_fill_viridis_c("", limits = c(0, 30)) + 
       theme_void() + 
-      theme(panel.background = element_rect(fill = "gray10")))
+      theme(panel.background = element_rect(fill = "gray10"),
+            panel.grid = element_line(color = "gray15")))
   
   (strata = cells %>% 
       ggplot(aes(x, y)) +
@@ -264,7 +265,8 @@ for (i in 1:length(islands)) {
       coord_fixed() + 
       scale_fill_discrete("") + 
       theme_void() + 
-      theme(panel.background = element_rect(fill = "gray10")))
+      theme(panel.background = element_rect(fill = "gray10"),
+            panel.grid = element_line(color = "gray15")))
   
   (variability = cells %>% 
       ggplot(aes(x, y)) +
@@ -272,7 +274,8 @@ for (i in 1:length(islands)) {
       coord_fixed() + 
       scale_fill_viridis_c("") + 
       theme_void() + 
-      theme(panel.background = element_rect(fill = "gray10")))
+      theme(panel.background = element_rect(fill = "gray10"),
+            panel.grid = element_line(color = "gray15")))
   
   (area = cells %>% 
       ggplot(aes(x, y)) +
@@ -280,7 +283,8 @@ for (i in 1:length(islands)) {
       coord_fixed() + 
       scale_fill_viridis_c("") + 
       theme_void() + 
-      theme(panel.background = element_rect(fill = "gray10")))
+      theme(panel.background = element_rect(fill = "gray10"),
+            panel.grid = element_line(color = "gray15")))
   
   isl_shp = island_name_code %>% subset(Island_Code == islands[i])
   
@@ -442,8 +446,8 @@ for (i in 1:length(islands)) {
       ggplot() +
       # ggmap(map) +
       
-      geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
-      
+      # geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
+
       # display if there is more than 1 island sector
       
       {if (length(unique(buffer$sector_nam)) > 1) {
