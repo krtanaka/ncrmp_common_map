@@ -18,7 +18,7 @@ ncrmp_utm_zones = df %>%
   dplyr::select(ISLAND, Island_Code, UTM_Zone, Hemisphere) %>% 
   as.data.frame()
 
-colnames(ncrmp_utm_zones) = c("Island", "Island_Code", "UTM_Zone", "Hemishpere")
+colnames(ncrmp_utm_zones) = c("Island", "Island_Code", "UTM_Zone", "Hemisphere")
 
 ncrmp_utm_zones$Island_Code = tolower(as.character(ncrmp_utm_zones$Island_Code))
 ncrmp_utm_zones$Island = gsub(" " , "_", ncrmp_utm_zones$Island)
