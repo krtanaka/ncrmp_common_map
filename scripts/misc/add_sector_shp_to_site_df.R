@@ -1,16 +1,27 @@
 #####################################################
-### add sector information to site level data #######
+### Add sector information to site-level data ###
 #####################################################
-# MUST CONNECT TO RELEVANT PIFSC DRIVES
+# make sure you are connected to relevant PIFSC drives
 
 rm(list = ls())
 
 library(readr)
-library(rgdal) # needed for working with shapefiles
 library(tidyr)
 library(dplyr)
 library(ggplot2)
 library(maps)
+library(sp)
+library(sf)
+
+get_utm <- function(x, y, zone, loc){
+  points = SpatialPoints(cbind(x, y), proj4string = CRS("+proj=longlat +datum=WGS84"))
+  points_utm = spTransform(points, CRS(paste0("+proj=utm +zone=", zone[1]," +ellps=WGS84 +north")))
+  if (loc == "x") {
+    return(coordinates(points_utm)[,1])
+  } else if (loc == "y") {
+    return(coordinates(points_utm)[,2])
+  }
+}
 
 # READ IN DATA ------------------------
 df = read.csv("data/spc/Cleaned_sitevisit_112322.csv")
@@ -30,8 +41,14 @@ for (isl in 1:length(unique(df$ISLAND))) {
   # re-project in correct utm zone 
   zone <- (floor((df_i$LONGITUDE_SV[1] + 180)/6) %% 60) + 1
   
-  if (median(df_i$LATITUDE_SV) > 0) xy_utm = as.data.frame(cbind(utm = project(as.matrix(df_i[, c("LONGITUDE_SV", "LATITUDE_SV")]), paste0("+proj=utm +units=m +zone=",  zone, " +north"))))
-  if (median(df_i$LATITUDE_SV) < 0) xy_utm = as.data.frame(cbind(utm = project(as.matrix(df_i[, c("LONGITUDE_SV", "LATITUDE_SV")]), paste0("+proj=utm +units=m +zone=",  zone, " +south"))))
+  xy_utm = data.frame(x = df_i$LONGITUDE_SV, y = df_i$LATITUDE_SV)  %>% 
+    mutate(zone2 = (floor((x + 180)/6) %% 60) + 1, keep = "all") %>% 
+    group_by(zone2) %>% 
+    mutate(utm_x = get_utm(x, y, zone2, loc = "x"),
+           utm_y = get_utm(x, y, zone2, loc = "y")) %>% 
+    ungroup() %>% 
+    select(utm_x, utm_y) %>% 
+    as.data.frame()
   
   colnames(xy_utm) = c("X", "Y")
   df_i = cbind(df_i, xy_utm)
@@ -41,9 +58,9 @@ for (isl in 1:length(unique(df$ISLAND))) {
   coordinates(latlon) = ~X+Y
   
   # read shp file, assign same projection attribute
-  if (unique(df$ISLAND)[isl] == "Guam") shp <- rgdal::readOGR("N:/GIS/Projects/CommonMaps/Sector/gua_base_land_openwater_mpa_finalize.shp")
-  if (unique(df$ISLAND)[isl] == "Tutuila") shp <- rgdal::readOGR("N:/GIS/Projects/CommonMaps/Sector/tut_sector.shp")
-  if (unique(df$ISLAND)[isl] == "Hawaii") shp <- rgdal::readOGR("N:/GIS/Projects/CommonMaps/Sector/HAW_sectors.shp")
+  if (unique(df$ISLAND)[isl] == "Guam") shp <- st_read(file.path("N:/GIS/Projects/CommonMaps/Sector/gua_base_land_openwater_mpa_finalize.shp")) %>% as("Spatial")
+  if (unique(df$ISLAND)[isl] == "Tutuila") shp <- st_read(file.path("N:/GIS/Projects/CommonMaps/Sector/tut_sector.shp")) %>% as("Spatial")
+  if (unique(df$ISLAND)[isl] == "Hawaii") shp <- st_read(file.path("N:/GIS/Projects/CommonMaps/Sector/HAW_sectors.shp")) %>% as("Spatial")
   
   if (median(df_i$LATITUDE_SV) > 0) CRS.new <- CRS(paste0("+proj=utm +zone=", zone, " +datum=WGS84 +units=m +no_defs +north"))
   if (median(df_i$LATITUDE_SV) < 0) CRS.new <- CRS(paste0("+proj=utm +zone=", zone, " +datum=WGS84 +units=m +no_defs +south"))
@@ -67,6 +84,7 @@ for (isl in 1:length(unique(df$ISLAND))) {
 
 df_sec %>%
   subset(REGION == "MARIAN") %>% 
+  subset(ISLAND == "Guam") %>% 
   ggplot(aes(LONGITUDE_SV , LATITUDE_SV, fill = SEC_NAME, color = SEC_NAME)) +
   geom_point(shape = 21, size = 2) + 
   coord_fixed()
