@@ -20,7 +20,6 @@ shp_path = "N:/GIS/Projects/CommonMaps/Restricted areas_2016/"
 shp_list = list.files(path = shp_path, pattern = "\\.shp$", full.names = T)
 shp_list = shp_list[c(1, 3:4)]; shp_list
 
-
 ##################################
 ### CFR_RestrictedAreas_Hawaii ###
 ##################################
