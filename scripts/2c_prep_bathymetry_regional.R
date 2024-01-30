@@ -31,27 +31,28 @@ if(region == "MARIAN") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/mari
 if(region == "SAMOA") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/pago_pago_3_mhw_2009.nc")
 if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/usgsCeCrm10.nc")
 if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/mhi_mbsyn_bathyonly_50m_v21_0.001deg.tif")
-if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged.tif")
+if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_51m_res.tif")
+if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_5m_res.tif")
 
 default_proj = crs(topo)
 topo = as.data.frame(rasterToPoints(topo))
 colnames(topo)[3] = "depth"
 topo$depth = as.numeric(as.character(topo$depth))
 
-# df = topo %>% 
-#   mutate(x = round(x, 1), 
-#          y = round(y, 1)) %>% 
-#   group_by(x, y) %>% 
+# df = topo %>%
+#   mutate(x = round(x, 1),
+#          y = round(y, 1)) %>%
+#   group_by(x, y) %>%
 #   summarise(d = mean(depth))
 
-# wireframe(unclass(as.bathy(df)), 
+# wireframe(unclass(as.bathy(df)),
 #           shade = T,
 #           aspect = c(length(unique(df$y))/length(unique(df$x)), 0.05),
 #           par.box = c(col = "transparent"),
 #           scales = list(arrows = FALSE, col = "transparent"), # col="black" is required
 #           par.settings = list(axis.line = list(col = 'transparent')),
 #           light.source = c(10, 0, 10),
-#           zlab = "", 
+#           zlab = "",
 #           xlab = "",
 #           ylab = "",
 #           perspective = T,
