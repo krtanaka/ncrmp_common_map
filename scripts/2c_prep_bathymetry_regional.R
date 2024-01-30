@@ -31,6 +31,7 @@ if(region == "MARIAN") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/mari
 if(region == "SAMOA") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/pago_pago_3_mhw_2009.nc")
 if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/usgsCeCrm10.nc")
 if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/mhi_mbsyn_bathyonly_50m_v21_0.001deg.tif")
+if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Bathymetry_ETOPO_2022_v1_15s_all_units.nc")
 if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_51m_res.tif")
 if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_5m_res.tif")
 
