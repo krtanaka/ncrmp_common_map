@@ -133,6 +133,22 @@ for (isl in 1:length(islands)) {
     
   }
   
+  ### MHI restricted areas ###
+  if (region == "MHI") {
+    
+    load("data/gis_sector/mhi_restricted_ecfr_area.RData"); mhi_restricted_a = raster_and_table
+    load("data/gis_sector/mhi_restricted_cfr_areas_hawaii.RData"); mhi_restricted_b = raster_and_table
+    load("data/gis_sector/mhi_restricted_areas_hawaii_zone4.RData"); mhi_restricted_c = raster_and_table
+    load("data/gis_sector/mhi_restricted_areas_hawaii_zone5.RData"); mhi_restricted_d = raster_and_table
+
+    boxes_a = mhi_restricted_a[[1]]; boxes_name_a = mhi_restricted_a[[2]]
+    boxes_b = mhi_restricted_b[[1]]; boxes_name_b = mhi_restricted_b[[2]]
+    boxes_c = mhi_restricted_c[[1]]; boxes_name_c = mhi_restricted_c[[2]]
+    boxes_d = mhi_restricted_d[[1]]; boxes_name_d = mhi_restricted_d[[2]]
+    
+    
+  } 
+  
   hardsoft = resample(hardsoft, topo_i, method = "ngb")
   sector = resample(sector, topo_i, method = "ngb")
   reef = resample(reef, topo_i, method = "ngb") 
