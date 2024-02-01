@@ -88,8 +88,7 @@ ggplot() +
 
 raster_and_table = list(raster, table)
 
-save(raster_and_table, file = "data/gis_sector/mhi_restricted_cfr_areas_hawaii.RData")
-
+save(raster_and_table, file = "data/gis_sector/mhi_restricted_areas_kau_oah_a.RData")
 
 #################
 ### eCFR_Area ###
@@ -159,8 +158,7 @@ ggplot() +
 
 raster_and_table = list(raster, table)
 
-save(raster_and_table, file = "data/gis_sector/mhi_restricted_ecfr_area.RData")
-
+save(raster_and_table, file = "data/gis_sector/mhi_restricted_areas_kau_oah_b.RData")
 
 #######################################
 ### RestrictedAreas_Hawaii - zone 4 ###

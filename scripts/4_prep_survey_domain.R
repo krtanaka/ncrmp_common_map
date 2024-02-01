@@ -154,11 +154,13 @@ for (isl in 1:length(islands)) {
   bathymetry = resample(topo_i, topo_i, method = "ngb")
   buffer = resample(buffer, topo_i, method = "ngb")
   boxes = resample(boxes, topo_i, method = "ngb")
-
+  
   if (islands[isl] %in% c("kau", "oah")) boxes_a = resample(boxes_a, topo_i, method = "ngb")
   if (islands[isl] %in% c("kau", "oah")) boxes_b = resample(boxes_b, topo_i, method = "ngb")
   if (islands[isl] %in% c("mau", "kah", "lan", "mol", "oah")) boxes_c = resample(boxes_c, topo_i, method = "ngb")
   if (islands[isl] %in% c("haw", "mau", "kah", "lan", "mol", "oah")) boxes_d = resample(boxes_d, topo_i, method = "ngb")
+  
+
   
   df = stack(hardsoft, sector, reef, bathymetry, buffer)
   
@@ -173,8 +175,7 @@ for (isl in 1:length(islands)) {
   if (islands[isl] == "tut") {
     colnames(df) <- c("longitude", "latitude", "hardsoft", "sector", "reef", "depth")
   } else if (islands[isl] == "ros") {
-    colnames(df) <- c("longitude", "latitude", "hardsoft", "reef", "depth", "buffer")
-    df$sector <- 1L
+    colnames(df) <- c("longitude", "latitude", "hardsoft", "reef", "depth", "buffer"); df$sector <- 1L
   } else if (islands[isl] %in% c("kau", "oah")) {
     colnames(df) <- c("longitude", "latitude", "hardsoft", "sector", "reef", "depth", "buffer", "restricted_a", "restricted_b")
   } else if (islands[isl] %in% c("mau", "kah", "lan", "mol", "oah")) {
