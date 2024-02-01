@@ -176,8 +176,8 @@ sites = c("Paiko Lagoon WS",
 dat <- shapefile(shp_list[3], verbose = T); plot(dat, col = 2); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T); names(dat)
 dat = dat %>% subset(Site_Label %in% sites); plot(dat, col = 2); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T); names(dat)
 
-dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2)
-proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2)
+dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T)
+proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T)
 
 dat_i <- spTransform(dat,  CRS('+proj=utm +zone=4 +datum=WGS84 +units=m +no_defs +north'))
 # dat_i <- spTransform(dat,  CRS('+proj=utm +zone=5 +datum=WGS84 +units=m +no_defs +north'))
@@ -233,7 +233,7 @@ ggplot() +
 
 raster_and_table = list(raster, table)
 
-save(raster_and_table, file = "data/gis_sector/mhi_restricted_areas_hawaii_zone4.RData")
+save(raster_and_table, file = "data/gis_sector/mhi_restricted_areas_oah_lan_mau.RData")
 
 
 #######################################
@@ -305,4 +305,4 @@ ggplot() +
 
 raster_and_table = list(raster, table)
 
-save(raster_and_table, file = "data/gis_sector/mhi_restricted_areas_hawaii_zone5.RData")
+save(raster_and_table, file = "data/gis_sector/mhi_restricted_areas_haw.RData")

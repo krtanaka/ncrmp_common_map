@@ -136,15 +136,15 @@ for (isl in 1:length(islands)) {
   ### MHI restricted areas ###
   if (region == "MHI") {
     
-    load("data/gis_sector/mhi_restricted_ecfr_area.RData"); mhi_restricted_a = raster_and_table
-    load("data/gis_sector/mhi_restricted_cfr_areas_hawaii.RData"); mhi_restricted_b = raster_and_table
-    load("data/gis_sector/mhi_restricted_areas_hawaii_zone4.RData"); mhi_restricted_c = raster_and_table
-    load("data/gis_sector/mhi_restricted_areas_hawaii_zone5.RData"); mhi_restricted_d = raster_and_table
-
-    boxes_a = mhi_restricted_a[[1]]; boxes_name_a = mhi_restricted_a[[2]]
-    boxes_b = mhi_restricted_b[[1]]; boxes_name_b = mhi_restricted_b[[2]]
-    boxes_c = mhi_restricted_c[[1]]; boxes_name_c = mhi_restricted_c[[2]]
-    boxes_d = mhi_restricted_d[[1]]; boxes_name_d = mhi_restricted_d[[2]]
+    load("data/gis_sector/mhi_restricted_areas_haw.RData"); restricted_haw = raster_and_table
+    load("data/gis_sector/mhi_restricted_areas_kau_oah_a.RData"); restricted_kau_oah_a = raster_and_table
+    load("data/gis_sector/mhi_restricted_areas_kau_oah_b.RData"); restricted_kau_oah_b = raster_and_table
+    load("data/gis_sector/mhi_restricted_areas_oah_lan_mau.RData"); restricted_oah_lan_mau = raster_and_table
+    
+    restricted_haw_areas = restricted_haw[[1]]; restricted_haw_names = restricted_haw[[2]]
+    restricted_kau_oah_a_areas = restricted_kau_oah_a[[1]]; restricted_kau_oah_a_names = restricted_kau_oah_a[[2]]
+    restricted_kau_oah_b_areas = restricted_kau_oah_b[[1]]; restricted_kau_oah_b_names = restricted_kau_oah_b[[2]]
+    restricted_oah_lan_mau_areas = restricted_oah_lan_mau[[1]]; restricted_oah_lan_mau_names = restricted_oah_lan_mau[[2]]
     
   } 
   
@@ -155,36 +155,59 @@ for (isl in 1:length(islands)) {
   buffer = resample(buffer, topo_i, method = "ngb")
   boxes = resample(boxes, topo_i, method = "ngb")
   
-  if (islands[isl] %in% c("kau", "oah")) boxes_a = resample(boxes_a, topo_i, method = "ngb")
-  if (islands[isl] %in% c("kau", "oah")) boxes_b = resample(boxes_b, topo_i, method = "ngb")
-  if (islands[isl] %in% c("mau", "kah", "lan", "mol", "oah")) boxes_c = resample(boxes_c, topo_i, method = "ngb")
-  if (islands[isl] %in% c("haw", "mau", "kah", "lan", "mol", "oah")) boxes_d = resample(boxes_d, topo_i, method = "ngb")
+  if (islands[isl] %in% c("haw")) {
+    restricted_haw_areas = resample(restricted_haw_areas, topo_i, method = "ngb")
+  } 
   
-
+  if (islands[isl] %in% c("kau", "oah")) {
+    restricted_kau_oah_a_areas = resample(restricted_kau_oah_a_areas, topo_i, method = "ngb")
+    restricted_kau_oah_b_areas = resample(restricted_kau_oah_b_areas, topo_i, method = "ngb")
+  }
+  
+  if (islands[isl] %in% c("oah", "lan", "mau")) {
+    restricted_oah_lan_mau_areas = resample(restricted_oah_lan_mau_areas, topo_i, method = "ngb")
+  } 
   
   df = stack(hardsoft, sector, reef, bathymetry, buffer)
-  
-  if (islands[isl] == "tut") df = stack(hardsoft, sector, reef, bathymetry)
-  if (islands[isl] == "ros") df = stack(hardsoft, reef, bathymetry, buffer)
-  if (islands[isl] %in% c("kau", "oah")) df = stack(hardsoft, sector, reef, bathymetry, buffer, boxes_a, boxes_b)
-  if (islands[isl] %in% c("mau", "kah", "lan", "mol", "oah")) df = stack(hardsoft, sector, reef, bathymetry, buffer, boxes_c)
-  if (islands[isl] %in% c("haw", "mau", "kah", "lan", "mol", "oah")) df = stack(hardsoft, sector, reef, bathymetry, buffer, boxes_d)
-  
-  df = as.data.frame(rasterToPoints(df))
+  names(df) <- c("hardsoft", "sector", "reef", "depth", "buffer")
   
   if (islands[isl] == "tut") {
-    colnames(df) <- c("longitude", "latitude", "hardsoft", "sector", "reef", "depth")
-  } else if (islands[isl] == "ros") {
-    colnames(df) <- c("longitude", "latitude", "hardsoft", "reef", "depth", "buffer"); df$sector <- 1L
-  } else if (islands[isl] %in% c("kau", "oah")) {
-    colnames(df) <- c("longitude", "latitude", "hardsoft", "sector", "reef", "depth", "buffer", "restricted_a", "restricted_b")
-  } else if (islands[isl] %in% c("mau", "kah", "lan", "mol", "oah")) {
-    colnames(df) <- c("longitude", "latitude", "hardsoft", "sector", "reef", "depth", "buffer", "restricted_c")
-  } else if (islands[isl] %in% c("haw", "mau", "kah", "lan", "mol", "oah")) {
-    colnames(df) <- c("longitude", "latitude", "hardsoft", "sector", "reef", "depth", "buffer", "restricted_d")
-  } else {
-    colnames(df) <- c("longitude", "latitude", "hardsoft", "sector", "reef", "depth", "buffer")
+    df = stack(hardsoft, sector, reef, bathymetry)
+    names(df) <- c("hardsoft", "sector", "reef", "depth")
   }
+  
+  if (islands[isl] == "ros") {
+    df = stack(hardsoft, reef, bathymetry, buffer)
+    names(df) <- c("hardsoft", "reef", "depth", "buffer")
+    df$sector <- 1L
+  }
+  
+  if (islands[isl] %in% c("haw")) {
+    df = stack(hardsoft, sector, reef, bathymetry, buffer, restricted_haw_areas)
+    names(df) <- c("hardsoft", "sector", "reef", "depth", "buffer", "restricted_haw_areas")
+  } 
+  
+  if (islands[isl] %in% c("oah")) {
+    df = stack(hardsoft, sector, reef, bathymetry, buffer, 
+               restricted_kau_oah_a_areas, 
+               restricted_kau_oah_b_areas, 
+               restricted_oah_lan_mau_areas)
+    names(df) <- c("hardsoft", "sector", "reef", "depth", "buffer", "restricted_kau_oah_a_areas", "restricted_kau_oah_b_areas", "restricted_oah_lan_mau_areas")
+  } 
+  
+  if (islands[isl] %in% c("kau")) {
+    df = stack(hardsoft, sector, reef, bathymetry, buffer, 
+               restricted_kau_oah_a_areas, 
+               restricted_kau_oah_b_areas)
+    names(df) <- c("hardsoft", "sector", "reef", "depth", "buffer", "restricted_kau_oah_a_areas", "restricted_kau_oah_b_areas")
+  } 
+  
+  if (islands[isl] %in% c("mau", "lan")) {
+    df = stack(hardsoft, sector, reef, bathymetry, buffer, restricted_oah_lan_mau_areas)
+    names(df) <- c("hardsoft", "sector", "reef", "depth", "buffer", "restricted_oah_lan_mau_areas")
+  } 
+
+  df = as.data.frame(rasterToPoints(df))
   
   # df = na.omit(df)
   
@@ -205,8 +228,8 @@ for (isl in 1:length(islands)) {
   
   df$depth = as.numeric(df$depth*-1)
   
-  df$longitude = df$longitude * 0.001
-  df$latitude = df$latitude * 0.001
+  df$longitude = df$x * 0.001
+  df$latitude = df$y * 0.001
   
   df = as.data.frame(df)
   
@@ -214,28 +237,28 @@ for (isl in 1:length(islands)) {
   colnames(reef_name) = c("reef", "reef_id")
   colnames(hardsoft_name) = c("hardsoft", "hardsoft_id")
   
-  if (islands[isl] %in% c("kau", "oah")) colnames(boxes_name_a) = c("restricted_a", "restricted_a_names")
-  if (islands[isl] %in% c("kau", "oah")) colnames(boxes_name_b) = c("restricted_b", "restricted_a_names")
-  if (islands[isl] %in% c("mau", "kah", "lan", "mol", "oah")) colnames(boxes_name_c) = c("restricted_c", "restricted_c_names")
-  if (islands[isl] %in% c("haw", "mau", "kah", "lan", "mol", "oah")) colnames(boxes_name_c) = c("restricted_d", "restricted_d_names")
-  
   sector_name$sector_id = tolower(sector_name$sector_id)
   reef_name$reef_id = tolower(reef_name$reef_id)
   hardsoft_name$hardsoft_id = tolower(hardsoft_name$hardsoft_id)
   
-  if (islands[isl] %in% c("kau", "oah")) boxes_name_a$nam <- gsub(" ", "_", tolower(boxes_name_a$nam))
-  if (islands[isl] %in% c("kau", "oah")) boxes_name_b$nam <- gsub(" ", "_", tolower(boxes_name_b$nam))
-  if (islands[isl] %in% c("mau", "kah", "lan", "mol", "oah")) boxes_name_c$nam <- gsub(" ", "_", tolower(boxes_name_c$nam))
-  if (islands[isl] %in% c("haw", "mau", "kah", "lan", "mol", "oah")) boxes_name_d$nam <- gsub(" ", "_", tolower(boxes_name_d$nam))
+  colnames(restricted_haw_names) = c("restricted_haw_areas", "restricted_haw_areas_id")
+  colnames(restricted_kau_oah_a_names) = c("restricted_kau_oah_a_areas", "restricted_kau_oah_a_names_id")
+  colnames(restricted_kau_oah_b_names) = c("restricted_kau_oah_b_areas", "restricted_kau_oah_b_names_id")
+  colnames(restricted_oah_lan_mau_names) = c("restricted_oah_lan_mau_areas", "restricted_oah_lan_mau_names_id")
+  
+  restricted_haw_names$restricted_haw_areas_id <- gsub(" ", "_", tolower(restricted_haw_names$restricted_haw_areas_id))
+  restricted_kau_oah_a_names$restricted_kau_oah_a_names_id <- gsub(" ", "_", tolower(restricted_kau_oah_a_names$restricted_kau_oah_a_names_id))
+  restricted_kau_oah_b_names$restricted_kau_oah_b_names_id <- gsub(" ", "_", tolower(restricted_kau_oah_b_names$restricted_kau_oah_b_names_id))
+  restricted_oah_lan_mau_names$restricted_oah_lan_mau_names_id <- gsub(" ", "_", tolower(restricted_oah_lan_mau_names$restricted_oah_lan_mau_names_id))
   
   df = merge(df, sector_name)
   df = merge(df, reef_name)
   df = merge(df, hardsoft_name)
   
-  if (islands[isl] %in% c("kau", "oah")) df = merge(df, boxes_name_a)
-  if (islands[isl] %in% c("kau", "oah")) df = merge(df, boxes_name_b)
-  if (islands[isl] %in% c("mau", "kah", "lan", "mol", "oah")) df = merge(df, boxes_name_c)
-  if (islands[isl] %in% c("haw", "mau", "kah", "lan", "mol", "oah")) df = merge(df, boxes_name_d)
+  df = left_join(df, restricted_haw_names)
+  df = left_join(df, restricted_kau_oah_a_names)
+  df = left_join(df, restricted_kau_oah_b_names)
+  df = left_join(df, restricted_oah_lan_mau_names)
   
   (df %>% 
       ggplot( aes(longitude, latitude, fill = depth_bin)) + 
@@ -320,7 +343,7 @@ for (isl in 1:length(islands)) {
   save(survey_grid_ncrmp, file = paste0("data/survey_grid_ncrmp/survey_grid_", islands[isl], ".RData"))
   
   print(paste0("... ", islands[isl], " survey domain generated ..."))
-
+  
   # default_proj = "+init=epsg:4326 +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"
   # crs(survey_grid_ncrmp) = default_proj
   # 
