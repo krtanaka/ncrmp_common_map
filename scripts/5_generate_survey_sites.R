@@ -3,7 +3,7 @@
 ###############################################
 rm(list = ls())
 
-library(SimSurvey)
+# library(SimSurvey)
 library(raster)
 library(data.table)
 library(ggplot2)
@@ -57,7 +57,7 @@ islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"  
 islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI"    # Main Hawaiian Islands
 islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"                 # Northern Hawaiian Islands
 
-set.seed(2023)
+set.seed(2024)
 
 select = dplyr::select
 
@@ -253,7 +253,6 @@ for (i in 1:length(islands)) {
       geom_raster(aes(fill = depth)) + 
       coord_fixed() + 
       scale_fill_viridis_c("", limits = c(0, 30)) + 
-      theme_void() + 
       theme(panel.background = element_rect(fill = "gray10"),
             panel.grid = element_line(color = "gray15")))
   
@@ -262,7 +261,6 @@ for (i in 1:length(islands)) {
       geom_raster(aes(fill = factor(strat))) + 
       coord_fixed() + 
       scale_fill_discrete("") + 
-      theme_void() + 
       theme(panel.background = element_rect(fill = "gray10"),
             panel.grid = element_line(color = "gray15")))
   
@@ -271,7 +269,6 @@ for (i in 1:length(islands)) {
       geom_raster(aes(fill = sd_total)) + 
       coord_fixed() + 
       scale_fill_viridis_c("") + 
-      theme_void() + 
       theme(panel.background = element_rect(fill = "gray10"),
             panel.grid = element_line(color = "gray15")))
   
@@ -280,7 +277,6 @@ for (i in 1:length(islands)) {
       geom_raster(aes(fill = strat_area )) + 
       coord_fixed() + 
       scale_fill_viridis_c("") + 
-      theme_void() + 
       theme(panel.background = element_rect(fill = "gray10"),
             panel.grid = element_line(color = "gray15")))
   
