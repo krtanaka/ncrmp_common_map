@@ -3,7 +3,6 @@
 ############################################
 
 library(raster)
-library(rgdal)
 library(rgeos)
 library(dplyr)
 library(readr)
@@ -13,6 +12,7 @@ library(ggrepel)
 rm(list = ls())
 
 spatial_resolution = 100 # target spatial resolution in m
+buffer_distance <- 0.005
 
 # shp_path = "L:/ktanaka/GIS"
 shp_path = "N:/GIS/Projects/CommonMaps/Restricted areas_2016/"
@@ -24,7 +24,10 @@ shp_list = shp_list[c(1, 3:4)]; shp_list
 ### CFR_RestrictedAreas_Hawaii ###
 ##################################
 
-dat <- shapefile(shp_list[1], verbose = T); plot(dat, col = 2); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T); names(dat)
+dat <- shapefile(shp_list[1], verbose = T)
+dat <- gBuffer(dat, byid = TRUE, width = buffer_distance)
+
+plot(dat, col = 2); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T); names(dat)
 
 rstr <- as.data.frame(dat)
 rstr = rstr$Name; rstr
@@ -94,7 +97,10 @@ save(raster_and_table, file = "data/gis_sector/mhi_restricted_areas_kau_oah_a.RD
 ### eCFR_Area ###
 #################
 
-dat <- shapefile(shp_list[2], verbose = T); plot(dat, col = 2); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T); names(dat)
+dat <- shapefile(shp_list[2], verbose = T)
+dat <- gBuffer(dat, byid = TRUE, width = buffer_distance)
+
+plot(dat, col = 2); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T); names(dat)
 
 rstr <- as.data.frame(dat)
 rstr = rstr$SafetyZone; rstr
@@ -173,8 +179,11 @@ sites = c("Paiko Lagoon WS",
           "Honolua-Mokuleia Bay MLCD", 
           "Hanauma Bay MLCD")
 
-dat <- shapefile(shp_list[3], verbose = T); plot(dat, col = 2); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T); names(dat)
-dat = dat %>% subset(Site_Label %in% sites); plot(dat, col = 2); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T); names(dat)
+dat <- shapefile(shp_list[3], verbose = T)
+dat = dat %>% subset(Site_Label %in% sites)
+dat <- gBuffer(dat, byid = TRUE, width = buffer_distance)
+
+plot(dat, col = 2); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T); names(dat)
 
 dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T)
 proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T)
@@ -246,8 +255,11 @@ sites = c("Lapakahi MLCD",
           "Wai'opae Tidepools MLCD", 
           "Kealakekua Bay MLCD")
 
-dat <- shapefile(shp_list[3], verbose = T); plot(dat, col = 2); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T); names(dat)
-dat = dat %>% subset(Site_Label %in% sites); plot(dat, col = 2); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T); names(dat)
+dat <- shapefile(shp_list[3], verbose = T)
+dat = dat %>% subset(Site_Label %in% sites)
+dat <- gBuffer(dat, byid = TRUE, width = buffer_distance)
+
+plot(dat, col = 2); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T); names(dat)
 
 dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2)
 proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2)
