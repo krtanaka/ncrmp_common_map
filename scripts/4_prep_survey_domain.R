@@ -26,36 +26,6 @@ islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"   
 
 for (isl in 1:length(islands)) {
   
-  ### MHI restricted areas ###
-  if (region == "MHI") {
-    
-    load("data/gis_sector/mhi_restricted_areas_haw.RData"); restricted_haw = raster_and_table
-    load("data/gis_sector/mhi_restricted_areas_kau_oah_a.RData"); restricted_kau_oah_a = raster_and_table
-    load("data/gis_sector/mhi_restricted_areas_kau_oah_b.RData"); restricted_kau_oah_b = raster_and_table
-    load("data/gis_sector/mhi_restricted_areas_oah_lan_mau.RData"); restricted_oah_lan_mau = raster_and_table
-    
-    restricted_haw_areas = restricted_haw[[1]]; restricted_haw_names = restricted_haw[[2]]
-    restricted_kau_oah_a_areas = restricted_kau_oah_a[[1]]; restricted_kau_oah_a_names = restricted_kau_oah_a[[2]]
-    restricted_kau_oah_b_areas = restricted_kau_oah_b[[1]]; restricted_kau_oah_b_names = restricted_kau_oah_b[[2]]
-    restricted_oah_lan_mau_areas = restricted_oah_lan_mau[[1]]; restricted_oah_lan_mau_names = restricted_oah_lan_mau[[2]]
-    
-    restricted_haw_names$ID  = as.character(restricted_haw_names$ID)
-    restricted_kau_oah_a_names$ID = as.character(restricted_kau_oah_a_names$ID)
-    restricted_kau_oah_b_names$ID = as.character(restricted_kau_oah_b_names$ID)
-    restricted_oah_lan_mau_names$ID = as.character(restricted_oah_lan_mau_names$ID)
-    
-    colnames(restricted_haw_names) = c("restricted_haw_areas", "restricted_haw_areas_id")
-    colnames(restricted_kau_oah_a_names) = c("restricted_kau_oah_a_areas", "restricted_kau_oah_a_names_id")
-    colnames(restricted_kau_oah_b_names) = c("restricted_kau_oah_b_areas", "restricted_kau_oah_b_names_id")
-    colnames(restricted_oah_lan_mau_names) = c("restricted_oah_lan_mau_areas", "restricted_oah_lan_mau_names_id")
-    
-    restricted_haw_names$restricted_haw_areas_id <- gsub(" ", "_", tolower(restricted_haw_names$restricted_haw_areas_id))
-    restricted_kau_oah_a_names$restricted_kau_oah_a_names_id <- gsub(" ", "_", tolower(restricted_kau_oah_a_names$restricted_kau_oah_a_names_id))
-    restricted_kau_oah_b_names$restricted_kau_oah_b_names_id <- gsub(" ", "_", tolower(restricted_kau_oah_b_names$restricted_kau_oah_b_names_id))
-    restricted_oah_lan_mau_names$restricted_oah_lan_mau_names_id <- gsub(" ", "_", tolower(restricted_oah_lan_mau_names$restricted_oah_lan_mau_names_id))
-    
-  } 
-  
   # isl = 1
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
@@ -162,6 +132,36 @@ for (isl in 1:length(islands)) {
     
   }
   
+  ### MHI restricted areas ###
+  if (region == "MHI") {
+    
+    load("data/gis_sector/mhi_restricted_areas_haw.RData"); restricted_haw = raster_and_table
+    load("data/gis_sector/mhi_restricted_areas_kau_oah_a.RData"); restricted_kau_oah_a = raster_and_table
+    load("data/gis_sector/mhi_restricted_areas_kau_oah_b.RData"); restricted_kau_oah_b = raster_and_table
+    load("data/gis_sector/mhi_restricted_areas_oah_lan_mau.RData"); restricted_oah_lan_mau = raster_and_table
+    
+    restricted_haw_areas = restricted_haw[[1]]; restricted_haw_names = restricted_haw[[2]]
+    restricted_kau_oah_a_areas = restricted_kau_oah_a[[1]]; restricted_kau_oah_a_names = restricted_kau_oah_a[[2]]
+    restricted_kau_oah_b_areas = restricted_kau_oah_b[[1]]; restricted_kau_oah_b_names = restricted_kau_oah_b[[2]]
+    restricted_oah_lan_mau_areas = restricted_oah_lan_mau[[1]]; restricted_oah_lan_mau_names = restricted_oah_lan_mau[[2]]
+    
+    restricted_haw_names$ID  = as.character(restricted_haw_names$ID)
+    restricted_kau_oah_a_names$ID = as.character(restricted_kau_oah_a_names$ID)
+    restricted_kau_oah_b_names$ID = as.character(restricted_kau_oah_b_names$ID)
+    restricted_oah_lan_mau_names$ID = as.character(restricted_oah_lan_mau_names$ID)
+    
+    colnames(restricted_haw_names) = c("restricted_haw_areas", "restricted_haw_areas_id")
+    colnames(restricted_kau_oah_a_names) = c("restricted_kau_oah_a_areas", "restricted_kau_oah_a_names_id")
+    colnames(restricted_kau_oah_b_names) = c("restricted_kau_oah_b_areas", "restricted_kau_oah_b_names_id")
+    colnames(restricted_oah_lan_mau_names) = c("restricted_oah_lan_mau_areas", "restricted_oah_lan_mau_names_id")
+    
+    restricted_haw_names$restricted_haw_areas_id <- gsub(" ", "_", tolower(restricted_haw_names$restricted_haw_areas_id))
+    restricted_kau_oah_a_names$restricted_kau_oah_a_names_id <- gsub(" ", "_", tolower(restricted_kau_oah_a_names$restricted_kau_oah_a_names_id))
+    restricted_kau_oah_b_names$restricted_kau_oah_b_names_id <- gsub(" ", "_", tolower(restricted_kau_oah_b_names$restricted_kau_oah_b_names_id))
+    restricted_oah_lan_mau_names$restricted_oah_lan_mau_names_id <- gsub(" ", "_", tolower(restricted_oah_lan_mau_names$restricted_oah_lan_mau_names_id))
+    
+  } 
+  
   hardsoft = resample(hardsoft, topo_i, method = "ngb")
   sector = resample(sector, topo_i, method = "ngb")
   reef = resample(reef, topo_i, method = "ngb") 
@@ -184,7 +184,6 @@ for (isl in 1:length(islands)) {
   
   df = stack(hardsoft, sector, reef, bathymetry, buffer)
   names(df) <- c("hardsoft", "sector", "reef", "depth", "buffer")
-  
   
   if (islands[isl] == "tut") {
     df = stack(hardsoft, sector, reef, bathymetry)
@@ -275,23 +274,27 @@ for (isl in 1:length(islands)) {
   df = left_join(df, reef_name)
   df = left_join(df, hardsoft_name)
   
-  # Loop through restricted dataframes and perform left join
-  for (df_to_join in list(
-    restricted_haw_names,
-    restricted_kau_oah_a_names,
-    restricted_kau_oah_b_names,
-    restricted_oah_lan_mau_names
-  )) {
-    tryCatch({
-      df <- left_join(df, df_to_join)
-    }, error = function(e) {
-      # Ignore errors and continue
-      message("Error ignored:", e$message)
-    })
+  if (region == 'MHI') {
+    
+    # Loop through restricted dataframes and perform left join
+    for (df_to_join in list(
+      restricted_haw_names,
+      restricted_kau_oah_a_names,
+      restricted_kau_oah_b_names,
+      restricted_oah_lan_mau_names
+    )) {
+      tryCatch({
+        df <- left_join(df, df_to_join)
+      }, error = function(e) {
+        # Ignore errors and continue
+        message("Error ignored:", e$message)
+      })
+    }
+    
+    df = df %>%
+      filter(if_all(.cols = contains("restricted_"), ~ is.na(.)))
+    
   }
-  
-  df = df %>%
-    filter(if_all(.cols = contains("restricted_"), ~ is.na(.)))
   
   (df %>% 
       ggplot( aes(longitude, latitude, fill = depth_bin)) + 
@@ -379,17 +382,11 @@ for (isl in 1:length(islands)) {
   default_proj = "+init=epsg:4326 +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"
   crs(survey_grid_ncrmp) = default_proj
 
-  # export strata as shapefiles
-  # p <- raster::rasterToPolygons(survey_grid$strat, dissolve = TRUE); sp::plot(p)
-  p <- raster::rasterToPolygons(survey_grid_ncrmp$strat, dissolve = TRUE); sp::plot(p)
-
-  # Convert the SpatialPolygonsDataFrame object to an sf object
-  sf_object <- st_as_sf(p)
-
-  # Save the sf object as a shapefile
-  shapefile_name <- paste0("outputs/shapefiles/", islands[isl], "_strata.shp")
-  shapefile_dir <- dirname(shapefile_name)
-  if (!file.exists(shapefile_dir)) dir.create(shapefile_dir)
-  st_write(sf_object, dsn = shapefile_dir, layer = basename(shapefile_name), driver = "ESRI Shapefile",  append=FALSE)
+  # # export strata as shapefiles
+  # p <- raster::rasterToPolygons(survey_grid_ncrmp$strat, dissolve = TRUE); sp::plot(p)
+  # sf_object <- st_as_sf(p)
+  # shapefile_dir <- dirname(paste0("outputs/shapefiles/", islands[isl], "_strata.shp"))
+  # if (!file.exists(shapefile_dir)) dir.create(shapefile_dir)
+  # st_write(sf_object, dsn = shapefile_dir, layer = basename(shapefile_name), driver = "ESRI Shapefile", append = FALSE)
   
 }
