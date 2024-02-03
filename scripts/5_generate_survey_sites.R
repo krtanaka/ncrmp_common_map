@@ -613,8 +613,8 @@ for (i in 1:length(islands)) {
                 paste0("outputs/map/survey_map_", region, "_", islands[i], "_NE.pdf"),
                 paste0("outputs/map/survey_map_", region, "_", islands[i], "_NW.pdf"),
                 paste0("outputs/map/survey_map_", region, "_", islands[i], "_SE.pdf"),
-                paste0("outputs/map/survey_map_", region, "_", islands[i], "_SW.pdf")),
-                # paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf")),
+                paste0("outputs/map/survey_map_", region, "_", islands[i], "_SW.pdf"),
+                paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf")),
               output = paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"))
   
   file.remove(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"))
