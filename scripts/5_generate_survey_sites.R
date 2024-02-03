@@ -377,24 +377,24 @@ for (i in 1:length(islands)) {
       
     })
     
-    # use ggmap
-    tryCatch({
-      
-      map = get_map(location = c(mean(sets_i$longitude, na.rm = T), mean(sets_i$latitude, na.rm = T)),
-                    maptype = "satellite",
-                    zoom = utm_i$Satellite,
-                    # color = "bw",
-                    force = T)
-      
-    }, error = function(e){
-      
-      print("No sets available in this extent. Use full extent instead")
-      map <- get_map(location = c(mean(sets$longitude, na.rm = T), mean(sets$latitude, na.rm = T)),
-                     maptype = "satellite",
-                     zoom = utm_i$Satellite,
-                     # color = "bw",
-                     force = T)
-    })
+    # # use ggmap
+    # tryCatch({
+    #   
+    #   map = get_map(location = c(mean(sets_i$longitude, na.rm = T), mean(sets_i$latitude, na.rm = T)),
+    #                 maptype = "satellite",
+    #                 zoom = utm_i$Satellite,
+    #                 # color = "bw",
+    #                 force = T)
+    #   
+    # }, error = function(e){
+    #   
+    #   print("No sets available in this extent. Use full extent instead")
+    #   map <- get_map(location = c(mean(sets$longitude, na.rm = T), mean(sets$latitude, na.rm = T)),
+    #                  maptype = "satellite",
+    #                  zoom = utm_i$Satellite,
+    #                  # color = "bw",
+    #                  force = T)
+    # })
     
     
     # remove sector label outside of extent
@@ -515,10 +515,10 @@ for (i in 1:length(islands)) {
   # Get map
   ext = c(min(sets$longitude, na.rm = T) - 0.01, max(sets$longitude, na.rm = T) + 0.01, min(sets$latitude, na.rm = T) - 0.01, max(sets$latitude, na.rm = T) + 0.01)
   # map <- get_map(location = c(left = ext[1], bottom = ext[3], right = ext[2], top = ext[4]), maptype = 'satellite')
-  map <- get_map(location = c(mean(sets$longitude, na.rm = T),
-                              mean(sets$latitude, na.rm = T)), 
-                 zoom = utm_i$Satellite,
-                 maptype = 'satellite')
+  # map <- get_map(location = c(mean(sets$longitude, na.rm = T),
+  #                             mean(sets$latitude, na.rm = T)), 
+  #                zoom = utm_i$Satellite,
+  #                maptype = 'satellite')
   
   whole_map = 
     
@@ -613,8 +613,8 @@ for (i in 1:length(islands)) {
                 paste0("outputs/map/survey_map_", region, "_", islands[i], "_NE.pdf"),
                 paste0("outputs/map/survey_map_", region, "_", islands[i], "_NW.pdf"),
                 paste0("outputs/map/survey_map_", region, "_", islands[i], "_SE.pdf"),
-                paste0("outputs/map/survey_map_", region, "_", islands[i], "_SW.pdf"),
-                paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf")),
+                paste0("outputs/map/survey_map_", region, "_", islands[i], "_SW.pdf")),
+                # paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf")),
               output = paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"))
   
   file.remove(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"))
