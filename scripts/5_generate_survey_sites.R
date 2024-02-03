@@ -67,7 +67,7 @@ select = dplyr::select
 
 for (i in 1:length(islands)) {
   
-  # i = 5
+  # i = 9
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData")); plot(survey_grid_ncrmp)
@@ -80,7 +80,7 @@ for (i in 1:length(islands)) {
     
   } else {
     
-    total_sample = total_sample$Effort
+    total_sample = total_sample$Effort*2
     
   }
   
@@ -147,22 +147,20 @@ for (i in 1:length(islands)) {
   
   utm_i = utm %>% subset(Island_Code == islands[i])
   
-  utmcoor <- SpatialPoints(cbind(cells$x, cells$y), proj4string = CRS(paste0("+proj=utm +units=km +zone=", utm_i$UTM_Zone, " ", utm_i$Hemishpere)))
+  utmcoor <- SpatialPoints(cbind(cells$x, cells$y), proj4string = CRS(paste0("+proj=utm +units=km +zone=", utm_i$UTM_Zone, " ", utm_i$Hemisphere)))
   longlatcoor <- spTransform(utmcoor,CRS("+proj=longlat"))
   cells$longitude <- coordinates(longlatcoor)[,1]
   cells$latitude <- coordinates(longlatcoor)[,2]
   
   # subset "cells" to create site locations
-  sets <- cells[, .SD[sample(.N, size = unique(strat_sets), replace = resample_cells)], 
-                by = c("strat")]
+  sets <- cells[, .SD[sample(.N, size = unique(strat_sets), replace = resample_cells)], by = c("strat")]
   
   # remove sites that are closer than 100 m
-  nearby_sites <- data.frame(longitude = sets$longitude, latitude = sets$latitude)
-  plot(nearby_sites, pch = 20, col = 2)
+  nearby_sites <- data.frame(longitude = sets$longitude, latitude = sets$latitude); plot(nearby_sites, pch = 20, col = 2, axes = F)
   
   coordinates(nearby_sites) <- c('longitude', 'latitude')
   proj4string(nearby_sites) <- CRS("+proj=longlat +ellps=WGS84 +datum=WGS84")
-  nearby_sites <- spTransform(nearby_sites, CRS(paste0("+proj=utm +units=m +zone=", utm_i$UTM_Zone, " ", utm_i$Hemishpere)))##
+  nearby_sites <- spTransform(nearby_sites, CRS(paste0("+proj=utm +units=m +zone=", utm_i$UTM_Zone, " ", utm_i$Hemisphere)))##
   
   library(rgeos)
   points_matrix <- gWithinDistance(nearby_sites, dist = 100, byid = T)
@@ -172,14 +170,15 @@ for (i in 1:length(islands)) {
   colSums(points_matrix, na.rm = T) == 0
   
   v <- colSums(points_matrix, na.rm = T) == 0
-  nearby_sites = nearby_sites[v, ]
   
   nearby_sites <- spTransform(nearby_sites, CRS("+proj=longlat +ellps=WGS84 +datum=WGS84"))
   nearby_sites = as.data.frame(nearby_sites)
-  points(nearby_sites, pch = 20, col = 4); axis(1); axis(2)
   
-  nearby_sites$latitude = round(nearby_sites$latitude, 4)
-  nearby_sites$longitude = round(nearby_sites$longitude, 4)
+  nearby_sites = nearby_sites[v, ]; points(nearby_sites, pch = 20, col = 4)
+  
+  nearby_sites$latitude = round(nearby_sites$coords.x2, 4)
+  nearby_sites$longitude = round(nearby_sites$coords.x1, 4)
+  
   sets$latitude = round(sets$latitude, 4)
   sets$longitude = round(sets$longitude, 4)
   
@@ -298,7 +297,7 @@ for (i in 1:length(islands)) {
   buffer = raster_and_table[[1]]
   buffer_name = raster_and_table[[2]]
   buffer <- data.table(rasterToPoints(buffer))
-  utmcoor <- SpatialPoints(cbind(buffer$x, buffer$y), proj4string = CRS(paste0("+proj=utm +units=m +zone=", utm_i$UTM_Zone, " ", utm_i$Hemishpere)))
+  utmcoor <- SpatialPoints(cbind(buffer$x, buffer$y), proj4string = CRS(paste0("+proj=utm +units=m +zone=", utm_i$UTM_Zone, " ", utm_i$Hemisphere)))
   longlatcoor <- spTransform(utmcoor,CRS("+proj=longlat"))
   buffer$longitude <- coordinates(longlatcoor)[,1]
   buffer$latitude <- coordinates(longlatcoor)[,2]
@@ -310,7 +309,9 @@ for (i in 1:length(islands)) {
     dplyr::select(longitude, latitude, nam) %>% 
     unique()
   colnames(buffer)[3] = "sector_nam"
-  buffer_label = buffer %>% group_by(sector_nam) %>% summarise(longitude = quantile(longitude, 0.9), latitude = quantile(latitude, 0.9))
+  buffer_label = buffer %>% 
+    group_by(sector_nam) %>% 
+    summarise(longitude = quantile(longitude, 0.5), latitude = quantile(latitude, 0.5))
   
   ################################
   ### Read Island survey boxes ###
@@ -367,12 +368,12 @@ for (i in 1:length(islands)) {
     # use coastline shp file
     tryCatch({
       
-      ISL_this_i <- crop(ISL_this, extent(ext)); plot(ISL_this_i)
+      ISL_this_i <- crop(ISL_this, extent(ext))
       
     }, error = function(e){
       
       print("No land shp available in this extent. Use full extent instead")
-      ISL_this_i <- crop(ISL_this, extent(ISL_this)); plot(ISL_this_i)
+      ISL_this_i <- crop(ISL_this, extent(ISL_this))
       
     })
     
@@ -403,8 +404,8 @@ for (i in 1:length(islands)) {
       buffer_label_i = buffer %>% 
         subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4]) %>% 
         group_by(sector_nam) %>% 
-        summarise(longitude = quantile(longitude, 0.1), 
-                  latitude = quantile(latitude, 0.9))
+        summarise(longitude = quantile(longitude, 0.4), 
+                  latitude = quantile(latitude, 0.6))
     }
     
     if (map_direction[d] == "NE") {
@@ -412,8 +413,8 @@ for (i in 1:length(islands)) {
       buffer_label_i = buffer %>% 
         subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4]) %>% 
         group_by(sector_nam) %>% 
-        summarise(longitude = quantile(longitude, 0.9), 
-                  latitude = quantile(latitude, 0.9))
+        summarise(longitude = quantile(longitude, 0.6), 
+                  latitude = quantile(latitude, 0.6))
     }
     
     if (map_direction[d] == "SW") {
@@ -421,8 +422,8 @@ for (i in 1:length(islands)) {
       buffer_label_i = buffer %>% 
         subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4]) %>% 
         group_by(sector_nam) %>% 
-        summarise(longitude = quantile(longitude, 0.1), 
-                  latitude = quantile(latitude, 0.1))
+        summarise(longitude = quantile(longitude, 0.4), 
+                  latitude = quantile(latitude, 0.4))
     }
     
     if (map_direction[d] == "SE") {
@@ -430,8 +431,8 @@ for (i in 1:length(islands)) {
       buffer_label_i = buffer %>% 
         subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4]) %>% 
         group_by(sector_nam) %>% 
-        summarise(longitude = quantile(longitude, 0.9), 
-                  latitude = quantile(latitude, 0.1))
+        summarise(longitude = quantile(longitude, 0.6), 
+                  latitude = quantile(latitude, 0.4))
     }
     
     
@@ -439,14 +440,15 @@ for (i in 1:length(islands)) {
       
       ggplot() +
       # ggmap(map) +
-      
-      # geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
+
+      geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
 
       # display if there is more than 1 island sector
       
       {if (length(unique(buffer$sector_nam)) > 1) {
         
-        geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.3, show.legend = F)}
+        geom_raster(data = buffer %>% mutate(across(c(latitude, longitude), round, digits = 3)) %>% distinct(), 
+                   aes(longitude, latitude, fill = sector_nam), show.legend = F, alpha = 0.2)}
         
       } + 
       
@@ -526,7 +528,7 @@ for (i in 1:length(islands)) {
     geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "darkgrey") + # coastline
     geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
     
-    geom_tile(data = cells, aes(longitude, latitude, fill = factor(strat)), alpha = 0.5, width = 0.00005, height = 0.00005) + # stratum
+    geom_raster(data = cells %>% mutate(across(c(latitude, longitude), round, digits = 3)), aes(longitude, latitude, fill = factor(strat)), alpha = 0.8) + # stratum
     
     scale_fill_discrete("Strata") + 
     scale_color_discrete("Strata") + 
@@ -536,7 +538,8 @@ for (i in 1:length(islands)) {
     
     {if ( length(unique(buffer$sector_nam)) > 1) {
       
-      geom_tile(data = buffer, aes(longitude, latitude, fill = sector_nam), width = 0.001, height = 0.001, alpha = 0.3, show.legend = F)}
+      geom_raster(data = buffer %>% mutate(across(c(latitude, longitude), round, digits = 3)), 
+                  aes(longitude, latitude, fill = sector_nam), alpha = 0.2, show.legend = F)}
       
     } + 
     
@@ -610,9 +613,9 @@ for (i in 1:length(islands)) {
                 paste0("outputs/map/survey_map_", region, "_", islands[i], "_NE.pdf"),
                 paste0("outputs/map/survey_map_", region, "_", islands[i], "_NW.pdf"),
                 paste0("outputs/map/survey_map_", region, "_", islands[i], "_SE.pdf"),
-                paste0("outputs/map/survey_map_", region, "_", islands[i], "_SW.pdf"),
-                paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf")), 
-              output = paste0("outputs/map/survey_map_table_", region, "_", islands[i], ".pdf"))
+                paste0("outputs/map/survey_map_", region, "_", islands[i], "_SW.pdf")),
+                # paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf")),
+              output = paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"))
   
   file.remove(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"))
   file.remove(paste0("outputs/map/survey_map_", region, "_", islands[i], "_NE.pdf"))

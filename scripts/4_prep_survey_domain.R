@@ -26,7 +26,7 @@ islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"   
 
 for (isl in 1:length(islands)) {
   
-  # isl = 1
+  # isl = 9
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -291,30 +291,31 @@ for (isl in 1:length(islands)) {
       })
     }
     
-    df = df %>%
-      filter(if_all(.cols = contains("restricted_"), ~ is.na(.)))
+    df = df %>% filter(if_all(.cols = contains("restricted_"), ~ is.na(.)))
     
   }
   
-  (df %>% 
-      ggplot( aes(longitude, latitude, fill = depth_bin)) + 
-      geom_raster() + 
-      coord_fixed())
+  p1 = df %>% 
+    ggplot(aes(x, y, fill = depth_bin)) + 
+    geom_raster() + 
+    coord_fixed()
   
-  (df %>% 
-      ggplot( aes(longitude, latitude, fill = sector_id)) + 
-      geom_raster() +
-      coord_fixed())
+  p2 = df %>% 
+    ggplot(aes(x, y,  fill = sector_id)) + 
+    geom_raster() +
+    coord_fixed()
   
-  (df %>% 
-      ggplot( aes(longitude, latitude, fill = reef_id)) + 
-      geom_raster() +
-      coord_fixed())
+  p3 = df %>% 
+    ggplot(aes(x, y,  fill = reef_id)) + 
+    geom_raster() +
+    coord_fixed() 
   
-  (df %>% 
-      ggplot( aes(longitude, latitude, fill = hardsoft_id)) + 
-      geom_raster() +
-      coord_fixed())
+  p4 = df %>% 
+    ggplot(aes(x, y, fill = hardsoft_id)) + 
+    geom_raster() +
+    coord_fixed()
+  
+    (p1 + p2) / (p3 + p4)
   
   if (islands[isl] %in% c("kin", "ros")) {
     
@@ -360,8 +361,10 @@ for (isl in 1:length(islands)) {
       ggplot( aes(longitude, latitude, fill = factor(strat))) + 
       geom_raster() + 
       scale_fill_discrete("strata") + 
-      coord_fixed())
-  
+      coord_fixed() +
+      theme(panel.background = element_rect(fill = "gray10"),
+            panel.grid = element_line(color = "gray15")))
+
   cell = rasterFromXYZ(df[,c("longitude", "latitude", "cell")]); plot(cell)
   division = rasterFromXYZ(df[,c("longitude", "latitude", "division")]); plot(division)
   strat = rasterFromXYZ(df[,c("longitude", "latitude", "strat")]); plot(strat)
