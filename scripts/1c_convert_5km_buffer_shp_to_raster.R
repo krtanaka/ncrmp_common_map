@@ -3,7 +3,6 @@
 ###############################################
 
 library(raster)
-library(rgdal)
 library(rgeos)
 library(dplyr)
 library(readr)

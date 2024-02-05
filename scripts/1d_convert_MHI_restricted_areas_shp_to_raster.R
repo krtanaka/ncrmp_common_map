@@ -12,7 +12,7 @@ library(ggrepel)
 rm(list = ls())
 
 spatial_resolution = 100 # target spatial resolution in m
-buffer_distance <- 0.005
+buffer_distance = 0.005
 
 # shp_path = "L:/ktanaka/GIS"
 shp_path = "N:/GIS/Projects/CommonMaps/Restricted areas_2016/"

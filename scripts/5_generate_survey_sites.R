@@ -202,50 +202,50 @@ for (i in 1:length(islands)) {
   
   readr::write_csv(sets, file = paste0("outputs/table/survey_table_", region, "_", islands[i], ".csv"))
   
-  #########################################
-  ## Export set table as two columns pdf ##
-  #########################################
-  
-  # Add additional row to sets with odd numbers so they can be evenly split
-  if(nrow(sets) %% 2 == 1){     
-    
-    blankrow <- data.frame(matrix(ncol = 8, nrow = 1))
-    colnames(blankrow) <- colnames(sets)
-    sets <- rbind(sets, blankrow)
-    
-  }
-  
-  # Format and split sets to create two columns   
-  sets$depth <- round(sets$depth, digits = 2)
-  sets_print <- select(sets, "id", "longitude","latitude","depth","strat","depth_bin")
-  
-  sets1 <- data.frame(split(sets_print, factor(sort(rank(row.names(sets_print))%%2))))
-  sets1 <- sets1[,1:6]
-  colnames(sets1) <- colnames(sets_print)
-  sets2 <- anti_join(sets_print, sets1)
-  list = seq.int((nrow(sets2) + 1 ), nrow(sets))
-  
-  # Print table  
-  if(dim(sets1)[1] < 30) {
-    
-    page_height = 14.5 # Margins for smaller site lists i.e Rota 
-    page_width = 10.5 # Margins for smaller site lists i.e Rota
-    
-  } else {
-    
-    page_height = 21.75 # Margins for larger site lists i.e. Guam 
-    page_width = 15.75 # Margins for larger site lists i.e. Guam 
-    
-  }
-  
-  library(grid)
-  library(gridExtra)
-  pdf(paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf"), height = page_height, width = page_width)
-  sets1 <- tableGrob(sets1)
-  sets2 <- tableGrob(sets2, rows = list)
-  grid.arrange(rectGrob(), rectGrob(), ncol = 2)
-  grid.arrange(sets1, sets2, nrow = 1, ncol = 2, newpage = F)
-  dev.off()
+  # #########################################
+  # ## Export set table as two columns pdf ##
+  # #########################################
+  # 
+  # # Add additional row to sets with odd numbers so they can be evenly split
+  # if(nrow(sets) %% 2 == 1){     
+  #   
+  #   blankrow <- data.frame(matrix(ncol = 8, nrow = 1))
+  #   colnames(blankrow) <- colnames(sets)
+  #   sets <- rbind(sets, blankrow)
+  #   
+  # }
+  # 
+  # # Format and split sets to create two columns   
+  # sets$depth <- round(sets$depth, digits = 2)
+  # sets_print <- select(sets, "id", "longitude","latitude","depth","strat","depth_bin")
+  # 
+  # sets1 <- data.frame(split(sets_print, factor(sort(rank(row.names(sets_print))%%2))))
+  # sets1 <- sets1[,1:6]
+  # colnames(sets1) <- colnames(sets_print)
+  # sets2 <- anti_join(sets_print, sets1)
+  # list = seq.int((nrow(sets2) + 1 ), nrow(sets))
+  # 
+  # # Print table  
+  # if(dim(sets1)[1] < 30) {
+  #   
+  #   page_height = 14.5 # Margins for smaller site lists i.e Rota 
+  #   page_width = 10.5 # Margins for smaller site lists i.e Rota
+  #   
+  # } else {
+  #   
+  #   page_height = 21.75 # Margins for larger site lists i.e. Guam 
+  #   page_width = 15.75 # Margins for larger site lists i.e. Guam 
+  #   
+  # }
+  # 
+  # library(grid)
+  # library(gridExtra)
+  # pdf(paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf"), height = page_height, width = page_width)
+  # sets1 <- tableGrob(sets1)
+  # sets2 <- tableGrob(sets2, rows = list)
+  # grid.arrange(rectGrob(), rectGrob(), ncol = 2)
+  # grid.arrange(sets1, sets2, nrow = 1, ncol = 2, newpage = F)
+  # dev.off()
   
   (bathymetry = cells %>% 
       ggplot(aes(x, y)) +
@@ -615,7 +615,7 @@ for (i in 1:length(islands)) {
                 paste0("outputs/map/survey_map_", region, "_", islands[i], "_SE.pdf"),
                 paste0("outputs/map/survey_map_", region, "_", islands[i], "_SW.pdf")),
                 # paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf")),
-              output = paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"))
+              output = paste0("outputs/map/survey_maps_", region, "_", islands[i], ".pdf"))
   
   file.remove(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"))
   file.remove(paste0("outputs/map/survey_map_", region, "_", islands[i], "_NE.pdf"))
