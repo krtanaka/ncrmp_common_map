@@ -315,7 +315,7 @@ for (isl in 1:length(islands)) {
     geom_raster() +
     coord_fixed()
   
-    (p1 + p2) / (p3 + p4)
+  (p1 + p2) / (p3 + p4)
   
   if (islands[isl] %in% c("kin", "ros")) {
     
