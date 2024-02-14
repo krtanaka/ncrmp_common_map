@@ -8,6 +8,8 @@ library(dplyr)
 library(readr)
 library(colorRamps)
 library(ggrepel)
+library(sf)
+library(patchwork)
 
 rm(list = ls())
 
@@ -27,7 +29,26 @@ shp_list = shp_list[c(1, 3:4)]; shp_list
 dat <- shapefile(shp_list[1], verbose = T)
 dat <- gBuffer(dat, byid = TRUE, width = buffer_distance)
 
-plot(dat, col = 2); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T); names(dat)
+png("outputs/CFR_RestrictedAreas_Hawaii.png", height = 18, width = 20, units = "in", res = 100)
+
+p1 = ggplot(st_as_sf(dat)) +
+  geom_sf(aes(fill = Type)) +
+  coord_sf() +
+  annotation_map(map_data("world")) + 
+  scale_fill_discrete("") + 
+  ggtitle("CFR Restricted Areas Hawaii") + 
+  theme(legend.position = c(0.05, 0.15))
+
+p2 = ggplot(st_as_sf(dat)) +
+  geom_sf(aes(fill = Name)) +
+  coord_sf() +
+  annotation_map(map_data("world")) + 
+  scale_fill_discrete("") + 
+  theme(legend.position = c(0.2, 0.25))
+
+p1/p2
+
+dev.off()
 
 rstr <- as.data.frame(dat)
 rstr = rstr$Name; rstr
@@ -100,7 +121,15 @@ save(raster_and_table, file = "data/gis_sector/mhi_restricted_areas_kau_oah_a.RD
 dat <- shapefile(shp_list[2], verbose = T)
 dat <- gBuffer(dat, byid = TRUE, width = buffer_distance)
 
-plot(dat, col = 2); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T); names(dat)
+png("outputs/eCFR_Area.png", height = 9, width = 18, units = "in", res = 100)
+ggplot(st_as_sf(dat)) +
+  geom_sf(aes(fill = SafetyZone)) +
+  coord_sf() +
+  annotation_map(map_data("world")) + 
+  scale_fill_discrete("") + 
+  ggtitle("eCFR_Area") + 
+  theme(legend.position = c(0.1, 0.2))
+dev.off()
 
 rstr <- as.data.frame(dat)
 rstr = rstr$SafetyZone; rstr
@@ -183,7 +212,15 @@ dat <- shapefile(shp_list[3], verbose = T)
 dat = dat %>% subset(Site_Label %in% sites)
 dat <- gBuffer(dat, byid = TRUE, width = buffer_distance)
 
-plot(dat, col = 2); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T); names(dat)
+png("outputs/RestrictedAreas_Hawaii_a.png", height = 9, width = 13, units = "in", res = 100)
+ggplot(st_as_sf(dat)) +
+  geom_sf(aes(fill = Site_Name)) +
+  coord_sf() +
+  annotation_map(map_data("world")) + 
+  scale_fill_discrete("") + 
+  ggtitle("Restricted Areas Hawaii") + 
+  theme(legend.position = c(0.15, 0.15))
+dev.off()
 
 dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T)
 proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T)
@@ -259,7 +296,16 @@ dat <- shapefile(shp_list[3], verbose = T)
 dat = dat %>% subset(Site_Label %in% sites)
 dat <- gBuffer(dat, byid = TRUE, width = buffer_distance)
 
-plot(dat, col = 2); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T); names(dat)
+png("outputs/RestrictedAreas_Hawaii_b.png", height = 9, width = 13, units = "in", res = 100)
+ggplot(st_as_sf(dat)) +
+  geom_sf(aes(fill = Site_Name)) +
+  coord_sf() +
+  annotation_map(map_data("world")) + 
+  scale_fill_discrete("") + 
+  ggtitle("Restricted Areas Hawaii") + 
+  theme(legend.position = c(0.8, 0.85))
+dev.off()
+
 
 dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2)
 proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2)
