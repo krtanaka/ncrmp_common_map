@@ -31,4 +31,11 @@ files <- list_files_with_exts("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_Jo
 merge_rasters(files[1:16], output_raster = "N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_51m_res.tif", overwrite = T)
 merge_rasters(files[1:16], output_raster = "N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_5m_res.tif", overwrite = T)
 
-plot(rast("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged.tif"))
+plot(rast("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_5m_res.tif"))
+
+# calculate rugosity
+df = rast("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_5m_res.tif")
+df = terra::aggregate(df, fun = "sd", fact = 2, core = 14) # fact = 10 gives you 30m, fact = 17 gives you 51m, fact = 5 gives you 15m
+df = project(df, "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0")
+plot(df)
+writeRaster(df, "N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_5m_res_rugosity.tif", overwrite = TRUE)
