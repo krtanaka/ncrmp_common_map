@@ -8,12 +8,11 @@ library(dplyr)
 library(ggplot2)
 library(raster)
 library(sp)
-# library(rgdal)
 library(tidyr)
-# library(SimSurvey)
 library(sf)
 library(readr)
 library(concaveman)
+library(patchwork)
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
@@ -26,9 +25,11 @@ islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"   
 
 for (isl in 1:length(islands)) {
   
-  # isl = 9
+  # isl = 2
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
+  
+  cat(paste0("generating ", islands[isl], " survey domain ...\n"))
   
   ###########################################################
   ### import sector/reefzones shapefile                   ###
@@ -139,61 +140,87 @@ for (isl in 1:length(islands)) {
     load("data/gis_sector/mhi_restricted_areas_kau_oah_a.RData"); restricted_kau_oah_a = raster_and_table
     load("data/gis_sector/mhi_restricted_areas_kau_oah_b.RData"); restricted_kau_oah_b = raster_and_table
     load("data/gis_sector/mhi_restricted_areas_oah_lan_mau.RData"); restricted_oah_lan_mau = raster_and_table
+    load("data/gis_sector/mhi_restricted_areas_oah_mokapu.RData"); restricted_oah_mokapu = raster_and_table
     
     restricted_haw_areas = restricted_haw[[1]]; restricted_haw_names = restricted_haw[[2]]
     restricted_kau_oah_a_areas = restricted_kau_oah_a[[1]]; restricted_kau_oah_a_names = restricted_kau_oah_a[[2]]
     restricted_kau_oah_b_areas = restricted_kau_oah_b[[1]]; restricted_kau_oah_b_names = restricted_kau_oah_b[[2]]
     restricted_oah_lan_mau_areas = restricted_oah_lan_mau[[1]]; restricted_oah_lan_mau_names = restricted_oah_lan_mau[[2]]
+    restricted_oah_mokapu_areas = restricted_oah_mokapu[[1]]; restricted_oah_mokapu_names = restricted_oah_mokapu[[2]]
     
     restricted_haw_names$ID  = as.character(restricted_haw_names$ID)
     restricted_kau_oah_a_names$ID = as.character(restricted_kau_oah_a_names$ID)
     restricted_kau_oah_b_names$ID = as.character(restricted_kau_oah_b_names$ID)
     restricted_oah_lan_mau_names$ID = as.character(restricted_oah_lan_mau_names$ID)
+    restricted_oah_lan_mau_names$ID = as.character(restricted_oah_lan_mau_names$ID)
+    restricted_oah_mokapu_names$ID = as.character(restricted_oah_mokapu_names$ID)
     
     colnames(restricted_haw_names) = c("restricted_haw_areas", "restricted_haw_areas_id")
     colnames(restricted_kau_oah_a_names) = c("restricted_kau_oah_a_areas", "restricted_kau_oah_a_names_id")
     colnames(restricted_kau_oah_b_names) = c("restricted_kau_oah_b_areas", "restricted_kau_oah_b_names_id")
     colnames(restricted_oah_lan_mau_names) = c("restricted_oah_lan_mau_areas", "restricted_oah_lan_mau_names_id")
+    colnames(restricted_oah_mokapu_names) = c("restricted_oah_mokapu_areas", "restricted_oah_mokapu_names_id")
     
     restricted_haw_names$restricted_haw_areas_id <- gsub(" ", "_", tolower(restricted_haw_names$restricted_haw_areas_id))
     restricted_kau_oah_a_names$restricted_kau_oah_a_names_id <- gsub(" ", "_", tolower(restricted_kau_oah_a_names$restricted_kau_oah_a_names_id))
     restricted_kau_oah_b_names$restricted_kau_oah_b_names_id <- gsub(" ", "_", tolower(restricted_kau_oah_b_names$restricted_kau_oah_b_names_id))
     restricted_oah_lan_mau_names$restricted_oah_lan_mau_names_id <- gsub(" ", "_", tolower(restricted_oah_lan_mau_names$restricted_oah_lan_mau_names_id))
+    restricted_oah_mokapu_names$restricted_oah_mokapu_names_id <- gsub(" ", "_", tolower(restricted_oah_mokapu_names$restricted_oah_mokapu_names_id))
     
   } 
   
-  hardsoft = resample(hardsoft, topo_i, method = "ngb")
-  sector = resample(sector, topo_i, method = "ngb")
-  reef = resample(reef, topo_i, method = "ngb") 
-  bathymetry = resample(topo_i, topo_i, method = "ngb")
-  buffer = resample(buffer, topo_i, method = "ngb")
-  boxes = resample(boxes, topo_i, method = "ngb")
+  # Resample raster layers to match 'topo_i' resolution using nearest-neighbor method
+  cat("resampling base raster layers to match original bathymetry resolution... this may take some time...\n")
+  hardsoft <- resample(hardsoft, topo_i, method = "ngb")
+  sector <- resample(sector, topo_i, method = "ngb")
+  reef <- resample(reef, topo_i, method = "ngb")
+  bathymetry <- resample(topo_i, topo_i, method = "ngb")
+  buffer <- resample(buffer, topo_i, method = "ngb")
+  boxes <- resample(boxes, topo_i, method = "ngb")
   
+  # Resample restricted areas based on the current island
   if (islands[isl] %in% c("haw")) {
+    
     restricted_haw_areas = resample(restricted_haw_areas, topo_i, method = "ngb")
+    
+  } 
+  
+  if (islands[isl] %in% c("oah")) {
+    
+    restricted_oah_mokapu_areas = resample(restricted_oah_mokapu_areas, topo_i, method = "ngb")
+    
   } 
   
   if (islands[isl] %in% c("kau", "oah")) {
+    
     restricted_kau_oah_a_areas = resample(restricted_kau_oah_a_areas, topo_i, method = "ngb")
     restricted_kau_oah_b_areas = resample(restricted_kau_oah_b_areas, topo_i, method = "ngb")
+    
   }
   
   if (islands[isl] %in% c("oah", "lan", "mau")) {
+    
     restricted_oah_lan_mau_areas = resample(restricted_oah_lan_mau_areas, topo_i, method = "ngb")
+    
   } 
   
-  df = stack(hardsoft, sector, reef, bathymetry, buffer)
+  # Stack and name layers based on the current island
+  df <- stack(hardsoft, sector, reef, bathymetry, buffer)
   names(df) <- c("hardsoft", "sector", "reef", "depth", "buffer")
   
   if (islands[isl] == "tut") {
+    
     df = stack(hardsoft, sector, reef, bathymetry)
     names(df) <- c("hardsoft", "sector", "reef", "depth")
+    
   }
   
   if (islands[isl] == "ros") {
-    df = stack(hardsoft, reef, bathymetry, buffer)
+    
+    df <- stack(hardsoft, reef, bathymetry, buffer)
     names(df) <- c("hardsoft", "reef", "depth", "buffer")
-    df$sector <- 1L
+    df$sector <- 1L  # Set sector to 1 for 'ros' island
+    
   }
   
   if (islands[isl] %in% c("haw")) {
@@ -208,12 +235,14 @@ for (isl in 1:length(islands)) {
     df = stack(hardsoft, sector, reef, bathymetry, buffer, 
                restricted_kau_oah_a_areas, 
                restricted_kau_oah_b_areas, 
-               restricted_oah_lan_mau_areas)
+               restricted_oah_lan_mau_areas,
+               restricted_oah_mokapu_areas)
     
     names(df) <- c("hardsoft", "sector", "reef", "depth", "buffer", 
                    "restricted_kau_oah_a_areas", 
                    "restricted_kau_oah_b_areas", 
-                   "restricted_oah_lan_mau_areas")
+                   "restricted_oah_lan_mau_areas",
+                   "restricted_oah_mokapu_areas")
   } 
   
   if (islands[isl] %in% c("kau")) {
@@ -234,88 +263,118 @@ for (isl in 1:length(islands)) {
     
   } 
   
-  df = as.data.frame(rasterToPoints(df))
+  # Convert raster to data frame and add cell numbers
+  df <- as.data.frame(rasterToPoints(df))
+  df$cell <- 1:nrow(df)
+  df$cell <- as.numeric(df$cell)
   
-  df$cell = 1:nrow(df)
-  df$cell = as.numeric(df$cell)
-  
+  # Add a division column with a constant value of 1
   df$division = as.numeric(1)
   
-  df$depth_bin = ""
-  df$depth_bin = ifelse(df$depth <= 0  & df$depth >= -6, "shallow", df$depth_bin) 
-  df$depth_bin = ifelse(df$depth < -6  & df$depth >= -18, "mid", df$depth_bin) 
-  df$depth_bin = ifelse(df$depth < -18, "deep", df$depth_bin) 
-  df = df %>% filter(!is.na(depth_bin))
+  # Classify depth into bins
+  df$depth_bin <- ""
+  df$depth_bin <- ifelse(df$depth <= 0 & df$depth >= -6, "shallow", df$depth_bin)
+  df$depth_bin <- ifelse(df$depth < -6 & df$depth >= -18, "mid", df$depth_bin)
+  df$depth_bin <- ifelse(df$depth < -18, "deep", df$depth_bin)
+  df <- df %>% filter(!is.na(depth_bin))
   
-  df$depth = as.numeric(df$depth*-1)
+  # Convert depth to positive values
+  df$depth <- as.numeric(df$depth * -1)
   
-  df$hardsoft = as.character(round(df$hardsoft, 0))
-  df$reef = as.character(round(df$reef, 0))
-  df$sector = as.character(round(df$sector, 0))
+  # Round and convert hardsoft, reef, and sector values to character
+  df$hardsoft <- as.character(round(df$hardsoft, 0))
+  df$reef <- as.character(round(df$reef, 0))
+  df$sector <- as.character(round(df$sector, 0))
   
-  df$longitude = df$x * 0.001
-  df$latitude = df$y * 0.001
+  # Rename UTM coordinates to longitude and latitude for now
+  df$longitude <- df$x * 0.001
+  df$latitude <- df$y * 0.001
   
-  df = df %>% mutate_at(vars(starts_with("restricted_")), as.character)
+  # Convert columns starting with 'restricted_' to character
+  df <- df %>% mutate_at(vars(starts_with("restricted_")), as.character)
   
-  colnames(sector_name) = c("sector", "sector_id")
-  colnames(reef_name) = c("reef", "reef_id")
-  colnames(hardsoft_name) = c("hardsoft", "hardsoft_id")
+  # Rename columns in sector_name, reef_name, and hardsoft_name data frames
+  colnames(sector_name) <- c("sector", "sector_id")
+  colnames(reef_name) <- c("reef", "reef_id")
+  colnames(hardsoft_name) <- c("hardsoft", "hardsoft_id")
   
-  sector_name$sector_id = tolower(sector_name$sector_id)
-  reef_name$reef_id = tolower(reef_name$reef_id)
-  hardsoft_name$hardsoft_id = tolower(hardsoft_name$hardsoft_id)
+  # Convert IDs to lowercase
+  sector_name$sector_id <- tolower(sector_name$sector_id)
+  reef_name$reef_id <- tolower(reef_name$reef_id)
+  hardsoft_name$hardsoft_id <- tolower(hardsoft_name$hardsoft_id)
   
-  sector_name$sector = as.character(sector_name$sector)
-  reef_name$reef = as.character(reef_name$reef)
-  hardsoft_name$hardsoft = as.character(hardsoft_name$hardsoft)
+  # Convert feature columns to character
+  sector_name$sector <- as.character(sector_name$sector)
+  reef_name$reef <- as.character(reef_name$reef)
+  hardsoft_name$hardsoft <- as.character(hardsoft_name$hardsoft)
   
-  df = left_join(df, sector_name)
-  df = left_join(df, reef_name)
-  df = left_join(df, hardsoft_name)
+  # Join additional information to the main data frame
+  df <- left_join(df, sector_name)
+  df <- left_join(df, reef_name)
+  df <- left_join(df, hardsoft_name)
   
+  # Loop through restricted dataframes and perform left join
   if (region == 'MHI') {
     
-    # Loop through restricted dataframes and perform left join
     for (df_to_join in list(
+      
       restricted_haw_names,
       restricted_kau_oah_a_names,
       restricted_kau_oah_b_names,
-      restricted_oah_lan_mau_names
+      restricted_oah_lan_mau_names,
+      restricted_oah_mokapu_names
+      
     )) {
+      
       tryCatch({
+        
         df <- left_join(df, df_to_join)
+        
       }, error = function(e) {
+        
         # Ignore errors and continue
         message("Error ignored:", e$message)
+        
       })
     }
     
+    # Filter out rows with NA in all restricted columns
     df = df %>% filter(if_all(.cols = contains("restricted_"), ~ is.na(.)))
     
   }
   
+  # Create plots for depth_bin, sector_id, reef_id, and hardsoft_id
   p1 = df %>% 
     ggplot(aes(x, y, fill = depth_bin)) + 
     geom_raster() + 
-    coord_fixed()
+    coord_fixed() +
+    theme(panel.background = element_rect(fill = "gray10"),
+          panel.grid = element_line(color = "gray15"))
   
   p2 = df %>% 
     ggplot(aes(x, y,  fill = sector_id)) + 
     geom_raster() +
-    coord_fixed()
+    coord_fixed() +
+    theme(panel.background = element_rect(fill = "gray10"),
+          panel.grid = element_line(color = "gray15"))
   
   p3 = df %>% 
     ggplot(aes(x, y,  fill = reef_id)) + 
     geom_raster() +
-    coord_fixed() 
+    coord_fixed() +
+    theme(panel.background = element_rect(fill = "gray10"),
+          panel.grid = element_line(color = "gray15"))
   
   p4 = df %>% 
     ggplot(aes(x, y, fill = hardsoft_id)) + 
     geom_raster() +
-    coord_fixed()
+    coord_fixed() +
+    theme(panel.background = element_rect(fill = "gray10"),
+          panel.grid = element_line(color = "gray15"))
   
-  (p1 + p2) / (p3 + p4)
+  png(paste0("outputs/map/base_layers_", islands[isl], ".png"), height = 15, width = 15, res = 500, units = "in")
+  print((p1 + p2) / (p3 + p4))
+  dev.off()
   
   if (islands[isl] %in% c("kin", "ros")) {
     
@@ -357,18 +416,22 @@ for (isl in 1:length(islands)) {
   tab <- tab %>% filter(!duplicated(tab))
   save(tab,file = paste0("outputs/sector_key/", islands[isl], ".RData"))
   
-  (strata = df %>% 
-      ggplot( aes(longitude, latitude, fill = factor(strat))) + 
-      geom_raster() + 
-      scale_fill_discrete("strata") + 
-      coord_fixed() +
-      theme(panel.background = element_rect(fill = "gray10"),
-            panel.grid = element_line(color = "gray15")))
-
-  cell = rasterFromXYZ(df[,c("longitude", "latitude", "cell")]); plot(cell)
-  division = rasterFromXYZ(df[,c("longitude", "latitude", "division")]); plot(division)
-  strat = rasterFromXYZ(df[,c("longitude", "latitude", "strat")]); plot(strat)
-  depth = rasterFromXYZ(df[,c("longitude", "latitude", "depth")]); plot(depth)
+  png(paste0("outputs/map/strata_", islands[isl], ".png"), height = 10, width = 10, res = 500, units = "in")
+  
+  print(df %>% 
+          ggplot( aes(longitude, latitude, fill = factor(strat))) + 
+          geom_raster() + 
+          scale_fill_discrete("strata") + 
+          coord_fixed() +
+          theme(panel.background = element_rect(fill = "gray10"),
+                panel.grid = element_line(color = "gray15")))
+  
+  dev.off()
+  
+  cell = rasterFromXYZ(df[,c("longitude", "latitude", "cell")])#; plot(cell)
+  division = rasterFromXYZ(df[,c("longitude", "latitude", "division")])#; plot(division)
+  strat = rasterFromXYZ(df[,c("longitude", "latitude", "strat")])#; plot(strat)
+  depth = rasterFromXYZ(df[,c("longitude", "latitude", "depth")])#; plot(depth)
   
   values = raster::values
   
@@ -380,11 +443,11 @@ for (isl in 1:length(islands)) {
   
   save(survey_grid_ncrmp, file = paste0("data/survey_grid_ncrmp/survey_grid_", islands[isl], ".RData"))
   
-  cat(paste0("... ", islands[isl], " survey domain generated ..."))
+  cat(paste0("... ", islands[isl], " survey domain generated ...\n"))
   
   default_proj = "+init=epsg:4326 +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"
   crs(survey_grid_ncrmp) = default_proj
-
+  
   # # export strata as shapefiles
   # p <- raster::rasterToPolygons(survey_grid_ncrmp$strat, dissolve = TRUE); sp::plot(p)
   # sf_object <- st_as_sf(p)

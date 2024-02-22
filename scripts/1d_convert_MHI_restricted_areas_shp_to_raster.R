@@ -22,6 +22,7 @@ shp_path = "N:/GIS/Projects/CommonMaps/Restricted areas_2016/"
 shp_list = list.files(path = shp_path, pattern = "\\.shp$", full.names = T)
 shp_list = shp_list[c(1, 3:5)]; shp_list
 
+
 ##################################
 ### CFR_RestrictedAreas_Hawaii ###
 ##################################
@@ -118,6 +119,7 @@ raster_and_table = list(raster, table)
 
 save(raster_and_table, file = "data/gis_sector/mhi_restricted_areas_kau_oah_a.RData")
 
+
 #################
 ### eCFR_Area ###
 #################
@@ -208,6 +210,7 @@ ggplot() +
 raster_and_table = list(raster, table)
 
 save(raster_and_table, file = "data/gis_sector/mhi_restricted_areas_kau_oah_b.RData")
+
 
 #######################################
 ### RestrictedAreas_Hawaii - zone 4 ###
@@ -405,7 +408,7 @@ dev.off()
 dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2)
 proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2)
 
-dat_i <- spTransform(dat,  CRS('+proj=utm +zone=5 +datum=WGS84 +units=m +no_defs +north'))
+dat_i <- spTransform(dat,  CRS('+proj=utm +zone=4 +datum=WGS84 +units=m +no_defs +north'))
 
 plot(dat_i); axis(1); axis(2)
 
