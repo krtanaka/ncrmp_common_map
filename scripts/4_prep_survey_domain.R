@@ -347,32 +347,48 @@ for (isl in 1:length(islands)) {
   p1 = df %>% 
     ggplot(aes(x, y, fill = depth_bin)) + 
     geom_raster() + 
-    coord_fixed() +
+    # coord_fixed() +
+    theme_map() +
     theme(panel.background = element_rect(fill = "gray10"),
-          panel.grid = element_line(color = "gray15"))
+          panel.grid = element_line(color = "gray15"),
+          legend.background = element_rect(fill = "transparent"), 
+          legend.text = element_text(color = "white"),           
+          legend.title = element_text(color = "white"))
   
   p2 = df %>% 
     ggplot(aes(x, y,  fill = sector_id)) + 
     geom_raster() +
-    coord_fixed() +
+    # coord_fixed() +
+    theme_map() +
     theme(panel.background = element_rect(fill = "gray10"),
-          panel.grid = element_line(color = "gray15"))
+          panel.grid = element_line(color = "gray15"),
+          legend.background = element_rect(fill = "transparent"), 
+          legend.text = element_text(color = "white"),           
+          legend.title = element_text(color = "white"))
   
   p3 = df %>% 
     ggplot(aes(x, y,  fill = reef_id)) + 
     geom_raster() +
-    coord_fixed() +
+    # coord_fixed() +
+    theme_map() +
     theme(panel.background = element_rect(fill = "gray10"),
-          panel.grid = element_line(color = "gray15"))
+          panel.grid = element_line(color = "gray15"),
+          legend.background = element_rect(fill = "transparent"), 
+          legend.text = element_text(color = "white"),           
+          legend.title = element_text(color = "white"))
   
   p4 = df %>% 
     ggplot(aes(x, y, fill = hardsoft_id)) + 
     geom_raster() +
-    coord_fixed() +
+    # coord_fixed() +
+    theme_map() +
     theme(panel.background = element_rect(fill = "gray10"),
-          panel.grid = element_line(color = "gray15"))
+          panel.grid = element_line(color = "gray15"),
+          legend.background = element_rect(fill = "transparent"), 
+          legend.text = element_text(color = "white"),           
+          legend.title = element_text(color = "white"))
   
-  png(paste0("outputs/map/base_layers_", islands[isl], ".png"), height = 15, width = 15, res = 500, units = "in")
+  png(paste0("outputs/map/base_layers_", islands[isl], ".png"), height = 10, width = 12, res = 500, units = "in")
   print((p1 + p2) / (p3 + p4))
   dev.off()
   
@@ -416,15 +432,19 @@ for (isl in 1:length(islands)) {
   tab <- tab %>% filter(!duplicated(tab))
   save(tab,file = paste0("outputs/sector_key/", islands[isl], ".RData"))
   
-  png(paste0("outputs/map/strata_", islands[isl], ".png"), height = 10, width = 10, res = 500, units = "in")
+  png(paste0("outputs/map/strata_", islands[isl], ".png"), height = 10, width = 12, res = 500, units = "in")
   
   print(df %>% 
           ggplot( aes(longitude, latitude, fill = factor(strat))) + 
           geom_raster() + 
           scale_fill_discrete("strata") + 
-          coord_fixed() +
+          # coord_fixed() +
+          theme_map() +
           theme(panel.background = element_rect(fill = "gray10"),
-                panel.grid = element_line(color = "gray15")))
+                panel.grid = element_line(color = "gray15"),
+                legend.background = element_rect(fill = "transparent"), 
+                legend.text = element_text(color = "white"),           
+                legend.title = element_text(color = "white")))
   
   dev.off()
   

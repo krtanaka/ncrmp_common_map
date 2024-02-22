@@ -70,7 +70,9 @@ for (i in 1:length(islands)) {
   # i = 9
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
-  load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData")); plot(survey_grid_ncrmp)
+  load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData"))#; plot(survey_grid_ncrmp)
+  
+  cat(paste0("generating survey site for ", islands[i], "...\n"))
   
   total_sample = survey_effort %>% subset(Island_Code == islands[i])
   
@@ -83,6 +85,8 @@ for (i in 1:length(islands)) {
     total_sample = total_sample$Effort*2
     
   }
+  
+  cat(paste0("target sampling effort = ", total_sample, "...\n"))
   
   n <- id <- division <- strat <- N <- strat_sets <- cell_sets <- NULL
   
@@ -156,7 +160,7 @@ for (i in 1:length(islands)) {
   sets <- cells[, .SD[sample(.N, size = unique(strat_sets), replace = resample_cells)], by = c("strat")]
   
   # remove sites that are closer than 100 m
-  nearby_sites <- data.frame(longitude = sets$longitude, latitude = sets$latitude); plot(nearby_sites, pch = 20, col = 2, axes = F)
+  nearby_sites <- data.frame(longitude = sets$longitude, latitude = sets$latitude)#; plot(nearby_sites, pch = 20, col = 2, axes = F)
   
   coordinates(nearby_sites) <- c('longitude', 'latitude')
   proj4string(nearby_sites) <- CRS("+proj=longlat +ellps=WGS84 +datum=WGS84")
@@ -174,13 +178,15 @@ for (i in 1:length(islands)) {
   nearby_sites <- spTransform(nearby_sites, CRS("+proj=longlat +ellps=WGS84 +datum=WGS84"))
   nearby_sites = as.data.frame(nearby_sites)
   
-  nearby_sites = nearby_sites[v, ]; points(nearby_sites, pch = 20, col = 4)
+  nearby_sites = nearby_sites[v, ]#; points(nearby_sites, pch = 20, col = 4)
   
   nearby_sites$latitude = round(nearby_sites$coords.x2, 4)
   nearby_sites$longitude = round(nearby_sites$coords.x1, 4)
   
   sets$latitude = round(sets$latitude, 4)
   sets$longitude = round(sets$longitude, 4)
+  
+  cat(paste0("removing ", nrow(sets) - nrow(nearby_sites), " sites to maintain a minimum distance of 100 m between each site...\n"))
   
   sets = inner_join(sets, nearby_sites)
   
@@ -200,6 +206,7 @@ for (i in 1:length(islands)) {
   sets$depth_bin = ifelse(sets$depth > 6  & sets$depth <= 18, "MID", sets$depth_bin) 
   sets$depth_bin = ifelse(sets$depth > 18, "DEEP", sets$depth_bin) 
   
+  cat(paste0("saving survey table for ", region, " ", islands[i], " to CSV...\n"))
   readr::write_csv(sets, file = paste0("outputs/table/survey_table_", region, "_", islands[i], ".csv"))
   
   # #########################################
@@ -250,34 +257,42 @@ for (i in 1:length(islands)) {
   (bathymetry = cells %>% 
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = depth)) + 
-      coord_fixed() + 
-      scale_fill_viridis_c("", limits = c(0, 30)) + 
-      theme(panel.background = element_rect(fill = "gray10"),
-            panel.grid = element_line(color = "gray15")))
-  
-  (strata = cells %>% 
-      ggplot(aes(x, y)) +
-      geom_raster(aes(fill = factor(strat))) + 
-      coord_fixed() + 
-      scale_fill_discrete("") + 
-      theme(panel.background = element_rect(fill = "gray10"),
-            panel.grid = element_line(color = "gray15")))
+      # coord_fixed() +
+     theme_map() + 
+      scale_fill_viridis_c("Depth (m)", limits = c(0, 30), direction = -1) + 
+     theme(panel.background = element_rect(fill = "gray10"),
+           panel.grid = element_line(color = "gray15"),
+           legend.background = element_rect(fill = "transparent"), 
+           legend.text = element_text(color = "white"),           
+           legend.title = element_text(color = "white")))  
   
   (variability = cells %>% 
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = sd_total)) + 
-      coord_fixed() + 
-      scale_fill_viridis_c("") + 
+      # coord_fixed() +
+      theme_map() + 
+      scale_fill_viridis_c("Var") + 
       theme(panel.background = element_rect(fill = "gray10"),
-            panel.grid = element_line(color = "gray15")))
+            panel.grid = element_line(color = "gray15"),
+            legend.background = element_rect(fill = "transparent"), 
+            legend.text = element_text(color = "white"),           
+            legend.title = element_text(color = "white")))  
   
   (area = cells %>% 
       ggplot(aes(x, y)) +
       geom_raster(aes(fill = strat_area )) + 
-      coord_fixed() + 
-      scale_fill_viridis_c("") + 
+      # coord_fixed() +
+      theme_map() + 
+      scale_fill_viridis_c("Area (km2)") + 
       theme(panel.background = element_rect(fill = "gray10"),
-            panel.grid = element_line(color = "gray15")))
+            panel.grid = element_line(color = "gray15"),
+            legend.background = element_rect(fill = "transparent"), 
+            legend.text = element_text(color = "white"),           
+            legend.title = element_text(color = "white")))  
+  
+  png(paste0("outputs/map/survey_layers_", islands[i], ".png"), height = 5, width = 15, res = 500, units = "in")
+  print(bathymetry + variability + area)
+  dev.off()
   
   isl_shp = island_name_code %>% subset(Island_Code == islands[i])
   
