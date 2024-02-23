@@ -10,7 +10,7 @@ library(ggplot2)
 
 rm(list = ls())
 
-load("data/rea/fish_site_data.Rdata"); df = wsd; rm(wsd)
+load("data/spc/fish_site_data.Rdata"); df = wsd; rm(wsd)
 
 # Function
 LongLatToUTM<-function(x,y,zone){
@@ -94,11 +94,11 @@ for (r in 1:length(regions)) {
   # vis.gam(g_total, too.far = 0.01, n.grid = 100, plot.type = "contour", type = "response")
   # gam.check(g_total)
   
-  save(g_piscivore, file = paste0("data/rea/modeled_piscivore_variability_", regions[r], ".RData"))
-  save(g_planktivore, file = paste0("data/rea/modeled_planktivore_variability_", regions[r], ".RData"))
-  save(g_primary, file = paste0("data/rea/modeled_primary_variability_", regions[r], ".RData"))
-  save(g_secondary, file = paste0("data/rea/modeled_secondary_variability_", regions[r], ".RData"))
-  save(g_total, file = paste0("data/rea/modeled_total_variability_", regions[r], ".RData"))
+  save(g_piscivore, file = paste0("data/spc/modeled_piscivore_variability_", regions[r], ".RData"))
+  save(g_planktivore, file = paste0("data/spc/modeled_planktivore_variability_", regions[r], ".RData"))
+  save(g_primary, file = paste0("data/spc/modeled_primary_variability_", regions[r], ".RData"))
+  save(g_secondary, file = paste0("data/spc/modeled_secondary_variability_", regions[r], ".RData"))
+  save(g_total, file = paste0("data/spc/modeled_total_variability_", regions[r], ".RData"))
 
   print(regions[r])
   
