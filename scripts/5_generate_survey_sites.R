@@ -9,14 +9,13 @@ library(data.table)
 library(ggplot2)
 library(dplyr)
 library(patchwork)
-library(ggdark)
 library(colorRamps)
 library(readr)
 library(ggrepel)
 library(ggnewscale)
 library(ggspatial)
+library(ggthemes)
 library(ggmap)
-library(mapview)
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
@@ -207,7 +206,7 @@ for (i in 1:length(islands)) {
   sets$depth_bin = ifelse(sets$depth > 18, "DEEP", sets$depth_bin) 
   
   cat(paste0("saving survey table for ", region, " ", islands[i], " to CSV...\n"))
-  readr::write_csv(sets, file = paste0("outputs/table/survey_table_", region, "_", islands[i], ".csv"))
+  readr::write_csv(sets, file = paste0("outputs/tables/survey_table_", region, "_", islands[i], ".csv"))
   
   # #########################################
   # ## Export set table as two columns pdf ##
@@ -247,50 +246,50 @@ for (i in 1:length(islands)) {
   # 
   # library(grid)
   # library(gridExtra)
-  # pdf(paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf"), height = page_height, width = page_width)
+  # pdf(paste0("outputs/tables/survey_table_", region, "_", islands[i], ".pdf"), height = page_height, width = page_width)
   # sets1 <- tableGrob(sets1)
   # sets2 <- tableGrob(sets2, rows = list)
   # grid.arrange(rectGrob(), rectGrob(), ncol = 2)
   # grid.arrange(sets1, sets2, nrow = 1, ncol = 2, newpage = F)
   # dev.off()
   
-  (bathymetry = cells %>% 
-      ggplot(aes(x, y)) +
-      geom_raster(aes(fill = depth)) + 
-      # coord_fixed() +
-     theme_map() + 
-      scale_fill_viridis_c("Depth (m)", limits = c(0, 30), direction = -1) + 
-     theme(panel.background = element_rect(fill = "gray10"),
-           panel.grid = element_line(color = "gray15"),
-           legend.background = element_rect(fill = "transparent"), 
-           legend.text = element_text(color = "white"),           
-           legend.title = element_text(color = "white")))  
+  bathymetry = cells %>% 
+    ggplot(aes(x, y)) +
+    geom_raster(aes(fill = depth)) + 
+    # coord_fixed() +
+    theme_map() + 
+    scale_fill_viridis_c("Depth (m)", limits = c(0, 30), direction = -1) + 
+    theme(panel.background = element_rect(fill = "gray10"),
+          panel.grid = element_line(color = "gray15"),
+          legend.background = element_rect(fill = "transparent"), 
+          legend.text = element_text(color = "white"),           
+          legend.title = element_text(color = "white"))
   
-  (variability = cells %>% 
-      ggplot(aes(x, y)) +
-      geom_raster(aes(fill = sd_total)) + 
-      # coord_fixed() +
-      theme_map() + 
-      scale_fill_viridis_c("Var") + 
-      theme(panel.background = element_rect(fill = "gray10"),
-            panel.grid = element_line(color = "gray15"),
-            legend.background = element_rect(fill = "transparent"), 
-            legend.text = element_text(color = "white"),           
-            legend.title = element_text(color = "white")))  
+  variability = cells %>% 
+    ggplot(aes(x, y)) +
+    geom_raster(aes(fill = sd_total)) + 
+    # coord_fixed() +
+    theme_map() + 
+    scale_fill_viridis_c("Var") + 
+    theme(panel.background = element_rect(fill = "gray10"),
+          panel.grid = element_line(color = "gray15"),
+          legend.background = element_rect(fill = "transparent"), 
+          legend.text = element_text(color = "white"),           
+          legend.title = element_text(color = "white"))
   
-  (area = cells %>% 
-      ggplot(aes(x, y)) +
-      geom_raster(aes(fill = strat_area )) + 
-      # coord_fixed() +
-      theme_map() + 
-      scale_fill_viridis_c("Area (km2)") + 
-      theme(panel.background = element_rect(fill = "gray10"),
-            panel.grid = element_line(color = "gray15"),
-            legend.background = element_rect(fill = "transparent"), 
-            legend.text = element_text(color = "white"),           
-            legend.title = element_text(color = "white")))  
+  area = cells %>% 
+    ggplot(aes(x, y)) +
+    geom_raster(aes(fill = strat_area )) + 
+    # coord_fixed() +
+    theme_map() + 
+    scale_fill_viridis_c("Area (km2)") + 
+    theme(panel.background = element_rect(fill = "gray10"),
+          panel.grid = element_line(color = "gray15"),
+          legend.background = element_rect(fill = "transparent"), 
+          legend.text = element_text(color = "white"),           
+          legend.title = element_text(color = "white"))
   
-  png(paste0("outputs/map/survey_layers_", islands[i], ".png"), height = 5, width = 15, res = 500, units = "in")
+  png(paste0("outputs/maps/survey_layers_", islands[i], ".png"), height = 5, width = 15, res = 500, units = "in")
   print(bathymetry + variability + area)
   dev.off()
   
@@ -455,15 +454,16 @@ for (i in 1:length(islands)) {
       
       ggplot() +
       # ggmap(map) +
-
-      geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
-
+      
+      geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "gray50", color = NA, alpha = 0.9) + # land shapefile
+      geom_path(data = ISL_this_i, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "gray10") + # coastline
+      
       # display if there is more than 1 island sector
       
       {if (length(unique(buffer$sector_nam)) > 1) {
         
         geom_raster(data = buffer %>% mutate(across(c(latitude, longitude), round, digits = 3)) %>% distinct(), 
-                   aes(longitude, latitude, fill = sector_nam), show.legend = F, alpha = 0.2)}
+                    aes(longitude, latitude, fill = sector_nam), show.legend = F, alpha = 0.2)}
         
       } + 
       
@@ -515,8 +515,8 @@ for (i in 1:length(islands)) {
       coord_sf(crs = "+proj=lonlat +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs") + 
       theme_inset()
     
-    if(diff(ext[1:2]) < diff(ext[3:4])) pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], "_", map_direction[d], ".pdf"), height = 22, width = 17)
-    if(diff(ext[1:2]) > diff(ext[3:4])) pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], "_", map_direction[d], ".pdf"), height = 17, width = 22)
+    if(diff(ext[1:2]) < diff(ext[3:4])) pdf(paste0("outputs/maps/survey_map_", region, "_", islands[i], "_", map_direction[d], ".pdf"), height = 22, width = 17)
+    if(diff(ext[1:2]) > diff(ext[3:4])) pdf(paste0("outputs/maps/survey_map_", region, "_", islands[i], "_", map_direction[d], ".pdf"), height = 17, width = 22)
     
     # print(map_full / map_i + plot_layout(heights = c(1, 4)))
     print(map_i + inset_element(map_full, left = 0, bottom = 0.8, right = 0.2, top = 1, align_to = 'full'))
@@ -528,7 +528,7 @@ for (i in 1:length(islands)) {
   }
   
   # Get map
-  ext = c(min(sets$longitude, na.rm = T) - 0.01, max(sets$longitude, na.rm = T) + 0.01, min(sets$latitude, na.rm = T) - 0.01, max(sets$latitude, na.rm = T) + 0.01)
+  ext = c(min(sets$longitude, na.rm = T) - 0.005, max(sets$longitude, na.rm = T) + 0.005, min(sets$latitude, na.rm = T) - 0.005, max(sets$latitude, na.rm = T) + 0.005)
   # map <- get_map(location = c(left = ext[1], bottom = ext[3], right = ext[2], top = ext[4]), maptype = 'satellite')
   # map <- get_map(location = c(mean(sets$longitude, na.rm = T),
   #                             mean(sets$latitude, na.rm = T)), 
@@ -540,8 +540,8 @@ for (i in 1:length(islands)) {
     ggplot() +
     # ggmap(map) + 
     
-    geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "darkgrey") + # coastline
-    geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) + # land shapefile
+    geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "gray10") + # coastline
+    geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "gray50", color = NA, alpha = 0.9) + # land shapefile
     
     geom_raster(data = cells %>% mutate(across(c(latitude, longitude), round, digits = 3)), aes(longitude, latitude, fill = factor(strat)), alpha = 0.8) + # stratum
     
@@ -616,27 +616,27 @@ for (i in 1:length(islands)) {
       subtitle = paste0(paste0("Island = ", toupper(as.character(isl_shp[1])),"\n",
                                # "Number of strata = ", length(unique(cells$strat)), "\n",
                                # "Target survey effort = ", total_sample, " sites \n",
-                               "Total survey effort = ", sum(strat_det$strat_sets), " sites")))
+                               "Target effort = ", sum(strat_det$strat_sets), " sites")))
   
-  if(diff(ext[1:2]) < diff(ext[3:4])) pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), height = 22, width = 17)
-  if(diff(ext[1:2]) > diff(ext[3:4])) pdf(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), height = 17, width = 22)
+  if(diff(ext[1:2]) < diff(ext[3:4])) pdf(paste0("outputs/maps/survey_map_", region, "_", islands[i], ".pdf"), height = 22, width = 17)
+  if(diff(ext[1:2]) > diff(ext[3:4])) pdf(paste0("outputs/maps/survey_map_", region, "_", islands[i], ".pdf"), height = 17, width = 22)
   print(whole_map)
   dev.off()
   
   library(pdftools)
-  pdf_combine(c(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"), 
-                paste0("outputs/map/survey_map_", region, "_", islands[i], "_NE.pdf"),
-                paste0("outputs/map/survey_map_", region, "_", islands[i], "_NW.pdf"),
-                paste0("outputs/map/survey_map_", region, "_", islands[i], "_SE.pdf"),
-                paste0("outputs/map/survey_map_", region, "_", islands[i], "_SW.pdf")),
-                # paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf")),
-              output = paste0("outputs/map/survey_maps_", region, "_", islands[i], ".pdf"))
+  pdf_combine(c(paste0("outputs/maps/survey_map_", region, "_", islands[i], ".pdf"), 
+                paste0("outputs/maps/survey_map_", region, "_", islands[i], "_NE.pdf"),
+                paste0("outputs/maps/survey_map_", region, "_", islands[i], "_NW.pdf"),
+                paste0("outputs/maps/survey_map_", region, "_", islands[i], "_SE.pdf"),
+                paste0("outputs/maps/survey_map_", region, "_", islands[i], "_SW.pdf")),
+              # paste0("outputs/tables/survey_table_", region, "_", islands[i], ".pdf")),
+              output = paste0("outputs/maps/survey_maps_", region, "_", islands[i], ".pdf"))
   
-  file.remove(paste0("outputs/map/survey_map_", region, "_", islands[i], ".pdf"))
-  file.remove(paste0("outputs/map/survey_map_", region, "_", islands[i], "_NE.pdf"))
-  file.remove(paste0("outputs/map/survey_map_", region, "_", islands[i], "_NW.pdf"))
-  file.remove(paste0("outputs/map/survey_map_", region, "_", islands[i], "_SE.pdf"))
-  file.remove(paste0("outputs/map/survey_map_", region, "_", islands[i], "_SW.pdf"))
-  file.remove(paste0("outputs/table/survey_table_", region, "_", islands[i], ".pdf"))
+  file.remove(paste0("outputs/maps/survey_map_", region, "_", islands[i], ".pdf"))
+  file.remove(paste0("outputs/maps/survey_map_", region, "_", islands[i], "_NE.pdf"))
+  file.remove(paste0("outputs/maps/survey_map_", region, "_", islands[i], "_NW.pdf"))
+  file.remove(paste0("outputs/maps/survey_map_", region, "_", islands[i], "_SE.pdf"))
+  file.remove(paste0("outputs/maps/survey_map_", region, "_", islands[i], "_SW.pdf"))
+  file.remove(paste0("outputs/tables/survey_table_", region, "_", islands[i], ".pdf"))
   
 }

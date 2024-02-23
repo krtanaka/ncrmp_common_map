@@ -13,6 +13,7 @@ library(sf)
 library(readr)
 library(concaveman)
 library(patchwork)
+library(ggthemes)
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
@@ -388,7 +389,7 @@ for (isl in 1:length(islands)) {
           legend.text = element_text(color = "white"),           
           legend.title = element_text(color = "white"))
   
-  png(paste0("outputs/map/base_layers_", islands[isl], ".png"), height = 10, width = 12, res = 500, units = "in")
+  png(paste0("outputs/maps/base_layers_", islands[isl], ".png"), height = 10, width = 12, res = 500, units = "in")
   print((p1 + p2) / (p3 + p4))
   dev.off()
   
@@ -430,9 +431,9 @@ for (isl in 1:length(islands)) {
   tab$depth_bin_value = ifelse(tab$depth_bin == "deep", "DEEP", tab$depth_bin_value) 
   tab <- tab %>% dplyr::select(sector_id,reef_id,strat,depth_bin_value)
   tab <- tab %>% filter(!duplicated(tab))
-  save(tab,file = paste0("outputs/sector_key/", islands[isl], ".RData"))
+  save(tab,file = paste0("outputs/sector_keys/", islands[isl], ".RData"))
   
-  png(paste0("outputs/map/strata_", islands[isl], ".png"), height = 10, width = 12, res = 500, units = "in")
+  png(paste0("outputs/maps/strata_", islands[isl], ".png"), height = 10, width = 12, res = 500, units = "in")
   
   print(df %>% 
           ggplot( aes(longitude, latitude, fill = factor(strat))) + 
