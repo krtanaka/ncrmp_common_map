@@ -12,14 +12,18 @@ library(marmap)
 library(lattice)
 library(colorRamps)
 
-# need to connect to pifsc VPN if you are not at IRC
+# Note: Connect to PIFSC VPN if not at IRC 
 
 # South Mariana Islands
+# Guam: Run 2b_prep_bathymetry_Guam to process ngdc_bathy_10m_guam file separately
+# Rota: In-house bathymetry file cannot represent eastern side. Use Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c_prep_bathymetry_by_region.
+# Aguijan: In-house bathymetry file cannot represent the island. Use Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c_prep_bathymetry_by_region.
 islands = c(
-  # "gua", # run 2b_prep_bathymetry_Guam to process ngdc_bathy_10m_guam file separately 
-  # "rot", # in-house bathymetry file cannot represent eastern side of the island. Use Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c_prep_bathymetry_by_region.
-  "sai", "tin"
-  # "agu" # in-house bathymetry file cannot represent the island. Use Mariana Trench 6 arc-second Bathymetric Digital Elevation Model. Run 2c_prep_bathymetry_by_region.
+  # "gua", 
+  # "rot", 
+  "sai",
+  "tin"
+  # "agu" 
 )
 
 # North Mariana Islands
@@ -41,7 +45,7 @@ letter = "N"
 
 for (isl in 1:length(islands)) {
   
-  # isl = 5
+  # isl = 1
   
   # South Mariana Islands
   if (islands[isl] == "gua") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/ngdc_bathy_10m_guam_049d_6725_8fc5.nc"))
