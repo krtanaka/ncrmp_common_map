@@ -1,9 +1,8 @@
 library(raster)
-library(rgdal)
-library(rgeos)
 library(dplyr)
 library(readr)
 library(colorRamps)
+library(ggrepel)
 
 rm(list = ls())
 
@@ -105,6 +104,6 @@ for (i in 1:length(island_name)) {
   
   time = end - start
   
-  print(paste0(island_name[i], "...done...took ", time, "..."))
+  cat(paste0(island_name[i], "...done...took ", time, " seconds...\n"))
   
 }
