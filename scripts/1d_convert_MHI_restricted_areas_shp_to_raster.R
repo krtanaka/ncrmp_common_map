@@ -3,6 +3,7 @@
 ############################################
 
 library(raster)
+library(rgeos)
 library(dplyr)
 library(readr)
 library(colorRamps)
