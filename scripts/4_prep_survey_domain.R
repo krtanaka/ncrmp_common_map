@@ -26,7 +26,7 @@ islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"   
 
 for (isl in 1:length(islands)) {
   
-  # isl = 2
+  # isl = 9
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -52,8 +52,7 @@ for (isl in 1:length(islands)) {
     load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
     sector = topo_i
     sector[sector <= 0] <- 1
-    sector_name = data.frame(ID = 1L, 
-                             nam = paste0(islands[isl], "_sector"))
+    sector_name = data.frame(ID = 1L, nam = paste0(islands[isl], "_sector"))
     
   }
   
@@ -72,8 +71,7 @@ for (isl in 1:length(islands)) {
     load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
     reef = topo_i
     reef[reef <= 0] <- 1
-    reef_name = data.frame(ID = 1L, 
-                           nam = "forereef")
+    reef_name = data.frame(ID = 1L, nam = "forereef")
     
   }
   
@@ -92,8 +90,7 @@ for (isl in 1:length(islands)) {
     load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
     hardsoft = topo_i
     hardsoft[hardsoft <= 0] <- 1
-    hardsoft_name = data.frame(ID = 1L, 
-                               nam = "hard")
+    hardsoft_name = data.frame(ID = 1L, nam = "hard")
     
   }
   
@@ -112,8 +109,7 @@ for (isl in 1:length(islands)) {
     load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
     buffer = topo_i
     buffer[buffer <= 0] <- 1
-    buffer_name = data.frame(ID = 1L, 
-                             nam = paste0(islands[isl], "_5km_buffer"))
+    buffer_name = data.frame(ID = 1L, nam = paste0(islands[isl], "_5km_buffer"))
     
   }
   
@@ -129,8 +125,7 @@ for (isl in 1:length(islands)) {
     load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
     boxes = topo_i
     boxes[boxes <= 0] <- 1
-    boxes_name = data.frame(ID = 1L, 
-                            nam = paste0(islands[isl], "_box"))
+    boxes_name = data.frame(ID = 1L, nam = paste0(islands[isl], "_box"))
     
   }
   
@@ -348,7 +343,6 @@ for (isl in 1:length(islands)) {
   p1 = df %>% 
     ggplot(aes(x, y, fill = depth_bin)) + 
     geom_raster() + 
-    # coord_fixed() +
     theme_map() +
     theme(panel.background = element_rect(fill = "gray10"),
           panel.grid = element_line(color = "gray15"),
@@ -359,7 +353,6 @@ for (isl in 1:length(islands)) {
   p2 = df %>% 
     ggplot(aes(x, y,  fill = sector_id)) + 
     geom_raster() +
-    # coord_fixed() +
     theme_map() +
     theme(panel.background = element_rect(fill = "gray10"),
           panel.grid = element_line(color = "gray15"),
@@ -370,7 +363,6 @@ for (isl in 1:length(islands)) {
   p3 = df %>% 
     ggplot(aes(x, y,  fill = reef_id)) + 
     geom_raster() +
-    # coord_fixed() +
     theme_map() +
     theme(panel.background = element_rect(fill = "gray10"),
           panel.grid = element_line(color = "gray15"),
@@ -381,7 +373,6 @@ for (isl in 1:length(islands)) {
   p4 = df %>% 
     ggplot(aes(x, y, fill = hardsoft_id)) + 
     geom_raster() +
-    # coord_fixed() +
     theme_map() +
     theme(panel.background = element_rect(fill = "gray10"),
           panel.grid = element_line(color = "gray15"),
@@ -414,12 +405,12 @@ for (isl in 1:length(islands)) {
     
   }
   
-  df$strat = paste(df$depth_bin, 
-                   df$sector_id,
-                   df$reef_id,
-                   sep = "_")
+  df$strat_nam = paste(df$depth_bin, 
+                       df$sector_id,
+                       df$reef_id,
+                       sep = "_")
   
-  df$strat = as.numeric(as.factor(df$strat))
+  df$strat = as.numeric(as.factor(df$strat_nam))
   
   ################################################################
   ### create table to match strata to numbers for output table ###
@@ -429,14 +420,14 @@ for (isl in 1:length(islands)) {
   tab$depth_bin_value = ifelse(tab$depth_bin == "shallow", "SHAL", tab$depth_bin_value) 
   tab$depth_bin_value = ifelse(tab$depth_bin == "mid", "MIDD", tab$depth_bin_value) 
   tab$depth_bin_value = ifelse(tab$depth_bin == "deep", "DEEP", tab$depth_bin_value) 
-  tab <- tab %>% dplyr::select(sector_id,reef_id,strat,depth_bin_value)
+  tab <- tab %>% dplyr::select(sector_id, reef_id, strat, strat_nam, depth_bin_value)
   tab <- tab %>% filter(!duplicated(tab))
   save(tab,file = paste0("outputs/sector_keys/", islands[isl], ".RData"))
   
   png(paste0("outputs/maps/strata_", islands[isl], ".png"), height = 10, width = 12, res = 500, units = "in")
   
   print(df %>% 
-          ggplot( aes(longitude, latitude, fill = factor(strat))) + 
+          ggplot( aes(longitude, latitude, fill = factor(strat_nam))) + 
           geom_raster() + 
           scale_fill_discrete("strata") + 
           # coord_fixed() +
