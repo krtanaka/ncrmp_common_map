@@ -2,8 +2,7 @@
 ### Convert Swain island bathymetry shapefile raster ###
 ########################################################
 
-library(raster) # need to be version 3.4-13, not the latest version
-library(rgdal)
+library(raster)
 library(rgeos)
 library(dplyr)
 library(readr)
@@ -13,7 +12,7 @@ library(ggrepel)
 
 rm(list = ls())
 
-spatial_resolution = 50 # spatial resolution in m
+spatial_resolution = 10 # spatial resolution in m
 
 shp_path = "N:/GIS/Projects/CommonMaps"
 
