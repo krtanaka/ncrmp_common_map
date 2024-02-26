@@ -1,3 +1,7 @@
+###################################################
+### Convert NCRMP Survey Boxes shapefile raster ###
+###################################################
+
 library(raster)
 library(dplyr)
 library(readr)

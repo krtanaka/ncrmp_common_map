@@ -3,16 +3,14 @@
 #######################################################################
 
 library(raster)
-library(rgeos)
 library(dplyr)
 library(readr)
 library(colorRamps)
-library(ggplot2)
 library(ggrepel)
 
 rm(list = ls())
 
-spatial_resolution = 10 # target spatial resolution in m
+spatial_resolution = 100 # target spatial resolution in m
 
 # path to GIS Common Map shapefiles 
 # shp_path = "L:/ktanaka/GIS"
@@ -102,7 +100,7 @@ for (shp_i in 1:length(shp_list)) {
   
   time = end - start
   
-  cat(paste0(island_name, "...done...took ", time, "...\n"))
+  cat(paste0(island_name, "...done...took ", time, " seconds...\n"))
   
 }
 
@@ -190,7 +188,7 @@ for (shp_i in 1:length(shp_list)) {
   
   time = end - start
   
-  cat(paste0(island_name, "...done...took ", time, "...\n"))
+  cat(paste0(island_name, "...done...took ", time, " seconds...\n"))
   
 }
 
@@ -275,6 +273,6 @@ for (shp_i in 1:length(shp_list)) {
   
   time = end - start
   
-  cat(paste0(island_name, "...done...took ", time, "...\n"))
+  cat(paste0(island_name, "...done...took ", time, " seconds...\n"))
   
 }

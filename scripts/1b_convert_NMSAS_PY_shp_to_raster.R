@@ -3,10 +3,10 @@
 ############################################
 
 library(raster)
-library(rgeos)
 library(dplyr)
 library(readr)
 library(colorRamps)
+library(ggrepel)
 
 rm(list = ls())
 

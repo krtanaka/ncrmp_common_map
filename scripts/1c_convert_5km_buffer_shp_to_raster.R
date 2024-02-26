@@ -3,11 +3,9 @@
 ###############################################
 
 library(raster)
-library(rgeos)
 library(dplyr)
 library(readr)
 library(colorRamps)
-library(ggplot2)
 library(ggrepel)
 
 rm(list = ls())
