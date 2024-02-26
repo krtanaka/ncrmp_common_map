@@ -44,16 +44,10 @@ dat <- subset(dat, Name %in% c("Honolulu International Airport North Section Sec
                                "Barbers Point Offshore Moorings Security Zone",
                                "Pacific Missile Range Facility at Barking Sands Safety Zone"))
 
-png("outputs/CFR_RestrictedAreas_Hawaii.png", height = 7, width = 13, units = "in", res = 100)
-
 ggplot(st_as_sf(dat)) +
   geom_sf(aes(fill = Name)) +
   coord_sf() +
-  annotation_map(map_data("world")) + 
-  scale_fill_discrete("") + 
-  theme(legend.position = c(0.16, 0.28))
-
-dev.off()
+  annotation_map(map_data("world"))
 
 rstr <- as.data.frame(dat)
 rstr = rstr$Name; rstr
@@ -135,17 +129,10 @@ dat <- subset(dat, SafetyZone %in% c("Honolulu International Airport North Secti
                                      "Pacific Missile Range Facility",
                                      "Barbers Point Offshore Moorings"))
 
-png("outputs/eCFR_Area.png", height = 7, width = 13, units = "in", res = 100)
-
 ggplot(st_as_sf(dat)) +
   geom_sf(aes(fill = SafetyZone)) +
-  coord_sf() +
   annotation_map(map_data("world")) + 
-  scale_fill_discrete("") + 
-  ggtitle("eCFR_Area") + 
-  theme(legend.position = c(0.15, 0.2))
-
-dev.off()
+  scale_fill_discrete("")
 
 rstr <- as.data.frame(dat)
 rstr = rstr$SafetyZone; rstr
@@ -231,17 +218,11 @@ dat <- gBuffer(dat, byid = TRUE, width = buffer_distance)
 
 unique(dat$Site_Label)
 
-png("outputs/RestrictedAreas_Hawaii_a.png", height = 5, width = 8, units = "in", res = 100)
-
 ggplot(st_as_sf(dat)) +
   geom_sf(aes(fill = Site_Name)) +
   coord_sf() +
   annotation_map(map_data("world")) + 
-  scale_fill_discrete("") + 
-  ggtitle("Restricted Areas Hawaii") + 
-  theme(legend.position = c(0.21, 0.11))
-
-dev.off()
+  scale_fill_discrete("")
 
 dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T)
 proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T)
@@ -317,15 +298,11 @@ dat <- shapefile(shp_list[4], verbose = T)
 dat = dat %>% subset(Site_Label %in% sites)
 dat <- gBuffer(dat, byid = TRUE, width = buffer_distance)
 
-png("outputs/RestrictedAreas_Hawaii_b.png", height = 9, width = 13, units = "in", res = 100)
 ggplot(st_as_sf(dat)) +
   geom_sf(aes(fill = Site_Name)) +
   coord_sf() +
   annotation_map(map_data("world")) + 
-  scale_fill_discrete("") + 
-  ggtitle("Restricted Areas Hawaii") + 
-  theme(legend.position = c(0.8, 0.85))
-dev.off()
+  scale_fill_discrete("")
 
 dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2)
 proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2)
@@ -395,15 +372,11 @@ save(raster_and_table, file = "data/gis_sector/mhi_restricted_areas_haw.RData")
 dat <- shapefile(shp_list[3], verbose = T)
 dat <- gBuffer(dat, byid = TRUE, width = buffer_distance)
 
-png("outputs/mokapu_peninsula_500yds.png", height = 7, width = 7, units = "in", res = 100)
 ggplot(st_as_sf(dat)) +
   geom_sf(aes(fill = Name)) +
   coord_sf() +
   annotation_map(map_data("world")) + 
-  scale_fill_discrete("") + 
-  ggtitle("mokapu_peninsula_500yds") + 
-  theme(legend.position = c(0.8, 0.85))
-dev.off()
+  scale_fill_discrete("")
 
 dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2)
 proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2)
