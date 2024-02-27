@@ -179,8 +179,8 @@ for (i in 1:length(islands)) {
   
   nearby_sites = nearby_sites[v, ]#; points(nearby_sites, pch = 20, col = 4)
   
-  nearby_sites$latitude = round(nearby_sites$latitude, 4)
-  nearby_sites$longitude = round(nearby_sites$longitude, 4)
+  nearby_sites$latitude = round(nearby_sites$coords.x2, 4)
+  nearby_sites$longitude = round(nearby_sites$coords.x1, 4)
   
   sets$latitude = round(sets$latitude, 4)
   sets$longitude = round(sets$longitude, 4)
