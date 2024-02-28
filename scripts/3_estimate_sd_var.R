@@ -91,7 +91,7 @@ for (r in 1:length(regions)) {
                 data = df_r)
   
   # summary(g_total)
-  # vis.gam(g_total, too.far = 0.01, n.grid = 100, plot.type = "contour", type = "response")
+  # vis.gam(g_total, too.far = 0.05, n.grid = 100, plot.type = "contour", type = "response")
   # gam.check(g_total)
   
   save(g_piscivore, file = paste0("data/spc/modeled_piscivore_variability_", regions[r], ".RData"))

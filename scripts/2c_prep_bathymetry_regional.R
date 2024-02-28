@@ -2,19 +2,21 @@
 ### Prep island bathymetry data using external regional GIS files ###
 #####################################################################
 
-
+# Clear the workspace
 rm(list = ls())
 
-library(dplyr)
-library(ggplot2)
-library(raster)
-library(tidyr)
-library(marmap)
-library(lattice)
-library(readr)
+library(dplyr)       # For data manipulation
+library(ggplot2)     # For creating plots
+library(raster)      # For working with raster data
+library(tidyr)       # For tidying data
+library(marmap)      # For working with bathymetric data
+library(lattice)     # For creating trellis plots
+library(readr)       # For reading CSV files
 
+# Read in the UTM zones CSV file
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
+# Define the islands and region for which to prepare bathymetry data
 islands = c("gua", "rot", "sai", "tin", "agu")[2:5]; region = "MARIAN" # South Mariana Islands
 # islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "sar"); region = "MARIAN" # North Mariana Islands
 islands = c("ofu", "ros", "swa", "tau", "tut")[2]; region = "SAMOA" # American Samoa, but Swa is not included
@@ -22,11 +24,17 @@ islands = c("ofu", "ros", "swa", "tau", "tut")[2]; region = "SAMOA" # American S
 islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI" # Main Hawaiian Islands
 # islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI" # Northern Hawaiian Islands
 
+# Read in CSV files containing island extents and island name codes
 island_boxes = read_csv("data/misc/Island_Extents.csv") # Updated Bounding boxes 2021
 island_names_codes = read_csv("data/misc/island_name_code.csv")
+
+# Merge the two data frames on common columns
 island_names_codes_boxes = merge(island_names_codes, island_boxes)
+
+# Remove the original data frames to free up memory
 rm(island_names_codes, island_boxes)
 
+# Load the appropriate bathymetry raster file based on the selected region
 if(region == "MARIAN") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/mariana_trench_6_msl_2012.nc")
 if(region == "SAMOA") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/pago_pago_3_mhw_2009.nc")
 if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/usgsCeCrm10.nc")

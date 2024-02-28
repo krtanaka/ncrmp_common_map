@@ -2,15 +2,17 @@
 ### Prep island bathymetry data using in-house island GIS files ###
 ###################################################################
 
+# Clear the workspace
 rm(list = ls())
 
-library(dplyr)
-library(ggplot2)
-library(raster)
-library(tidyr)
-library(marmap)
-library(lattice)
-library(colorRamps)
+# Load required libraries
+library(dplyr)       # For data manipulation
+library(ggplot2)     # For creating plots
+library(raster)      # For working with raster data
+library(tidyr)       # For tidying data
+library(marmap)      # For working with bathymetric data
+library(lattice)     # For creating trellis plots
+library(colorRamps)  # For color ramp functions
 
 # Note: Connect to PIFSC VPN if not at IRC 
 
@@ -41,6 +43,7 @@ islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")
 # Northern Hawaiian Islands
 islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr")
 
+# specify alphabetical letter assigned to the target drive path
 letter = "N"
 
 for (isl in 1:length(islands)) {
@@ -112,18 +115,3 @@ for (isl in 1:length(islands)) {
   
 }
 
-load('data/gis_bathymetry/phr.RData')
-
-wireframe(unclass(as.bathy(topo_i)), 
-          shade = T,
-          aspect = c(dim(topo_i)[1]/dim(topo_i)[2], 0.001),
-          par.box = c(col = "transparent"),
-          scales = list(arrows = FALSE, col = "transparent"), # col="black" is required
-          par.settings = list(axis.line = list(col = 'transparent')),
-          light.source = c(10,0,10),
-          zlab = "",
-          xlab = "",
-          ylab = "",
-          perspective = T,
-          screen = list(z = 10, x = -40, y = 10),
-          zoom = 1.1)
