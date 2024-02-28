@@ -66,7 +66,7 @@ select = dplyr::select
 
 for (i in 1:length(islands)) {
   
-  # i = 9
+  # i = 7
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData"))#; plot(survey_grid_ncrmp)
@@ -528,7 +528,7 @@ for (i in 1:length(islands)) {
   }
   
   # Get map
-  ext = c(min(sets$longitude, na.rm = T) - 0.005, max(sets$longitude, na.rm = T) + 0.005, min(sets$latitude, na.rm = T) - 0.005, max(sets$latitude, na.rm = T) + 0.005)
+  ext = c(min(sets$longitude, na.rm = T) - 0.001, max(sets$longitude, na.rm = T) + 0.001, min(sets$latitude, na.rm = T) - 0.001, max(sets$latitude, na.rm = T) + 0.001)
   # map <- get_map(location = c(left = ext[1], bottom = ext[3], right = ext[2], top = ext[4]), maptype = 'satellite')
   # map <- get_map(location = c(mean(sets$longitude, na.rm = T),
   #                             mean(sets$latitude, na.rm = T)), 
@@ -605,8 +605,8 @@ for (i in 1:length(islands)) {
   # coord_map() + 
   coord_sf(crs = 4326) + 
     
-    scale_x_continuous(sec.axis = dup_axis(), "", limits = range(pretty(buffer$longitude))) +
-    scale_y_continuous(sec.axis = dup_axis(), "", limits = range(pretty(buffer$latitude))) +
+    scale_x_continuous(sec.axis = dup_axis(), "", limits = range(pretty(buffer$longitude) + c(-0.1, 0.1))) +
+    scale_y_continuous(sec.axis = dup_axis(), "", limits = range(pretty(buffer$latitude) + c(-0.1, 0.1))) +
     
     theme(legend.position = "bottom",
           axis.text = element_text(size = 10),
