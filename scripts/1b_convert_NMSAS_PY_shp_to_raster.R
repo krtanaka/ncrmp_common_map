@@ -2,36 +2,44 @@
 ### Convert NMSAS_PY shapefile to raster ###
 ############################################
 
-library(raster)
-library(dplyr)
-library(readr)
-library(colorRamps)
-library(ggrepel)
+# Load required libraries
+library(raster)      # For working with raster data
+library(dplyr)       # For data manipulation
+library(readr)       # For reading CSV files
+library(colorRamps)  # For color ramp functions
+library(ggrepel)     # For repelling overlapping text labels in ggplot2
 
+
+# Clear the workspace
 rm(list = ls())
 
-spatial_resolution = 10 # target spatial resolution in m
+# Set the target spatial resolution in meters
+spatial_resolution = 10
 
-# shp_path = "L:/ktanaka/GIS"
+# Define the path to the shapefile
 shp_path = "N:/GIS/Projects/CommonMaps/Sector/"
 
-shp_list = list.files(path = shp_path, pattern = "\\.shp$", full.names = T); shp_list
+# List all shapefiles in the specified path
+shp_list = list.files(path = shp_path, pattern = "\\.shp$", full.names = TRUE); shp_list
 
-# shp_list[10]: "NMSAS_PY.shp" is new nmsas shapefile
-# shp_list[11]: "NMSAS_PY_original.shp" is old nmsas shapefile
-
+# Extract the island name from the 10th shapefile's filename
 island_name = tolower(substr(shp_list[10], 35, 42)); island_name
-dat <- shapefile(shp_list[10], verbose = T); plot(dat); degAxis(1); degAxis(2); maps::map(add = T, col = "blue", fill = T)
 
+# Load the 10th shapefile and plot it
+dat <- shapefile(shp_list[10], verbose = TRUE); plot(dat); degAxis(1); degAxis(2); maps::map(add = TRUE, col = "blue", fill = TRUE)
+
+# Convert the shapefile data to a data frame and extract the 'Label' column
 nmsas <- as.data.frame(dat)
 nmsas = nmsas$Label; nmsas
-# nmsas = nmsas[c(1, 2, 5)]; nmsas # take out Tutulia sectors
 
+# Transform the coordinate reference system of the shapefile to WGS84
 dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2)
 proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2)
 
+# Read a CSV file containing UTM zone data
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
+# Define a vector of island names
 island_name = c("ros", "swa", "tau")
 
 for (i in 1:length(island_name)) {

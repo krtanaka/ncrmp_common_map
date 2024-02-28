@@ -2,31 +2,41 @@
 ### Convert 5km-buffer shapefiles to raster ###
 ###############################################
 
-library(raster)
-library(dplyr)
-library(readr)
-library(colorRamps)
-library(ggrepel)
+# Load required libraries
+library(raster)      # For working with raster data
+library(dplyr)       # For data manipulation
+library(readr)       # For reading CSV files
+library(colorRamps)  # For color ramp functions
+library(ggrepel)     # For repelling overlapping text labels in ggplot2
 
+# Clear the workspace
 rm(list = ls())
 
-spatial_resolution = 10 # target spatial resolution in m
+# Set the target spatial resolution in meters
+spatial_resolution = 10
 
-# shp_path = "L:/ktanaka/GIS"
+# Define the path to the shapefiles
 shp_path = "N:/GIS/Projects/CommonMaps"
 
-shp_list = list.files(path = paste0(shp_path, "/5km_buffer/"), pattern = "\\.shp$", full.names = T); shp_list
-dat <- shapefile(shp_list, verbose = T); plot(dat, col = 2, pch = 20); degAxis(1); degAxis(2)
+# List all shapefiles in the specified path (within the 5km_buffer folder)
+shp_list = list.files(path = paste0(shp_path, "/5km_buffer/"), pattern = "\\.shp$", full.names = TRUE); shp_list
 
+# Load all shapefiles and plot them
+dat <- shapefile(shp_list, verbose = TRUE); plot(dat, col = 2, pch = 20); degAxis(1); degAxis(2)
+
+# Convert the shapefile data to a data frame and extract the 'ISLAND_CD' column
 island_name <- as.data.frame(dat)
 island_name = island_name$ISLAND_CD
 island_name = tolower(island_name); island_name
 
+# Transform the coordinate reference system of the shapefiles to WGS84
 dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2)
 proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2)
 
+# Read a CSV file containing UTM zone data
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
+# Filter the island names to include only those present in the UTM zone data
 island_name = island_name %>% subset(island_name %in% utm$Island_Code)
 
 for (i in 1:length(island_name)) {

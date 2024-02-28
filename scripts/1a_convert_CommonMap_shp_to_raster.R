@@ -2,22 +2,23 @@
 ### Convert Hardsoft, Reefzones, Island sector shapefiles to raster ###
 #######################################################################
 
-library(raster)
-library(dplyr)
-library(readr)
-library(colorRamps)
-library(ggrepel)
+# Load required libraries
+library(raster)      # For working with raster data
+library(dplyr)       # For data manipulation
+library(readr)       # For reading CSV files
+library(colorRamps)  # For color ramp functions
+library(ggrepel)     # For repelling overlapping text labels in ggplot2
 
+# Clear the workspace
 rm(list = ls())
 
-spatial_resolution = 100 # target spatial resolution in m
+# Set the target spatial resolution in meters
+spatial_resolution = 100
 
-# path to GIS Common Map shapefiles 
-# shp_path = "L:/ktanaka/GIS"
-# shp_path = "X:/GIS/Projects/CommonMaps"
+# Define the path to the GIS Common Map shapefiles
 shp_path = "N:/GIS/Projects/CommonMaps"
 
-# UTM zones for each island
+# Read a CSV file containing UTM zone data for each island
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
 # Hard/Soft Bottom Substrate ----------------------------------------------

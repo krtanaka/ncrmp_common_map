@@ -2,26 +2,33 @@
 ### Convert rstr_PY shapefile to raster ###
 ############################################
 
-library(raster)
-library(rgeos)
-library(dplyr)
-library(readr)
-library(colorRamps)
-library(ggrepel)
-library(sf)
-library(patchwork)
+# Load required libraries
+library(raster)      # For working with raster data
+library(rgeos)       # For geometric operations on spatial data
+library(dplyr)       # For data manipulation
+library(readr)       # For reading CSV files
+library(colorRamps)  # For color ramp functions
+library(ggrepel)     # For repelling overlapping text labels in ggplot2
+library(sf)          # For simple features, a modern approach to spatial data
+library(patchwork)   # For combining ggplot2 plots
 
+# Clear the workspace
 rm(list = ls())
 
-spatial_resolution = 100 # target spatial resolution in m
+# Set the target spatial resolution in meters
+spatial_resolution = 100
+
+# Set the buffer distance in degrees (used for buffering operations)
 buffer_distance = 0.005
 
-# shp_path = "L:/ktanaka/GIS"
+# Define the path to the shapefiles
 shp_path = "N:/GIS/Projects/CommonMaps/Restricted areas_2016/"
 
-shp_list = list.files(path = shp_path, pattern = "\\.shp$", full.names = T)
-shp_list = shp_list[c(1, 3:5)]; shp_list
+# List all shapefiles in the specified path
+shp_list = list.files(path = shp_path, pattern = "\\.shp$", full.names = TRUE)
 
+# Select specific shapefiles from the list (1st, 3rd, 4th, and 5th)
+shp_list = shp_list[c(1, 3:5)]; shp_list
 
 ##################################
 ### CFR_RestrictedAreas_Hawaii ###
