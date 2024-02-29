@@ -15,7 +15,7 @@ rm(list = ls())
 # Set the target spatial resolution in meters
 spatial_resolution = 100
 
-# Define the path to the GIS Common Map shapefiles
+# Define the path to the GIS Common Map shapefiles (PICSWORDFISH)
 shp_path = "N:/GIS/Projects/CommonMaps"
 
 # Read a CSV file containing UTM zone data for each island

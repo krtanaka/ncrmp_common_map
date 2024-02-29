@@ -179,8 +179,9 @@ for (i in 1:length(islands)) {
   
   nearby_sites = nearby_sites[v, ]#; points(nearby_sites, pch = 20, col = 4)
   
-  nearby_sites$latitude = round(nearby_sites$coords.x2, 4)
-  nearby_sites$longitude = round(nearby_sites$coords.x1, 4)
+  colnames(nearby_sites) = c("longitude", "latitude")
+  nearby_sites$latitude = round(nearby_sites$latitude, 4)
+  nearby_sites$longitude = round(nearby_sites$longitude, 4)
   
   sets$latitude = round(sets$latitude, 4)
   sets$longitude = round(sets$longitude, 4)
@@ -188,7 +189,8 @@ for (i in 1:length(islands)) {
   cat(paste0("removing ", nrow(sets) - nrow(nearby_sites), " sites to maintain a minimum distance of 100 m between each site...\n"))
   
   sets = inner_join(sets, nearby_sites)
-  
+
+  # revise this later, id changes every year for every island  
   id <- seq(1,dim(sets)[1],1)
   id = sprintf("s_%04d", id)
   id = gsub("s",  islands[i], id)

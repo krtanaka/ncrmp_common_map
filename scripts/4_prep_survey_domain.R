@@ -384,7 +384,7 @@ for (isl in 1:length(islands)) {
   print((p1 + p2) / (p3 + p4))
   dev.off()
   
-  if (islands[isl] %in% c("kin", "ros")) {
+  if (islands[isl] %in% c("kin", "ros", "ffs")) {
     
     df = df %>%
       subset(reef_id %in% c( "forereef", "backreef", "lagoon", "protected slope")) %>% # filter land and Reef Crest/Reef Flat
