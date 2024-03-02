@@ -66,7 +66,7 @@ select = dplyr::select
 
 for (i in 1:length(islands)) {
   
-  # i = 7
+  # i = 9
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData"))#; plot(survey_grid_ncrmp)
@@ -146,6 +146,27 @@ for (i in 1:length(islands)) {
   
   # add "strat" "strat_cells" "tow_area" ...
   strat_det = strat_det[, c("strat", "strat_cells", "tow_area", "cell_area", "strat_area", "strat_sets")]
+  
+  if (any(grepl(paste0(islands[i], "_itinerary"),list.files("outputs/sector_keys/")))) {
+    
+    load(paste0("outputs/sector_keys/", islands[i], "_itinerary.Rdata"))
+    
+    tab$strat_sets_alt = tab$MAP_SITES
+    
+    tab = tab[, c("strat", "strat_sets_alt")]
+    
+    strat_det = left_join(strat_det, tab)
+    
+    strat_det$strat_sets_adj = ifelse(strat_det$strat_sets > strat_det$strat_sets_alt, 
+                                      strat_det$strat_sets, 
+                                      strat_det$strat_sets_alt)
+    
+    strat_det = strat_det[, c("strat", "strat_cells", "tow_area", "cell_area", "strat_area", "strat_sets_adj")]
+    
+    colnames(strat_det)[6] = "strat_sets"
+    
+  }
+  
   cells <- merge(cells, strat_det, by = c("strat")) 
   
   utm_i = utm %>% subset(Island_Code == islands[i])
@@ -189,7 +210,7 @@ for (i in 1:length(islands)) {
   cat(paste0("removing ", nrow(sets) - nrow(nearby_sites), " sites to maintain a minimum distance of 100 m between each site...\n"))
   
   sets = inner_join(sets, nearby_sites)
-
+  
   # revise this later, id changes every year for every island  
   id <- seq(1,dim(sets)[1],1)
   id = sprintf("s_%04d", id)
