@@ -43,7 +43,7 @@ for (i in 1:length(island_name)) {
   
   start = Sys.time()
   
-  # i = 79
+  # i = 64
  
   utm_i = utm %>% subset(Island_Code == island_name[i])
   
