@@ -55,8 +55,8 @@ for (isl in 1:length(islands)) {
   itinerary_i$sector_id <- tolower(substr(itinerary_i$SECTOR, 1, 6))
   tab$sector_id <- tolower(substr(tab$sector_id, 1, 6))
   
-  table(itinerary_i$sector_id)
-  table(tab$sector_id)
+  print(table(itinerary_i$sector_id))
+  print(table(tab$sector_id))
   
   tab = left_join(tab, itinerary_i) 
   
