@@ -161,6 +161,8 @@ for (i in 1:length(islands)) {
                                       strat_det$strat_sets, 
                                       strat_det$strat_sets_alt)
     
+    strat_det$strat_sets_adj = ifelse(is.na(strat_det$strat_sets_adj), strat_det$strat_sets, strat_det$strat_sets_adj)
+    
     strat_det = strat_det[, c("strat", "strat_cells", "tow_area", "cell_area", "strat_area", "strat_sets_adj")]
     
     colnames(strat_det)[6] = "strat_sets"
