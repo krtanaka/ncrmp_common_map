@@ -157,6 +157,8 @@ for (i in 1:length(islands)) {
     
     strat_det = left_join(strat_det, tab)
     
+    # less than 10 *3, more than 10 *2
+    
     strat_det$strat_sets_adj = ifelse(strat_det$strat_sets > strat_det$strat_sets_alt, 
                                       strat_det$strat_sets, 
                                       strat_det$strat_sets_alt)
