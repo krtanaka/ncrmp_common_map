@@ -17,6 +17,7 @@ islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); regi
 islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"                 # Northern Hawaiian Islands
 
 itinerary = read_csv("data/misc/Draft Itinerary SE-24-06 - RANDOM_maptargets.csv")
+names(itinerary) <- gsub(" ", "_", names(itinerary))
 
 itinerary = left_join(itinerary, utm)
 
