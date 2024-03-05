@@ -18,14 +18,6 @@ islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"   
 
 itinerary = read_csv("data/misc/Draft Itinerary SE-24-06 - RANDOM_maptargets.csv")
 
-# names(itinerary) <- gsub(" ", "_", names(itinerary))
-# colnames(itinerary)[1] = "Island"
-# itinerary$Island = ifelse(itinerary$Island == "Niihau and Lehua", "Niihau", itinerary$Island)
-# itinerary$Island = ifelse(itinerary$Island == "French Frigate Shoals", "French_Frigate", itinerary$Island)
-# itinerary$Island = ifelse(itinerary$Island == "Kure Atoll", "Kure", itinerary$Island)
-# itinerary$Island = ifelse(itinerary$Island == "Lisianski Island", "Lisianski", itinerary$Island)
-# itinerary$Island = ifelse(itinerary$Island == "Pearl and Hermes Atolls", "Pearl_&_Hermes", itinerary$Island)
-
 itinerary = left_join(itinerary, utm)
 
 for (isl in 1:length(islands)) {
