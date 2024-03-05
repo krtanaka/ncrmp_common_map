@@ -1,106 +1,105 @@
-ISLAND,SECTOR,STRATUM,FISH SITES,SFM SITES,MAP SITES
-Hawaii,HAW_Hamakua,FRF_D,5,6,6
-Hawaii,HAW_Hamakua,FRF_M,6,9,9
-Hawaii,HAW_Hamakua,FRF_S,2,2,2
-Hawaii,HAW_Kona,FRF_D,6,7,7
-Hawaii,HAW_Kona,FRF_M,15,11,11
-Hawaii,HAW_Kona,FRF_S,8,6,6
-Hawaii,HAW_Puna,FRF_D,7,4,4
-Hawaii,HAW_Puna,FRF_M,6,9,9
-Hawaii,HAW_Puna,FRF_S,4,2,2
-Hawaii,HAW_SE,FRF_D,3,2,2
-Hawaii,HAW_SE,FRF_M,4,4,4
-Hawaii,HAW_SE,FRF_S,3,2,2
-Kahoolawe,KAH_N,FRF_D,4,4,4
-Kahoolawe,KAH_N,FRF_M,3,7,7
-Kahoolawe,KAH_N,FRF_S,3,4,4
-Kahoolawe,KAH_S,FRF_D,3,2,2
-Kahoolawe,KAH_S,FRF_M,3,2,2
-Kahoolawe,KAH_S,FRF_S,3,4,4
-Kauai,KAU_E,FRF_D,5,2,2
-Kauai,KAU_E,FRF_M,9,9,9
-Kauai,KAU_E,FRF_S,5,4,4
-Kauai,KAU_Napali,FRF_D,4,2,2
-Kauai,KAU_Napali,FRF_M,4,5,5
-Kauai,KAU_Napali,FRF_S,2,2,2
-Lanai,LAN_N,FRF_D,3,2,2
-Lanai,LAN_N,FRF_M,3,6,6
-Lanai,LAN_N,FRF_S,3,2,2
-Lanai,LAN_S,FRF_D,3,2,2
-Lanai,LAN_S,FRF_M,9,4,4
-Lanai,LAN_S,FRF_S,6,8,8
-Maui,MAI_Hana,FRF_D,2,,2
-Maui,MAI_Hana,FRF_M,3,,3
-Maui,MAI_Hana,FRF_S,4,,4
-Maui,MAI_Kihei,FRF_D,4,4,4
-Maui,MAI_Kihei,FRF_M,5,9,9
-Maui,MAI_Kihei,FRF_S,6,7,7
-Maui,MAI_Lahaina,FRF_D,6,2,2
-Maui,MAI_Lahaina,FRF_M,5,4,4
-Maui,MAI_Lahaina,FRF_S,5,4,4
-Maui,MAI_NE,FRF_D,4,7,7
-Maui,MAI_NE,FRF_M,4,3,3
-Maui,MAI_NE,FRF_S,2,4,4
-Maui,MAI_NW,FRF_D,4,,4
-Maui,MAI_NW,FRF_M,4,,4
-Maui,MAI_NW,FRF_S,3,,3
-Maui,MAI_SE,FRF_D,4,4,4
-Maui,MAI_SE,FRF_M,4,7,7
-Maui,MAI_SE,FRF_S,3,2,2
-Molokai,MOL_NW,FRF_D,4,2,2
-Molokai,MOL_NW,FRF_M,4,2,2
-Molokai,MOL_NW,FRF_S,3,,3
-Molokai,MOL_Pali,FRF_D,5,2,2
-Molokai,MOL_Pali,FRF_M,4,2,2
-Molokai,MOL_Pali,FRF_S,3,2,2
-Molokai,MOL_S,FRF_D,3,3,3
-Molokai,MOL_S,FRF_M,5,9,9
-Molokai,MOL_S,FRF_S,6,10,10
-Molokai,MOL_W,FRF_D,4,2,2
-Molokai,MOL_W,FRF_M,4,4,4
-Molokai,MOL_W,FRF_S,3,2,2
-Niihau and Lehua,NII_E,FRF_D,4,2,2
-Niihau and Lehua,NII_E,FRF_M,4,2,2
-Niihau and Lehua,NII_E,FRF_S,3,,3
-Niihau and Lehua,NII_Lehua,FRF_D,2,2,2
-Niihau and Lehua,NII_Lehua,FRF_M,5,2,2
-Niihau and Lehua,NII_Lehua,FRF_S,3,2,2
-Niihau and Lehua,NII_W,FRF_D,3,2,2
-Niihau and Lehua,NII_W,FRF_M,5,2,2
-Niihau and Lehua,NII_W,FRF_S,2,2,2
-Oahu,OAH_E,FRF_D,2,6,6
-Oahu,OAH_E,FRF_M,4,5,5
-Oahu,OAH_E,FRF_S,4,2,2
-Oahu,OAH_Kaena,FRF_D,4,2,2
-Oahu,OAH_Kaena,FRF_M,3,3,3
-Oahu,OAH_Kaena,FRF_S,3,2,2
-Oahu,OAH_N,FRF_D,3,2,2
-Oahu,OAH_N,FRF_M,3,4,4
-Oahu,OAH_N,FRF_S,3,2,2
-Oahu,OAH_NE,FRF_D,3,3,3
-Oahu,OAH_NE,FRF_M,5,4,4
-Oahu,OAH_NE,FRF_S,5,23,23
-Oahu,OAH_S,FRF_D,6,2,2
-Oahu,OAH_S,FRF_M,9,8,8
-Oahu,OAH_S,FRF_S,10,12,12
-,,,,,
-French Frigate Shoals,FFS,FRF_D,6,2,2
-French Frigate Shoals,FFS,FRF_M,10,9,9
-French Frigate Shoals,FFS,FRF_S,5,2,2
-French Frigate Shoals,FFS,LAG_M,5,8,8
-French Frigate Shoals,FFS,LAG_S,5,3,3
-French Frigate Shoals,FFS,PRS_D,8,9,9
-French Frigate Shoals,FFS,PRS_M,8,5,5
-Kure Atoll,KUR,FRF_D,10,22,22
-Kure Atoll,KUR,FRF_M,9,8,8
-Kure Atoll,KUR,FRF_S,5,2,2
-Kure Atoll,KUR,LAG_M,3,,3
-Kure Atoll,KUR,LAG_S,3,,3
-Lisianski Island,LIS,FRF_D,12,18,18
-Lisianski Island,LIS,FRF_M,14,12,12
-Lisianski Island,LIS,FRF_S,6,2,2
-Pearl and Hermes Atolls,PHR,FRF_D,10,5,5
-Pearl and Hermes Atolls,PHR,FRF_M,11,20,20
-Pearl and Hermes Atolls,PHR,FRF_S,6,2,2
-Pearl and Hermes Atolls,PHR,LAG_M,6,,6
-Pearl and Hermes Atolls,PHR,LAG_S,8,14,14
+ISLAND,Island_Code,SECTOR,sector_id,STRATUM,FISH SITES,SFM SITES,MAP SITES
+Hawaii,haw,HAW_Hamakua,haw_hamak,FRF_D,5,6,6
+Hawaii,haw,HAW_Hamakua,haw_hamak,FRF_M,6,9,9
+Hawaii,haw,HAW_Hamakua,haw_hamak,FRF_S,2,2,2
+Hawaii,haw,HAW_Kona,haw_kona,FRF_D,6,7,7
+Hawaii,haw,HAW_Kona,haw_kona,FRF_M,15,11,15
+Hawaii,haw,HAW_Kona,haw_kona,FRF_S,8,6,8
+Hawaii,haw,HAW_Puna,haw_puna,FRF_D,7,4,7
+Hawaii,haw,HAW_Puna,haw_puna,FRF_M,6,9,9
+Hawaii,haw,HAW_Puna,haw_puna,FRF_S,4,2,4
+Hawaii,haw,HAW_SE,haw_se,FRF_D,3,2,3
+Hawaii,haw,HAW_SE,haw_se,FRF_M,4,4,4
+Hawaii,haw,HAW_SE,haw_se,FRF_S,3,2,3
+Kahoolawe,kah,KAH_N,kah_north,FRF_D,4,4,4
+Kahoolawe,kah,KAH_N,kah_north,FRF_M,3,7,7
+Kahoolawe,kah,KAH_N,kah_north,FRF_S,3,4,4
+Kahoolawe,kah,KAH_S,kah_south,FRF_D,3,2,3
+Kahoolawe,kah,KAH_S,kah_south,FRF_M,3,2,3
+Kahoolawe,kah,KAH_S,kah_south,FRF_S,3,4,4
+Kauai,kau,KAU_E,kau_east,FRF_D,5,2,5
+Kauai,kau,KAU_E,kau_east,FRF_M,9,9,9
+Kauai,kau,KAU_E,kau_east,FRF_S,5,4,5
+Kauai,kau,KAU_Napali,kau_napali,FRF_D,4,2,4
+Kauai,kau,KAU_Napali,kau_napali,FRF_M,4,5,5
+Kauai,kau,KAU_Napali,kau_napali,FRF_S,2,2,2
+Lanai,lan,LAN_N,lan_north,FRF_D,3,2,3
+Lanai,lan,LAN_N,lan_north,FRF_M,3,6,6
+Lanai,lan,LAN_N,lan_north,FRF_S,3,2,3
+Lanai,lan,LAN_S,lan_south,FRF_D,3,2,3
+Lanai,lan,LAN_S,lan_south,FRF_M,9,4,9
+Lanai,lan,LAN_S,lan_south,FRF_S,6,8,8
+Maui,mai,MAI_Hana,mai_hana,FRF_D,2,,2
+Maui,mai,MAI_Hana,mai_hana,FRF_M,3,,3
+Maui,mai,MAI_Hana,mai_hana,FRF_S,4,,4
+Maui,mai,MAI_Kihei,mai_kihei,FRF_D,4,4,4
+Maui,mai,MAI_Kihei,mai_kihei,FRF_M,5,9,9
+Maui,mai,MAI_Kihei,mai_kihei,FRF_S,6,7,7
+Maui,mai,MAI_Lahaina,mai_lahaina,FRF_D,6,2,6
+Maui,mai,MAI_Lahaina,mai_lahaina,FRF_M,5,4,5
+Maui,mai,MAI_Lahaina,mai_lahaina,FRF_S,5,4,5
+Maui,mai,MAI_NE,mai_ne,FRF_D,4,7,7
+Maui,mai,MAI_NE,mai_ne,FRF_M,4,3,4
+Maui,mai,MAI_NE,mai_ne,FRF_S,2,4,4
+Maui,mai,MAI_NW,mai_nw,FRF_D,4,,4
+Maui,mai,MAI_NW,mai_nw,FRF_M,4,,4
+Maui,mai,MAI_NW,mai_nw,FRF_S,3,,3
+Maui,mai,MAI_SE,mai_se,FRF_D,4,4,4
+Maui,mai,MAI_SE,mai_se,FRF_M,4,7,7
+Maui,mai,MAI_SE,mai_se,FRF_S,3,2,3
+Molokai,mol,MOL_NW,mol_nw,FRF_D,4,2,4
+Molokai,mol,MOL_NW,mol_nw,FRF_M,4,2,4
+Molokai,mol,MOL_NW,mol_nw,FRF_S,3,,3
+Molokai,mol,MOL_Pali,mol_pali,FRF_D,5,2,5
+Molokai,mol,MOL_Pali,mol_pali,FRF_M,4,2,4
+Molokai,mol,MOL_Pali,mol_pali,FRF_S,3,2,3
+Molokai,mol,MOL_S,mol_south,FRF_D,3,3,3
+Molokai,mol,MOL_S,mol_south,FRF_M,5,9,9
+Molokai,mol,MOL_S,mol_south,FRF_S,6,10,10
+Molokai,mol,MOL_W,mol_west,FRF_D,4,2,4
+Molokai,mol,MOL_W,mol_west,FRF_M,4,4,4
+Molokai,mol,MOL_W,mol_west,FRF_S,3,2,3
+Niihau,nii,NII_E,nii_east,FRF_D,4,2,4
+Niihau,nii,NII_E,nii_east,FRF_M,4,2,4
+Niihau,nii,NII_E,nii_east,FRF_S,3,,3
+Lehua,leh,NII_Lehua,nii_lehua,FRF_D,2,2,2
+Lehua,leh,NII_Lehua,nii_lehua,FRF_M,5,2,5
+Lehua,leh,NII_Lehua,nii_lehua,FRF_S,3,2,3
+Niihau,nii,NII_W,nii_west,FRF_D,3,2,3
+Niihau,nii,NII_W,nii_west,FRF_M,5,2,5
+Niihau,nii,NII_W,nii_west,FRF_S,2,2,2
+Oahu,oah,OAH_E,oah_east,FRF_D,2,6,6
+Oahu,oah,OAH_E,oah_east,FRF_M,4,5,5
+Oahu,oah,OAH_E,oah_east,FRF_S,4,2,4
+Oahu,oah,OAH_Kaena,oah_kaena,FRF_D,4,2,4
+Oahu,oah,OAH_Kaena,oah_kaena,FRF_M,3,3,3
+Oahu,oah,OAH_Kaena,oah_kaena,FRF_S,3,2,3
+Oahu,oah,OAH_N,oah_north,FRF_D,3,2,3
+Oahu,oah,OAH_N,oah_north,FRF_M,3,4,4
+Oahu,oah,OAH_N,oah_north,FRF_S,3,2,3
+Oahu,oah,OAH_NE,oah_ne,FRF_D,3,3,3
+Oahu,oah,OAH_NE,oah_ne,FRF_M,5,4,5
+Oahu,oah,OAH_NE,oah_ne,FRF_S,5,23,23
+Oahu,oah,OAH_S,oah_south,FRF_D,6,2,6
+Oahu,oah,OAH_S,oah_south,FRF_M,9,8,9
+Oahu,oah,OAH_S,oah_south,FRF_S,10,12,12
+French Frigate Shoals,ffs,FFS,ffs_sector,FRF_D,6,2,6
+French Frigate Shoals,ffs,FFS,ffs_sector,FRF_M,10,9,10
+French Frigate Shoals,ffs,FFS,ffs_sector,FRF_S,5,2,5
+French Frigate Shoals,ffs,FFS,ffs_sector,LAG_M,5,8,8
+French Frigate Shoals,ffs,FFS,ffs_sector,LAG_S,5,3,5
+French Frigate Shoals,ffs,FFS,ffs_sector,PRS_D,8,9,9
+French Frigate Shoals,ffs,FFS,ffs_sector,PRS_M,8,5,8
+Kure Atoll,kur,KUR,kur_sector,FRF_D,10,22,22
+Kure Atoll,kur,KUR,kur_sector,FRF_M,9,8,9
+Kure Atoll,kur,KUR,kur_sector,FRF_S,5,2,5
+Kure Atoll,kur,KUR,kur_sector,LAG_M,3,,3
+Kure Atoll,kur,KUR,kur_sector,LAG_S,3,,3
+Lisianski Island,lis,LIS,lis_sector,FRF_D,12,18,18
+Lisianski Island,lis,LIS,lis_sector,FRF_M,14,12,14
+Lisianski Island,lis,LIS,lis_sector,FRF_S,6,2,6
+Pearl and Hermes Atolls,phr,PHR,phr_sector,FRF_D,10,5,10
+Pearl and Hermes Atolls,phr,PHR,phr_sector,FRF_M,11,20,20
+Pearl and Hermes Atolls,phr,PHR,phr_sector,FRF_S,6,2,6
+Pearl and Hermes Atolls,phr,PHR,phr_sector,LAG_M,6,,6
+Pearl and Hermes Atolls,phr,PHR,phr_sector,LAG_S,8,14,14
