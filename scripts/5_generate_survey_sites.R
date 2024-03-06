@@ -152,12 +152,11 @@ for (i in 1:length(islands)) {
     load(paste0("outputs/sector_keys/", islands[i], "_itinerary.Rdata"))
     
     tab$strat_sets_alt = tab$MAP_SITES
+    tab$strat_sets_alt <- ifelse(tab$strat_sets_alt < 10, tab$strat_sets_alt * 3, tab$strat_sets_alt * 2)
     
     tab = tab[, c("strat", "strat_sets_alt")]
     
     strat_det = left_join(strat_det, tab)
-    
-    # less than 10 *3, more than 10 *2
     
     strat_det$strat_sets_adj = ifelse(strat_det$strat_sets > strat_det$strat_sets_alt, 
                                       strat_det$strat_sets, 
