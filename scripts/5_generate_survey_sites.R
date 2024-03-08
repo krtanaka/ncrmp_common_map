@@ -56,6 +56,15 @@ islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"  
 islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI"    # Main Hawaiian Islands
 islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"                 # Northern Hawaiian Islands
 
+#######################################################################
+### the last known site number from data management for each island ###
+#######################################################################
+
+site_num = read_csv("data/misc/V_NCRMP_MAX_SITE_NUM_DATA.csv") %>%
+  mutate(MAX_SITE_NUM = sprintf("%04d", MAX_SITE_NUM),
+         ISLANDCODE = tolower(ISLANDCODE)) %>% 
+  select(ISLANDCODE, MAX_SITE_NUM)
+
 set.seed(2024)
 
 select = dplyr::select
@@ -66,7 +75,7 @@ select = dplyr::select
 
 for (i in 1:length(islands)) {
   
-  # i = 9
+  # i = 1
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData"))#; plot(survey_grid_ncrmp)
@@ -214,10 +223,23 @@ for (i in 1:length(islands)) {
   
   sets = inner_join(sets, nearby_sites)
   
-  # revise this later, id changes every year for every island  
-  id <- seq(1,dim(sets)[1],1)
-  id = sprintf("s_%04d", id)
-  id = gsub("s",  islands[i], id)
+  if (islands[i] %in% unique(site_num$ISLANDCODE) ) {
+    
+    id = site_num %>% filter(ISLANDCODE == islands[i])
+    id = id$MAX_SITE_NUM %>% as.numeric()
+    id = seq(id,id + dim(sets)[1]-1,1)
+    id = sprintf("s_%04d", id)
+    id = gsub("s",  toupper(islands[i]), id)
+    id = paste0(id, "A")
+    
+  }else{
+    
+    id <- seq(1,dim(sets)[1],1)
+    id = sprintf("s_%04d", id)
+    id = gsub("s",  islands[i], id)
+    id = paste0(id, "A")
+    
+  }
   
   # count number of distinct sim*year*cell combinations
   sets[, `:=`(cell_sets, .N), by = c("cell")]
@@ -231,8 +253,16 @@ for (i in 1:length(islands)) {
   sets$depth_bin = ifelse(sets$depth > 6  & sets$depth <= 18, "MID", sets$depth_bin) 
   sets$depth_bin = ifelse(sets$depth > 18, "DEEP", sets$depth_bin) 
   
+  sets$SITE_NO = substr(sets$id, 5, 8)
+  
+  colnames(sets)[1] = c("site_id")
+  sets = sets[,c("site_id", "SITE_NO", "x", "y", "longitude", "latitude", "depth",  "depth_bin", "strat")]
+  
+  sets_i = sets
+  colnames(sets_i) = toupper(colnames(sets_i))
+  
   cat(paste0("saving survey table for ", region, " ", islands[i], " to CSV...\n"))
-  readr::write_csv(sets, file = paste0("outputs/tables/survey_table_", region, "_", islands[i], ".csv"))
+  readr::write_csv(sets_i, file = paste0("outputs/tables/survey_table_", region, "_", islands[i], ".csv"))
   
   # #########################################
   # ## Export set table as two columns pdf ##
@@ -515,7 +545,7 @@ for (i in 1:length(islands)) {
       annotation_scale(location = "br", width_hint = 0.2, text_col = "black", bar_cols = "black", size = 5) +  # new_scale_color() +
       
       geom_label_repel(data = sets_i, 
-                       aes(longitude, latitude, label = id),
+                       aes(longitude, latitude, label = SITE_NO),
                        size = 5,
                        label.size = NA, 
                        alpha = 0.75, 
