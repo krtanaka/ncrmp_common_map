@@ -41,7 +41,9 @@ if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/usgsCeC
 if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/mhi_mbsyn_bathyonly_50m_v21_0.001deg.tif")
 if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Bathymetry_ETOPO_2022_v1_15s_all_units.nc")
 if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_51m_res.tif")
-if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_5m_res.tif")
+if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_30m_res.tif")
+if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_9m_res.tif")
+if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_3m_res.tif")
 
 default_proj = crs(topo)
 topo = as.data.frame(rasterToPoints(topo))
