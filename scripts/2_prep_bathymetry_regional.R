@@ -70,7 +70,7 @@ topo$depth = as.numeric(as.character(topo$depth))
 
 for (i in 1:length(islands)) {
   
-  # i = 4
+  # i = 1
   
   if (file.exists(paste0('data/gis_bathymetry/', islands[i], '.RData'))) {
     
@@ -84,6 +84,8 @@ for (i in 1:length(islands)) {
   topo_i = topo %>%
     subset(depth >= -30 & depth <= 0) %>%
     subset(x < box$xmax & x > box$xmin & y < box$ymax & y > box$ymin)
+  
+  gc()
   
   topo_i = rasterFromXYZ(topo_i)
   
