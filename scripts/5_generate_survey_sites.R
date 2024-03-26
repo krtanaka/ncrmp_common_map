@@ -447,24 +447,24 @@ for (i in 1:length(islands)) {
       
     })
     
-    # # use ggmap
-    # tryCatch({
-    #   
-    #   map = get_map(location = c(mean(sets_i$longitude, na.rm = T), mean(sets_i$latitude, na.rm = T)),
-    #                 maptype = "satellite",
-    #                 zoom = utm_i$Satellite,
-    #                 # color = "bw",
-    #                 force = T)
-    #   
-    # }, error = function(e){
-    #   
-    #   print("No sets available in this extent. Use full extent instead")
-    #   map <- get_map(location = c(mean(sets$longitude, na.rm = T), mean(sets$latitude, na.rm = T)),
-    #                  maptype = "satellite",
-    #                  zoom = utm_i$Satellite,
-    #                  # color = "bw",
-    #                  force = T)
-    # })
+    # use ggmap
+    tryCatch({
+
+      map = get_map(location = c(mean(sets_i$longitude, na.rm = T), mean(sets_i$latitude, na.rm = T)),
+                    maptype = "satellite",
+                    zoom = utm_i$Satellite,
+                    # color = "bw",
+                    force = T)
+
+    }, error = function(e){
+
+      print("No sets available in this extent. Use full extent instead")
+      map <- get_map(location = c(mean(sets$longitude, na.rm = T), mean(sets$latitude, na.rm = T)),
+                     maptype = "satellite",
+                     zoom = utm_i$Satellite,
+                     # color = "bw",
+                     force = T)
+    })
     
     
     # remove sector label outside of extent
@@ -508,11 +508,11 @@ for (i in 1:length(islands)) {
     
     map_i = 
       
-      ggplot() +
-      # ggmap(map) +
+      # ggplot() +
+      ggmap(map) +
       
-      geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "gray50", color = NA, alpha = 0.9) + # land shapefile
-      geom_path(data = ISL_this_i, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "gray10") + # coastline
+      # geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "gray50", color = NA, alpha = 0.9) + # land shapefile
+      # geom_path(data = ISL_this_i, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "gray10") + # coastline
       
       # display if there is more than 1 island sector
       
@@ -542,7 +542,7 @@ for (i in 1:length(islands)) {
       
       scale_fill_manual(name = "Depth", values = c("red", "goldenrod1", "green3"), na.translate = F) + 
       scale_shape_manual(name = "Depth", values = c(24, 22, 21), na.translate = F) +
-      annotation_scale(location = "br", width_hint = 0.2, text_col = "black", bar_cols = "black", size = 5) +  # new_scale_color() +
+      annotation_scale(location = "br", width_hint = 0.2, text_col = "white", bar_cols = "white", size = 5) +  # new_scale_color() +
       
       geom_label_repel(data = sets_i, 
                        aes(longitude, latitude, label = SITE_NO),
@@ -585,16 +585,16 @@ for (i in 1:length(islands)) {
   
   # Get map
   ext = c(min(sets$longitude, na.rm = T) - 0.001, max(sets$longitude, na.rm = T) + 0.001, min(sets$latitude, na.rm = T) - 0.001, max(sets$latitude, na.rm = T) + 0.001)
-  # map <- get_map(location = c(left = ext[1], bottom = ext[3], right = ext[2], top = ext[4]), maptype = 'satellite')
-  # map <- get_map(location = c(mean(sets$longitude, na.rm = T),
-  #                             mean(sets$latitude, na.rm = T)), 
-  #                zoom = utm_i$Satellite,
-  #                maptype = 'satellite')
+  map <- get_map(location = c(left = ext[1], bottom = ext[3], right = ext[2], top = ext[4]), maptype = 'satellite')
+  map <- get_map(location = c(mean(sets$longitude, na.rm = T),
+                              mean(sets$latitude, na.rm = T)),
+                 # zoom = utm_i$Satellite,
+                 maptype = 'satellite')
   
   whole_map = 
     
-    ggplot() +
-    # ggmap(map) + 
+    # ggplot() +
+    ggmap(map) +
     
     geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "gray10") + # coastline
     geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "gray50", color = NA, alpha = 0.9) + # land shapefile
