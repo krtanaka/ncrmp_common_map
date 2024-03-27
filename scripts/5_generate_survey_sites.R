@@ -179,6 +179,9 @@ for (i in 1:length(islands)) {
     
   }
   
+  cat(paste0("saving strata table for ", region, " ", islands[i], " to CSV...\n"))
+  readr::write_csv(strat_det, file = paste0("outputs/tables/strata_table_", region, "_", islands[i], ".csv"))
+  
   cells <- merge(cells, strat_det, by = c("strat")) 
   
   utm_i = utm %>% subset(Island_Code == islands[i])
@@ -696,3 +699,4 @@ for (i in 1:length(islands)) {
   file.remove(paste0("outputs/tables/survey_table_", region, "_", islands[i], ".pdf"))
   
 }
+
