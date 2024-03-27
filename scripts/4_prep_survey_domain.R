@@ -456,18 +456,5 @@ for (isl in 1:length(islands)) {
   save(survey_grid_ncrmp, file = paste0("data/survey_grid_ncrmp/survey_grid_", islands[isl], ".RData"))
   
   cat(paste0("... ", islands[isl], " survey domain generated ...\n"))
-  
-  default_proj = "+init=epsg:4326 +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"
-  crs(survey_grid_ncrmp) = default_proj
-  
-  # export strata as shapefiles
-  p <- raster::rasterToPolygons(survey_grid_ncrmp$strat, dissolve = TRUE); sp::plot(p)
-  sf_object <- st_as_sf(p)
-  shapefile_dir <- dirname(paste0("outputs/shapefiles/", islands[isl], "_strata.shp"))
-  if (!file.exists(shapefile_dir)) dir.create(shapefile_dir)
-  shapefile_dir <- paste0("outputs/shapefiles/", islands[isl], "_strata.shp")
-  st_write(sf_object, dsn = shapefile_dir, 
-           # layer = basename(shapefile_name),
-           driver = "ESRI Shapefile", append = FALSE)
-  
+
 }
