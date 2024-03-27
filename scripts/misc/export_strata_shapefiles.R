@@ -1,6 +1,6 @@
 ########################################
-###   # export strata as shapefiles
-# Calculate the aggregation factor ###
+### Exporting Strata as Shapefiles   ###
+### Calculate the aggregation factor ###
 ########################################
 
 rm(list = ls())
