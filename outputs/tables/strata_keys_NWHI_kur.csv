@@ -1,0 +1,4 @@
+strat,strat_nam,sector_id,reef_id,depth_bin_value
+1,deep_kur_sector_forereef,kur_sector,forereef,DEEP
+2,mid_kur_sector_forereef,kur_sector,forereef,MIDD
+3,shallow_kur_sector_forereef,kur_sector,forereef,SHAL
