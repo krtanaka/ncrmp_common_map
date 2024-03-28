@@ -1,0 +1,16 @@
+strat,strat_nam,sector_id,reef_id,depth_bin_value
+3,deep_oah_ne_forereef,oah_ne,forereef,DEEP
+8,mid_oah_ne_forereef,oah_ne,forereef,MIDD
+4,deep_oah_north_forereef,oah_north,forereef,DEEP
+13,shallow_oah_ne_forereef,oah_ne,forereef,SHAL
+9,mid_oah_north_forereef,oah_north,forereef,MIDD
+14,shallow_oah_north_forereef,oah_north,forereef,SHAL
+2,deep_oah_kaena_forereef,oah_kaena,forereef,DEEP
+7,mid_oah_kaena_forereef,oah_kaena,forereef,MIDD
+12,shallow_oah_kaena_forereef,oah_kaena,forereef,SHAL
+10,mid_oah_south_forereef,oah_south,forereef,MIDD
+15,shallow_oah_south_forereef,oah_south,forereef,SHAL
+5,deep_oah_south_forereef,oah_south,forereef,DEEP
+1,deep_oah_east_forereef,oah_east,forereef,DEEP
+6,mid_oah_east_forereef,oah_east,forereef,MIDD
+11,shallow_oah_east_forereef,oah_east,forereef,SHAL
