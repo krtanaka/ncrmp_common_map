@@ -1,0 +1,7 @@
+strat,strat_nam,sector_id,reef_id,depth_bin_value
+1,deep_lan_north_forereef,lan_north,forereef,DEEP
+3,mid_lan_north_forereef,lan_north,forereef,MIDD
+5,shallow_lan_north_forereef,lan_north,forereef,SHAL
+2,deep_lan_south_forereef,lan_south,forereef,DEEP
+4,mid_lan_south_forereef,lan_south,forereef,MIDD
+6,shallow_lan_south_forereef,lan_south,forereef,SHAL

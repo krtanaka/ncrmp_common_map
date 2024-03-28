@@ -423,8 +423,8 @@ for (isl in 1:length(islands)) {
   tab <- tab %>% dplyr::select(sector_id, reef_id, strat, strat_nam, depth_bin_value)
   tab <- tab %>% filter(!duplicated(tab))
   tab = tab %>% dplyr::select(strat, strat_nam, sector_id, reef_id, depth_bin_value)
-  # save(tab,file = paste0("outputs/sector_keys/", islands[isl], ".RData"))
-  write_csv(tab, file = paste0("outputs/sector_keys/", islands[isl], ".csv"))
+  save(tab,file = paste0("outputs/sector_keys/", islands[isl], ".RData"))
+  write_csv(tab, file = paste0("outputs/tables/strata_keys_", region, "_", islands[isl], ".csv"))
   
   png(paste0("outputs/maps/strata_", islands[isl], ".png"), height = 10, width = 12, res = 500, units = "in")
   

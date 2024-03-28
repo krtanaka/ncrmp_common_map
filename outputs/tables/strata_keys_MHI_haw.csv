@@ -1,0 +1,13 @@
+strat,strat_nam,sector_id,reef_id,depth_bin_value
+1,deep_haw_hamak_forereef,haw_hamak,forereef,DEEP
+5,mid_haw_hamak_forereef,haw_hamak,forereef,MIDD
+9,shallow_haw_hamak_forereef,haw_hamak,forereef,SHAL
+2,deep_haw_kona_forereef,haw_kona,forereef,DEEP
+6,mid_haw_kona_forereef,haw_kona,forereef,MIDD
+10,shallow_haw_kona_forereef,haw_kona,forereef,SHAL
+3,deep_haw_puna_forereef,haw_puna,forereef,DEEP
+7,mid_haw_puna_forereef,haw_puna,forereef,MIDD
+11,shallow_haw_puna_forereef,haw_puna,forereef,SHAL
+12,shallow_haw_se_forereef,haw_se,forereef,SHAL
+8,mid_haw_se_forereef,haw_se,forereef,MIDD
+4,deep_haw_se_forereef,haw_se,forereef,DEEP

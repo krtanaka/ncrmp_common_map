@@ -1,0 +1,10 @@
+strat,strat_nam,sector_id,reef_id,depth_bin_value
+2,deep_nii_lehua_forereef,nii_lehua,forereef,DEEP
+5,mid_nii_lehua_forereef,nii_lehua,forereef,MIDD
+8,shallow_nii_lehua_forereef,nii_lehua,forereef,SHAL
+3,deep_nii_west_forereef,nii_west,forereef,DEEP
+6,mid_nii_west_forereef,nii_west,forereef,MIDD
+9,shallow_nii_west_forereef,nii_west,forereef,SHAL
+7,shallow_nii_east_forereef,nii_east,forereef,SHAL
+4,mid_nii_east_forereef,nii_east,forereef,MIDD
+1,deep_nii_east_forereef,nii_east,forereef,DEEP

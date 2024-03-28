@@ -1,0 +1,13 @@
+strat,strat_nam,sector_id,reef_id,depth_bin_value
+1,deep_mol_nw_forereef,mol_nw,forereef,DEEP
+4,deep_mol_west_forereef,mol_west,forereef,DEEP
+5,mid_mol_nw_forereef,mol_nw,forereef,MIDD
+8,mid_mol_west_forereef,mol_west,forereef,MIDD
+9,shallow_mol_nw_forereef,mol_nw,forereef,SHAL
+12,shallow_mol_west_forereef,mol_west,forereef,SHAL
+2,deep_mol_pali_forereef,mol_pali,forereef,DEEP
+6,mid_mol_pali_forereef,mol_pali,forereef,MIDD
+10,shallow_mol_pali_forereef,mol_pali,forereef,SHAL
+7,mid_mol_south_forereef,mol_south,forereef,MIDD
+3,deep_mol_south_forereef,mol_south,forereef,DEEP
+11,shallow_mol_south_forereef,mol_south,forereef,SHAL
