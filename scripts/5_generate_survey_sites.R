@@ -262,7 +262,13 @@ for (i in 1:length(islands)) {
   sets = sets[,c("site_id", "SITE_NO", "x", "y", "longitude", "latitude", "depth",  "depth_bin", "strat")]
   
   sets_i = sets
+  key_i = read_csv(paste0("outputs/tables/strata_keys_", region, "_", islands[i], ".csv"))
+  
+  sets_i = left_join(sets_i, key_i)
+  
   colnames(sets_i) = toupper(colnames(sets_i))
+  
+  sets_i = sets_i[,c("SITE_ID", "SITE_NO", "X", "Y", "LONGITUDE", "LATITUDE", "DEPTH_BIN", "REEF_ID")]
   
   cat(paste0("saving survey table for ", region, " ", islands[i], " to CSV...\n"))
   readr::write_csv(sets_i, file = paste0("outputs/tables/survey_table_", region, "_", islands[i], ".csv"))
