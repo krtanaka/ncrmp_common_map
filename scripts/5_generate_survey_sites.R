@@ -69,6 +69,8 @@ set.seed(2024)
 
 select = dplyr::select
 
+ggmap::register_google("AIzaSyDpirvA5gB7bmbEbwB1Pk__6jiV4SXAEcY")
+
 #################################################################
 ### Generate survey site tables & maps, check outputs/ folder ###
 #################################################################
