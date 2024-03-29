@@ -448,15 +448,10 @@ for (isl in 1:length(islands)) {
   strat = rasterFromXYZ(df[,c("longitude", "latitude", "strat")])#; plot(strat)
   depth = rasterFromXYZ(df[,c("longitude", "latitude", "depth")])#; plot(depth)
 
-  df$strat_nam = factor(df$strat_nam)
-  strat[] = factor(levels(df$strat_nam)[strat[]])
-  
   values = raster::values
   
   survey_grid_ncrmp = stack(cell, division, strat, depth)
   survey_grid_ncrmp$strat = round(survey_grid_ncrmp$strat, digits = 0)
-  
-  survey_grid_ncrmp$strat = factor(levels(df$strat_nam)[survey_grid_ncrmp$strat[]])
   
   values(survey_grid_ncrmp$division) = ifelse(is.na(values(survey_grid_ncrmp$division)), NA, 1)
   survey_grid_ncrmp = readAll(survey_grid_ncrmp)

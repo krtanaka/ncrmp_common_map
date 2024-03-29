@@ -45,18 +45,25 @@ for (isl in 1:length(islands)) {
   current_resolution <- res(strat)[1]
   factor <- desired_resolution / current_resolution
   strat <- aggregate(strat, fact = factor, fun = mean)
+  strat <- round(strat$strat)
+  names(strat) = "strat"
   
   p <- raster::rasterToPolygons(strat, dissolve = TRUE)
+  
+  key = read_csv(paste0("outputs/tables/strata_keys_", region, "_", islands[isl], ".csv"))
+  strat_nam_vector <- setNames(key$strat_nam, key$strat)
+  p$strat_nam <- strat_nam_vector[as.character(p$strat)]
   
   sf_object <- st_as_sf(p)
   
   plot(sf_object["strat"])
+  plot(sf_object["strat_nam"])
   
   shapefile_dir <- dirname(paste0("outputs/shapefiles/", islands[isl], "_strata.shp"))
   
   if (!file.exists(shapefile_dir)) dir.create(shapefile_dir)
-  
   shapefile_dir <- paste0("outputs/shapefiles/", islands[isl], "_strata.shp")
+  
   st_write(sf_object, dsn = shapefile_dir, 
            # layer = basename(shapefile_name),
            driver = "ESRI Shapefile", append = FALSE)
