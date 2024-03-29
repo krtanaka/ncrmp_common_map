@@ -423,6 +423,7 @@ for (isl in 1:length(islands)) {
   tab <- tab %>% dplyr::select(sector_id, reef_id, strat, strat_nam, depth_bin_value)
   tab <- tab %>% filter(!duplicated(tab))
   tab = tab %>% dplyr::select(strat, strat_nam, sector_id, reef_id, depth_bin_value)
+  
   save(tab,file = paste0("outputs/sector_keys/", islands[isl], ".RData"))
   write_csv(tab, file = paste0("outputs/tables/strata_keys_", region, "_", islands[isl], ".csv"))
   
@@ -446,17 +447,21 @@ for (isl in 1:length(islands)) {
   division = rasterFromXYZ(df[,c("longitude", "latitude", "division")])#; plot(division)
   strat = rasterFromXYZ(df[,c("longitude", "latitude", "strat")])#; plot(strat)
   depth = rasterFromXYZ(df[,c("longitude", "latitude", "depth")])#; plot(depth)
+
+  df$strat_nam = factor(df$strat_nam)
+  strat[] = factor(levels(df$strat_nam)[strat[]])
   
   values = raster::values
   
   survey_grid_ncrmp = stack(cell, division, strat, depth)
   survey_grid_ncrmp$strat = round(survey_grid_ncrmp$strat, digits = 0)
-  values(survey_grid_ncrmp$division) = ifelse(is.na(values(survey_grid_ncrmp$division)), NA, 1)
   
+  survey_grid_ncrmp$strat = factor(levels(df$strat_nam)[survey_grid_ncrmp$strat[]])
+  
+  values(survey_grid_ncrmp$division) = ifelse(is.na(values(survey_grid_ncrmp$division)), NA, 1)
   survey_grid_ncrmp = readAll(survey_grid_ncrmp)
   
   save(survey_grid_ncrmp, file = paste0("data/survey_grid_ncrmp/survey_grid_", islands[isl], ".RData"))
-  
   cat(paste0("... ", islands[isl], " survey domain generated ...\n"))
 
 }
