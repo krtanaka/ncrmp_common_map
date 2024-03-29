@@ -270,6 +270,10 @@ for (i in 1:length(islands)) {
   
   sets_i = sets_i[,c("SITE_ID", "SITE_NO", "X", "Y", "LONGITUDE", "LATITUDE", "DEPTH_BIN", "REEF_ID")]
   
+  sets_i <- sets_i %>% 
+    mutate_if(is.numeric, round, digits = 4) %>% 
+    mutate_if(is.character, toupper)
+  
   cat(paste0("saving survey table for ", region, " ", islands[i], " to CSV...\n"))
   readr::write_csv(sets_i, file = paste0("outputs/tables/survey_table_", region, "_", islands[i], ".csv"))
   

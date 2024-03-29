@@ -29,11 +29,13 @@ desired_resolution <- 0.5
 
 for (isl in 1:length(islands)) {
   
-  # isl = 1
+  # isl = 7
   
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[isl], ".RData"))
   
-  cat(paste0("converting raster strata for ", islands[isl], " to shp at ", desired_resolution, " km resolution ...\n"))
+  cat(paste0("converting rasterized strata layer to shapefile for ", 
+             islands[isl], " at ", 
+             desired_resolution, " km resolution ...\n"))
   
   default_proj = "+init=epsg:4326 +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"
   crs(survey_grid_ncrmp) = default_proj
@@ -53,6 +55,7 @@ for (isl in 1:length(islands)) {
   shapefile_dir <- dirname(paste0("outputs/shapefiles/", islands[isl], "_strata.shp"))
   
   if (!file.exists(shapefile_dir)) dir.create(shapefile_dir)
+  
   shapefile_dir <- paste0("outputs/shapefiles/", islands[isl], "_strata.shp")
   st_write(sf_object, dsn = shapefile_dir, 
            # layer = basename(shapefile_name),
