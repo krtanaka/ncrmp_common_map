@@ -17,6 +17,8 @@ library(ggspatial)
 library(ggthemes)
 library(ggmap)
 
+select = dplyr::select
+
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
 ########################################################################
