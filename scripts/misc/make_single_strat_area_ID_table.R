@@ -1,7 +1,6 @@
-########################################
-### Exporting Strata as Shapefiles   ###
-### Calculate the aggregation factor ###
-########################################
+###################################################
+### Exporting Strata ID, Areas as single tables ###
+###################################################
 
 rm(list = ls())
 
