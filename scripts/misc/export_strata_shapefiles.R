@@ -25,11 +25,11 @@ islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"  
 islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI"    # Main Hawaiian Islands
 islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"                 # Northern Hawaiian Islands
 
-desired_resolution <- 0.5
+desired_resolution <- 0.01
 
-for (isl in 1:length(islands)) {
+for (isl in 4:length(islands)) {
   
-  # isl = 7
+  # isl = 1
   
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[isl], ".RData"))
   
