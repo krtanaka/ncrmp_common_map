@@ -29,7 +29,7 @@ desired_resolution <- 0.01
 
 for (isl in 4:length(islands)) {
   
-  # isl = 1
+  # isl = 7
   
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[isl], ".RData"))
   
