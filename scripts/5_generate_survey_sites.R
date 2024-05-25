@@ -201,23 +201,41 @@ for (i in 1:length(islands)) {
   # remove sites that are closer than 100 m
   nearby_sites <- data.frame(longitude = sets$longitude, latitude = sets$latitude)#; plot(nearby_sites, pch = 20, col = 2, axes = F)
   
-  coordinates(nearby_sites) <- c('longitude', 'latitude')
-  proj4string(nearby_sites) <- CRS("+proj=longlat +ellps=WGS84 +datum=WGS84")
-  nearby_sites <- spTransform(nearby_sites, CRS(paste0("+proj=utm +units=m +zone=", utm_i$UTM_Zone, " ", utm_i$Hemisphere)))##
+  library(geosphere)
+  remove_close_points <- function(data, threshold = 100) {
+    keep <- rep(TRUE, nrow(data))
+    for (i in 1:(nrow(data) - 1)) {
+      if (keep[i]) {
+        dists <- distm(data[i, c("longitude", "latitude")], data[(i+1):nrow(data), c("longitude", "latitude")], fun = distHaversine)
+        close_points <- which(dists < threshold)
+        if (length(close_points) > 0) {
+          keep[(i + close_points)] <- FALSE
+        }
+      }
+    }
+    data[keep, ]
+  }
   
-  library(rgeos)
-  points_matrix <- gWithinDistance(nearby_sites, dist = 100, byid = T)
-  points_matrix[lower.tri(points_matrix, diag = T)] <- NA
-  points_matrix
+  nearby_sites <- remove_close_points(nearby_sites, 100)#; points(nearby_sites, pch = 20, col = 4)
   
-  colSums(points_matrix, na.rm = T) == 0
-  
-  v <- colSums(points_matrix, na.rm = T) == 0
-  
-  nearby_sites <- spTransform(nearby_sites, CRS("+proj=longlat +ellps=WGS84 +datum=WGS84"))
-  nearby_sites = as.data.frame(nearby_sites)
-  
-  nearby_sites = nearby_sites[v, ]#; points(nearby_sites, pch = 20, col = 4)
+  ### geos got deprecated so this is getting commendted out
+  # coordinates(nearby_sites) <- c('longitude', 'latitude')
+  # proj4string(nearby_sites) <- CRS("+proj=longlat +ellps=WGS84 +datum=WGS84")
+  # nearby_sites <- spTransform(nearby_sites, CRS(paste0("+proj=utm +units=m +zone=", utm_i$UTM_Zone, " ", utm_i$Hemisphere)))##
+  # 
+  # library(rgeos)
+  # points_matrix <- gWithinDistance(nearby_sites, dist = 100, byid = T)
+  # points_matrix[lower.tri(points_matrix, diag = T)] <- NA
+  # points_matrix
+  # 
+  # colSums(points_matrix, na.rm = T) == 0
+  # 
+  # v <- colSums(points_matrix, na.rm = T) == 0
+  # 
+  # nearby_sites <- spTransform(nearby_sites, CRS("+proj=longlat +ellps=WGS84 +datum=WGS84"))
+  # nearby_sites = as.data.frame(nearby_sites)
+  # 
+  # nearby_sites = nearby_sites[v, ]#; points(nearby_sites, pch = 20, col = 4)
   
   colnames(nearby_sites) = c("longitude", "latitude")
   nearby_sites$latitude = round(nearby_sites$latitude, 4)

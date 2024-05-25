@@ -4,12 +4,13 @@
 
 # Load required libraries
 library(raster)      # For working with raster data
-library(rgeos)       # For geometric operations on spatial data
+# library(rgeos)       # For geometric operations on spatial data
 library(dplyr)       # For data manipulation
 library(readr)       # For reading CSV files
 library(colorRamps)  # For color ramp functions
 library(ggrepel)     # For repelling overlapping text labels in ggplot2
-library(sf)          # For simple features, a modern approach to spatial data
+library(sf)
+library(sp)         # For simple features, a modern approach to spatial data
 library(patchwork)   # For combining ggplot2 plots
 
 # Clear the workspace
@@ -34,8 +35,11 @@ shp_list = shp_list[c(1, 3:5)]; shp_list
 ### CFR_RestrictedAreas_Hawaii ###
 ##################################
 
-dat <- shapefile(shp_list[1], verbose = T)
-dat <- gBuffer(dat, byid = TRUE, width = buffer_distance)
+dat <- shapefile(shp_list[1], verbose = T); plot(dat)
+# dat <- gBuffer(dat, byid = TRUE, width = buffer_distance)
+dat <- st_as_sf(dat)
+dat <- st_buffer(dat, dist = buffer_distance)
+dat <- as(dat, "Spatial"); plot(dat)
 
 unique(dat$Name)
 
@@ -125,8 +129,11 @@ save(raster_and_table, file = "data/gis_sector/mhi_restricted_areas_kau_oah_a.RD
 ### eCFR_Area ###
 #################
 
-dat <- shapefile(shp_list[2], verbose = T)
-dat <- gBuffer(dat, byid = TRUE, width = buffer_distance)
+dat <- shapefile(shp_list[2], verbose = T); plot(dat)
+# dat <- gBuffer(dat, byid = TRUE, width = buffer_distance)
+dat <- st_as_sf(dat)
+dat <- st_buffer(dat, dist = buffer_distance)
+dat <- as(dat, "Spatial"); plot(dat)
 
 unique(dat$SafetyZone)
 
@@ -220,8 +227,11 @@ sites = c(#"Paiko Lagoon WS",
           "Hanauma Bay MLCD")
 
 dat <- shapefile(shp_list[4], verbose = T)
-dat = dat %>% subset(Site_Label %in% sites)
-dat <- gBuffer(dat, byid = TRUE, width = buffer_distance)
+dat = dat %>% subset(Site_Label %in% sites); plot(dat)
+# dat <- gBuffer(dat, byid = TRUE, width = buffer_distance)
+dat <- st_as_sf(dat)
+dat <- st_buffer(dat, dist = buffer_distance)
+dat <- as(dat, "Spatial"); plot(dat)
 
 unique(dat$Site_Label)
 
@@ -288,7 +298,7 @@ ggplot() +
 
 raster_and_table = list(raster, table)
 
-save(raster_and_table, file = "data/gis_sector/mhi_restricted_areas_oah_lan_mau.RData")
+save(raster_and_table, file = "data/gis_sector/mhi_restricted_areas_oah_lan_mai.RData")
 
 
 #######################################
@@ -302,8 +312,11 @@ sites = c("Lapakahi MLCD",
           "Kealakekua Bay MLCD")
 
 dat <- shapefile(shp_list[4], verbose = T)
-dat = dat %>% subset(Site_Label %in% sites)
-dat <- gBuffer(dat, byid = TRUE, width = buffer_distance)
+dat = dat %>% subset(Site_Label %in% sites); plot(dat)
+# dat <- gBuffer(dat, byid = TRUE, width = buffer_distance)
+dat <- st_as_sf(dat)
+dat <- st_buffer(dat, dist = buffer_distance)
+dat <- as(dat, "Spatial"); plot(dat)
 
 ggplot(st_as_sf(dat)) +
   geom_sf(aes(fill = Site_Name)) +
@@ -376,8 +389,11 @@ save(raster_and_table, file = "data/gis_sector/mhi_restricted_areas_haw.RData")
 ### exported as kmz, converted to shp    ###
 ############################################
 
-dat <- shapefile(shp_list[3], verbose = T)
-dat <- gBuffer(dat, byid = TRUE, width = buffer_distance)
+dat <- shapefile(shp_list[3], verbose = T); plot(dat)
+# dat <- gBuffer(dat, byid = TRUE, width = buffer_distance)
+dat <- st_as_sf(dat)
+dat <- st_buffer(dat, dist = buffer_distance)
+dat <- as(dat, "Spatial"); plot(dat)
 
 ggplot(st_as_sf(dat)) +
   geom_sf(aes(fill = Name)) +
