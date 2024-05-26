@@ -1,6 +1,7 @@
 ###############################################
 ### generate stratified-random survey sites ###
 ###############################################
+
 rm(list = ls())
 
 # library(SimSurvey)
