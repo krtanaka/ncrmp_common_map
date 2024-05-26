@@ -59,6 +59,9 @@ for (isl in 4:length(islands)) {
   plot(sf_object["strat"])
   plot(sf_object["strat_nam"])
   
+  # plot(sf_object["strat_nam"] %>% filter(strat_nam %in% c("deep_mai_hana_forereef", "mid_mai_hana_forereef", "shallow_mai_hana_forereef")))
+  # plot(sf_object["strat_nam"] %>% filter(strat_nam %in% c("deep_mai_nw_forereef", "mid_mai_nw_forereef", "shallow_mai_nw_forereef")))
+  
   shapefile_dir <- dirname(paste0("outputs/shapefiles/", islands[isl], "_strata.shp"))
   
   if (!file.exists(shapefile_dir)) dir.create(shapefile_dir)
