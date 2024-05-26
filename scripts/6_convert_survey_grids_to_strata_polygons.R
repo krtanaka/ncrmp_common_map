@@ -13,8 +13,6 @@ keys = list.files("./outputs/sector_keys/", full.names = T)
 
 for(i in 1:length(grids)){
   
-  # for(i in c(7,9,22)){
-  
   # i = 22
   # Get the right grid and sector key
   
@@ -22,6 +20,12 @@ for(i in 1:length(grids)){
   grid_isl = substr(grid_file, 38, 40)
   
   keys_file = keys[which(substr(keys, 23, 25) == grid_isl)]
+  
+  if (length(keys_file) > 1) {
+    
+    keys_file = keys_file[2]
+    
+  }
   
   #load raster and convert into SpatRaster
   load(grid_file) #called survey_grid_ncrmp
