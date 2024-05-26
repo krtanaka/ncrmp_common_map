@@ -44,9 +44,9 @@ strat_id,strat_nam,sector_id,reef_id,depth_bin_value,strat_area,island,region
 22,shallow_mai_ne_forereef,mai_ne,forereef,SHAL,3.20882,mai,MHI
 10,mid_mai_kahului_forereef,mai_kahului,forereef,MIDD,8.42065,mai,MHI
 18,shallow_mai_kahului_forereef,mai_kahului,forereef,SHAL,4.3107,mai,MHI
-19,shallow_mai_kihei_forereef,mai_kihei,forereef,SHAL,3.24084,mai,MHI
-11,mid_mai_kihei_forereef,mai_kihei,forereef,MIDD,8.26169,mai,MHI
-3,deep_mai_kihei_forereef,mai_kihei,forereef,DEEP,5.80806,mai,MHI
+19,shallow_mai_kihei_forereef,mai_kihei,forereef,SHAL,2.90787,mai,MHI
+11,mid_mai_kihei_forereef,mai_kihei,forereef,MIDD,6.97897,mai,MHI
+3,deep_mai_kihei_forereef,mai_kihei,forereef,DEEP,4.87367,mai,MHI
 9,mid_mai_hana_forereef,mai_hana,forereef,MIDD,3.15911,mai,MHI
 1,deep_mai_hana_forereef,mai_hana,forereef,DEEP,2.79807,mai,MHI
 17,shallow_mai_hana_forereef,mai_hana,forereef,SHAL,1.6443,mai,MHI

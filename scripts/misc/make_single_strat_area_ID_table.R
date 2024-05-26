@@ -28,7 +28,7 @@ df_all = NULL
 
 for (isl in 1:length(islands)) {
   
-  # isl = 7
+  # isl = 6
   
   key = read_csv(paste0("outputs/tables/strata_keys_", region, "_", islands[isl], ".csv"))
   table = read_csv(paste0("outputs/tables/strata_table_", region, "_", islands[isl], ".csv"))
