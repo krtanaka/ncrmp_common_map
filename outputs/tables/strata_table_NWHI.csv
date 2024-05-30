@@ -25,6 +25,7 @@ strat_id,strat_nam,sector_id,reef_id,depth_bin_value,strat_area,island,region
 3,shallow_mid_sector_forereef,mid_sector,forereef,SHAL,61.26305,mid,NWHI
 1,deep_phr_sector_forereef,phr_sector,forereef,DEEP,11.726,phr,NWHI
 2,mid_phr_sector_forereef,phr_sector,forereef,MIDD,0.40607,phr,NWHI
-5,shallow_phr_sector_lagoon,phr_sector,lagoon,SHAL,109.5465,phr,NWHI
-4,shallow_phr_sector_forereef,phr_sector,forereef,SHAL,2e-4,phr,NWHI
+6,shallow_phr_sector_lagoon,phr_sector,lagoon,SHAL,109.5465,phr,NWHI
+5,shallow_phr_sector_forereef,phr_sector,forereef,SHAL,2e-4,phr,NWHI
 3,mid_phr_sector_lagoon,phr_sector,lagoon,MIDD,2.92862,phr,NWHI
+4,shallow_phr_sector_backreef,phr_sector,backreef,SHAL,0.001,phr,NWHI

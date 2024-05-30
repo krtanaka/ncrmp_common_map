@@ -399,9 +399,15 @@ for (isl in 1:length(islands)) {
   } else if (islands[isl] %in% c("kur", "phr")) {
     
     df = df %>%
-      subset(reef_id %in% c( "forereef", "outer back reef", "inner back reef", "outer lagoon", "inner lagoon")) %>% # keep backreef and lagoon
+      subset(reef_id %in% c( "forereef", 
+                             "back reef",
+                             "outer back reef", 
+                             "inner back reef",
+                             "outer lagoon", 
+                             "inner lagoon")) %>% # keep backreef and lagoon
       mutate(reef_id = ifelse(reef_id == "outer back reef", "backreef", reef_id),
              reef_id = ifelse(reef_id == "inner back reef", "backreef", reef_id),
+             reef_id = ifelse(reef_id == "back reef", "backreef", reef_id),
              reef_id = ifelse(reef_id == "outer lagoon", "lagoon", reef_id),
              reef_id = ifelse(reef_id == "inner lagoon", "lagoon", reef_id)) %>% 
       subset(hardsoft_id %in% c("hard", "unknown")) # filter for sector
