@@ -114,7 +114,7 @@ for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  # shp_i = 18
+  # shp_i = 14
   
   island_name = tolower(substr(shp_list[shp_i], 37, 39)); island_name
   
@@ -131,7 +131,7 @@ for (shp_i in 1:length(shp_list)) {
   
   plot(dat); axis(1); axis(2)
 
-  dat = dat[c(names(dat) %in% c("Zone", "REEF_ZONE"))]
+  dat = dat[c(names(dat) %in% c("Zone", "Zones", "REEF_ZONE"))]
   
   names(dat) = "Reef"
   
