@@ -42,9 +42,9 @@ for (isl in 4:length(islands)) {
   
   strat <- survey_grid_ncrmp$strat
 
-  current_resolution <- res(strat)[1]
-  factor <- desired_resolution / current_resolution
-  strat <- aggregate(strat, fact = factor, fun = mean)
+  # current_resolution <- res(strat)[1]
+  # factor <- desired_resolution / current_resolution
+  # strat <- aggregate(strat, fact = factor, fun = mean)
   strat <- round(strat$strat)
   names(strat) = "strat"
   
