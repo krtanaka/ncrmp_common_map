@@ -1,9 +1,10 @@
 strat,strat_nam,sector_id,reef_id,depth_bin_value
 1,deep_ffs_sector_forereef,ffs_sector,forereef,DEEP
-3,mid_ffs_sector_forereef,ffs_sector,forereef,MIDD
-2,deep_ffs_sector_protected slope,ffs_sector,protected slope,DEEP
-6,shallow_ffs_sector_forereef,ffs_sector,forereef,SHAL
-5,mid_ffs_sector_protected slope,ffs_sector,protected slope,MIDD
-8,shallow_ffs_sector_protected slope,ffs_sector,protected slope,SHAL
-4,mid_ffs_sector_lagoon,ffs_sector,lagoon,MIDD
-7,shallow_ffs_sector_lagoon,ffs_sector,lagoon,SHAL
+4,mid_ffs_sector_forereef,ffs_sector,forereef,MIDD
+3,deep_ffs_sector_protected slope,ffs_sector,protected slope,DEEP
+7,shallow_ffs_sector_forereef,ffs_sector,forereef,SHAL
+6,mid_ffs_sector_protected slope,ffs_sector,protected slope,MIDD
+9,shallow_ffs_sector_protected slope,ffs_sector,protected slope,SHAL
+5,mid_ffs_sector_lagoon,ffs_sector,lagoon,MIDD
+8,shallow_ffs_sector_lagoon,ffs_sector,lagoon,SHAL
+2,deep_ffs_sector_lagoon,ffs_sector,lagoon,DEEP
