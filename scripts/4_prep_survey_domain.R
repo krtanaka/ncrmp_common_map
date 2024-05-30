@@ -396,7 +396,7 @@ for (isl in 1:length(islands)) {
       subset(reef_id %in% c( "forereef", "reef crest/reef flat")) %>% # keep reef crest/reef flat to emphasize east side of swain
       subset(hardsoft_id %in% c("hard", "unknown")) # filter for sector
     
-  } else if (islands[isl] == "kur") {
+  } else if (islands[isl] %in% c("kur", "phr")) {
     
     df = df %>%
       subset(reef_id %in% c( "forereef", "outer back reef", "inner back reef", "outer lagoon", "inner lagoon")) %>% # keep backreef and lagoon
