@@ -497,7 +497,7 @@ for (i in 1:length(islands)) {
       print("No sets available in this extent. Use full extent instead")
       map <- get_map(location = c(mean(sets$longitude, na.rm = T), mean(sets$latitude, na.rm = T)),
                      maptype = "satellite",
-                     zoom = utm_i$Satellite,
+                     # zoom = utm_i$Satellite,
                      # color = "bw",
                      force = T)
     })

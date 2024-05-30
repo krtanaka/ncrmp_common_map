@@ -1,15 +1,17 @@
 strat_id,strat_nam,sector_id,reef_id,depth_bin_value,strat_area,island,region
-1,deep_ffs_sector_forereef,ffs_sector,forereef,DEEP,1.4237,ffs,NWHI
-3,mid_ffs_sector_forereef,ffs_sector,forereef,MIDD,5.75007,ffs,NWHI
-2,deep_ffs_sector_protected slope,ffs_sector,protected slope,DEEP,186.71442,ffs,NWHI
-6,shallow_ffs_sector_forereef,ffs_sector,forereef,SHAL,4.2e-4,ffs,NWHI
-5,mid_ffs_sector_protected slope,ffs_sector,protected slope,MIDD,22.16512,ffs,NWHI
-8,shallow_ffs_sector_protected slope,ffs_sector,protected slope,SHAL,0.01397,ffs,NWHI
-4,mid_ffs_sector_lagoon,ffs_sector,lagoon,MIDD,5.44167,ffs,NWHI
-7,shallow_ffs_sector_lagoon,ffs_sector,lagoon,SHAL,5.7e-4,ffs,NWHI
-1,deep_kur_sector_forereef,kur_sector,forereef,DEEP,15.63435,kur,NWHI
-2,mid_kur_sector_forereef,kur_sector,forereef,MIDD,15.21835,kur,NWHI
-3,shallow_kur_sector_forereef,kur_sector,forereef,SHAL,48.37102,kur,NWHI
+1,deep_ffs_sector_forereef,ffs_sector,forereef,DEEP,1.42387,ffs,NWHI
+4,mid_ffs_sector_forereef,ffs_sector,forereef,MIDD,5.7487,ffs,NWHI
+3,deep_ffs_sector_protected slope,ffs_sector,protected slope,DEEP,186.7133,ffs,NWHI
+7,shallow_ffs_sector_forereef,ffs_sector,forereef,SHAL,4.2e-4,ffs,NWHI
+6,mid_ffs_sector_protected slope,ffs_sector,protected slope,MIDD,22.11545,ffs,NWHI
+9,shallow_ffs_sector_protected slope,ffs_sector,protected slope,SHAL,0.01397,ffs,NWHI
+5,mid_ffs_sector_lagoon,ffs_sector,lagoon,MIDD,5.49302,ffs,NWHI
+8,shallow_ffs_sector_lagoon,ffs_sector,lagoon,SHAL,5.7e-4,ffs,NWHI
+2,deep_ffs_sector_lagoon,ffs_sector,lagoon,DEEP,9.5e-4,ffs,NWHI
+3,shallow_kur_sector_backreef,kur_sector,backreef,SHAL,48.37102,kur,NWHI
+1,mid_kur_sector_backreef,kur_sector,backreef,MIDD,15.63435,kur,NWHI
+4,shallow_kur_sector_lagoon,kur_sector,lagoon,SHAL,NA,kur,NWHI
+2,mid_kur_sector_lagoon,kur_sector,lagoon,MIDD,15.21835,kur,NWHI
 1,mid_lay_sector_forereef,lay_sector,forereef,MIDD,11.3348,lay,NWHI
 2,shallow_lay_sector_forereef,lay_sector,forereef,SHAL,1.6604,lay,NWHI
 2,mid_lis_sector_forereef,lis_sector,forereef,MIDD,143.93501,lis,NWHI
@@ -21,6 +23,8 @@ strat_id,strat_nam,sector_id,reef_id,depth_bin_value,strat_area,island,region
 1,deep_mid_sector_forereef,mid_sector,forereef,DEEP,14.20275,mid,NWHI
 2,mid_mid_sector_forereef,mid_sector,forereef,MIDD,21.4855,mid,NWHI
 3,shallow_mid_sector_forereef,mid_sector,forereef,SHAL,61.26305,mid,NWHI
-1,deep_phr_sector_forereef,phr_sector,forereef,DEEP,12.38405,phr,NWHI
-2,mid_phr_sector_forereef,phr_sector,forereef,MIDD,188.99097,phr,NWHI
-3,shallow_phr_sector_forereef,phr_sector,forereef,SHAL,153.0386,phr,NWHI
+1,deep_phr_sector_forereef,phr_sector,forereef,DEEP,11.726,phr,NWHI
+2,mid_phr_sector_forereef,phr_sector,forereef,MIDD,0.40607,phr,NWHI
+5,shallow_phr_sector_lagoon,phr_sector,lagoon,SHAL,109.5465,phr,NWHI
+4,shallow_phr_sector_forereef,phr_sector,forereef,SHAL,2e-4,phr,NWHI
+3,mid_phr_sector_lagoon,phr_sector,lagoon,MIDD,2.92862,phr,NWHI
