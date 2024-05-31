@@ -184,6 +184,9 @@ for (i in 1:length(islands)) {
     
   }
   
+  strat_det = strat_det %>% 
+    mutate(strat_sets = ifelse(strat_sets > strat_cells, strat_cells, strat_sets))
+  
   cat(paste0("saving strata table for ", region, " ", islands[i], " to CSV...\n"))
   readr::write_csv(strat_det, file = paste0("outputs/tables/strata_table_", region, "_", islands[i], ".csv"))
   
