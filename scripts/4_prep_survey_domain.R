@@ -399,6 +399,7 @@ for (isl in 1:length(islands)) {
   } else if (islands[isl] %in% c("kur", "phr")) {
     
     df = df %>%
+      mutate(reef_id = coalesce(reef_id, "forereef")) %>% 
       subset(reef_id %in% c( "forereef", 
                              "back reef",
                              "outer back reef", 
@@ -463,7 +464,7 @@ for (isl in 1:length(islands)) {
   division = rasterFromXYZ(df[,c("longitude", "latitude", "division")])#; plot(division)
   strat = rasterFromXYZ(df[,c("longitude", "latitude", "strat")])#; plot(strat)
   depth = rasterFromXYZ(df[,c("longitude", "latitude", "depth")])#; plot(depth)
-
+  
   values = raster::values
   
   survey_grid_ncrmp = stack(cell, division, strat, depth)
@@ -474,5 +475,5 @@ for (isl in 1:length(islands)) {
   
   save(survey_grid_ncrmp, file = paste0("data/survey_grid_ncrmp/survey_grid_", islands[isl], ".RData"))
   cat(paste0("... ", islands[isl], " survey domain generated ...\n"))
-
+  
 }
