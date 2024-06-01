@@ -22,7 +22,7 @@ islands = c("gua", "rot", "sai", "tin", "agu")[2:5]; region = "MARIAN" # South M
 islands = c("ofu", "ros", "swa", "tau", "tut")[2]; region = "SAMOA" # American Samoa, but Swa is not included
 # islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs" # Pacific Remote Island Areas
 islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI" # Main Hawaiian Islands
-# islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI" # Northern Hawaiian Islands
+islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI" # Northern Hawaiian Islands
 
 # Read in CSV files containing island extents and island name codes
 island_boxes = read_csv("data/misc/Island_Extents.csv") # Updated Bounding boxes 2021
@@ -37,6 +37,7 @@ rm(island_names_codes, island_boxes)
 # Load the appropriate bathymetry raster file based on the selected region
 if(region == "MARIAN") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/mariana_trench_6_msl_2012.nc")
 if(region == "SAMOA") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/pago_pago_3_mhw_2009.nc")
+if(region == "NWHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Bathymetry_HURL_NWHI_60m_all_units.nc")
 if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/usgsCeCrm10.nc")
 if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/mhi_mbsyn_bathyonly_50m_v21_0.001deg.tif")
 if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Bathymetry_ETOPO_2022_v1_15s_all_units.nc")
@@ -106,7 +107,7 @@ for (i in 1:length(islands)) {
   plot(topo_i)
   print(islands[i])
   
-  save(topo_i, file = paste0('data/gis_bathymetry/', islands[i], '.RData'))
+  save(topo_i, file = paste0('data/gis_bathymetry/', islands[i], '_regional.RData'))
   
 }
 

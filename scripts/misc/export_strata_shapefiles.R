@@ -29,7 +29,7 @@ desired_resolution <- 0.01
 
 for (isl in 4:length(islands)) {
   
-  # isl = 7
+  # isl = 6
   
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[isl], ".RData"))
   
@@ -45,7 +45,7 @@ for (isl in 4:length(islands)) {
   # current_resolution <- res(strat)[1]
   # factor <- desired_resolution / current_resolution
   # strat <- aggregate(strat, fact = factor, fun = mean)
-  strat <- round(strat$strat)
+  strat <- round(strat$strat, 0)
   names(strat) = "strat"
   
   p <- raster::rasterToPolygons(strat, dissolve = TRUE)
