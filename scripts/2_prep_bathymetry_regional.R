@@ -107,7 +107,7 @@ for (i in 1:length(islands)) {
   plot(topo_i)
   print(islands[i])
   
-  save(topo_i, file = paste0('data/gis_bathymetry/', islands[i], '_regional.RData'))
+  save(topo_i, file = paste0('data/gis_bathymetry/', islands[i], '_b.RData'))
   
 }
 
