@@ -8,6 +8,8 @@ library(dplyr)       # For data manipulation
 library(readr)       # For reading CSV files
 library(colorRamps)  # For color ramp functions
 library(ggrepel)     # For repelling overlapping text labels in ggplot2
+library(sf)
+library(sp)
 
 # Clear the workspace
 rm(list = ls())
@@ -30,22 +32,28 @@ for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  # shp_i = 5
+  # shp_i = 7
   
   island_name = tolower(substr(shp_list[shp_i], 37, 39)); island_name
   
   utm_i = utm %>% subset(Island_Code == island_name)
   
-  dat <- shapefile(shp_list[shp_i], verbose = T)
+  
+  dat = shapefile(shp_list[shp_i], verbose = T)
+  
+  # import as sf dataframe if shp takes too long to read (e.g., ffs)
+  # dat = st_read(shp_list[shp_i])
+  # # dat = as(dat, "SpatialPolygonsDataFrame")
+  # dat = as(dat, "Spatial")
   
   # proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2)
-  dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2)
+  dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84'))#; plot(dat); degAxis(1); degAxis(2)
   
   # determine northern or southern hemisphere
   if (median((dat@bbox[2,])) > 0) dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +north')))
   if (median((dat@bbox[2,])) < 0) dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +south')))
   
-  plot(dat); axis(1); axis(2)
+  # plot(dat); axis(1); axis(2)
   
   dat = dat[c(names(dat) %in% c("HardSoft"))]
   
