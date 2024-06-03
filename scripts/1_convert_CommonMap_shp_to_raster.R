@@ -128,7 +128,12 @@ for (shp_i in 1:length(shp_list)) {
   
   utm_i = utm %>% subset(Island_Code == island_name)
   
-  dat <- shapefile(shp_list[shp_i], verbose = T)
+  # dat = shapefile(shp_list[shp_i], verbose = T)
+  
+  # import as sf dataframe if shp takes too long to read (e.g., ffs)
+  dat = st_read(shp_list[shp_i])
+  # dat = as(dat, "SpatialPolygonsDataFrame")
+  dat = as(dat, "Spatial")
   
   # proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2)
   dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2)
