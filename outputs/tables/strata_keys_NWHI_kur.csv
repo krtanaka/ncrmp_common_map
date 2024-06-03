@@ -2,7 +2,7 @@ strat,strat_nam,sector_id,reef_id,depth_bin_value
 1,deep_kur_sector_forereef,kur_sector,forereef,DEEP
 3,mid_kur_sector_forereef,kur_sector,forereef,MIDD
 6,shallow_kur_sector_forereef,kur_sector,forereef,SHAL
-5,shallow_kur_sector_backreef,kur_sector,backreef,SHAL
 2,mid_kur_sector_backreef,kur_sector,backreef,MIDD
+5,shallow_kur_sector_backreef,kur_sector,backreef,SHAL
 7,shallow_kur_sector_lagoon,kur_sector,lagoon,SHAL
 4,mid_kur_sector_lagoon,kur_sector,lagoon,MIDD

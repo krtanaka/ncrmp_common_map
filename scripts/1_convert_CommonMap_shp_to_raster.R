@@ -39,15 +39,17 @@ for (shp_i in 1:length(shp_list)) {
   utm_i = utm %>% subset(Island_Code == island_name)
   
   
-  dat = shapefile(shp_list[shp_i], verbose = T)
+  # dat = shapefile(shp_list[shp_i], verbose = T)
   
   # import as sf dataframe if shp takes too long to read (e.g., ffs)
-  # dat = st_read(shp_list[shp_i])
-  # # dat = as(dat, "SpatialPolygonsDataFrame")
-  # dat = as(dat, "Spatial")
+  dat = st_read(shp_list[shp_i])
+  # dat = as(dat, "SpatialPolygonsDataFrame")
+  dat = as(dat, "Spatial")
   
-  # proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2)
-  dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84'))#; plot(dat); degAxis(1); degAxis(2)
+  # proj4string(dat) <- CRS("+proj=longlat +datum=WGS84")
+  dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84'))
+  
+  # plot(dat); degAxis(1); degAxis(2)
   
   # determine northern or southern hemisphere
   if (median((dat@bbox[2,])) > 0) dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +north')))
@@ -135,15 +137,17 @@ for (shp_i in 1:length(shp_list)) {
   # dat = as(dat, "SpatialPolygonsDataFrame")
   dat = as(dat, "Spatial")
   
-  # proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2)
-  dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2)
+  # proj4string(dat) <- CRS("+proj=longlat +datum=WGS84")
+  dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84'))
+  
+  # plot(dat); degAxis(1); degAxis(2)
   
   # determine northern or southern hemisphere
   if (median((dat@bbox[2,])) > 0) dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +north')))
   if (median((dat@bbox[2,])) < 0) dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +south')))
   
-  plot(dat); axis(1); axis(2)
-
+  # plot(dat); axis(1); axis(2)
+  
   dat = dat[c(names(dat) %in% c("Zone", "Zones", "REEF_ZONE"))]
   
   names(dat) = "Reef"
@@ -221,16 +225,23 @@ for (shp_i in 1:length(shp_list)) {
   
   utm_i = utm %>% subset(Island_Code == island_name)
   
-  dat <- shapefile(shp_list[shp_i], verbose = T)
+  # dat = shapefile(shp_list[shp_i], verbose = T)
   
-  # proj4string(dat) <- CRS("+proj=longlat +datum=WGS84"); plot(dat); degAxis(1); degAxis(2)
-  dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84')); plot(dat); degAxis(1); degAxis(2)
+  # import as sf dataframe if shp takes too long to read (e.g., ffs)
+  dat = st_read(shp_list[shp_i])
+  # dat = as(dat, "SpatialPolygonsDataFrame")
+  dat = as(dat, "Spatial")
+  
+  # proj4string(dat) <- CRS("+proj=longlat +datum=WGS84")
+  dat <- spTransform(dat, CRS('+proj=longlat +datum=WGS84'))
+  
+  # plot(dat); degAxis(1); degAxis(2)
   
   # determine northern or southern hemisphere
   if (median((dat@bbox[2,])) > 0) dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +north')))
   if (median((dat@bbox[2,])) < 0) dat <- spTransform(dat, CRS(paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +south')))
   
-  plot(dat); axis(1); axis(2)
+  # plot(dat); axis(1); axis(2)
   
   dat = dat[c(names(dat) %in% c("SEC_NAME", "Sanctuary"))]
   

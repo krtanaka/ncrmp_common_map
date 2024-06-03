@@ -26,9 +26,13 @@ islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"   
 
 for (isl in 1:length(islands)) {
   
-  # isl = 6
+  # isl = 2
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
+  
+  if (file.exists(paste0("data/gis_bathymetry/", islands[isl], "_merged.RData"))) {
+    load(paste0("data/gis_bathymetry/", islands[isl], "_merged.RData"))
+  }
   
   cat(paste0("generating ", islands[isl], " survey domain ...\n"))
   
