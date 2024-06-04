@@ -54,6 +54,9 @@ for (isl in 1:length(islands)) {
     
     # using bathymetry raster as a placeholder bc there is no sector for this island
     load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
+    if (file.exists(paste0("data/gis_bathymetry/", islands[isl], "_merged.RData"))) {
+      load(paste0("data/gis_bathymetry/", islands[isl], "_merged.RData"))
+    }
     sector = topo_i
     sector[sector <= 0] <- 1
     sector_name = data.frame(ID = 1L, nam = paste0(islands[isl], "_sector"))
@@ -73,6 +76,9 @@ for (isl in 1:length(islands)) {
     
     # using bathymetry raster as a placeholder bc there is no reef data for this island
     load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
+    if (file.exists(paste0("data/gis_bathymetry/", islands[isl], "_merged.RData"))) {
+      load(paste0("data/gis_bathymetry/", islands[isl], "_merged.RData"))
+    }
     reef = topo_i
     reef[reef <= 0] <- 1
     reef_name = data.frame(ID = 1L, nam = "forereef")
@@ -92,6 +98,9 @@ for (isl in 1:length(islands)) {
     
     # using bathymetry raster as a placeholder bc there is no reef data for this island
     load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
+    if (file.exists(paste0("data/gis_bathymetry/", islands[isl], "_merged.RData"))) {
+      load(paste0("data/gis_bathymetry/", islands[isl], "_merged.RData"))
+    }
     hardsoft = topo_i
     hardsoft[hardsoft <= 0] <- 1
     hardsoft_name = data.frame(ID = 1L, nam = "hard")
@@ -111,6 +120,9 @@ for (isl in 1:length(islands)) {
     
     # using bathymetry raster as a placeholder bc there is no reef data for this island
     load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
+    if (file.exists(paste0("data/gis_bathymetry/", islands[isl], "_merged.RData"))) {
+      load(paste0("data/gis_bathymetry/", islands[isl], "_merged.RData"))
+    }
     buffer = topo_i
     buffer[buffer <= 0] <- 1
     buffer_name = data.frame(ID = 1L, nam = paste0(islands[isl], "_5km_buffer"))
@@ -127,6 +139,9 @@ for (isl in 1:length(islands)) {
     
     # using bathymetry raster as a placeholder bc there is no reef data for this island
     load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
+    if (file.exists(paste0("data/gis_bathymetry/", islands[isl], "_merged.RData"))) {
+      load(paste0("data/gis_bathymetry/", islands[isl], "_merged.RData"))
+    }
     boxes = topo_i
     boxes[boxes <= 0] <- 1
     boxes_name = data.frame(ID = 1L, nam = paste0(islands[isl], "_box"))
