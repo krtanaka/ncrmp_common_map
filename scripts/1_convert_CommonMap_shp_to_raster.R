@@ -38,7 +38,6 @@ for (shp_i in 1:length(shp_list)) {
   
   utm_i = utm %>% subset(Island_Code == island_name)
   
-  
   # dat = shapefile(shp_list[shp_i], verbose = T)
   
   # import as sf dataframe if shp takes too long to read (e.g., ffs)
@@ -57,7 +56,9 @@ for (shp_i in 1:length(shp_list)) {
   
   # plot(dat); axis(1); axis(2)
   
-  dat = dat[c(names(dat) %in% c("HardSoft"))]
+  dat = dat[c(names(dat) %in% c("HardSoft", "hard_soft"))]
+  
+  names(dat) = "HardSoft"
   
   # dat <- dat[dat$HardSoft %in% c("Hard", "hard", "Unknown", "unknown"),]
   
