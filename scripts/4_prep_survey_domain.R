@@ -26,7 +26,7 @@ islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"   
 
 for (isl in 1:length(islands)) {
   
-  # isl = 7
+  # isl = 1
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -289,7 +289,9 @@ for (isl in 1:length(islands)) {
   } 
   
   # Convert raster to data frame and add cell numbers
-  df <- as.data.frame(rasterToPoints(df))
+  # df <- as.data.frame(rasterToPoints(df))
+  df <- terra::as.data.frame(df, xy = TRUE, na.rm = FALSE) 
+  
   df$cell <- 1:nrow(df)
   df$cell <- as.numeric(df$cell)
   
