@@ -165,7 +165,9 @@ for (i in 1:length(islands)) {
     
     load(paste0("outputs/sector_keys/", islands[i], "_itinerary.Rdata"))
     
-    tab$strat_sets_alt = tab$MAP_SITES
+    tab$strat_sets_alt = tab$MAP_SITES %>% as.numeric()
+    tab$strat_sets_alt = tab$FISH_MAX_SITES %>% as.numeric()
+    
     tab$strat_sets_alt <- ifelse(tab$strat_sets_alt < 10, tab$strat_sets_alt * 3, tab$strat_sets_alt * 2)
     
     tab = tab[, c("strat", "strat_sets_alt")]

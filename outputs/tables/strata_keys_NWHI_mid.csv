@@ -1,4 +1,8 @@
 strat,strat_nam,sector_id,reef_id,depth_bin_value
 1,deep_mid_sector_forereef,mid_sector,forereef,DEEP
-2,mid_mid_sector_forereef,mid_sector,forereef,MIDD
-3,shallow_mid_sector_forereef,mid_sector,forereef,SHAL
+3,mid_mid_sector_forereef,mid_sector,forereef,MIDD
+6,shallow_mid_sector_forereef,mid_sector,forereef,SHAL
+5,shallow_mid_sector_backreef,mid_sector,backreef,SHAL
+7,shallow_mid_sector_lagoon,mid_sector,lagoon,SHAL
+4,mid_mid_sector_lagoon,mid_sector,lagoon,MIDD
+2,mid_mid_sector_backreef,mid_sector,backreef,MIDD

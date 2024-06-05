@@ -26,7 +26,7 @@ islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"   
 
 for (isl in 1:length(islands)) {
   
-  # isl = 2
+  # isl = 7
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -54,9 +54,11 @@ for (isl in 1:length(islands)) {
     
     # using bathymetry raster as a placeholder bc there is no sector for this island
     load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
+    
     if (file.exists(paste0("data/gis_bathymetry/", islands[isl], "_merged.RData"))) {
       load(paste0("data/gis_bathymetry/", islands[isl], "_merged.RData"))
     }
+    
     sector = topo_i
     sector[sector <= 0] <- 1
     sector_name = data.frame(ID = 1L, nam = paste0(islands[isl], "_sector"))
@@ -76,9 +78,11 @@ for (isl in 1:length(islands)) {
     
     # using bathymetry raster as a placeholder bc there is no reef data for this island
     load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
+    
     if (file.exists(paste0("data/gis_bathymetry/", islands[isl], "_merged.RData"))) {
       load(paste0("data/gis_bathymetry/", islands[isl], "_merged.RData"))
     }
+    
     reef = topo_i
     reef[reef <= 0] <- 1
     reef_name = data.frame(ID = 1L, nam = "forereef")
@@ -98,9 +102,11 @@ for (isl in 1:length(islands)) {
     
     # using bathymetry raster as a placeholder bc there is no reef data for this island
     load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
+    
     if (file.exists(paste0("data/gis_bathymetry/", islands[isl], "_merged.RData"))) {
       load(paste0("data/gis_bathymetry/", islands[isl], "_merged.RData"))
     }
+    
     hardsoft = topo_i
     hardsoft[hardsoft <= 0] <- 1
     hardsoft_name = data.frame(ID = 1L, nam = "hard")
@@ -120,9 +126,11 @@ for (isl in 1:length(islands)) {
     
     # using bathymetry raster as a placeholder bc there is no reef data for this island
     load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
+    
     if (file.exists(paste0("data/gis_bathymetry/", islands[isl], "_merged.RData"))) {
       load(paste0("data/gis_bathymetry/", islands[isl], "_merged.RData"))
     }
+    
     buffer = topo_i
     buffer[buffer <= 0] <- 1
     buffer_name = data.frame(ID = 1L, nam = paste0(islands[isl], "_5km_buffer"))
@@ -139,9 +147,11 @@ for (isl in 1:length(islands)) {
     
     # using bathymetry raster as a placeholder bc there is no reef data for this island
     load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
+    
     if (file.exists(paste0("data/gis_bathymetry/", islands[isl], "_merged.RData"))) {
       load(paste0("data/gis_bathymetry/", islands[isl], "_merged.RData"))
     }
+    
     boxes = topo_i
     boxes[boxes <= 0] <- 1
     boxes_name = data.frame(ID = 1L, nam = paste0(islands[isl], "_box"))
@@ -363,6 +373,8 @@ for (isl in 1:length(islands)) {
     ggplot(aes(x, y, fill = depth_bin)) + 
     geom_raster() + 
     theme_map() +
+    scale_fill_discrete("") + 
+    ggtitle("depth_bins") + 
     theme(panel.background = element_rect(fill = "gray10"),
           panel.grid = element_line(color = "gray15"),
           legend.background = element_rect(fill = "transparent"), 
@@ -373,6 +385,8 @@ for (isl in 1:length(islands)) {
     ggplot(aes(x, y,  fill = sector_id)) + 
     geom_raster() +
     theme_map() +
+    scale_fill_discrete("") + 
+    ggtitle("sector") + 
     theme(panel.background = element_rect(fill = "gray10"),
           panel.grid = element_line(color = "gray15"),
           legend.background = element_rect(fill = "transparent"), 
@@ -383,6 +397,8 @@ for (isl in 1:length(islands)) {
     ggplot(aes(x, y,  fill = reef_id)) + 
     geom_raster() +
     theme_map() +
+    scale_fill_discrete("") + 
+    ggtitle("reef_type") + 
     theme(panel.background = element_rect(fill = "gray10"),
           panel.grid = element_line(color = "gray15"),
           legend.background = element_rect(fill = "transparent"), 
@@ -393,17 +409,19 @@ for (isl in 1:length(islands)) {
     ggplot(aes(x, y, fill = hardsoft_id)) + 
     geom_raster() +
     theme_map() +
+    scale_fill_discrete("") + 
+    ggtitle("benthic_type") + 
     theme(panel.background = element_rect(fill = "gray10"),
           panel.grid = element_line(color = "gray15"),
           legend.background = element_rect(fill = "transparent"), 
           legend.text = element_text(color = "white"),           
           legend.title = element_text(color = "white"))
   
-  png(paste0("outputs/maps/base_layers_", islands[isl], ".png"), height = 10, width = 12, res = 500, units = "in")
+  png(paste0("outputs/maps/base_layers_", region, "_", islands[isl], ".png"), height = 7, width = 7, res = 500, units = "in")
   print((p1 + p2) / (p3 + p4))
   dev.off()
   
-  if (islands[isl] %in% c("kin", "ros", "ffs")) {
+  if (islands[isl] %in% c("kin", "ros", "ffs", "mar", "mid")) {
     
     df = df %>%
       subset(reef_id %in% c( "forereef", "backreef", "lagoon", "protected slope")) %>% # filter land and Reef Crest/Reef Flat
@@ -432,12 +450,17 @@ for (isl in 1:length(islands)) {
              reef_id = ifelse(reef_id == "inner lagoon", "lagoon", reef_id)) %>% 
       subset(hardsoft_id %in% c("hard", "unknown")) # filter for sector
     
+  } else if (islands[isl] %in% c("lay")) {
+    
+    df = df %>%
+      subset(hardsoft_id %in% c("hard")) # filter for sector
+    
   } else {
     
     df = df %>%
       subset(sector_id != "GUA_LAND") %>% # filter sector
       subset(reef_id %in% c( "forereef")) %>% # filter land and Reef Crest/Reef Flat
-      subset(hardsoft_id %in% c("hard", "unknown", "other")) # filter for sector
+      subset(hardsoft_id %in% c("hard", "unknown", "other", "other delinations")) # filter for sector
     
   }
   
@@ -459,23 +482,26 @@ for (isl in 1:length(islands)) {
   tab <- tab %>% dplyr::select(sector_id, reef_id, strat, strat_nam, depth_bin_value)
   tab <- tab %>% filter(!duplicated(tab))
   tab = tab %>% dplyr::select(strat, strat_nam, sector_id, reef_id, depth_bin_value)
-  
-  save(tab,file = paste0("outputs/sector_keys/", islands[isl], ".RData"))
+  save(tab, file = paste0("outputs/sector_keys/", region, "_", islands[isl], ".RData"))
   write_csv(tab, file = paste0("outputs/tables/strata_keys_", region, "_", islands[isl], ".csv"))
   
-  png(paste0("outputs/maps/strata_", islands[isl], ".png"), height = 10, width = 12, res = 500, units = "in")
+  png(paste0("outputs/maps/strata_", region, "_", islands[isl], ".png"), height = 6, width = 8, res = 500, units = "in")
   
   print(df %>% 
           ggplot( aes(longitude, latitude, fill = factor(strat_nam))) + 
           geom_raster() + 
-          scale_fill_discrete("strata") + 
+          scale_fill_discrete("") + 
           # coord_fixed() +
-          theme_map() +
+          # theme_map() +
+          labs(x = "", y = "") + 
+          ggtitle(paste0(region, "_", islands[isl])) + 
           theme(panel.background = element_rect(fill = "gray10"),
-                panel.grid = element_line(color = "gray15"),
-                legend.background = element_rect(fill = "transparent"), 
-                legend.text = element_text(color = "white"),           
-                legend.title = element_text(color = "white")))
+                panel.grid = element_line(color = "gray15")
+                # ,
+                # legend.background = element_rect(fill = "transparent"), 
+                # legend.text = element_text(color = "white"),           
+                # legend.title = element_text(color = "white")
+          ))
   
   dev.off()
   
