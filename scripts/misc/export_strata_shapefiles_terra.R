@@ -22,7 +22,7 @@ domain_sf_object=NULL
 desired_resolution <- 0.01
 PLOT=FALSE
 
-for(reg in 1:6){
+for(reg in 5:6){
   if(reg ==1){
     islands = c("gua", "rot", "sai", "tin", "agu"); region = "S.MARIAN"                           # South Mariana Islands
   } else if(reg ==2){
@@ -54,7 +54,9 @@ for(reg in 1:6){
     survey_grid_ncrmp.t=as(survey_grid_ncrmp,"SpatRaster"); rm(list="survey_grid_ncrmp")
     
     #crs local utm setting
-    utm_proj = paste0("epsg:",utm$epsg[match(islands[isl],utm$Island_Code)])
+    #utm_proj = paste0("epsg:",utm$epsg[match(islands[isl],utm$Island_Code)])
+    utm_proj = paste0("+proj=utm +zone=",utm$UTM_Zone[match(islands[isl],utm$Island_Code)],
+                      " +",utm$Hemisphere[match(islands[isl],utm$Island_Code)]," +datum=WGS84 +units=km +no_defs +type=crs")
     terra::crs(survey_grid_ncrmp.t) = utm_proj
     
     #pull just the strata
@@ -91,6 +93,7 @@ for(reg in 1:6){
              driver = "ESRI Shapefile", append = FALSE)
     
     #tranform to universal WGS84
+    
     sf_object.84=st_transform(x = sf_object,crs = 4326)
     #bind into regional object
     regional_sf_object=rbind(regional_sf_object,sf_object.84)
