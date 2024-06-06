@@ -26,7 +26,7 @@ islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"   
 
 for (isl in 1:length(islands)) {
   
-  # isl = 4
+  # isl = 1
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -372,8 +372,21 @@ for (isl in 1:length(islands)) {
   
   load("data/spc/SURVEY MASTER.RData")
   utm_i = utm %>% filter(Island_Code == islands[isl])
-  sv = SURVEY_MASTER %>% filter(ISLAND == utm_i$Island) %>% select(LONGITUDE_LOV, LATITUDE_LOV) %>% na.omit()
-
+  sv = SURVEY_MASTER %>% 
+    mutate(ISLAND = gsub(" ", "_", ISLAND)) %>% 
+    filter(ISLAND == utm_i$Island) %>% 
+    dplyr::select(LONGITUDE_LOV, LATITUDE_LOV) %>% na.omit()
+  
+  get_utm <- function(x, y, zone, loc){
+    points = SpatialPoints(cbind(x, y), proj4string = CRS("+proj=longlat +datum=WGS84"))
+    points_utm = spTransform(points, CRS(paste0("+proj=utm +zone=", zone[1]," +ellps=WGS84 +north")))
+    if (loc == "x") {
+      return(coordinates(points_utm)[,1])
+    } else if (loc == "y") {
+      return(coordinates(points_utm)[,2])
+    }
+  }
+  
   xy_utm = data.frame(x = sv$LONGITUDE_LOV, y = sv$LATITUDE_LOV)  %>% 
     # mutate(zone2 = (floor((x + 180)/6) %% 60) + 1, keep = "all") %>% 
     mutate(zone2 = utm_i$UTM_Zone) %>%
@@ -381,60 +394,56 @@ for (isl in 1:length(islands)) {
     mutate(utm_x = get_utm(x, y, zone2, loc = "x"),
            utm_y = get_utm(x, y, zone2, loc = "y")) %>% 
     ungroup() %>% 
-    select(utm_x, utm_y) 
+    dplyr::select(utm_x, utm_y) 
   
   colnames(xy_utm) = c("X", "Y")
   sv = cbind(sv, xy_utm)
   
   p1 = ggplot() + 
     geom_raster(data = df, aes(x, y, fill = depth_bin)) +
-    geom_point(data = sv, aes(X, Y), color = "yellow") + 
+    geom_point(data = sv, aes(X, Y), color = "yellow", alpha = 0.8) + 
     theme_map() +
     scale_fill_discrete("") + 
     ggtitle("depth_bins") + 
     theme(panel.background = element_rect(fill = "gray10"),
           panel.grid = element_line(color = "gray15"),
           legend.background = element_rect(fill = "transparent"), 
-          legend.text = element_text(color = "white"),           
-          legend.title = element_text(color = "white"))
+          legend.text = element_text(size = 15, face = "bold", color = "white"))
   
   p2 = ggplot() + 
     geom_raster(data = df, aes(x, y, fill = sector_id)) +
-    geom_point(data = sv, aes(X, Y), color = "yellow") + 
+    geom_point(data = sv, aes(X, Y), color = "yellow", alpha = 0.8) + 
     theme_map() +
     scale_fill_discrete("") + 
     ggtitle("sector") + 
     theme(panel.background = element_rect(fill = "gray10"),
           panel.grid = element_line(color = "gray15"),
           legend.background = element_rect(fill = "transparent"), 
-          legend.text = element_text(color = "white"),           
-          legend.title = element_text(color = "white"))
+          legend.text = element_text(size = 15, face = "bold", color = "white"))
   
   p3 = ggplot() + 
     geom_raster(data = df, aes(x, y, fill = reef_id)) +
-    geom_point(data = sv, aes(X, Y), color = "yellow") + 
+    geom_point(data = sv, aes(X, Y), color = "yellow", alpha = 0.8) + 
     theme_map() +
     scale_fill_discrete("") + 
     ggtitle("reef_type") + 
     theme(panel.background = element_rect(fill = "gray10"),
           panel.grid = element_line(color = "gray15"),
           legend.background = element_rect(fill = "transparent"), 
-          legend.text = element_text(color = "white"),           
-          legend.title = element_text(color = "white"))
+          legend.text = element_text(size = 15, face = "bold", color = "white"))
   
   p4 = ggplot() + 
     geom_raster(data = df, aes(x, y, fill = hardsoft_id)) +
-    geom_point(data = sv, aes(X, Y), color = "yellow") + 
+    geom_point(data = sv, aes(X, Y), color = "yellow", alpha = 0.8) + 
     theme_map() +
     scale_fill_discrete("") + 
     ggtitle("benthic_type") + 
     theme(panel.background = element_rect(fill = "gray10"),
           panel.grid = element_line(color = "gray15"),
           legend.background = element_rect(fill = "transparent"), 
-          legend.text = element_text(color = "white"),           
-          legend.title = element_text(color = "white"))
+          legend.text = element_text(size = 15, face = "bold", color = "white"))
   
-  png(paste0("outputs/maps/base_layers_", region, "_", islands[isl], ".png"), height = 7, width = 7, res = 500, units = "in")
+  png(paste0("outputs/maps/base_layers_", region, "_", islands[isl], ".png"), height = 20, width = 20, res = 500, units = "in")
   print((p1 + p2) / (p3 + p4))
   dev.off()
   
@@ -448,7 +457,12 @@ for (isl in 1:length(islands)) {
     
     df = df %>%
       subset(reef_id %in% c( "forereef", "reef crest/reef flat")) %>% # keep reef crest/reef flat to emphasize east side of swain
-      subset(hardsoft_id %in% c("hard", "unknown")) # filter for sector
+      subset(hardsoft_id %in% c("hard", "unknown")) 
+    
+  } else if (islands[isl] == "lis") {
+    
+    df = df %>%
+      subset(hardsoft_id %in% c("hard", "unknown")) 
     
   } else if (islands[isl] %in% c("kur", "phr")) {
     
