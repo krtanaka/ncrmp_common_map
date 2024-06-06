@@ -26,7 +26,7 @@ islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"   
 
 for (isl in 1:length(islands)) {
   
-  # isl = 1
+  # isl = 4
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -370,10 +370,25 @@ for (isl in 1:length(islands)) {
     
   }
   
-  # Create plots for depth_bin, sector_id, reef_id, and hardsoft_id
-  p1 = df %>% 
-    ggplot(aes(x, y, fill = depth_bin)) + 
-    geom_raster() + 
+  load("data/spc/SURVEY MASTER.RData")
+  utm_i = utm %>% filter(Island_Code == islands[isl])
+  sv = SURVEY_MASTER %>% filter(ISLAND == utm_i$Island) %>% select(LONGITUDE_LOV, LATITUDE_LOV) %>% na.omit()
+
+  xy_utm = data.frame(x = sv$LONGITUDE_LOV, y = sv$LATITUDE_LOV)  %>% 
+    # mutate(zone2 = (floor((x + 180)/6) %% 60) + 1, keep = "all") %>% 
+    mutate(zone2 = utm_i$UTM_Zone) %>%
+    group_by(zone2) %>% 
+    mutate(utm_x = get_utm(x, y, zone2, loc = "x"),
+           utm_y = get_utm(x, y, zone2, loc = "y")) %>% 
+    ungroup() %>% 
+    select(utm_x, utm_y) 
+  
+  colnames(xy_utm) = c("X", "Y")
+  sv = cbind(sv, xy_utm)
+  
+  p1 = ggplot() + 
+    geom_raster(data = df, aes(x, y, fill = depth_bin)) +
+    geom_point(data = sv, aes(X, Y), color = "yellow") + 
     theme_map() +
     scale_fill_discrete("") + 
     ggtitle("depth_bins") + 
@@ -383,9 +398,9 @@ for (isl in 1:length(islands)) {
           legend.text = element_text(color = "white"),           
           legend.title = element_text(color = "white"))
   
-  p2 = df %>% 
-    ggplot(aes(x, y,  fill = sector_id)) + 
-    geom_raster() +
+  p2 = ggplot() + 
+    geom_raster(data = df, aes(x, y, fill = sector_id)) +
+    geom_point(data = sv, aes(X, Y), color = "yellow") + 
     theme_map() +
     scale_fill_discrete("") + 
     ggtitle("sector") + 
@@ -395,9 +410,9 @@ for (isl in 1:length(islands)) {
           legend.text = element_text(color = "white"),           
           legend.title = element_text(color = "white"))
   
-  p3 = df %>% 
-    ggplot(aes(x, y,  fill = reef_id)) + 
-    geom_raster() +
+  p3 = ggplot() + 
+    geom_raster(data = df, aes(x, y, fill = reef_id)) +
+    geom_point(data = sv, aes(X, Y), color = "yellow") + 
     theme_map() +
     scale_fill_discrete("") + 
     ggtitle("reef_type") + 
@@ -407,9 +422,9 @@ for (isl in 1:length(islands)) {
           legend.text = element_text(color = "white"),           
           legend.title = element_text(color = "white"))
   
-  p4 = df %>% 
-    ggplot(aes(x, y, fill = hardsoft_id)) + 
-    geom_raster() +
+  p4 = ggplot() + 
+    geom_raster(data = df, aes(x, y, fill = hardsoft_id)) +
+    geom_point(data = sv, aes(X, Y), color = "yellow") + 
     theme_map() +
     scale_fill_discrete("") + 
     ggtitle("benthic_type") + 
@@ -450,19 +465,19 @@ for (isl in 1:length(islands)) {
              reef_id = ifelse(reef_id == "back reef", "backreef", reef_id),
              reef_id = ifelse(reef_id == "outer lagoon", "lagoon", reef_id),
              reef_id = ifelse(reef_id == "inner lagoon", "lagoon", reef_id)) %>% 
-      subset(hardsoft_id %in% c("hard", "unknown")) # filter for sector
+      subset(hardsoft_id %in% c("hard", "unknown")) 
     
   } else if (islands[isl] %in% c("lay")) {
     
     df = df %>%
-      subset(hardsoft_id %in% c("hard")) # filter for sector
+      subset(hardsoft_id %in% c("hard")) 
     
   } else {
     
     df = df %>%
-      subset(sector_id != "GUA_LAND") %>% # filter sector
-      subset(reef_id %in% c( "forereef")) %>% # filter land and Reef Crest/Reef Flat
-      subset(hardsoft_id %in% c("hard", "unknown", "other", "other delinations")) # filter for sector
+      subset(sector_id != "GUA_LAND") %>% 
+      subset(reef_id %in% c( "forereef")) %>% 
+      subset(hardsoft_id %in% c("hard", "unknown", "other", "other delinations")) 
     
   }
   
