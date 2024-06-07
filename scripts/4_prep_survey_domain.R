@@ -26,7 +26,7 @@ islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"   
 
 for (isl in 1:length(islands)) {
   
-  # isl = 2
+  # isl = 4
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -447,11 +447,17 @@ for (isl in 1:length(islands)) {
   print((p1 + p2) / (p3 + p4))
   dev.off()
   
-  if (islands[isl] %in% c("kin", "ros", "ffs", "mar", "mid")) {
+  if (islands[isl] %in% c("kin", "ros", "ffs", "mar")) {
     
     df = df %>%
       subset(reef_id %in% c( "forereef", "backreef", "lagoon", "protected slope")) %>% # filter land and Reef Crest/Reef Flat
       subset(hardsoft_id %in% c("hard", "unknown")) # filter for sector
+    
+  } else if (islands[isl] == "mid") {
+    
+    df = df %>%
+      subset(reef_id %in% c( "forereef", "backreef", "lagoon", "protected slope")) %>% # filter land and Reef Crest/Reef Flat
+      subset(hardsoft_id %in% c("hard", "unknown", "other delinations")) 
     
   } else if (islands[isl] == "swa") {
     
