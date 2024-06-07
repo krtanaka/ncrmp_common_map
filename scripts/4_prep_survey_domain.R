@@ -26,7 +26,7 @@ islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"   
 
 for (isl in 1:length(islands)) {
   
-  # isl = 1
+  # isl = 2
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -443,7 +443,7 @@ for (isl in 1:length(islands)) {
           legend.background = element_rect(fill = "transparent"), 
           legend.text = element_text(size = 15, face = "bold", color = "white"))
   
-  png(paste0("outputs/maps/base_layers_", region, "_", islands[isl], ".png"), height = 20, width = 20, res = 500, units = "in")
+  png(paste0("outputs/maps/base_layers_", region, "_", islands[isl], ".png"), height = 15, width = 15, res = 100, units = "in")
   print((p1 + p2) / (p3 + p4))
   dev.off()
   
