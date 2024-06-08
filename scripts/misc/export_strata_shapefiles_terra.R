@@ -1,6 +1,5 @@
 ########################################
 ### Exporting Strata as Shapefiles   ###
-### Calculate the aggregation factor ###
 ########################################
 
 rm(list = ls())
@@ -17,11 +16,13 @@ library(patchwork)
 library(ggthemes)
 library(terra)
 
-utm = read_csv('data/misc/ncrmp_utm_zones.csv')
-domain_sf_object = NULL
-PLOT = FALSE
+utm <- read_csv('data/misc/ncrmp_utm_zones.csv')
+domain_sf_object <- NULL
+PLOT <- FALSE
 
 for(reg in 5:6){
+  
+  reg = 5
   
   if(reg == 1){
     islands = c("gua", "rot", "sai", "tin", "agu"); region = "S.MARIAN"                           # South Mariana Islands
@@ -41,24 +42,22 @@ for(reg in 5:6){
   
   for (isl in 1:length(islands)) {
     
-    gc()
+    gc()  # Garbage collection
     
     # isl = 1
     
-    #Load huge 50m survey grid raster data
+    # Load survey grid raster data
     load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[isl], ".RData"))
     
-    #Print Status
-    cat(paste0("converting rasterized strata layer to shapefile for ", islands[isl], " ...\n"))
+    # print Status
+    cat(paste0("\n\n\n\nconverting rasterized strata layer to shapefile for ", islands[isl], " ...\n\n\n\n"))
     
-    #terra obejct for fast rasterization
-    survey_grid_ncrmp.t=as(survey_grid_ncrmp,"SpatRaster"); rm(list="survey_grid_ncrmp")
+    # Convert to Terra object for fast rasterization
+    survey_grid_ncrmp.t = as(survey_grid_ncrmp, "SpatRaster"); rm(list = "survey_grid_ncrmp")
     
     gc()
     
-    #crs local utm setting
-    #utm_proj = paste0("epsg:",utm$epsg[match(islands[isl],utm$Island_Code)])
-    
+    # Set CRS local UTM
     utm_proj = paste0("+proj=utm +zone=",
                       utm$UTM_Zone[match(islands[isl], utm$Island_Code)],
                       " +",
@@ -67,79 +66,74 @@ for(reg in 5:6){
     
     terra::crs(survey_grid_ncrmp.t) = utm_proj
     
-    #pull just the strata
+    # Extract strata
     strat <- survey_grid_ncrmp.t$strat
     
-    # strat <- round(strat$strat, 0)
-    # names(strat) = "strat"
-    
-    #convert to polygons
+    # Convert to polygons
     p <- terra::as.polygons(strat, aggregate = TRUE)
     
-    gc()
+    gc()  # Garbage collection
     
-    #get names for strata
+    # Get strata names
     key = read_csv(paste0("outputs/tables/strata_keys_", region, "_", islands[isl], ".csv"))
     strat_nam_vector <- setNames(key$strat_nam, key$strat)
     
-    #assign them
+    # Assign strata names
     p$strat_nam <- strat_nam_vector[as.character(p$strat)]
     
-    #work in sf polygon
+    # Convert to sf polygon
     sf_object <- st_as_sf(p)
     
-    if (PLOT){#check em
+    # Optionally plot
+    if (PLOT) {
       plot(sf_object["strat"])
       plot(sf_object["strat_nam"])
     }
     
-    #build and create output dir
+    # Create output directory
     shapefile_dir <- dirname(paste0("outputs/shapefiles/", islands[isl], "_strata.shp"))
     if (!file.exists(shapefile_dir)) dir.create(shapefile_dir)
     
-    #build output filename
+    # Define output filename
     shapefile_file <- paste0("outputs/shapefiles/", islands[isl], "_strata.shp")
     
-    #write island object
-    st_write(sf_object, dsn = shapefile_file, 
-             driver = "ESRI Shapefile", append = FALSE)
+    # Write shapefile
+    st_write(sf_object, dsn = shapefile_file, driver = "ESRI Shapefile", append = FALSE)
     
-    #tranform to universal WGS84
+    # Transform to universal WGS84
+    sf_object.84 = st_transform(x = sf_object, crs = 4326)
     
-    sf_object.84 = st_transform(x = sf_object,crs = 4326)
+    # Bind into regional object
+    regional_sf_object = rbind(regional_sf_object, sf_object.84)
     
-    #bind into regional object
-    regional_sf_object = rbind(regional_sf_object,sf_object.84)
+    # Print notification
+    print(paste0("Done with Island: ", islands[isl]))
     
-    #notification
-    print(paste0("Done with Island: ",islands[isl]))
   }
   
-  #built regional file
+  # Define regional shapefile filename
   regional_shapefile_file <- paste0("outputs/shapefiles/", region, "_strata.shp")
   
-  #Check em
-  if(PLOT){
-    plot(regional_sf_object["strat_nam"])
-  }
+  # Optionally plot
+  if (PLOT) plot(regional_sf_object["strat_nam"])
   
-  #write regional object
+  # Write regional shapefile
   st_write(regional_sf_object, dsn = regional_shapefile_file, driver = "ESRI Shapefile", append = FALSE)
   
-  #bind into domain object
-  domain_sf_object = rbind(domain_sf_object,regional_sf_object)
+  # Bind into domain object
+  domain_sf_object = rbind(domain_sf_object, regional_sf_object)
   
-  #notification
-  print(paste0("Done with Region: ",region))
+  # Print notification
+  print(paste0("Done with Region: ", region))
   
 }
 
-#built domain file
+# Define domain shapefile filename
 domain_shapefile_file = paste0("outputs/shapefiles/", "NCRMP_Domain", "_strata.shp")
 
-#write domain object
+# Write domain shapefile
 st_write(domain_sf_object, dsn = domain_shapefile_file, driver = "ESRI Shapefile", append = FALSE)
 
-#notification
+# Print final notification
 print(paste0("Done and Done."))
 
