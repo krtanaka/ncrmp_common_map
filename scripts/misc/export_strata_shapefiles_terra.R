@@ -21,7 +21,7 @@ utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 domain_sf_object = NULL
 PLOT = FALSE
 
-for(reg in 6:6){
+for(reg in 5:6){
   
   if(reg == 1){
     islands = c("gua", "rot", "sai", "tin", "agu"); region = "S.MARIAN"                           # South Mariana Islands
