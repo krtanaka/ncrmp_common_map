@@ -12,6 +12,7 @@ library(tidyr)       # For tidying data
 library(marmap)      # For working with bathymetric data
 library(lattice)     # For creating trellis plots
 library(readr)       # For reading CSV files
+library(terra)
 
 # Read in the UTM zones CSV file
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
@@ -35,19 +36,20 @@ island_names_codes_boxes = merge(island_names_codes, island_boxes)
 rm(island_names_codes, island_boxes)
 
 # Load the appropriate bathymetry raster file based on the selected region
-if(region == "MARIAN") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/mariana_trench_6_msl_2012.nc")
-if(region == "SAMOA") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/pago_pago_3_mhw_2009.nc")
-if(region == "NWHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Bathymetry_HURL_NWHI_60m_all_units.nc")
-if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/usgsCeCrm10.nc")
-if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/mhi_mbsyn_bathyonly_50m_v21_0.001deg.tif")
-if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/Bathymetry_ETOPO_2022_v1_15s_all_units.nc")
-if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_51m_res.tif")
-if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_30m_res.tif")
-if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_9m_res.tif")
-if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_3m_res.tif")
+if(region == "MARIAN") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/mariana_trench_6_msl_2012.nc")
+if(region == "SAMOA") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/pago_pago_3_mhw_2009.nc")
+if(region == "NWHI") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/Bathymetry_HURL_NWHI_60m_all_units.nc")
+# if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/usgsCeCrm10.nc") #outdated
+if(region == "MHI") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/crm_vol10_2023.nc") #new CRM data at 1 arc second
+if(region == "MHI") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/mhi_mbsyn_bathyonly_50m_v21_0.001deg.tif")
+if(region == "MHI") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/Bathymetry_ETOPO_2022_v1_15s_all_units.nc")
+if(region == "MHI") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_51m_res.tif")
+if(region == "MHI") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_30m_res.tif")
+if(region == "MHI") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_9m_res.tif")
+if(region == "MHI") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_3m_res.tif")
 
 default_proj = crs(topo)
-topo = as.data.frame(rasterToPoints(topo))
+topo = terra::as.data.frame(topo, xy = TRUE)
 colnames(topo)[3] = "depth"
 topo$depth = as.numeric(as.character(topo$depth))
 
@@ -73,20 +75,20 @@ topo$depth = as.numeric(as.character(topo$depth))
 
 for (i in 1:length(islands)) {
   
-  # i = 1
+  # i = 7
   
-  if (file.exists(paste0('data/gis_bathymetry/', islands[i], '.RData'))) {
-    
-    cat("Bathymetry data for this island already exists, skipping this island...\n")
-    next
-    
-  }
+  # if (file.exists(paste0('data/gis_bathymetry/', islands[i], '.RData'))) {
+  #   
+  #   cat("Bathymetry data for this island already exists, skipping this island...\n")
+  #   next
+  #   
+  # }
   
   box = island_names_codes_boxes %>% subset(Island_Code == islands[i])
 
   topo_i = topo %>%
-    subset(depth >= -30 & depth <= 0) %>%
-    subset(x < box$xmax & x > box$xmin & y < box$ymax & y > box$ymin)
+    subset(x < box$xmax & x > box$xmin & y < box$ymax & y > box$ymin) %>% 
+    subset(depth >= -30 & depth <= 0)
   
   gc()
   
@@ -107,7 +109,9 @@ for (i in 1:length(islands)) {
   plot(topo_i)
   print(islands[i])
   
-  save(topo_i, file = paste0('data/gis_bathymetry/alt/', islands[i], '.RData'))
+  # save(topo_i, file = paste0('data/gis_bathymetry/alt/', islands[i], '.RData'))
+  save(topo_i, file = paste0('data/gis_bathymetry/alt/', islands[i], '_crm.RData'))
+  # save(topo_i, file = paste0('data/gis_bathymetry/alt/', islands[i], '_mbsyn.RData'))
   
 }
 
