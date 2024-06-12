@@ -60,6 +60,8 @@ ggplot(st_as_sf(dat)) +
   coord_sf() +
   annotation_map(map_data("world"))
 
+ggsave(last_plot(), file = "outputs/maps/CFR_RestrictedAreas_Hawaii.png", height = 10, width = 20)
+
 rstr <- as.data.frame(dat)
 rstr = rstr$Name; rstr
 rstr_name = gsub(" ", "_", rstr)
@@ -147,6 +149,9 @@ ggplot(st_as_sf(dat)) +
   geom_sf(aes(fill = SafetyZone)) +
   annotation_map(map_data("world")) + 
   scale_fill_discrete("")
+
+ggsave(last_plot(), file = "outputs/maps/eCFR_Area.png", height = 10, width = 20)
+
 
 rstr <- as.data.frame(dat)
 rstr = rstr$SafetyZone; rstr
