@@ -7,7 +7,9 @@ islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")
 
 for (i in 1:length(islands)) {
   
-  # i = 8
+  gc()
+  
+  # i = 7
   
   load(paste0("data/gis_bathymetry/", islands[i], ".RData")); b1 = topo_i
   load(paste0("data/gis_bathymetry/alt/", islands[i], "_crm.RData")); b2 = topo_i
@@ -21,12 +23,17 @@ for (i in 1:length(islands)) {
   # topo = mean(stack(b1, b3), na.rm = T)
   # topo = mean(stack(topo, b3), na.rm = T)
   
-  plot(b1)
-  plot(topo)
-  
+  # par(mfrow = c(2,2))
+  # plot(b1, main = "3m CUDEM 2023", col = matlab.like(100))
+  # plot(topo, main = "3m CUDEM 2023 & 30m CRM 2023", col = matlab.like(100))
+  # plot(abs(b1-b2), main = "abs(CUDEM-CRM)", col = matlab.like(100))
+  # hist(abs(b1-b2), main = "abs(CUDEM-CRM)")
+
   topo_i = readAll(topo)
   
   save(topo_i, file = paste0("data/gis_bathymetry/", islands[i], "_merged.RData"))
+  
+  gc()
   
   # # alt approach
   # 

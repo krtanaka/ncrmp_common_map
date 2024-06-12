@@ -42,16 +42,21 @@ if(region == "NWHI") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/Bathymet
 # if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/usgsCeCrm10.nc") #outdated
 if(region == "MHI") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/crm_vol10_2023.nc") #new CRM data at 1 arc second
 if(region == "MHI") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/mhi_mbsyn_bathyonly_50m_v21_0.001deg.tif")
-if(region == "MHI") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/Bathymetry_ETOPO_2022_v1_15s_all_units.nc")
+# if(region == "MHI") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/Bathymetry_ETOPO_2022_v1_15s_all_units.nc")
 if(region == "MHI") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_51m_res.tif")
 if(region == "MHI") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_30m_res.tif")
 if(region == "MHI") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_9m_res.tif")
 if(region == "MHI") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/cudem_HI_merged_3m_res.tif")
 
 default_proj = crs(topo)
-topo = terra::as.data.frame(topo, xy = TRUE)
-colnames(topo)[3] = "depth"
-topo$depth = as.numeric(as.character(topo$depth))
+
+# Define the function to set values not between -30 and 0 to NA
+set_na <- function(x) {
+  x[x < -30 | x > 0] <- NA
+  return(x)
+}
+
+# topo = clamp(topo, lower = -30, upper = 0, values = TRUE)
 
 # df = topo %>%
 #   mutate(x = round(x, 1),
@@ -85,33 +90,54 @@ for (i in 1:length(islands)) {
   # }
   
   box = island_names_codes_boxes %>% subset(Island_Code == islands[i])
-
-  topo_i = topo %>%
-    subset(x < box$xmax & x > box$xmin & y < box$ymax & y > box$ymin) %>% 
-    subset(depth >= -30 & depth <= 0)
+  
+  ymax <- box$ymax[1]
+  ymin <- box$ymin[1]
+  xmin <- box$xmin[1]
+  xmax <- box$xmax[1]
+  
+  # Define the extent
+  ext <- ext(xmin, xmax, ymin, ymax)
+  
+  # Crop the raster using the defined extent
+  topo_i <- crop(topo, ext)
+  
+  # Apply the function to the raster
+  topo_i <- app(topo_i, set_na)
+  
+  # topo_i = terra::as.data.frame(topo_i, xy = TRUE)
+  # colnames(topo_i)[3] = "depth"
+  # topo_i$depth = as.numeric(as.character(topo_i$depth))
+  
+  # topo_i = topo %>%
+  #   subset(x < box$xmax & x > box$xmin & y < box$ymax & y > box$ymin) %>% 
+  #   subset(depth >= -30 & depth <= 0)
   
   gc()
   
-  topo_i = rasterFromXYZ(topo_i)
+  # topo_i = rasterFromXYZ(topo_i)
   
   crs(topo_i) = default_proj
   
   utm_i = utm %>% subset(Island_Code == islands[i])
   
   # determine northern or southern hemisphere
-  if (mean(extent(topo_i)[3:4]) > 0) sr = paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +north')
-  if (mean(extent(topo_i)[3:4]) < 0) sr = paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +south')
+  if (mean(yFromRow(topo_i, 1:nrow(topo_i))) > 0) sr = paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +north')
+  if (mean(yFromRow(topo_i, 1:nrow(topo_i))) < 0) sr = paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +south')
   
-  topo_i <- projectRaster(topo_i, crs = sr)
+  # topo_i <- projectRaster(topo_i, crs = sr)
+  topo_i <- project(topo_i, sr)
   
-  topo_i = readAll(topo_i)
+  topo_i = readAll(raster(topo_i))
   # topo_i <- aggregate(topo_i, fact = 100/res(topo_i)); res(topo_i)
   plot(topo_i)
   print(islands[i])
   
-  # save(topo_i, file = paste0('data/gis_bathymetry/alt/', islands[i], '.RData'))
-  save(topo_i, file = paste0('data/gis_bathymetry/alt/', islands[i], '_crm.RData'))
+  save(topo_i, file = paste0('data/gis_bathymetry/', islands[i], '.RData'))
+  # save(topo_i, file = paste0('data/gis_bathymetry/alt/', islands[i], '_crm.RData'))
   # save(topo_i, file = paste0('data/gis_bathymetry/alt/', islands[i], '_mbsyn.RData'))
+  
+  gc()
   
 }
 

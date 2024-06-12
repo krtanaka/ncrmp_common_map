@@ -26,7 +26,7 @@ islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"   
 
 for (isl in 1:length(islands)) {
   
-  # isl = 7
+  # isl = 1
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -443,7 +443,7 @@ for (isl in 1:length(islands)) {
           legend.background = element_rect(fill = "transparent"), 
           legend.text = element_text(size = 15, face = "bold", color = "white"))
   
-  png(paste0("outputs/maps/base_layers_", region, "_", islands[isl], ".png"), height = 15, width = 15, res = 100, units = "in")
+  png(paste0("outputs/maps/base_layers_", region, "_", islands[isl], ".png"), height = 15, width = 15, res = 500, units = "in")
   print((p1 + p2) / (p3 + p4))
   dev.off()
   
@@ -525,7 +525,7 @@ for (isl in 1:length(islands)) {
   png(paste0("outputs/maps/strata_", region, "_", islands[isl], ".png"), height = 10, width = 15, res = 500, units = "in")
   
   print(ggplot() + 
-    geom_raster(data = df %>% subset(strat_nam == "shallow_mol_south_forereef"), aes(longitude, latitude, fill = factor(strat_nam))) +
+    geom_raster(data = df, aes(longitude, latitude, fill = factor(strat_nam))) +
     geom_point(data = sv, aes(X*0.001, Y*0.001), color = "yellow", alpha = 0.8) + 
     scale_fill_discrete("") + 
     # coord_fixed() +
