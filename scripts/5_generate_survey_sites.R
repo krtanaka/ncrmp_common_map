@@ -80,7 +80,7 @@ ggmap::register_google("AIzaSyDpirvA5gB7bmbEbwB1Pk__6jiV4SXAEcY")
 
 for (i in 1:length(islands)) {
   
-  # i = 5
+  # i = 2
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData"))#; plot(survey_grid_ncrmp)
@@ -386,9 +386,9 @@ for (i in 1:length(islands)) {
           legend.text = element_text(color = "white"),           
           legend.title = element_text(color = "white"))
   
-  png(paste0("outputs/maps/survey_layers_", islands[i], ".png"), height = 5, width = 15, res = 500, units = "in")
-  print(bathymetry + variability + area)
-  dev.off()
+  # png(paste0("outputs/maps/survey_layers_", islands[i], ".png"), height = 5, width = 15, res = 500, units = "in")
+  # print(bathymetry + variability + area)
+  # dev.off()
   
   isl_shp = island_name_code %>% subset(Island_Code == islands[i])
   
@@ -549,10 +549,10 @@ for (i in 1:length(islands)) {
     
     map_i = 
       
-      # ggplot() +
-      ggmap(map) +
+      ggplot() +
+      # ggmap(map) +
       
-      # geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "gray50", color = NA, alpha = 0.9) + # land shapefile
+      geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "gray50", color = NA, alpha = 0.9) + # land shapefile
       # geom_path(data = ISL_this_i, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "gray10") + # coastline
       
       # display if there is more than 1 island sector
@@ -583,7 +583,7 @@ for (i in 1:length(islands)) {
       
       scale_fill_manual(name = "Depth", values = c("red", "goldenrod1", "green3"), na.translate = F) + 
       scale_shape_manual(name = "Depth", values = c(24, 22, 21), na.translate = F) +
-      annotation_scale(location = "br", width_hint = 0.2, text_col = "white", bar_cols = "white", size = 5) +  # new_scale_color() +
+      annotation_scale(location = "br", width_hint = 0.2, text_col = "gray20", bar_cols = "white", size = 5) +  # new_scale_color() +
       
       geom_label_repel(data = sets_i, 
                        aes(longitude, latitude, label = SITE_NO),
@@ -593,7 +593,7 @@ for (i in 1:length(islands)) {
                        fontface = 'bold', 
                        color = 'black',
                        max.overlaps = Inf,
-                       segment.color = "white",
+                       segment.color = "gray20",
                        box.padding = unit(0.8, "lines"),
                        point.padding = unit(0.3, "lines")) +
       
@@ -634,8 +634,8 @@ for (i in 1:length(islands)) {
   
   whole_map = 
     
-    # ggplot() +
-    ggmap(map) +
+    ggplot() +
+    # ggmap(map) +
     
     geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "gray10") + # coastline
     geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "gray50", color = NA, alpha = 0.9) + # land shapefile
@@ -680,7 +680,7 @@ for (i in 1:length(islands)) {
     # geom_spatial_point(data = sets, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 3, crs = 4326) + 
     # scale_fill_manual(name = "Depth", values = c("red", "goldenrod1", "green3"), na.translate = F) + # in geom_spatial_point make size = 9 ONLY for Guam
     # scale_shape_manual(name = "Depth", values = c(24, 22, 21), na.translate = F) +
-    annotation_scale(location = "br", width_hint = 0.2, text_col = "black", bar_cols = "black", size = 5) +  # new_scale_color() +
+    annotation_scale(location = "br", width_hint = 0.2, text_col = "gray90", bar_cols = "gray90", size = 5) +  # new_scale_color() +
     # new_scale_fill() +      
     
     # geom_label_repel(data = sets,
