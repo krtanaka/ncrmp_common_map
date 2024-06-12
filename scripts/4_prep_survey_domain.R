@@ -26,7 +26,7 @@ islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"   
 
 for (isl in 1:length(islands)) {
   
-  # isl = 1
+  # isl = 9
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -260,13 +260,13 @@ for (isl in 1:length(islands)) {
     df = stack(hardsoft, sector, reef, bathymetry, buffer, 
                restricted_kau_oah_a_areas, 
                restricted_kau_oah_b_areas, 
-               restricted_oah_lan_mau_areas,
+               restricted_oah_lan_mai_areas,
                restricted_oah_mokapu_areas)
     
     names(df) <- c("hardsoft", "sector", "reef", "depth", "buffer", 
                    "restricted_kau_oah_a_areas", 
                    "restricted_kau_oah_b_areas", 
-                   "restricted_oah_lan_mau_areas",
+                   "restricted_oah_lan_mai_areas",
                    "restricted_oah_mokapu_areas")
   } 
   
@@ -375,7 +375,9 @@ for (isl in 1:length(islands)) {
   sv = SURVEY_MASTER %>% 
     mutate(ISLAND = gsub(" ", "_", ISLAND)) %>% 
     filter(ISLAND == utm_i$Island) %>% 
-    dplyr::select(LONGITUDE_LOV, LATITUDE_LOV) %>% na.omit()
+    mutate(YEAR = ifelse(is.na(ANALYSIS_YEAR), OBS_YEAR, ANALYSIS_YEAR)) %>% 
+    dplyr::select(LONGITUDE_LOV, LATITUDE_LOV, YEAR) %>% 
+    na.omit()
   
   get_utm <- function(x, y, zone, loc){
     points = SpatialPoints(cbind(x, y), proj4string = CRS("+proj=longlat +datum=WGS84"))
@@ -522,23 +524,24 @@ for (isl in 1:length(islands)) {
   save(tab, file = paste0("outputs/sector_keys/", region, "_", islands[isl], ".RData"))
   write_csv(tab, file = paste0("outputs/tables/strata_keys_", region, "_", islands[isl], ".csv"))
   
-  png(paste0("outputs/maps/strata_", region, "_", islands[isl], ".png"), height = 10, width = 15, res = 500, units = "in")
+  png(paste0("outputs/maps/strata_", region, "_", islands[isl], ".png"), height = 8, width = 12, res = 500, units = "in")
   
   print(ggplot() + 
-    geom_raster(data = df, aes(longitude, latitude, fill = factor(strat_nam))) +
-    geom_point(data = sv, aes(X*0.001, Y*0.001), color = "yellow", alpha = 0.8) + 
-    scale_fill_discrete("") + 
-    # coord_fixed() +
-    # theme_map() +
-    labs(x = "", y = "") + 
-    ggtitle(paste0(region, "_", islands[isl])) + 
-    theme(panel.background = element_rect(fill = "gray10"),
-          panel.grid = element_line(color = "gray15")
-          # ,
-          # legend.background = element_rect(fill = "transparent"), 
-          # legend.text = element_text(color = "white"),           
-          # legend.title = element_text(color = "white")
-    ))
+          # geom_raster(data = df, aes(longitude, latitude, fill = factor(strat_nam))) +
+          geom_point(data = sv %>% subset(YEAR > 2009), aes(X*0.001, Y*0.001, color = factor(YEAR)), alpha = 0.9) + 
+          scale_fill_discrete("") + 
+          scale_color_viridis_d("") + 
+          # coord_fixed() +
+          # theme_map() +
+          labs(x = "", y = "") + 
+          ggtitle(paste0(region, "_", islands[isl])) + 
+          theme(#panel.background = element_rect(fill = "gray10"),
+                #panel.grid = element_line(color = "gray15")
+                # ,
+                # legend.background = element_rect(fill = "transparent"), 
+                # legend.text = element_text(color = "white"),           
+                # legend.title = element_text(color = "white")
+          ))
   
   dev.off()
   

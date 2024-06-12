@@ -80,7 +80,7 @@ ggmap::register_google("AIzaSyDpirvA5gB7bmbEbwB1Pk__6jiV4SXAEcY")
 
 for (i in 1:length(islands)) {
   
-  # i = 1
+  # i = 5
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData"))#; plot(survey_grid_ncrmp)
@@ -165,8 +165,8 @@ for (i in 1:length(islands)) {
     
     load(paste0("outputs/sector_keys/", islands[i], "_itinerary.Rdata"))
     
-    tab$strat_sets_alt = tab$MAP_SITES %>% as.numeric()
-    # tab$strat_sets_alt = tab$FISH_MAX_SITES %>% as.numeric()
+    # tab$strat_sets_alt = tab$MAP_SITES %>% as.numeric()
+    tab$strat_sets_alt = tab$FISH_MAX_SITES %>% as.numeric()
     
     tab$strat_sets_alt <- ifelse(tab$strat_sets_alt < 10, tab$strat_sets_alt * 3, tab$strat_sets_alt * 2)
     
