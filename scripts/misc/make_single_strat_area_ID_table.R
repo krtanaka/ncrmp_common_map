@@ -37,7 +37,7 @@ for (isl in 1:length(islands)) {
   key_table$region = region
   key_table$island = islands[isl]
   
-  key_table = key_table %>% dplyr::select(strat, strat_nam, sector_id, reef_id, depth_bin_value, strat_area, island, region)
+  key_table = key_table %>% dplyr::select(strat, strat_nam, sector_id, reef_id, depth_bin, strat_area, island, region)
   colnames(key_table)[1] = "strat_id"
   
   key_table$strat_area = round(key_table$strat_area, 5)
