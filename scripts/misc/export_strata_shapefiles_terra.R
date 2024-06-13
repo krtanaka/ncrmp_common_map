@@ -22,7 +22,7 @@ PLOT <- FALSE
 
 for(reg in 5:6){
   
-  reg = 6
+  # reg = 6
   
   if(reg == 1) islands = c("gua", "rot", "sai", "tin", "agu"); region = "S.MARIAN"                           # South Mariana Islands
   if(reg == 2) islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "pag", "sar"); region = "N.MARIAN"      # North Mariana Islands
