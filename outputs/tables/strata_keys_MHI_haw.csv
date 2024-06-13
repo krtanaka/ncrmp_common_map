@@ -1,4 +1,4 @@
-strat,strat_nam,sector_id,reef_id,depth_bin_value
+strat,strat_nam,sector_id,reef_id,depth_bin
 1,deep_haw_hamak_forereef,haw_hamak,forereef,DEEP
 5,mid_haw_hamak_forereef,haw_hamak,forereef,MIDD
 9,shallow_haw_hamak_forereef,haw_hamak,forereef,SHAL

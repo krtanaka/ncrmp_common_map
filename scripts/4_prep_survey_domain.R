@@ -14,6 +14,8 @@ library(readr)
 library(concaveman)
 library(patchwork)
 library(ggthemes)
+library(data.table)
+library(terra)
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
@@ -28,7 +30,7 @@ select = dplyr::select
 
 for (isl in 1:length(islands)) {
   
-  # isl = 2
+  # isl = 1
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -225,6 +227,8 @@ for (isl in 1:length(islands)) {
     restricted_oah_lan_mai_areas = resample(restricted_oah_lan_mai_areas, topo_i, method = "ngb")
     
   } 
+  
+  rm(topo_i); gc()
   
   # Stack and name layers based on the current island
   df <- stack(hardsoft, sector, reef, bathymetry, buffer)
