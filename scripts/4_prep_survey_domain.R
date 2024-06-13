@@ -26,7 +26,7 @@ islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"   
 
 for (isl in 1:length(islands)) {
   
-  # isl = 9
+  # isl = 4
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -213,11 +213,6 @@ for (isl in 1:length(islands)) {
   if (islands[isl] %in% c("oah")) {
     
     restricted_oah_mokapu_areas = resample(restricted_oah_mokapu_areas, topo_i, method = "ngb")
-    
-  } 
-  
-  if (islands[isl] %in% c("kau", "oah")) {
-    
     restricted_kau_oah_a_areas = resample(restricted_kau_oah_a_areas, topo_i, method = "ngb")
     restricted_kau_oah_b_areas = resample(restricted_kau_oah_b_areas, topo_i, method = "ngb")
     
@@ -270,16 +265,16 @@ for (isl in 1:length(islands)) {
                    "restricted_oah_mokapu_areas")
   } 
   
-  if (islands[isl] %in% c("kau")) {
-    
-    df = stack(hardsoft, sector, reef, bathymetry, buffer, 
-               restricted_kau_oah_a_areas, 
-               restricted_kau_oah_b_areas)
-    
-    names(df) <- c("hardsoft", "sector", "reef", "depth", "buffer", 
-                   "restricted_kau_oah_a_areas", 
-                   "restricted_kau_oah_b_areas")
-  } 
+  # if (islands[isl] %in% c("kau")) {
+  #   
+  #   df = stack(hardsoft, sector, reef, bathymetry, buffer, 
+  #              restricted_kau_oah_a_areas, 
+  #              restricted_kau_oah_b_areas)
+  #   
+  #   names(df) <- c("hardsoft", "sector", "reef", "depth", "buffer", 
+  #                  "restricted_kau_oah_a_areas", 
+  #                  "restricted_kau_oah_b_areas")
+  # } 
   
   if (islands[isl] %in% c("mai", "lan")) {
     
@@ -527,16 +522,17 @@ for (isl in 1:length(islands)) {
   png(paste0("outputs/maps/strata_", region, "_", islands[isl], ".png"), height = 8, width = 12, res = 500, units = "in")
   
   print(ggplot() + 
-          # geom_raster(data = df, aes(longitude, latitude, fill = factor(strat_nam))) +
-          geom_point(data = sv %>% subset(YEAR > 2009), aes(X*0.001, Y*0.001, color = factor(YEAR)), alpha = 0.9) + 
+          geom_raster(data = df, aes(longitude, latitude, fill = factor(strat_nam))) +
+          # geom_point(data = sv %>% subset(YEAR > 2009), aes(X*0.001, Y*0.001, color = factor(YEAR)), alpha = 0.9) +
+          geom_point(data = sv %>% subset(YEAR > 2009), aes(X*0.001, Y*0.001), color = "yellow", alpha = 0.9, show.legend = F) +
           scale_fill_discrete("") + 
-          scale_color_viridis_d("") + 
+          scale_color_viridis_d("") +
           # coord_fixed() +
           # theme_map() +
           labs(x = "", y = "") + 
           ggtitle(paste0(region, "_", islands[isl])) + 
-          theme(#panel.background = element_rect(fill = "gray10"),
-                #panel.grid = element_line(color = "gray15")
+          theme(panel.background = element_rect(fill = "gray10"),
+                panel.grid = element_line(color = "gray15")
                 # ,
                 # legend.background = element_rect(fill = "transparent"), 
                 # legend.text = element_text(color = "white"),           

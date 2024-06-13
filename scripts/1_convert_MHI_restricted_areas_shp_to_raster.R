@@ -43,22 +43,23 @@ dat <- as(dat, "Spatial"); plot(dat)
 
 unique(dat$Name)
 
-dat <- subset(dat, Name %in% c("Honolulu International Airport North Section Security Zone", 
-                               "Honolulu International Airport South Section Security Zone",
-                               "Pearl Harbor Prohibited Area",
+dat <- subset(dat, Name %in% c(#"Honolulu International Airport North Section Security Zone", 
+                               #"Honolulu International Airport South Section Security Zone",
+                               # "Pearl Harbor Prohibited Area",
                                # "MCB Danger Zone",
                                "MCB Hawaii Buffer Zone",
                                "Restricted Anchorage A",
                                "Restricted Anchorage B",
                                "Restricted Anchorage C",
                                "Restricted Anchorage D",
-                               "Barbers Point Offshore Moorings Security Zone",
-                               "Pacific Missile Range Facility at Barking Sands Safety Zone"))
+                               "Barbers Point Offshore Moorings Security Zone"
+                               # "Pacific Missile Range Facility at Barking Sands Safety Zone"
+                               ))
 
 ggplot(st_as_sf(dat)) +
+  annotation_map(map_data("world")) + 
   geom_sf(aes(fill = Name)) +
-  coord_sf() +
-  annotation_map(map_data("world"))
+  coord_sf()
 
 ggsave(last_plot(), file = "outputs/maps/CFR_RestrictedAreas_Hawaii.png", height = 10, width = 20)
 
@@ -140,9 +141,9 @@ dat <- as(dat, "Spatial"); plot(dat)
 unique(dat$SafetyZone)
 
 # Zones to keep
-dat <- subset(dat, SafetyZone %in% c("Honolulu International Airport North Section", 
-                                     "Honolulu International Airport South Section",
-                                     "Pacific Missile Range Facility",
+dat <- subset(dat, SafetyZone %in% c(#"Honolulu International Airport North Section", 
+                                     #"Honolulu International Airport South Section",
+                                     #"Pacific Missile Range Facility",
                                      "Barbers Point Offshore Moorings"))
 
 ggplot(st_as_sf(dat)) +
