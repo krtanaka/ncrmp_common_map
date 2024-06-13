@@ -1,8 +1,8 @@
-strat,strat_nam,sector_id,reef_id,depth_bin_value
-3,mid_kur_sector_forereef,kur_sector,forereef,MIDD
-1,deep_kur_sector_forereef,kur_sector,forereef,DEEP
-6,shallow_kur_sector_forereef,kur_sector,forereef,SHAL
-2,mid_kur_sector_backreef,kur_sector,backreef,MIDD
-5,shallow_kur_sector_backreef,kur_sector,backreef,SHAL
-7,shallow_kur_sector_lagoon,kur_sector,lagoon,SHAL
-4,mid_kur_sector_lagoon,kur_sector,lagoon,MIDD
+strat,strat_nam,sector_id,reef_id,depth_bin
+3,MID_KUR_SECTOR_FOREREEF,KUR_SECTOR,FOREREEF,MIDD
+1,DEEP_KUR_SECTOR_FOREREEF,KUR_SECTOR,FOREREEF,DEEP
+6,SHALLOW_KUR_SECTOR_FOREREEF,KUR_SECTOR,FOREREEF,SHAL
+2,MID_KUR_SECTOR_BACKREEF,KUR_SECTOR,BACKREEF,MIDD
+5,SHALLOW_KUR_SECTOR_BACKREEF,KUR_SECTOR,BACKREEF,SHAL
+7,SHALLOW_KUR_SECTOR_LAGOON,KUR_SECTOR,LAGOON,SHAL
+4,MID_KUR_SECTOR_LAGOON,KUR_SECTOR,LAGOON,MIDD

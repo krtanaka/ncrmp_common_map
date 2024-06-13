@@ -1,4 +1,4 @@
-strat,strat_nam,sector_id,reef_id,depth_bin_value
-1,deep_lis_sector_forereef,lis_sector,forereef,DEEP
-2,mid_lis_sector_forereef,lis_sector,forereef,MIDD
-3,shallow_lis_sector_forereef,lis_sector,forereef,SHAL
+strat,strat_nam,sector_id,reef_id,depth_bin
+1,DEEP_LIS_SECTOR_FOREREEF,LIS_SECTOR,FOREREEF,DEEP
+2,MID_LIS_SECTOR_FOREREEF,LIS_SECTOR,FOREREEF,MIDD
+3,SHALLOW_LIS_SECTOR_FOREREEF,LIS_SECTOR,FOREREEF,SHAL

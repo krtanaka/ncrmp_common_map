@@ -1,8 +1,8 @@
-strat,strat_nam,sector_id,reef_id,depth_bin_value
-1,deep_phr_sector_forereef,phr_sector,forereef,DEEP
-3,mid_phr_sector_forereef,phr_sector,forereef,MIDD
-6,shallow_phr_sector_forereef,phr_sector,forereef,SHAL
-5,shallow_phr_sector_backreef,phr_sector,backreef,SHAL
-2,mid_phr_sector_backreef,phr_sector,backreef,MIDD
-7,shallow_phr_sector_lagoon,phr_sector,lagoon,SHAL
-4,mid_phr_sector_lagoon,phr_sector,lagoon,MIDD
+strat,strat_nam,sector_id,reef_id,depth_bin
+1,DEEP_PHR_SECTOR_FOREREEF,PHR_SECTOR,FOREREEF,DEEP
+3,MID_PHR_SECTOR_FOREREEF,PHR_SECTOR,FOREREEF,MIDD
+6,SHALLOW_PHR_SECTOR_FOREREEF,PHR_SECTOR,FOREREEF,SHAL
+5,SHALLOW_PHR_SECTOR_BACKREEF,PHR_SECTOR,BACKREEF,SHAL
+2,MID_PHR_SECTOR_BACKREEF,PHR_SECTOR,BACKREEF,MIDD
+7,SHALLOW_PHR_SECTOR_LAGOON,PHR_SECTOR,LAGOON,SHAL
+4,MID_PHR_SECTOR_LAGOON,PHR_SECTOR,LAGOON,MIDD

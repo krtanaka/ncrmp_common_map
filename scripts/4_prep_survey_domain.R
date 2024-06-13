@@ -24,9 +24,11 @@ islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"  
 islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI"    # Main Hawaiian Islands
 islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"                 # Northern Hawaiian Islands
 
+select = dplyr::select
+
 for (isl in 1:length(islands)) {
   
-  # isl = 4
+  # isl = 2
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -509,14 +511,19 @@ for (isl in 1:length(islands)) {
   ### create table to match strata to numbers for output table ###
   ################################################################
   tab <- df 
+  
   tab$depth_bin_value = ""
   tab$depth_bin_value = ifelse(tab$depth_bin == "shallow", "SHAL", tab$depth_bin_value) 
   tab$depth_bin_value = ifelse(tab$depth_bin == "mid", "MIDD", tab$depth_bin_value) 
   tab$depth_bin_value = ifelse(tab$depth_bin == "deep", "DEEP", tab$depth_bin_value) 
-  tab <- tab %>% dplyr::select(sector_id, reef_id, strat, strat_nam, depth_bin_value)
-  tab <- tab %>% filter(!duplicated(tab))
-  tab = tab %>% dplyr::select(strat, strat_nam, sector_id, reef_id, depth_bin_value)
-  save(tab, file = paste0("outputs/sector_keys/", region, "_", islands[isl], ".RData"))
+  
+  tab <- tab %>% 
+    select(strat, strat_nam, sector_id, reef_id, depth_bin_value) %>%
+    distinct() %>% 
+    mutate(across(where(is.character), toupper))
+  
+  colnames(tab)[5] <- "depth_bin"
+  
   write_csv(tab, file = paste0("outputs/tables/strata_keys_", region, "_", islands[isl], ".csv"))
   
   png(paste0("outputs/maps/strata_", region, "_", islands[isl], ".png"), height = 8, width = 12, res = 500, units = "in")
@@ -553,6 +560,15 @@ for (isl in 1:length(islands)) {
   
   values(survey_grid_ncrmp$division) = ifelse(is.na(values(survey_grid_ncrmp$division)), NA, 1)
   survey_grid_ncrmp = readAll(survey_grid_ncrmp)
+  
+  cells <- data.table(terra::as.data.frame(survey_grid_ncrmp, xy = T, cells = T, na.rm = T))
+
+  strat_det <- cells[, list(strat_cells = .N), by = "strat"]; strat_det
+  strat_det$cell_area <- prod(res(survey_grid_ncrmp)); strat_det
+  strat_det$strat_area <- strat_det$strat_cells * prod(res(survey_grid_ncrmp)); strat_det
+  
+  cat(paste0("saving strata table for ", region, " ", islands[isl], " as CSV...\n"))
+  readr::write_csv(strat_det, file = paste0("outputs/tables/strata_table_", region, "_", islands[isl], ".csv"))
   
   save(survey_grid_ncrmp, file = paste0("data/survey_grid_ncrmp/survey_grid_", islands[isl], ".RData"))
   cat(paste0("... ", islands[isl], " survey domain generated ...\n"))

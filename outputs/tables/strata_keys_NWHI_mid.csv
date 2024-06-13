@@ -1,8 +1,8 @@
-strat,strat_nam,sector_id,reef_id,depth_bin_value
-1,deep_mid_sector_forereef,mid_sector,forereef,DEEP
-3,mid_mid_sector_forereef,mid_sector,forereef,MIDD
-6,shallow_mid_sector_forereef,mid_sector,forereef,SHAL
-5,shallow_mid_sector_backreef,mid_sector,backreef,SHAL
-7,shallow_mid_sector_lagoon,mid_sector,lagoon,SHAL
-4,mid_mid_sector_lagoon,mid_sector,lagoon,MIDD
-2,mid_mid_sector_backreef,mid_sector,backreef,MIDD
+strat,strat_nam,sector_id,reef_id,depth_bin
+1,DEEP_MID_SECTOR_FOREREEF,MID_SECTOR,FOREREEF,DEEP
+3,MID_MID_SECTOR_FOREREEF,MID_SECTOR,FOREREEF,MIDD
+6,SHALLOW_MID_SECTOR_FOREREEF,MID_SECTOR,FOREREEF,SHAL
+5,SHALLOW_MID_SECTOR_BACKREEF,MID_SECTOR,BACKREEF,SHAL
+7,SHALLOW_MID_SECTOR_LAGOON,MID_SECTOR,LAGOON,SHAL
+4,MID_MID_SECTOR_LAGOON,MID_SECTOR,LAGOON,MIDD
+2,MID_MID_SECTOR_BACKREEF,MID_SECTOR,BACKREEF,MIDD

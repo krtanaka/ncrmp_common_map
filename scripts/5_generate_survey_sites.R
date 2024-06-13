@@ -80,7 +80,7 @@ ggmap::register_google("AIzaSyDpirvA5gB7bmbEbwB1Pk__6jiV4SXAEcY")
 
 for (i in 1:length(islands)) {
   
-  # i = 2
+  # i = 4
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData"))#; plot(survey_grid_ncrmp)
@@ -104,7 +104,7 @@ for (i in 1:length(islands)) {
   n <- id <- division <- strat <- N <- strat_sets <- cell_sets <- NULL
   
   cells <- data.table(rasterToPoints(survey_grid_ncrmp))
-  
+
   # add modeled trophic biomass variability, summarize by strata
   load(paste0("data/spc/modeled_piscivore_variability_", region, ".RData")) # modeled at original grid scale
   load(paste0("data/spc/modeled_planktivore_variability_", region, ".RData")) # modeled at original grid scale
@@ -189,8 +189,8 @@ for (i in 1:length(islands)) {
   strat_det = strat_det %>% 
     mutate(strat_sets = ifelse(strat_sets > strat_cells, strat_cells, strat_sets))
   
-  cat(paste0("saving strata table for ", region, " ", islands[i], " to CSV...\n"))
-  readr::write_csv(strat_det, file = paste0("outputs/tables/strata_table_", region, "_", islands[i], ".csv"))
+  # cat(paste0("saving strata table for ", region, " ", islands[i], " to CSV...\n"))
+  # readr::write_csv(strat_det, file = paste0("outputs/tables/strata_table_", region, "_", islands[i], ".csv"))
   
   cells <- merge(cells, strat_det, by = c("strat")) 
   
