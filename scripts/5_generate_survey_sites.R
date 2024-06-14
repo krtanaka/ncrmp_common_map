@@ -80,7 +80,7 @@ ggmap::register_google("AIzaSyDpirvA5gB7bmbEbwB1Pk__6jiV4SXAEcY")
 
 for (i in 1:length(islands)) {
   
-  # i = 1
+  # i = 9
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData"))#; plot(survey_grid_ncrmp)
@@ -300,7 +300,8 @@ for (i in 1:length(islands)) {
   sets = sets[,c("site_id", "SITE_NO", "x", "y", "longitude", "latitude", "depth",  "depth_bin", "strat")]
   
   sets_i = sets
-  key_i = read_csv(paste0("outputs/tables/strata_keys_", region, "_", islands[i], ".csv"))
+  key_i = read_csv(paste0("outputs/tables/strata_keys_", region, "_", islands[i], ".csv")) %>%
+    mutate(depth_bin = stringr::str_replace(depth_bin, "MIDD", "MID"))
   
   sets_i = left_join(sets_i, key_i)
   
@@ -747,4 +748,3 @@ for (i in 1:length(islands)) {
   file.remove(paste0("outputs/tables/survey_table_", region, "_", islands[i], ".pdf"))
   
 }
-
