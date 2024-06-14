@@ -1,0 +1,13 @@
+region,island,depth_bin,sector_id,reef_id,strat,strat_nam,strat_area,strat_sets
+MHI,haw,DEEP,haw_hamak,forereef,1,deep_haw_hamak_forereef,17.595776202222932,20
+MHI,haw,MIDD,haw_hamak,forereef,5,mid_haw_hamak_forereef,19.188996100586223,21
+MHI,haw,SHAL,haw_hamak,forereef,9,shallow_haw_hamak_forereef,6.216678481396724,9
+MHI,haw,DEEP,haw_kona,forereef,2,deep_haw_kona_forereef,16.174794168235916,24
+MHI,haw,MIDD,haw_kona,forereef,6,mid_haw_kona_forereef,23.275537927029077,28
+MHI,haw,SHAL,haw_kona,forereef,10,shallow_haw_kona_forereef,12.035346781443799,18
+MHI,haw,DEEP,haw_puna,forereef,3,deep_haw_puna_forereef,14.2893752092215,24
+MHI,haw,MIDD,haw_puna,forereef,7,mid_haw_puna_forereef,15.800760503835042,24
+MHI,haw,SHAL,haw_puna,forereef,11,shallow_haw_puna_forereef,3.7936352620129123,6
+MHI,haw,SHAL,haw_se,forereef,12,shallow_haw_se_forereef,3.4974270132818286,6
+MHI,haw,MIDD,haw_se,forereef,8,mid_haw_se_forereef,7.202152633756828,12
+MHI,haw,DEEP,haw_se,forereef,4,deep_haw_se_forereef,6.575618731849519,9

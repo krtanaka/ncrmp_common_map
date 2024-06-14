@@ -103,8 +103,9 @@ for (i in 1:length(islands)) {
   
   n <- id <- division <- strat <- N <- strat_sets <- cell_sets <- NULL
   
-  cells <- data.table(rasterToPoints(survey_grid_ncrmp))
-
+  # cells <- data.table(rasterToPoints(survey_grid_ncrmp))
+  cells <- data.table(terra::as.data.frame(survey_grid_ncrmp, xy = T, cells = T, na.rm = T))
+  
   # add modeled trophic biomass variability, summarize by strata
   load(paste0("data/spc/modeled_piscivore_variability_", region, ".RData")) # modeled at original grid scale
   load(paste0("data/spc/modeled_planktivore_variability_", region, ".RData")) # modeled at original grid scale
@@ -189,8 +190,17 @@ for (i in 1:length(islands)) {
   strat_det = strat_det %>% 
     mutate(strat_sets = ifelse(strat_sets > strat_cells, strat_cells, strat_sets))
   
-  # cat(paste0("saving strata table for ", region, " ", islands[i], " to CSV...\n"))
-  # readr::write_csv(strat_det, file = paste0("outputs/tables/strata_table_", region, "_", islands[i], ".csv"))
+  strat_set = strat_det %>% select(strat, strat_area, strat_sets) %>% 
+    mutate(island = islands[i],
+           region = region)
+  
+  keys = read_csv(paste0("outputs/tables/strata_keys_", region, "_", islands[i], ".csv"))
+  
+  strat_set = left_join(strat_set, keys) %>% 
+    select(region, island, depth_bin, sector_id, reef_id, strat, strat_nam, strat_area, strat_sets)
+  
+  cat(paste0("saving strata set for ", region, " ", islands[i], " to CSV...\n"))
+  readr::write_csv(strat_set, file = paste0("outputs/tables/strata_set_", region, "_", islands[i], ".csv"))
   
   cells <- merge(cells, strat_det, by = c("strat")) 
   
@@ -680,7 +690,7 @@ for (i in 1:length(islands)) {
     # geom_spatial_point(data = sets, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 3, crs = 4326) + 
     # scale_fill_manual(name = "Depth", values = c("red", "goldenrod1", "green3"), na.translate = F) + # in geom_spatial_point make size = 9 ONLY for Guam
     # scale_shape_manual(name = "Depth", values = c(24, 22, 21), na.translate = F) +
-    annotation_scale(location = "br", width_hint = 0.2, text_col = "gray90", bar_cols = "gray90", size = 5) +  # new_scale_color() +
+    annotation_scale(location = "br", width_hint = 0.2, text_col = "gray20", bar_cols = "gray20", size = 5) +  # new_scale_color() +
     # new_scale_fill() +      
     
     # geom_label_repel(data = sets,
