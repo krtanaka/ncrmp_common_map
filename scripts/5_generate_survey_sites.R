@@ -281,6 +281,7 @@ for (i in 1:length(islands)) {
   sets = sets[,c("site_id", "SITE_NO", "x", "y", "longitude", "latitude", "depth",  "depth_bin", "strat")]
   
   sets_i = sets
+  
   key_i = read_csv(paste0("outputs/tables/strata_keys_", region, "_", islands[i], ".csv")) %>%
     mutate(depth_bin = stringr::str_replace(depth_bin, "MIDD", "MID"))
   
@@ -294,7 +295,7 @@ for (i in 1:length(islands)) {
     mutate_if(is.numeric, round, digits = 4) %>% 
     mutate_if(is.character, toupper)
   
-  cat(paste0("saving survey table for ", region, " ", islands[i], " to CSV...\n"))
+  cat(paste0("\n\n\n... saving survey table for ", region, " ", islands[i], " to CSV ...\n\n\n"))
   readr::write_csv(sets_i, file = paste0("outputs/tables/survey_table_", region, "_", islands[i], ".csv"))
   
   # #########################################
@@ -439,6 +440,29 @@ for (i in 1:length(islands)) {
     find_hull <- function(boxes) boxes[chull(boxes$latitude, boxes$longitude), ]
     boxes_hulls <- ddply(df, "boxes_nam", find_hull)
     
+    # Split the data frame by ID
+    split_data <- split(boxes_hulls, boxes_hulls$ID)
+    
+    # Function to create polygons
+    create_polygon <- function(df) {
+      coords <- df[, c("longitude", "latitude")]
+      coords <- rbind(coords, coords[1, ])  # Close the polygon
+      Polygons(list(Polygon(coords)), as.character(df$ID[1]))
+    }
+    
+    # Apply the function to each group
+    polygons_list <- lapply(split_data, create_polygon)
+    
+    # Combine into SpatialPolygons
+    sp_polygons <- SpatialPolygons(polygons_list)
+    
+    # Create a data frame for the polygons
+    polygons_df <- do.call(rbind, lapply(split_data, function(df) df[1, ]))
+    row.names(polygons_df) <- as.character(polygons_df$ID)
+    
+    # Create the SpatialPolygonsDataFrame
+    boxes_hulls_polygon <- SpatialPolygonsDataFrame(sp_polygons, polygons_df)
+    
     Switch = T
     
   } else {
@@ -455,7 +479,7 @@ for (i in 1:length(islands)) {
   
   for (d in 1:length(map_direction)) {
     
-    # d = 1
+    # d = 2
     
     map_i = map_direction[d]
     
@@ -468,29 +492,37 @@ for (i in 1:length(islands)) {
     
     sets_i = sets %>% subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4])
     
-    # use coastline shp file
+    # clip survey boxes and coast lines
     tryCatch({
       
       ISL_this_i <- crop(ISL_this, extent(ext))
+      boxes_hulls_polygon_i <- crop(boxes_hulls_polygon, extent(ext))
+      boxes_hulls_polygon_i_nam = boxes %>% 
+        subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4]) %>% 
+        group_by(boxes_nam) %>% 
+        summarise(longitude = median(longitude), latitude = median(latitude))
       
     }, error = function(e){
       
       print("No land shp available in this extent. Use full extent instead")
       ISL_this_i <- crop(ISL_this, extent(ISL_this))
-      
+      boxes_hulls_polygon_i <- crop(boxes_hulls_polygon, extent(boxes_hulls_polygon))
+      boxes_hulls_polygon_i_nam = boxes %>% 
+        group_by(boxes_nam) %>% 
+        summarise(longitude = median(longitude), latitude = median(latitude))
     })
     
     # use ggmap
     tryCatch({
-
+      
       map = get_map(location = c(mean(sets_i$longitude, na.rm = T), mean(sets_i$latitude, na.rm = T)),
                     maptype = "satellite",
                     zoom = utm_i$Satellite,
                     # color = "bw",
                     force = T)
-
+      
     }, error = function(e){
-
+      
       print("No sets available in this extent. Use full extent instead")
       map <- get_map(location = c(mean(sets$longitude, na.rm = T), mean(sets$latitude, na.rm = T)),
                      maptype = "satellite",
@@ -538,17 +570,21 @@ for (i in 1:length(islands)) {
                   latitude = quantile(latitude, 0.4))
     }
     
-    
     map_i = 
       
       ggplot() +
       # ggmap(map) +
       
-      geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "gray50", color = NA, alpha = 0.9) + # land shapefile
-      # geom_path(data = ISL_this_i, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "gray10") + # coastline
+      # add land and coastline
+      geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "gray50", color = NA, alpha = 0.9) + 
+      geom_path(data = ISL_this_i, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "gray10") +
+      
+      # add survey boxes
+      {if(Switch) geom_polygon(data = boxes_hulls_polygon_i, aes(long, lat, group = group), inherit.aes = F, size = 1, alpha = 0.2)} +
+      {if(Switch) geom_path(data = boxes_hulls_polygon, aes(long, lat, group = group), inherit.aes = F, size = 1, color = "gray10")} +
+      {if(Switch) geom_text_repel(data = boxes_hulls_polygon_i_nam, aes(longitude, latitude, label = boxes_nam), color = "black", size = 5)} + 
       
       # display if there is more than 1 island sector
-      
       {if (length(unique(buffer$sector_nam)) > 1) {
         
         geom_raster(data = buffer %>% mutate(across(c(latitude, longitude), round, digits = 3)) %>% distinct(), 
@@ -631,6 +667,7 @@ for (i in 1:length(islands)) {
     
     geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "gray10") + # coastline
     geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "gray50", color = NA, alpha = 0.9) + # land shapefile
+    {if(Switch) geom_path(data = sp_polygons_df , aes(long, lat, group = group), inherit.aes = F, size = 1, color = "gray10")} + # coastline
     
     geom_raster(data = cells %>% mutate(across(c(latitude, longitude), round, digits = 3)), aes(longitude, latitude, fill = factor(strat)), alpha = 0.8) + # stratum
     
