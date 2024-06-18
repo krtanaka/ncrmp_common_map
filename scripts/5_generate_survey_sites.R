@@ -580,9 +580,9 @@ for (i in 1:length(islands)) {
       geom_path(data = ISL_this_i, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "gray10") +
       
       # add survey boxes
-      {if(Switch) geom_polygon(data = boxes_hulls_polygon_i, aes(long, lat, group = group), inherit.aes = F, size = 1, alpha = 0.2)} +
-      {if(Switch) geom_path(data = boxes_hulls_polygon, aes(long, lat, group = group), inherit.aes = F, size = 1, color = "gray10")} +
-      {if(Switch) geom_text_repel(data = boxes_hulls_polygon_i_nam, aes(longitude, latitude, label = boxes_nam), color = "black", size = 5)} + 
+      # {if(Switch) geom_polygon(data = boxes_hulls_polygon_i, aes(long, lat, group = group), inherit.aes = F, size = 1, alpha = 0.2)} +
+      {if(Switch) geom_path(data = boxes_hulls_polygon_i, aes(long, lat, group = group), inherit.aes = F, size = 0.5, color = "gray10")} +
+      {if(Switch) geom_text_repel(data = boxes_hulls_polygon_i_nam, aes(longitude, latitude, label = boxes_nam), color = "black", size = 15)} + 
       
       # display if there is more than 1 island sector
       {if (length(unique(buffer$sector_nam)) > 1) {
@@ -609,8 +609,8 @@ for (i in 1:length(islands)) {
       geom_spatial_point(data = sets_i, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 5, crs = 4326) +
       # geom_point(data = sets_i, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 5) + 
       
-      scale_fill_manual(name = "Depth", values = c("red", "goldenrod1", "green3"), na.translate = F) + 
-      scale_shape_manual(name = "Depth", values = c(24, 22, 21), na.translate = F) +
+      scale_fill_manual(name = "", values = c("red", "goldenrod1", "green3"), na.translate = F) + 
+      scale_shape_manual(name = "", values = c(24, 22, 21), na.translate = F) +
       annotation_scale(location = "br", width_hint = 0.2, text_col = "gray20", bar_cols = "white", size = 5) +  # new_scale_color() +
       
       geom_label_repel(data = sets_i, 
@@ -630,8 +630,8 @@ for (i in 1:length(islands)) {
       
       coord_sf(crs = 4326) + 
       
-      scale_x_continuous(sec.axis = dup_axis(), "", limits = ext[1:2]) +
-      scale_y_continuous(sec.axis = dup_axis(), "", limits = ext[3:4])
+      scale_x_continuous(sec.axis = dup_axis(), "", limits = ext[1:2], expand = c(-0.001, 0)) +
+      scale_y_continuous(sec.axis = dup_axis(), "", limits = ext[3:4], expand = c(-0.001, 0))
     
     map_full =     
       ggplot() +
@@ -644,7 +644,7 @@ for (i in 1:length(islands)) {
     if(diff(ext[1:2]) > diff(ext[3:4])) pdf(paste0("outputs/maps/survey_map_", region, "_", islands[i], "_", map_direction[d], ".pdf"), height = 17, width = 22)
     
     # print(map_full / map_i + plot_layout(heights = c(1, 4)))
-    print(map_i + inset_element(map_full, left = 0, bottom = 0.8, right = 0.2, top = 1, align_to = 'full'))
+    print(map_i + inset_element(map_full, left = 0, bottom = 0.9, right = 0.2, top = 1, align_to = 'full'))
     
     dev.off()
     
@@ -667,8 +667,7 @@ for (i in 1:length(islands)) {
     
     geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "gray10") + # coastline
     geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "gray50", color = NA, alpha = 0.9) + # land shapefile
-    {if(Switch) geom_path(data = sp_polygons_df , aes(long, lat, group = group), inherit.aes = F, size = 1, color = "gray10")} + # coastline
-    
+
     geom_raster(data = cells %>% mutate(across(c(latitude, longitude), round, digits = 3)), aes(longitude, latitude, fill = factor(strat)), alpha = 0.8) + # stratum
     
     scale_fill_discrete("Strata") + 
