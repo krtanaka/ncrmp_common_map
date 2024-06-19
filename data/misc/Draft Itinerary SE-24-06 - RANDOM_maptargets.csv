@@ -65,9 +65,9 @@ Molokai,mol,MOL_W,mol_west,FRF_S,3,2,3,9,2,-1
 Niihau,nii,NII_E,nii_east,FRF_D,4,2,4,12,6,2
 Niihau,nii,NII_E,nii_east,FRF_M,4,2,4,12,4,0
 Niihau,nii,NII_E,nii_east,FRF_S,3,,3,9,2,-1
-Lehua,leh,NII_Lehua,nii_lehua,FRF_D,2,2,2,6,2,0
-Lehua,leh,NII_Lehua,nii_lehua,FRF_M,5,2,5,15,2,-3
-Lehua,leh,NII_Lehua,nii_lehua,FRF_S,3,2,3,9,2,-1
+Niihau,nii,NII_Lehua,nii_lehua,FRF_D,2,2,2,6,2,0
+Niihau,nii,NII_Lehua,nii_lehua,FRF_M,5,2,5,15,2,-3
+Niihau,nii,NII_Lehua,nii_lehua,FRF_S,3,2,3,9,2,-1
 Niihau,nii,NII_W,nii_west,FRF_D,3,2,3,9,7,4
 Niihau,nii,NII_W,nii_west,FRF_M,5,2,5,15,12,7
 Niihau,nii,NII_W,nii_west,FRF_S,2,2,2,6,2,0
