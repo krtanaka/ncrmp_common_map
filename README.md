@@ -13,3 +13,4 @@ Kisei continue test zoom in ggplot
 # https://www.fisheries.noaa.gov/inport/item/35021
 # https://geoportal.hawaii.gov/datasets/HiStateGIS::bottom-type/about
 # https://catalog.data.gov/dataset/hard-and-soft-bottom-seafloor-substrate-map-derived-from-an-unsupervised-classification-of-grid
+# https://geoportal.hawaii.gov/datasets/HiStateGIS::marine-managed-areas-dar/explore
