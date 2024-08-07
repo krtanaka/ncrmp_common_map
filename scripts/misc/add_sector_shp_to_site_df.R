@@ -1,6 +1,6 @@
-#####################################################
+#################################################
 ### Add sector information to site-level data ###
-#####################################################
+#################################################
 # make sure you are connected to relevant PIFSC drives
 
 rm(list = ls())
@@ -41,8 +41,11 @@ for (isl in 1:length(unique(df$ISLAND))) {
   # re-project in correct utm zone 
   zone <- (floor((df_i$LONGITUDE_SV[1] + 180)/6) %% 60) + 1
   
+  if (unique(df$ISLAND)[isl] == "Hawaii") zone = 4
+  
   xy_utm = data.frame(x = df_i$LONGITUDE_SV, y = df_i$LATITUDE_SV)  %>% 
     mutate(zone2 = (floor((x + 180)/6) %% 60) + 1, keep = "all") %>% 
+    mutate(zone2 = ifelse(unique(df$ISLAND)[isl] == "Hawaii", 4, zone2)) %>%  # Add this line for the conditional statement
     group_by(zone2) %>% 
     mutate(utm_x = get_utm(x, y, zone2, loc = "x"),
            utm_y = get_utm(x, y, zone2, loc = "y")) %>% 
