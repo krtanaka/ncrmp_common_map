@@ -20,7 +20,7 @@ utm <- read_csv('data/misc/ncrmp_utm_zones.csv')
 domain_sf_object <- NULL
 PLOT <- FALSE
 
-for(reg in 5:6){
+for(reg in 1:6){
   
   # reg = 6
   
