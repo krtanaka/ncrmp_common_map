@@ -20,18 +20,39 @@ utm <- read_csv('data/misc/ncrmp_utm_zones.csv')
 domain_sf_object <- NULL
 PLOT <- FALSE
 
-for(reg in 1:6){
+for(reg in 1:2){
   
   # reg = 6
   
-  if(reg == 1) islands = c("gua", "rot", "sai", "tin", "agu"); region = "S.MARIAN"                           # South Mariana Islands
-  if(reg == 2) islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "pag", "sar"); region = "N.MARIAN"      # North Mariana Islands
-  if(reg == 3) islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                              # American Samoa
-  if(reg == 4) islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"                # Pacific Remote Island Areas
-  if(reg == 5) islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI"    # Main Hawaiian Islands
-  if(reg == 6) islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"                 # Northern Hawaiian Islands
+  region <- NULL
+  islands <- NULL
   
-  regional_sf_object = NULL
+  if(reg == 1) {
+    islands <- c("gua", "rot", "sai", "tin", "agu")
+    region <- "S.MARIAN"  # South Mariana Islands
+  } else if(reg == 2) {
+    islands <- c("agr", "ala", "asc", "gug", "fdp", "mau", "pag", "sar")
+    region <- "N.MARIAN"  # North Mariana Islands
+  } else if(reg == 3) {
+    islands <- c("ofu", "ros", "swa", "tau", "tut")
+    region <- "SAMOA"  # American Samoa
+  } else if(reg == 4) {
+    islands <- c("bak", "how", "jar", "joh", "kin", "pal", "wak")
+    region <- "PRIAs"  # Pacific Remote Island Areas
+  } else if(reg == 5) {
+    islands <- c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah")
+    region <- "MHI"  # Main Hawaiian Islands
+  } else if(reg == 6) {
+    islands <- c("ffs", "kur", "lay", "lis", "mar", "mid", "phr")
+    region <- "NWHI"  # Northern Hawaiian Islands
+  } else {
+    stop("Invalid 'reg' value.")
+  }
+  
+  cat("Processing Region:", region, "\n")
+  cat("Islands:", paste(islands, collapse = ", "), "\n")
+  
+  regional_sf_object <- NULL
   
   for (isl in 1:length(islands)) {
     
