@@ -81,7 +81,7 @@ set_na <- function(x) {
 
 for (i in 1:length(islands)) {
   
-  # i = 7
+  # i = 1
   
   # if (file.exists(paste0('data/gis_bathymetry/', islands[i], '.RData'))) {
   #   
