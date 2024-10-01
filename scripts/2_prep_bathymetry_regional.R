@@ -38,6 +38,7 @@ rm(island_names_codes, island_boxes)
 # Load the appropriate bathymetry raster file based on the selected region
 if(region == "MARIAN") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/mariana_trench_6_msl_2012.nc")
 if(region == "MARIAN") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/Bathymetry_ETOPO_2022_v1_15s_all_units.nc")
+if(region == "MARIAN") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/cnmi_merged_3m_res.tif")
 if(region == "SAMOA") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/pago_pago_3_mhw_2009.nc")
 if(region == "NWHI") topo = rast("N:/GIS/Projects/CommonMaps/Bathymetry/Bathymetry_HURL_NWHI_60m_all_units.nc")
 # if(region == "MHI") topo = raster("N:/GIS/Projects/CommonMaps/Bathymetry/usgsCeCrm10.nc") #outdated
@@ -81,7 +82,7 @@ set_na <- function(x) {
 
 for (i in 1:length(islands)) {
   
-  # i = 1
+  # i = 4
   
   # if (file.exists(paste0('data/gis_bathymetry/', islands[i], '.RData'))) {
   #   

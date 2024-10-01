@@ -30,7 +30,7 @@ select = dplyr::select
 
 for (isl in 1:length(islands)) {
   
-  # isl = 4
+  # isl = 5
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
