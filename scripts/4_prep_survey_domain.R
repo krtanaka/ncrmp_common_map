@@ -1,9 +1,11 @@
 ########################################
-### prep survey_grid for simulations ###
+### Prep survey_grid for simulations ###
 ########################################
 
+# Clear the environment
 rm(list = ls())
 
+# Load required libraries
 library(dplyr)
 library(ggplot2)
 library(raster)
@@ -17,20 +19,34 @@ library(ggthemes)
 library(data.table)
 library(terra)
 
-utm = read_csv('data/misc/ncrmp_utm_zones.csv')
+# Load UTM zones data
+utm <- read_csv('data/misc/ncrmp_utm_zones.csv')
 
-islands = c("gua", "rot", "sai", "tin", "agu"); region = "S.MARIAN"                           # South Mariana Islands
-islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "pag", "sar"); region = "N.MARIAN"      # North Mariana Islands
-islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                              # American Samoa
-islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"                # Pacific Remote Island Areas
-islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI"    # Main Hawaiian Islands
-islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"                 # Northern Hawaiian Islands
+# Define island groups and regions
+
+# South Mariana Islands
+islands <- c("gua", "rot", "sai", "tin", "agu"); region <- "S.MARIAN"
+
+# North Mariana Islands
+islands <- c("agr", "ala", "ana", "asc", "gug", "fdp", "mau", "pag", "sar"); region <- "N.MARIAN"
+
+# American Samoa
+islands <- c("ofu", "ros", "swa", "tau", "tut"); region <- "SAMOA"
+
+# Pacific Remote Island Areas (PRIAs)
+islands <- c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region <- "PRIAs"
+
+# Main Hawaiian Islands (MHI)
+islands <- c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region <- "MHI"
+
+# Northwestern Hawaiian Islands (NWHI)
+islands <- c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region <- "NWHI"
 
 select = dplyr::select
 
 for (isl in 1:length(islands)) {
   
-  # isl = 6
+  # isl = 7
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -380,9 +396,9 @@ for (isl in 1:length(islands)) {
     dplyr::select(LONGITUDE_LOV, LATITUDE_LOV, YEAR) %>% 
     na.omit()
   
-  get_utm <- function(x, y, zone, loc){
+  get_utm <- function(x, y, zone, loc, hemisphere){
     points = SpatialPoints(cbind(x, y), proj4string = CRS("+proj=longlat +datum=WGS84"))
-    points_utm = spTransform(points, CRS(paste0("+proj=utm +zone=", zone[1]," +ellps=WGS84 +north")))
+    points_utm = spTransform(points, CRS(paste0("+proj=utm +zone=", zone[1]," +ellps=WGS84 +", hemisphere[1])))
     if (loc == "x") {
       return(coordinates(points_utm)[,1])
     } else if (loc == "y") {
@@ -392,10 +408,11 @@ for (isl in 1:length(islands)) {
   
   xy_utm = data.frame(x = sv$LONGITUDE_LOV, y = sv$LATITUDE_LOV)  %>% 
     # mutate(zone2 = (floor((x + 180)/6) %% 60) + 1, keep = "all") %>% 
-    mutate(zone2 = utm_i$UTM_Zone) %>%
+    mutate(zone2 = utm_i$UTM_Zone,
+           hemisphere = utm_i$Hemisphere) %>%
     group_by(zone2) %>% 
-    mutate(utm_x = get_utm(x, y, zone2, loc = "x"),
-           utm_y = get_utm(x, y, zone2, loc = "y")) %>% 
+    mutate(utm_x = get_utm(x, y, zone2, loc = "x", hemisphere),
+           utm_y = get_utm(x, y, zone2, loc = "y", hemisphere)) %>% 
     ungroup() %>% 
     dplyr::select(utm_x, utm_y) 
   
