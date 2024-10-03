@@ -9,7 +9,7 @@ list_folders <- list_folders[file.info(list_folders)$isdir]
 
 for (l in head(list_folders, -2)) {
   
-  # l = list_folders[1]
+  # l = list_folders[2]
   
   folder_name <- basename(l)
   
@@ -56,7 +56,7 @@ for (l in head(list_folders, -2)) {
   # plot(rast("N:/GIS/Projects/CommonMaps/Bathymetry/cnmi_merged_9m_res.tif"))
   
   files <- list_files_with_exts(path, "tif")
-  merge_rasters(files[1:length(files)], output_raster = paste0("N:/GIS/Projects/CommonMaps/Bathymetry/", folder_name, ".tif"), overwrite = T)
+  merge_rasters(files[1:length(files)], output_raster = paste0("N:/GIS/Projects/CommonMaps/Bathymetry/", folder_name, "_merged.tif"), overwrite = T)
   plot(rast(paste0("N:/GIS/Projects/CommonMaps/Bathymetry/", folder_name, ".tif")))
   
   # # calculate rugosity
@@ -65,8 +65,7 @@ for (l in head(list_folders, -2)) {
   # df = project(df, "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0")
   # plot(df)
   # writeRaster(df, "N:/GIS/Projects/CommonMaps/Bathymetry/cnmi_merged_6m_res_rugosity.tif", overwrite = TRUE)
-  
-  
+
 }
 
 
