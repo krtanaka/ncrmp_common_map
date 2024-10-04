@@ -4,12 +4,12 @@ library(tools)
 
 rm(list = ls())
 
-list_folders <- list.files('/Users/kisei.tanaka/Desktop/', full.names = TRUE)
+list_folders <- list.files('N:/GIS/Projects/CommonMaps/Bathymetry/', full.names = TRUE)
 list_folders <- list_folders[file.info(list_folders)$isdir]
 
-for (l in head(list_folders, -2)) {
+for (l in list_folders) {
   
-  # l = list_folders[2]
+  # l = list_folders[8]
   
   folder_name <- basename(l)
   
