@@ -9,7 +9,7 @@ list_folders <- list_folders[file.info(list_folders)$isdir]
 
 for (l in list_folders) {
   
-  # l = list_folders[8]
+  # l = list_folders[6]
   
   folder_name <- basename(l)
   
