@@ -29,7 +29,7 @@ islands = c(
 )
 
 # North Mariana Islands
-islands = c("agr", "ala", "ana", "asc", "gug", "fdp", "mau", "sar", "pag")
+islands = c("agr", "ala", "ana", "asc", "gug", "fdp", "mau", "sar", "sup", "pag")
 
 # American Samoa
 islands = c("ofu", "ros", "swa", "tau", "tut")
@@ -66,6 +66,7 @@ for (isl in 1:length(islands)) {
   if (islands[isl] == "fdp") topo = raster(paste0(letter, ":/GIS/Projects/SeafloorCalc/Final_Products/fdp_inpo/w001001.adf"))
   if (islands[isl] == "mau") topo = raster(paste0(letter, ":/GIS/Projects/SeafloorCalc/Final_Products/mau_inpo/w001001.adf"))
   if (islands[isl] == "sar") topo = raster(paste0(letter, ":/GIS/Projects/SeafloorCalc/Final_Products/sar_inpo/w001001.adf"))
+  if (islands[isl] == "sup") topo = raster(paste0(letter, ":/GIS/Projects/SeafloorCalc/Workspace/Supply/sup_10m/w001001.adf"))
   if (islands[isl] == "pag") topo = raster(paste0(letter, ":/GIS/Projects/SeafloorCalc/Final_Products/pag_inpo/w001001.adf"))
   
   # American Samoa
