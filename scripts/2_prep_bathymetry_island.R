@@ -29,7 +29,7 @@ islands = c(
 )
 
 # North Mariana Islands
-islands = c("agr", "ala", "ana", "asc", "gug", "fdp", "mau", "sar", "sup", "pag")
+islands = c("agr", "ala", "ana", "asc", "gug", "fdp", "mau", "sar", "sup", "pag", "zea")
 
 # American Samoa
 islands = c("ofu", "ros", "swa", "tau", "tut")
@@ -48,7 +48,7 @@ letter = "N"
 
 for (isl in 1:length(islands)) {
   
-  # isl = 9
+  # isl = 11
   
   # South Mariana Islands
   if (islands[isl] == "gua") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/ngdc_bathy_10m_guam_049d_6725_8fc5.nc"))
@@ -68,6 +68,7 @@ for (isl in 1:length(islands)) {
   if (islands[isl] == "sar") topo = raster(paste0(letter, ":/GIS/Projects/SeafloorCalc/Final_Products/sar_inpo/w001001.adf"))
   if (islands[isl] == "sup") topo = raster(paste0(letter, ":/GIS/Projects/SeafloorCalc/Workspace/Supply/sup_10m/w001001.adf"))
   if (islands[isl] == "pag") topo = raster(paste0(letter, ":/GIS/Projects/SeafloorCalc/Final_Products/pag_inpo/w001001.adf"))
+  if (islands[isl] == "zea") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/ZEA_5m_bathy.asc"))
   
   # American Samoa
   if (islands[isl] == "ofu") topo = raster(paste0(letter, ":/GIS/Projects/CommonMaps/Bathymetry/oo_dbmb_mos4.asc"))

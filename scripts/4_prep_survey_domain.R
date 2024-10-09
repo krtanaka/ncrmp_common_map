@@ -28,7 +28,7 @@ utm <- read_csv('data/misc/ncrmp_utm_zones.csv')
 islands <- c("gua", "rot", "sai", "tin", "agu"); region <- "S.MARIAN"
 
 # North Mariana Islands
-islands <- c("agr", "ala", "ana", "asc", "gug", "fdp", "mau", "sar", "sup", "pag"); region <- "N.MARIAN"
+islands <- c("agr", "ala", "ana", "asc", "gug", "fdp", "mau", "sar", "sup", "pag", "zea"); region <- "N.MARIAN"
 
 # American Samoa
 islands <- c("ofu", "ros", "swa", "tau", "tut"); region <- "SAMOA"
@@ -46,7 +46,7 @@ select = dplyr::select
 
 for (isl in 1:length(islands)) {
   
-  # isl = 5
+  # isl = 11
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
