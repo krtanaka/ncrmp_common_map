@@ -9,7 +9,7 @@ rm(list = ls())
 
 # Rota Island: Bathymetry PIBHMC
 # https://www.soest.hawaii.edu/pibhmc/cms/data-by-location/cnmi-guam/rota-island/rota-island-bathymetry/
-b1 = rast("N:/GIS/Projects/CommonMaps/Bathymetry/2020_ngs_topobathy_anatahan_Job1075853_merged.tif"); plot(b1)
+b1 = rast("N:/GIS/Projects/CommonMaps/Bathymetry/2020_ngs_topobathy_anatahan/"); plot(b1)
 b2 = rast("N:/GIS/Projects/SeafloorCalc/Workspace/Anatahan/ana_60m_bathy/w001001.adf"); plot(b2)
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
