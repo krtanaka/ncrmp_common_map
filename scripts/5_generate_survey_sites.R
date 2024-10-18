@@ -99,7 +99,7 @@ if (dim(total_sample)[1] == 0){
   
 }
 
-total_sample = 40
+total_sample = 50
 
 cat(paste0("target sampling effort = ", total_sample, "...\n"))
 
@@ -247,23 +247,13 @@ cat(paste0("removing ", nrow(sets) - nrow(nearby_sites), " sites to maintain a m
 
 sets = inner_join(sets, nearby_sites)
 
-if (islands[i] %in% unique(site_num$ISLANDCODE) ) {
-  
-  id = site_num %>% filter(ISLANDCODE == islands[i])
-  id = id$MAX_SITE_NUM %>% as.numeric()
-  id = seq(id,id + dim(sets)[1]-1,1)
-  id = sprintf("s_%04d", id)
-  id = gsub("s",  toupper(islands[i]), id)
-  id = paste0(id, "A")
-  
-}else{
-  
-  id <- seq(1,dim(sets)[1],1)
-  id = sprintf("s_%04d", id)
-  id = gsub("s",  islands[i], id)
-  id = paste0(id, "A")
-  
-}
+# remove sites east of -170.705
+sets = sets %>% filter(longitude <= -170.705)
+
+#TUT-6061 and above
+id = sprintf("s_%04d", seq(6061, 6061 + dim(sets)[1] - 1, 1))
+id = gsub("s",  islands[i], id)
+id = paste0(id, "A")
 
 # count number of distinct sim*year*cell combinations
 sets[, `:=`(cell_sets, .N), by = c("cell")]
