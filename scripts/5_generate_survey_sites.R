@@ -422,10 +422,6 @@ total_area = unique(cells$cell_area)*dim(cells)[1]
 
 map_direction = c("NW", "NE", "SW", "SE")
 
-# map_list = list()
-
-# for (d in 1:length(map_direction)) {
-
 d = 2
 
 map_i = map_direction[d]
@@ -439,28 +435,7 @@ if (map_direction[d] == "SE") ext = c(median(sets$longitude, na.rm = T) - space,
 
 sets_i = sets %>% subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4])
 
-# clip survey boxes and coast lines
-# tryCatch({
-
 ISL_this_i <- crop(ISL_this, extent(ext))
-# boxes_hulls_polygon_i <- crop(boxes_hulls_polygon, extent(ext))
-# boxes_hulls_polygon_i_nam = boxes %>% 
-#   subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4]) %>% 
-#   group_by(boxes_nam) %>% 
-#   summarise(longitude = median(longitude), latitude = median(latitude))
-
-# }, error = function(e){
-#   
-#   print("No land shp available in this extent. Use full extent instead")
-#   ISL_this_i <- crop(ISL_this, extent(ISL_this))
-# boxes_hulls_polygon_i <- crop(boxes_hulls_polygon, extent(boxes_hulls_polygon))
-# boxes_hulls_polygon_i_nam = boxes %>% 
-#   group_by(boxes_nam) %>% 
-#   summarise(longitude = median(longitude), latitude = median(latitude))
-# })
-
-# use ggmap
-# tryCatch({
 
 map = get_map(location = c(mean(sets_i$longitude, na.rm = T), mean(sets_i$latitude, na.rm = T)),
               maptype = "satellite",
@@ -468,98 +443,12 @@ map = get_map(location = c(mean(sets_i$longitude, na.rm = T), mean(sets_i$latitu
               # color = "bw",
               force = T)
 
-# }, error = function(e){
-#   
-#   print("No sets available in this extent. Use full extent instead")
-#   map <- get_map(location = c(mean(sets$longitude, na.rm = T), mean(sets$latitude, na.rm = T)),
-#                  maptype = "satellite",
-#                  # zoom = utm_i$Satellite,
-#                  # color = "bw",
-#                  force = T)
-# })
-
-
-# # remove sector label outside of extent
-# 
-# if (map_direction[d] == "NW") {
-#   
-#   buffer_label_i = buffer %>% 
-#     subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4]) %>% 
-#     group_by(sector_nam) %>% 
-#     summarise(longitude = quantile(longitude, 0.4), 
-#               latitude = quantile(latitude, 0.6))
-# }
-# 
-# if (map_direction[d] == "NE") {
-#   
-#   buffer_label_i = buffer %>% 
-#     subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4]) %>% 
-#     group_by(sector_nam) %>% 
-#     summarise(longitude = quantile(longitude, 0.6), 
-#               latitude = quantile(latitude, 0.6))
-# }
-# 
-# if (map_direction[d] == "SW") {
-#   
-#   buffer_label_i = buffer %>% 
-#     subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4]) %>% 
-#     group_by(sector_nam) %>% 
-#     summarise(longitude = quantile(longitude, 0.4), 
-#               latitude = quantile(latitude, 0.4))
-# }
-# 
-# if (map_direction[d] == "SE") {
-#   
-#   buffer_label_i = buffer %>% 
-#     subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4]) %>% 
-#     group_by(sector_nam) %>% 
-#     summarise(longitude = quantile(longitude, 0.6), 
-#               latitude = quantile(latitude, 0.4))
-# }
-
 map_i = 
-  
-  # ggplot() +
   ggmap(map) +
-  
-  # add land and coastline
-  # geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "gray50", color = NA, alpha = 0.9) + 
-  # geom_path(data = ISL_this_i, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "gray10") +
-  
-  # add survey boxes
-  # {if(Switch) geom_polygon(data = boxes_hulls_polygon_i, aes(long, lat, group = group), inherit.aes = F, size = 1, alpha = 0.2)} +
-  # {if(Switch) geom_path(data = boxes_hulls_polygon_i, aes(long, lat, group = group), inherit.aes = F, size = 0.5, color = "gray10")} +
-  # {if(Switch) geom_text_repel(data = boxes_hulls_polygon_i_nam, aes(longitude, latitude, label = boxes_nam), color = "black", size = 15)} + 
-  
-  # # display if there is more than 1 island sector
-# {if (length(unique(buffer$sector_nam)) > 1) {
-#   
-#   geom_raster(data = buffer %>% mutate(across(c(latitude, longitude), round, digits = 3)) %>% distinct(), 
-#               aes(longitude, latitude, fill = sector_nam), show.legend = F, alpha = 0.2)}
-#   
-# } + 
-# 
-# {if (length(unique(buffer$sector_nam)) > 1) {
-#   
-#   geom_label_repel(data = buffer_label_i, 
-#                    aes(longitude, latitude, label = sector_nam, fill = sector_nam, fontface = 'bold'), 
-#                    alpha = 0.8, color = "white", size = 10, max.overlaps = Inf, show.legend = F)}
-#   
-# } + 
-# 
-# scale_fill_discrete("") +
-# scale_color_discrete("") +
-# 
-# new_scale_color() +
-# new_scale_fill() + 
-
-geom_spatial_point(data = sets_i, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 5, crs = 4326) +
-  # geom_point(data = sets_i, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 5) + 
-  
+  geom_spatial_point(data = sets_i, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 5, crs = 4326) +
   scale_fill_manual(name = "", values = c("red", "goldenrod1", "green3"), na.translate = F) + 
   scale_shape_manual(name = "", values = c(24, 22, 21), na.translate = F) +
   annotation_scale(location = "br", width_hint = 0.2, text_col = "white", bar_cols = "white", size = 10) +  # new_scale_color() +
-  
   geom_label_repel(data = sets_i, 
                    aes(longitude, latitude, label = SITE_NO),
                    size = 5,
@@ -571,12 +460,7 @@ geom_spatial_point(data = sets_i, aes(longitude, latitude, shape = depth_bin, fi
                    segment.color = "white",
                    box.padding = unit(0.8, "lines"),
                    point.padding = unit(0.3, "lines")) +
-  
-  # ggtitle(paste0(map_direction[d])) +
-  # theme(plot.title = element_text(size = 30, face = "bold")) + 
-  
   coord_sf(crs = 4326) + 
-  
   scale_x_continuous(sec.axis = dup_axis(), "", limits = c(-170.718, -170.701)) +
   scale_y_continuous(sec.axis = dup_axis(), "", limits = c(-14.327, -14.315))
 
@@ -585,136 +469,3 @@ map_i
 pdf(paste0("outputs/maps/survey_map_", region, "_", islands[i], ".pdf"), height = 17, width = 22)
 print(map_i)
 dev.off()
-
-#   map_full =     
-#     ggplot() +
-#     geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "darkgrey", color = NA, alpha = 0.9) +
-#     geom_rect(aes(xmin =  ext[1], xmax =  ext[2], ymin =  ext[3], ymax =  ext[4]), color = "red", fill = NA, size = 2) +
-#     coord_sf(crs = "+proj=lonlat +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs") + 
-#     theme_inset()
-#   
-#   if(diff(ext[1:2]) < diff(ext[3:4])) pdf(paste0("outputs/maps/survey_map_", region, "_", islands[i], "_", map_direction[d], ".pdf"), height = 22, width = 17)
-#   if(diff(ext[1:2]) > diff(ext[3:4])) pdf(paste0("outputs/maps/survey_map_", region, "_", islands[i], "_", map_direction[d], ".pdf"), height = 17, width = 22)
-#   
-#   # print(map_full / map_i + plot_layout(heights = c(1, 4)))
-#   print(map_i + inset_element(map_full, left = 0, bottom = 0.9, right = 0.2, top = 1, align_to = 'full'))
-#   
-#   dev.off()
-#   
-#   map_list[[length(map_list)+1]] = map_i
-#   
-# }
-# 
-# # Get map
-# ext = c(min(sets$longitude, na.rm = T) - 0.001, max(sets$longitude, na.rm = T) + 0.001, min(sets$latitude, na.rm = T) - 0.001, max(sets$latitude, na.rm = T) + 0.001)
-# map <- get_map(location = c(left = ext[1], bottom = ext[3], right = ext[2], top = ext[4]), maptype = 'satellite')
-# map <- get_map(location = c(mean(sets$longitude, na.rm = T),
-#                             mean(sets$latitude, na.rm = T)),
-#                # zoom = utm_i$Satellite,
-#                maptype = 'satellite')
-# 
-# whole_map = 
-#   
-#   ggplot() +
-#   # ggmap(map) +
-#   
-#   geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "gray10") + # coastline
-#   geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "gray50", color = NA, alpha = 0.9) + # land shapefile
-#   
-#   geom_raster(data = cells %>% mutate(across(c(latitude, longitude), round, digits = 3)), aes(longitude, latitude, fill = factor(strat)), alpha = 0.8) + # stratum
-#   
-#   scale_fill_discrete("Strata") + 
-#   scale_color_discrete("Strata") + 
-#   
-#   new_scale_color() +
-#   new_scale_fill() +
-#   
-#   {if ( length(unique(buffer$sector_nam)) > 1) {
-#     
-#     geom_raster(data = buffer %>% mutate(across(c(latitude, longitude), round, digits = 3)), 
-#                 aes(longitude, latitude, fill = sector_nam), alpha = 0.2, show.legend = F)}
-#     
-#   } + 
-#   
-#   # island sectors
-#   {if ( length(unique(buffer$sector_nam)) > 1) {
-#     
-#     geom_label_repel(data = buffer_label, aes(longitude, latitude, label = sector_nam, fill = sector_nam, fontface = 'bold'), color = "white", max.overlaps = Inf, show.legend = F)}
-#     
-#   } +
-#   
-#   scale_fill_discrete("") + 
-#   scale_color_discrete("") + 
-#   
-#   new_scale_color() +
-#   new_scale_fill() +
-#   
-#   # geom_tile(data = boxes, aes(longitude, latitude, fill = boxes_nam), width = 0.001, height = 0.001, alpha = 0.2, show.legend = F) + # survey boxes fill
-#   {if(Switch) geom_polygon(data = boxes_hulls, aes(longitude, latitude, fill = boxes_nam, color = boxes_nam), alpha = 0.01, size = 1, show.legend = F)} + # survey boxes hull
-#   {if(Switch) geom_text_repel(data = boxes_label, aes(longitude, latitude, label = boxes_nam, color = boxes_nam, fontface = 'bold'), max.overlaps = Inf, show.legend = F)} +
-#   {if(Switch) scale_fill_discrete()} + 
-#   {if(Switch) scale_color_discrete()} + 
-#   {if(Switch) new_scale_color()} +
-#   {if(Switch) new_scale_fill()} +
-#   
-#   # geom_point(data = sets, aes(longitude, latitude, shape = depth_bin, color = depth_bin)) +
-#   # geom_spatial_point(data = sets, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 3, crs = 4326) + 
-#   # scale_fill_manual(name = "Depth", values = c("red", "goldenrod1", "green3"), na.translate = F) + # in geom_spatial_point make size = 9 ONLY for Guam
-#   # scale_shape_manual(name = "Depth", values = c(24, 22, 21), na.translate = F) +
-#   annotation_scale(location = "br", width_hint = 0.2, text_col = "gray20", bar_cols = "gray20", size = 5) +  # new_scale_color() +
-#   # new_scale_fill() +      
-#   
-#   # geom_label_repel(data = sets,
-#   #                  aes(longitude, latitude, label = id),
-#   #                  size = 2,
-#   #                  label.size = NA,
-#   #                  alpha = 0.75,
-#   #                  fontface = 'bold',
-#   #                  color = 'black',
-#   #                  max.overlaps = Inf,
-#   #                  segment.size = 0.2,
-# #                  direction = "both",
-# #                  # nudge_y = 0.005,
-# #                  # nudge_x = 0.005,
-# #                  box.padding = unit(0.8, "lines"),
-# #                  point.padding = unit(0.3, "lines")) +
-# 
-# # coord_fixed() +
-# # coord_map() + 
-# coord_sf(crs = 4326) + 
-#   
-#   scale_x_continuous(sec.axis = dup_axis(), "", limits = range(pretty(buffer$longitude) + c(-0.1, 0.1))) +
-#   scale_y_continuous(sec.axis = dup_axis(), "", limits = range(pretty(buffer$latitude) + c(-0.1, 0.1))) +
-#   
-#   theme(legend.position = "bottom",
-#         axis.text = element_text(size = 10),
-#         axis.title = element_text(size = 10)) +   
-#   labs(
-#     title = "",
-#     subtitle = paste0(paste0("Island = ", toupper(as.character(isl_shp[1])),"\n",
-#                              # "Number of strata = ", length(unique(cells$strat)), "\n",
-#                              # "Target survey effort = ", total_sample, " sites \n",
-#                              "Target effort = ", sum(strat_det$strat_sets), " sites")))
-# 
-# if(diff(ext[1:2]) < diff(ext[3:4])) pdf(paste0("outputs/maps/survey_map_", region, "_", islands[i], ".pdf"), height = 22, width = 17)
-# if(diff(ext[1:2]) > diff(ext[3:4])) pdf(paste0("outputs/maps/survey_map_", region, "_", islands[i], ".pdf"), height = 17, width = 22)
-# print(whole_map)
-# dev.off()
-# 
-# library(pdftools)
-# pdf_combine(c(paste0("outputs/maps/survey_map_", region, "_", islands[i], ".pdf"), 
-#               paste0("outputs/maps/survey_map_", region, "_", islands[i], "_NE.pdf"),
-#               paste0("outputs/maps/survey_map_", region, "_", islands[i], "_NW.pdf"),
-#               paste0("outputs/maps/survey_map_", region, "_", islands[i], "_SE.pdf"),
-#               paste0("outputs/maps/survey_map_", region, "_", islands[i], "_SW.pdf")),
-#             # paste0("outputs/tables/survey_table_", region, "_", islands[i], ".pdf")),
-#             output = paste0("outputs/maps/survey_maps_", region, "_", islands[i], ".pdf"))
-# 
-# file.remove(paste0("outputs/maps/survey_map_", region, "_", islands[i], ".pdf"))
-# file.remove(paste0("outputs/maps/survey_map_", region, "_", islands[i], "_NE.pdf"))
-# file.remove(paste0("outputs/maps/survey_map_", region, "_", islands[i], "_NW.pdf"))
-# file.remove(paste0("outputs/maps/survey_map_", region, "_", islands[i], "_SE.pdf"))
-# file.remove(paste0("outputs/maps/survey_map_", region, "_", islands[i], "_SW.pdf"))
-# file.remove(paste0("outputs/tables/survey_table_", region, "_", islands[i], ".pdf"))
-# 
-# }
