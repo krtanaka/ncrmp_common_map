@@ -46,7 +46,7 @@ select = dplyr::select
 
 for (isl in 1:length(islands)) {
   
-  # isl = 2
+  # isl = 5
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -552,7 +552,7 @@ for (isl in 1:length(islands)) {
   print(ggplot() + 
           geom_raster(data = df, aes(longitude, latitude, fill = factor(strat_nam))) +
           # geom_point(data = sv %>% subset(YEAR > 2009), aes(X*0.001, Y*0.001, color = factor(YEAR)), alpha = 0.9) +
-          geom_point(data = sv %>% subset(YEAR > 2009), aes(X*0.001, Y*0.001), color = "yellow", alpha = 0.9, show.legend = F) +
+          # geom_point(data = sv %>% subset(YEAR > 2009), aes(X*0.001, Y*0.001), color = "yellow", alpha = 0.9, show.legend = F) +
           scale_fill_discrete("") + 
           scale_color_viridis_d("") +
           # coord_fixed() +

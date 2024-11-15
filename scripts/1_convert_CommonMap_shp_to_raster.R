@@ -125,7 +125,7 @@ for (shp_i in 1:length(shp_list)) {
   
   start = Sys.time()
   
-  # shp_i = 2
+  # shp_i = 29
   
   island_name = tolower(substr(shp_list[shp_i], 37, 39)); island_name
   
@@ -197,7 +197,12 @@ for (shp_i in 1:length(shp_list)) {
   
   ggplot() +  
     geom_raster(data = r_df, aes(x, y, fill = nam), show.legend = T) + 
-    coord_equal()
+    coord_equal() + 
+    scale_fill_viridis_d("") + 
+    theme(axis.title = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank()) 
+    
   
   raster_and_table = list(raster, table)
   

@@ -80,7 +80,7 @@ ggmap::register_google("AIzaSyDpirvA5gB7bmbEbwB1Pk__6jiV4SXAEcY")
 
 for (i in 1:length(islands)) {
   
-  # i = 8
+  # i = 5
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData"))#; plot(survey_grid_ncrmp)
@@ -492,32 +492,33 @@ for (i in 1:length(islands)) {
     
     sets_i = sets %>% subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4])
     
-    # clip survey boxes and coast lines
-    tryCatch({
-      
-      ISL_this_i <- crop(ISL_this, extent(ext))
-      boxes_hulls_polygon_i <- crop(boxes_hulls_polygon, extent(ext))
-      boxes_hulls_polygon_i_nam = boxes %>% 
-        subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4]) %>% 
-        group_by(boxes_nam) %>% 
-        summarise(longitude = median(longitude), latitude = median(latitude))
-      
-    }, error = function(e){
-      
-      print("No land shp available in this extent. Use full extent instead")
-      ISL_this_i <- crop(ISL_this, extent(ISL_this))
-      boxes_hulls_polygon_i <- crop(boxes_hulls_polygon, extent(boxes_hulls_polygon))
-      boxes_hulls_polygon_i_nam = boxes %>% 
-        group_by(boxes_nam) %>% 
-        summarise(longitude = median(longitude), latitude = median(latitude))
-    })
+    # # clip survey boxes and coast lines
+    # tryCatch({
+    #   
+    #   ISL_this_i <- crop(ISL_this, extent(ext))
+    #   boxes_hulls_polygon_i <- crop(boxes_hulls_polygon, extent(ext))
+    #   boxes_hulls_polygon_i_nam = boxes %>% 
+    #     subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4]) %>% 
+    #     group_by(boxes_nam) %>% 
+    #     summarise(longitude = median(longitude), latitude = median(latitude))
+    #   
+    # }, error = function(e){
+    #   
+    #   print("No land shp available in this extent. Use full extent instead")
+    #   ISL_this_i <- crop(ISL_this, extent(ISL_this))
+    #   boxes_hulls_polygon_i <- crop(boxes_hulls_polygon, extent(boxes_hulls_polygon))
+    #   boxes_hulls_polygon_i_nam = boxes %>% 
+    #     group_by(boxes_nam) %>% 
+    #     summarise(longitude = median(longitude), latitude = median(latitude))
+    # })
     
     # use ggmap
     tryCatch({
       
       map = get_map(location = c(mean(sets_i$longitude, na.rm = T), mean(sets_i$latitude, na.rm = T)),
                     maptype = "satellite",
-                    zoom = utm_i$Satellite,
+                    # zoom = utm_i$Satellite,
+                    zoom = 12,
                     # color = "bw",
                     force = T)
       
@@ -572,12 +573,12 @@ for (i in 1:length(islands)) {
     
     map_i = 
       
-      ggplot() +
-      # ggmap(map) +
+      # ggplot() +
+      ggmap(map) +
       
       # add land and coastline
-      geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "gray50", color = NA, alpha = 0.9) + 
-      geom_path(data = ISL_this_i, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "gray10") +
+      # geom_polygon(data = ISL_this_i, aes(long, lat, group = group), fill = "gray50", color = NA, alpha = 0.9) + 
+      # geom_path(data = ISL_this_i, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "gray10") +
       
       # add survey boxes
       # {if(Switch) geom_polygon(data = boxes_hulls_polygon_i, aes(long, lat, group = group), inherit.aes = F, size = 1, alpha = 0.2)} +
@@ -662,8 +663,8 @@ for (i in 1:length(islands)) {
   
   whole_map = 
     
-    ggplot() +
-    # ggmap(map) +
+    # ggplot() +
+    ggmap(map) +
     
     geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "gray10") + # coastline
     geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "gray50", color = NA, alpha = 0.9) + # land shapefile
