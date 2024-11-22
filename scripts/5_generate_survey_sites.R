@@ -662,7 +662,7 @@ for (i in 1:length(islands)) {
   map <- get_map(location = c(left = ext[1], bottom = ext[3], right = ext[2], top = ext[4]), maptype = 'satellite')
   map <- get_map(location = c(mean(sets$longitude, na.rm = T),
                               mean(sets$latitude, na.rm = T)),
-                 # zoom = utm_i$Satellite,
+                 zoom = 11,
                  maptype = 'satellite')
   
   whole_map = 
@@ -670,8 +670,8 @@ for (i in 1:length(islands)) {
     # ggplot() +
     ggmap(map) +
     
-    geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "gray10") + # coastline
-    geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "gray50", color = NA, alpha = 0.9) + # land shapefile
+    # geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "gray10") + # coastline
+    # geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "gray50", color = NA, alpha = 0.9) + # land shapefile
 
     geom_raster(data = cells %>% mutate(across(c(latitude, longitude), round, digits = 3)), aes(longitude, latitude, fill = factor(strat)), alpha = 0.8) + # stratum
     
@@ -713,7 +713,7 @@ for (i in 1:length(islands)) {
     # geom_spatial_point(data = sets, aes(longitude, latitude, shape = depth_bin, fill = depth_bin), size = 3, crs = 4326) + 
     # scale_fill_manual(name = "Depth", values = c("red", "goldenrod1", "green3"), na.translate = F) + # in geom_spatial_point make size = 9 ONLY for Guam
     # scale_shape_manual(name = "Depth", values = c(24, 22, 21), na.translate = F) +
-    annotation_scale(location = "br", width_hint = 0.2, text_col = "gray20", bar_cols = "gray20", size = 5) +  # new_scale_color() +
+    annotation_scale(location = "br", width_hint = 0.2, text_col = "gray90", bar_cols = "gray90", size = 5) +  # new_scale_color() +
     # new_scale_fill() +      
     
     # geom_label_repel(data = sets,
@@ -735,8 +735,8 @@ for (i in 1:length(islands)) {
   # coord_map() + 
   coord_sf(crs = 4326) + 
     
-    scale_x_continuous(sec.axis = dup_axis(), "", limits = range(pretty(buffer$longitude) + c(-0.1, 0.1))) +
-    scale_y_continuous(sec.axis = dup_axis(), "", limits = range(pretty(buffer$latitude) + c(-0.1, 0.1))) +
+    scale_x_continuous(sec.axis = dup_axis(), "", limits = range(pretty(cells$longitude) + c(-0.01, 0.01))) +
+    scale_y_continuous(sec.axis = dup_axis(), "", limits = range(pretty(cells$latitude) + c(-0.01, 0.01))) +
     
     theme(legend.position = "bottom",
           axis.text = element_text(size = 10),
@@ -748,8 +748,7 @@ for (i in 1:length(islands)) {
                                # "Target survey effort = ", total_sample, " sites \n",
                                "Target effort = ", sum(strat_det$strat_sets), " sites")))
   
-  if(diff(ext[1:2]) < diff(ext[3:4])) pdf(paste0("outputs/maps/survey_map_", region, "_", islands[i], ".pdf"), height = 22, width = 17)
-  if(diff(ext[1:2]) > diff(ext[3:4])) pdf(paste0("outputs/maps/survey_map_", region, "_", islands[i], ".pdf"), height = 17, width = 22)
+  pdf(paste0("outputs/maps/survey_map_", region, "_", islands[i], ".pdf"), height = 8, width = 10)
   print(whole_map)
   dev.off()
   
