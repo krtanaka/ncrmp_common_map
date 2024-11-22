@@ -421,7 +421,7 @@ for (isl in 1:length(islands)) {
   
   p1 = ggplot() + 
     geom_raster(data = df, aes(x, y, fill = depth_bin)) +
-    geom_point(data = sv, aes(X, Y), color = "yellow", alpha = 0.8) + 
+    # geom_point(data = sv, aes(X, Y), color = "yellow", alpha = 0.8) + 
     theme_map() +
     scale_fill_discrete("") + 
     ggtitle("depth_bins") + 
@@ -432,7 +432,7 @@ for (isl in 1:length(islands)) {
   
   p2 = ggplot() + 
     geom_raster(data = df, aes(x, y, fill = sector_id)) +
-    geom_point(data = sv, aes(X, Y), color = "yellow", alpha = 0.8) + 
+    # geom_point(data = sv, aes(X, Y), color = "yellow", alpha = 0.8) + 
     theme_map() +
     scale_fill_discrete("") + 
     ggtitle("sector") + 
@@ -443,7 +443,7 @@ for (isl in 1:length(islands)) {
   
   p3 = ggplot() + 
     geom_raster(data = df, aes(x, y, fill = reef_id)) +
-    geom_point(data = sv, aes(X, Y), color = "yellow", alpha = 0.8) + 
+    # geom_point(data = sv, aes(X, Y), color = "yellow", alpha = 0.8) + 
     theme_map() +
     scale_fill_discrete("") + 
     ggtitle("reef_type") + 
@@ -454,7 +454,7 @@ for (isl in 1:length(islands)) {
   
   p4 = ggplot() + 
     geom_raster(data = df, aes(x, y, fill = hardsoft_id)) +
-    geom_point(data = sv, aes(X, Y), color = "yellow", alpha = 0.8) + 
+    # geom_point(data = sv, aes(X, Y), color = "yellow", alpha = 0.8) + 
     theme_map() +
     scale_fill_discrete("") + 
     ggtitle("benthic_type") + 
@@ -467,59 +467,11 @@ for (isl in 1:length(islands)) {
   print((p1 + p2) / (p3 + p4))
   dev.off()
   
-  if (islands[isl] %in% c("kin", "ros", "ffs", "mar")) {
-    
-    df = df %>%
-      subset(reef_id %in% c( "forereef", "backreef", "lagoon", "protected slope")) %>% # filter land and Reef Crest/Reef Flat
-      subset(hardsoft_id %in% c("hard", "unknown")) # filter for sector
-    
-  } else if (islands[isl] == "mid") {
-    
-    df = df %>%
-      subset(reef_id %in% c( "forereef", "backreef", "lagoon", "protected slope")) %>% # filter land and Reef Crest/Reef Flat
-      subset(hardsoft_id %in% c("hard", "unknown", "other delinations")) 
-    
-  } else if (islands[isl] == "swa") {
-    
-    df = df %>%
-      subset(reef_id %in% c( "forereef", "reef crest/reef flat")) %>% # keep reef crest/reef flat to emphasize east side of swain
-      subset(hardsoft_id %in% c("hard", "unknown")) 
-    
-  } else if (islands[isl] == "lis") {
-    
-    df = df %>%
-      subset(hardsoft_id %in% c("hard", "unknown")) 
-    
-  } else if (islands[isl] %in% c("kur", "phr")) {
-    
-    df = df %>%
-      mutate(reef_id = coalesce(reef_id, "forereef")) %>% 
-      subset(reef_id %in% c( "forereef", 
-                             "back reef",
-                             "outer back reef", 
-                             "inner back reef",
-                             "outer lagoon", 
-                             "inner lagoon")) %>% # keep backreef and lagoon
-      mutate(reef_id = ifelse(reef_id == "outer back reef", "backreef", reef_id),
-             reef_id = ifelse(reef_id == "inner back reef", "backreef", reef_id),
-             reef_id = ifelse(reef_id == "back reef", "backreef", reef_id),
-             reef_id = ifelse(reef_id == "outer lagoon", "lagoon", reef_id),
-             reef_id = ifelse(reef_id == "inner lagoon", "lagoon", reef_id)) %>% 
-      subset(hardsoft_id %in% c("hard", "unknown")) 
-    
-  } else if (islands[isl] %in% c("lay")) {
-    
-    df = df %>%
-      subset(hardsoft_id %in% c("hard")) 
-    
-  } else {
-    
-    df = df %>%
-      subset(sector_id != "GUA_LAND") %>% 
-      subset(reef_id %in% c( "forereef")) %>% 
-      subset(hardsoft_id %in% c("hard", "unknown", "other", "other delinations")) 
-    
-  }
+  df = df %>%
+    subset(sector_id != "GUA_LAND") %>% 
+    subset(reef_id %in% c( "forereef")) %>% 
+    subset(depth_bin != "deep") %>% 
+    subset(hardsoft_id %in% c("hard", "unknown", "other", "other delinations")) 
   
   df$strat_nam = paste(df$depth_bin, 
                        df$sector_id,
@@ -583,7 +535,7 @@ for (isl in 1:length(islands)) {
   survey_grid_ncrmp = readAll(survey_grid_ncrmp)
   
   cells <- data.table(terra::as.data.frame(survey_grid_ncrmp, xy = T, cells = T, na.rm = T))
-
+  
   strat_det <- cells[, list(strat_cells = .N), by = "strat"]; strat_det
   strat_det$cell_area <- prod(res(survey_grid_ncrmp)); strat_det
   strat_det$strat_area <- strat_det$strat_cells * prod(res(survey_grid_ncrmp)); strat_det

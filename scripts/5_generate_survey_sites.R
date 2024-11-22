@@ -99,6 +99,8 @@ for (i in 1:length(islands)) {
     
   }
   
+  total_sample = 174
+  
   cat(paste0("target sampling effort = ", total_sample, "...\n"))
   
   n <- id <- division <- strat <- N <- strat_sets <- cell_sets <- NULL
@@ -348,7 +350,9 @@ for (i in 1:length(islands)) {
     geom_raster(aes(fill = depth)) + 
     # coord_fixed() +
     theme_map() + 
-    scale_fill_viridis_c("Depth (m)", limits = c(0, 30), direction = -1) + 
+    scale_fill_viridis_c("Depth (m)", 
+                         # limits = c(0, 30), 
+                         direction = -1) + 
     theme(panel.background = element_rect(fill = "gray10"),
           panel.grid = element_line(color = "gray15"),
           legend.background = element_rect(fill = "transparent"), 
