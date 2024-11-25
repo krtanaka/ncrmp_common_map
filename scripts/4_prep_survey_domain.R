@@ -46,7 +46,7 @@ select = dplyr::select
 
 for (isl in 1:length(islands)) {
   
-  # isl = 5
+  # isl = 1
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -419,53 +419,42 @@ for (isl in 1:length(islands)) {
   colnames(xy_utm) = c("X", "Y")
   sv = cbind(sv, xy_utm)
   
-  p1 = ggplot() + 
-    geom_raster(data = df, aes(x, y, fill = depth_bin)) +
-    geom_point(data = sv, aes(X, Y), color = "yellow", alpha = 0.8) + 
-    theme_map() +
-    scale_fill_discrete("") + 
-    ggtitle("depth_bins") + 
-    theme(panel.background = element_rect(fill = "gray10"),
-          panel.grid = element_line(color = "gray15"),
-          legend.background = element_rect(fill = "transparent"), 
-          legend.text = element_text(size = 15, face = "bold", color = "white"))
+  common_theme <- theme_minimal() +
+    theme(
+      panel.background = element_rect(fill = "gray10"),
+      panel.grid = element_line(color = "gray15"),
+      axis.title = element_blank(),
+      axis.text = element_blank()
+      
+    )
   
-  p2 = ggplot() + 
-    geom_raster(data = df, aes(x, y, fill = sector_id)) +
-    geom_point(data = sv, aes(X, Y), color = "yellow", alpha = 0.8) + 
-    theme_map() +
-    scale_fill_discrete("") + 
-    ggtitle("sector") + 
-    theme(panel.background = element_rect(fill = "gray10"),
-          panel.grid = element_line(color = "gray15"),
-          legend.background = element_rect(fill = "transparent"), 
-          legend.text = element_text(size = 15, face = "bold", color = "white"))
+  create_raster_plot <- function(data, fill_var, title) {
+    ggplot(data = data) +
+      geom_raster(aes(x, y, fill = !!sym(fill_var))) +
+      common_theme +
+      coord_fixed() +
+      scale_fill_discrete() +
+      ggtitle(title)
+  }
   
-  p3 = ggplot() + 
-    geom_raster(data = df, aes(x, y, fill = reef_id)) +
-    geom_point(data = sv, aes(X, Y), color = "yellow", alpha = 0.8) + 
-    theme_map() +
-    scale_fill_discrete("") + 
-    ggtitle("reef_type") + 
-    theme(panel.background = element_rect(fill = "gray10"),
-          panel.grid = element_line(color = "gray15"),
-          legend.background = element_rect(fill = "transparent"), 
-          legend.text = element_text(size = 15, face = "bold", color = "white"))
+  p1 <- create_raster_plot(df, "depth_bin", "Depth_Bin")
+  p2 <- create_raster_plot(df, "sector_id", "Sector_ID")
+  p3 <- create_raster_plot(df, "reef_id", "Reef_ID")
+  p4 <- create_raster_plot(df, "hardsoft_id", "HardSoft_ID")
   
-  p4 = ggplot() + 
-    geom_raster(data = df, aes(x, y, fill = hardsoft_id)) +
-    geom_point(data = sv, aes(X, Y), color = "yellow", alpha = 0.8) + 
-    theme_map() +
-    scale_fill_discrete("") + 
-    ggtitle("benthic_type") + 
-    theme(panel.background = element_rect(fill = "gray10"),
-          panel.grid = element_line(color = "gray15"),
-          legend.background = element_rect(fill = "transparent"), 
-          legend.text = element_text(size = 15, face = "bold", color = "white"))
+  combined_plot <- (p1 | p2) / (p3 | p4)
   
-  png(paste0("outputs/maps/base_layers_", region, "_", islands[isl], ".png"), height = 15, width = 15, res = 500, units = "in")
-  print((p1 + p2) / (p3 + p4))
-  dev.off()
+  # Adjust layout to minimize white space
+  combined_plot <- combined_plot +
+    plot_layout(guides = "collect") & # Shared legend (if applicable)
+    theme(plot.margin = unit(c(0, 0, 0, 0), "cm")) # Remove plot margins
+  
+  ggsave(
+    filename = paste0("outputs/maps/base_layers_", region, "_", islands[isl], ".png"),
+    plot = combined_plot,
+    height = 10, # Adjust proportional to the number of rows
+    width = 10   # Adjust proportional to the number of columns
+  )
   
   if (islands[isl] %in% c("kin", "ros", "ffs", "mar")) {
     
@@ -539,7 +528,7 @@ for (isl in 1:length(islands)) {
   tab$depth_bin_value = ifelse(tab$depth_bin == "deep", "DEEP", tab$depth_bin_value) 
   
   tab <- tab %>% 
-    select(strat, strat_nam, sector_id, reef_id, depth_bin_value) %>%
+    dplyr::select(strat, strat_nam, sector_id, reef_id, depth_bin_value) %>%
     distinct() %>% 
     mutate(across(where(is.character), toupper))
   
@@ -547,27 +536,53 @@ for (isl in 1:length(islands)) {
   
   write_csv(tab, file = paste0("outputs/tables/strata_keys_", region, "_", islands[isl], ".csv"))
   
-  png(paste0("outputs/maps/strata_", region, "_", islands[isl], ".png"), height = 8, width = 12, res = 500, units = "in")
+  # Calculate dynamic dimensions based on data ranges
+  longitude_range <- diff(range(df$longitude, na.rm = TRUE))
+  latitude_range <- diff(range(df$latitude, na.rm = TRUE))
+  aspect_ratio <- latitude_range / longitude_range
   
-  print(ggplot() + 
-          geom_raster(data = df, aes(longitude, latitude, fill = factor(strat_nam))) +
-          # geom_point(data = sv %>% subset(YEAR > 2009), aes(X*0.001, Y*0.001, color = factor(YEAR)), alpha = 0.9) +
-          # geom_point(data = sv %>% subset(YEAR > 2009), aes(X*0.001, Y*0.001), color = "yellow", alpha = 0.9, show.legend = F) +
-          scale_fill_discrete("") + 
-          scale_color_viridis_d("") +
-          # coord_fixed() +
-          # theme_map() +
-          labs(x = "", y = "") + 
-          ggtitle(paste0(region, "_", islands[isl])) + 
-          theme(panel.background = element_rect(fill = "gray10"),
-                panel.grid = element_line(color = "gray15")
-                # ,
-                # legend.background = element_rect(fill = "transparent"), 
-                # legend.text = element_text(color = "white"),           
-                # legend.title = element_text(color = "white")
-          ))
+  # Adjust height and width based on aspect ratio
+  dynamic_width <- 10 # Fixed width
+  dynamic_height <- dynamic_width * aspect_ratio
   
-  dev.off()
+  # Create the plot
+  strata_plot <- ggplot() +
+    geom_raster(data = df, aes(longitude, latitude, fill = factor(strat_nam))) +
+    geom_point(
+      data = sv %>% filter(YEAR > 2009),
+      aes(X * 0.001, Y * 0.001),
+      color = "yellow",
+      size = 0.5,
+      show.legend = FALSE
+    ) +
+    scale_fill_discrete(
+      name = "",
+      guide = guide_legend(ncol = 1) # Adjust the legend to a single column
+    ) +
+    coord_fixed() +
+    labs(
+      x = NULL,
+      y = NULL,
+      title = paste0(region, ": ", utm_i$Island)
+    ) +
+    theme_gray(base_size = 18) +
+    theme(
+      panel.background = element_rect(fill = "gray10"),
+      panel.grid = element_line(color = "gray15"),
+      plot.margin = unit(c(0, 0, 0, 0), "cm") # Remove plot margins
+    )
+  
+  # Display the plot
+  print(strata_plot)
+  
+  # Save the plot with dynamic dimensions
+  ggsave(
+    filename = paste0("outputs/maps/strata_", region, "_", islands[isl], ".png"),
+    plot = strata_plot,
+    height = dynamic_height,
+    width = dynamic_width
+  )
+  
   
   cell = rasterFromXYZ(df[,c("longitude", "latitude", "cell")])#; plot(cell)
   division = rasterFromXYZ(df[,c("longitude", "latitude", "division")])#; plot(division)
@@ -583,7 +598,7 @@ for (isl in 1:length(islands)) {
   survey_grid_ncrmp = readAll(survey_grid_ncrmp)
   
   cells <- data.table(terra::as.data.frame(survey_grid_ncrmp, xy = T, cells = T, na.rm = T))
-
+  
   strat_det <- cells[, list(strat_cells = .N), by = "strat"]; strat_det
   strat_det$cell_area <- prod(res(survey_grid_ncrmp)); strat_det
   strat_det$strat_area <- strat_det$strat_cells * prod(res(survey_grid_ncrmp)); strat_det
