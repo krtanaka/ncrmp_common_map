@@ -25,14 +25,14 @@ for (isl in 1:length(islands)) {
   
   # isl = 1
   
-  load(paste0("outputs/sector_keys/", islands[isl], ".RData"))
+  tab = read_csv(paste0("outputs/tables/strata_keys_", region, "_", islands[isl], ".csv"))
   
   itinerary_i = itinerary %>% filter(Island_Code == islands[isl])
   
   if (nrow(itinerary_i) == 0) next
   
   tab$Island_Code = islands[isl]
-  tab$depth_bin_short = substr(tab$depth_bin_value, 1, 1)
+  tab$depth_bin_short = substr(tab$depth_bin, 1, 1)
   tab$reef_short = ""
   tab$reef_short = ifelse(tab$reef_id == "forereef", "FRF", tab$reef_short)
   tab$reef_short = ifelse(tab$reef_id == "lagoon", "LAG", tab$reef_short)
@@ -45,5 +45,5 @@ for (isl in 1:length(islands)) {
   tab = left_join(tab, itinerary_i) 
   
   save(tab, file = paste0("outputs/sector_keys/", islands[isl], "_itinerary.RData"))
-
+  
 }
