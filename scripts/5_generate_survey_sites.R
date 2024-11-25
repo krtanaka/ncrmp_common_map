@@ -20,6 +20,8 @@ library(ggmap)
 
 select = dplyr::select
 
+options(dplyr.quiet = TRUE)
+
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 
 ########################################################################
@@ -492,25 +494,25 @@ for (i in 1:length(islands)) {
     
     sets_i = sets %>% subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4])
     
-    # # clip survey boxes and coast lines
-    # tryCatch({
-    #   
-    #   ISL_this_i <- crop(ISL_this, extent(ext))
-    #   boxes_hulls_polygon_i <- crop(boxes_hulls_polygon, extent(ext))
-    #   boxes_hulls_polygon_i_nam = boxes %>% 
-    #     subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4]) %>% 
-    #     group_by(boxes_nam) %>% 
-    #     summarise(longitude = median(longitude), latitude = median(latitude))
-    #   
-    # }, error = function(e){
-    #   
-    #   print("No land shp available in this extent. Use full extent instead")
-    #   ISL_this_i <- crop(ISL_this, extent(ISL_this))
-    #   boxes_hulls_polygon_i <- crop(boxes_hulls_polygon, extent(boxes_hulls_polygon))
-    #   boxes_hulls_polygon_i_nam = boxes %>% 
-    #     group_by(boxes_nam) %>% 
-    #     summarise(longitude = median(longitude), latitude = median(latitude))
-    # })
+    # clip survey boxes and coast lines
+    tryCatch({
+
+      ISL_this_i <- crop(ISL_this, extent(ext))
+      boxes_hulls_polygon_i <- crop(boxes_hulls_polygon, extent(ext))
+      boxes_hulls_polygon_i_nam = boxes %>%
+        subset(longitude > ext[1] & longitude < ext[2] & latitude > ext[3] & latitude < ext[4]) %>%
+        group_by(boxes_nam) %>%
+        summarise(longitude = median(longitude), latitude = median(latitude))
+
+    }, error = function(e){
+
+      print("No land shp available in this extent. Use full extent instead")
+      ISL_this_i <- crop(ISL_this, extent(ISL_this))
+      boxes_hulls_polygon_i <- crop(boxes_hulls_polygon, extent(boxes_hulls_polygon))
+      boxes_hulls_polygon_i_nam = boxes %>%
+        group_by(boxes_nam) %>%
+        summarise(longitude = median(longitude), latitude = median(latitude))
+    })
     
     # use ggmap
     tryCatch({

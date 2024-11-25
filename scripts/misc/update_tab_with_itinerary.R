@@ -23,7 +23,7 @@ itinerary = left_join(itinerary, utm)
 
 for (isl in 1:length(islands)) {
   
-  # isl = 8
+  # isl = 1
   
   load(paste0("outputs/sector_keys/", islands[isl], ".RData"))
   
