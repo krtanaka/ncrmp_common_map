@@ -5,7 +5,7 @@
 library(dplyr)
 library(mgcv)
 library(sp)
-library(rgdal)
+# library(rgdal)
 library(ggplot2)
 
 rm(list = ls())
