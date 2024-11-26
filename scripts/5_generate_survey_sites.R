@@ -1,10 +1,8 @@
 ###############################################
-### generate stratified-random survey sites ###
+# Generate Stratified-Random Survey Sites
 ###############################################
 
-rm(list = ls())
-
-# library(SimSurvey)
+# Load Required Libraries
 library(raster)
 library(data.table)
 library(ggplot2)
@@ -18,61 +16,107 @@ library(ggspatial)
 library(ggthemes)
 library(ggmap)
 
-select = dplyr::select
+# Avoid conflicts by explicitly using dplyr's select
+select <- dplyr::select
 
-utm = read_csv('data/misc/ncrmp_utm_zones.csv')
+# Load Data
+utm <- read_csv('data/misc/ncrmp_utm_zones.csv')
 
-########################################################################
-### do some parameter settings to simulate stratified random surveys ###
-########################################################################
 
-# n_sims = 100 # number of simulations
-effort_level = c("low", "mid", "high")[2] # define sampling effort (low, mid, high)
-min_sets = 1 # minimum number of sets per strat
-max_sets = 50
-trawl_dim = c(0.01, 0.0353) # 0.000353 sq.km (353 sq.m) from two 15-m diameter survey cylinders
-resample_cells = F
+##################################################
+# Parameter Settings for Stratified Random Surveys
+##################################################
+
+# Sampling Effort Levels
+effort_levels <- c("low", "mid", "high")
+selected_effort_level <- effort_levels[2] # Select 'mid' sampling effort
+
+# Sampling Parameters
+min_sets <- 1        # Minimum number of sets per stratum
+max_sets <- 50       # Maximum number of sets per stratum
+trawl_dim <- c(0.01, 0.0353) # Area of survey (sq.km)
+
+# Resampling Flag
+resample_cells <- FALSE
+
 
 ##################################################################
-### determine number of sites you want to deploy @ each island ###
+# Determine Number of Sites to Deploy at Each Island
 ##################################################################
 
+# Load Survey Effort Data
 load('data/misc/survey_effort_ncrmp_2000-2020.RData')
-island_name_code = read_csv('data/misc/island_name_code.csv')
-survey_effort = data.frame(Island = survey_effort$Island, Effort = survey_effort[[effort_level]])
-survey_effort = merge(island_name_code, survey_effort); head(survey_effort); tail(survey_effort)
+
+# Load Island Name Code Mapping
+island_name_code <- read_csv('data/misc/island_name_code.csv')
+
+# Prepare Survey Effort Data Frame
+survey_effort <- data.frame(
+  Island = survey_effort$Island,
+  Effort = survey_effort[[effort_level]]
+)
+
+# Merge Island Names with Effort Data
+survey_effort <- merge(island_name_code, survey_effort)
+head(survey_effort) # Inspect the top rows
+tail(survey_effort) # Inspect the bottom rows
+
 
 #################################
-### Read in Island Boundaries ###
+# Read in Island Boundaries
 #################################
+
+# Load Island Boundaries Shapefile
 load('data/gis_island_boundaries/ncrmp_islands_shp.RData')
-crs(ISL_bounds) = "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
+
+# Set CRS for Island Boundaries
+crs(ISL_bounds) <- "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
+
 
 ##################################
-###  select islands & regions  ###
+# Select Islands and Regions
 ##################################
 
-islands = c("gua", "rot", "sai", "tin", "agu"); region = "S.MARIAN"                           # South Mariana Islands
-islands = c("agr", "ala", "asc", "gug", "fdp", "mau", "pag", "sar"); region = "N.MARIAN"      # North Mariana Islands
-islands = c("ofu", "ros", "swa", "tau", "tut"); region = "SAMOA"                              # American Samoa
-islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region = "PRIAs"                # Pacific Remote Island Areas
-islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region = "MHI"    # Main Hawaiian Islands
-islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region = "NWHI"                 # Northern Hawaiian Islands
+# Define a function for selecting islands and regions
+select_region <- function(region_name) {
+  switch(
+    region_name,
+    "S.MARIAN" = list(islands = c("gua", "rot", "sai", "tin", "agu"), region = "S.MARIAN"),
+    "N.MARIAN" = list(islands = c("agr", "ala", "ana", "asc", "gug", "fdp", "mau", "sar", "sup", "pag", "zea"), region = "N.MARIAN"),
+    "SAMOA" = list(islands = c("ofu", "ros", "swa", "tau", "tut"), region = "SAMOA"),
+    "PRIAs" = list(islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"), region = "PRIAs"),
+    "MHI" = list(islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"), region = "MHI"),
+    "NWHI" = list(islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"), region = "NWHI"),
+    stop("Invalid region name. Please specify a valid region.")
+  )
+}
+
+# Example: Select South Mariana Islands
+region_data <- select_region("N.MARIAN")
+islands <- region_data$islands
+region <- region_data$region
+
 
 #######################################################################
-### the last known site number from data management for each island ###
+# The Last Known Site Number from Data Management for Each Island
 #######################################################################
 
-site_num = read_csv("data/misc/V_NCRMP_MAX_SITE_NUM_DATA.csv") %>%
-  mutate(MAX_SITE_NUM = sprintf("%04d", MAX_SITE_NUM),
-         ISLANDCODE = tolower(ISLANDCODE)) %>% 
+# Load and process site number data
+site_num <- read_csv("data/misc/V_NCRMP_MAX_SITE_NUM_DATA.csv") %>%
+  mutate(
+    MAX_SITE_NUM = sprintf("%04d", MAX_SITE_NUM), # Format site numbers with leading zeros
+    ISLANDCODE = tolower(ISLANDCODE)              # Convert island codes to lowercase
+  ) %>% 
   select(ISLANDCODE, MAX_SITE_NUM)
 
-set.seed(2024)
 
-select = dplyr::select
+##################################
+# Set Global Parameters
+##################################
 
+set.seed(2024) # Set random seed for reproducibility
 ggmap::register_google("AIzaSyDpirvA5gB7bmbEbwB1Pk__6jiV4SXAEcY")
+
 
 #################################################################
 ### Generate survey site tables & maps, check outputs/ folder ###
@@ -80,7 +124,7 @@ ggmap::register_google("AIzaSyDpirvA5gB7bmbEbwB1Pk__6jiV4SXAEcY")
 
 for (i in 1:length(islands)) {
   
-  # i = 7
+  # i = 3
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData"))#; plot(survey_grid_ncrmp)

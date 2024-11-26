@@ -46,7 +46,7 @@ select = dplyr::select
 
 for (isl in 1:length(islands)) {
   
-  # isl = 1
+  # isl = 3
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -582,7 +582,6 @@ for (isl in 1:length(islands)) {
     height = dynamic_height,
     width = dynamic_width
   )
-  
   
   cell = rasterFromXYZ(df[,c("longitude", "latitude", "cell")])#; plot(cell)
   division = rasterFromXYZ(df[,c("longitude", "latitude", "division")])#; plot(division)
