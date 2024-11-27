@@ -53,7 +53,7 @@ island_name_code <- read_csv('data/misc/island_name_code.csv')
 # Prepare Survey Effort Data Frame
 survey_effort <- data.frame(
   Island = survey_effort$Island,
-  Effort = survey_effort[[effort_level]]
+  Effort = survey_effort[[selected_effort_level]]
 )
 
 # Merge Island Names with Effort Data
@@ -124,7 +124,7 @@ ggmap::register_google("AIzaSyDpirvA5gB7bmbEbwB1Pk__6jiV4SXAEcY")
 
 for (i in 1:length(islands)) {
   
-  # i = 3
+  # i = 7
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData"))#; plot(survey_grid_ncrmp)
@@ -259,7 +259,7 @@ for (i in 1:length(islands)) {
   sets <- cells[, .SD[sample(.N, size = unique(strat_sets), replace = resample_cells)], by = c("strat")]
   
   # remove sites that are closer than 100 m
-  nearby_sites <- data.frame(longitude = sets$longitude, latitude = sets$latitude)#; plot(nearby_sites, pch = 20, col = 2, axes = F)
+  nearby_sites <- data.frame(longitude = sets$longitude, latitude = sets$latitude); plot(nearby_sites, pch = 20, col = 2, axes = F)
   
   library(geosphere)
   remove_close_points <- function(data, threshold = 100) {
@@ -276,7 +276,7 @@ for (i in 1:length(islands)) {
     data[keep, ]
   }
   
-  nearby_sites <- remove_close_points(nearby_sites, 100)#; points(nearby_sites, pch = 20, col = 4)
+  nearby_sites <- remove_close_points(nearby_sites, 100); points(nearby_sites, pch = 20, col = 4)
   
   colnames(nearby_sites) = c("longitude", "latitude")
   nearby_sites$latitude = round(nearby_sites$latitude, 4)
@@ -441,25 +441,29 @@ for (i in 1:length(islands)) {
   ######################################
   ### Read Island 5km buffer sectors ###
   ######################################
-  load(paste0('data/gis_5km_buffer/', islands[i], '.RData'))
-  buffer = raster_and_table[[1]]
-  buffer_name = raster_and_table[[2]]
-  buffer <- data.table(rasterToPoints(buffer))
-  utmcoor <- SpatialPoints(cbind(buffer$x, buffer$y), proj4string = CRS(paste0("+proj=utm +units=m +zone=", utm_i$UTM_Zone, " ", utm_i$Hemisphere)))
-  longlatcoor <- spTransform(utmcoor,CRS("+proj=longlat"))
-  buffer$longitude <- coordinates(longlatcoor)[,1]
-  buffer$latitude <- coordinates(longlatcoor)[,2]
-  colnames(buffer)[3] = "ID"
-  buffer = merge(buffer, buffer_name)
-  buffer = buffer %>%
-    mutate(longitude = round(longitude, 3), 
-           latitude = round(latitude, 3)) %>% 
-    dplyr::select(longitude, latitude, nam) %>% 
-    unique()
-  colnames(buffer)[3] = "sector_nam"
-  buffer_label = buffer %>% 
-    group_by(sector_nam) %>% 
-    summarise(longitude = quantile(longitude, 0.5), latitude = quantile(latitude, 0.5))
+  if (file.exists(paste0('data/gis_5km_buffer/', islands[i], '.RData'))) {
+    
+    load(paste0('data/gis_5km_buffer/', islands[i], '.RData'))
+    buffer = raster_and_table[[1]]
+    buffer_name = raster_and_table[[2]]
+    buffer <- data.table(rasterToPoints(buffer))
+    utmcoor <- SpatialPoints(cbind(buffer$x, buffer$y), proj4string = CRS(paste0("+proj=utm +units=m +zone=", utm_i$UTM_Zone, " ", utm_i$Hemisphere)))
+    longlatcoor <- spTransform(utmcoor,CRS("+proj=longlat"))
+    buffer$longitude <- coordinates(longlatcoor)[,1]
+    buffer$latitude <- coordinates(longlatcoor)[,2]
+    colnames(buffer)[3] = "ID"
+    buffer = merge(buffer, buffer_name)
+    buffer = buffer %>%
+      mutate(longitude = round(longitude, 3), 
+             latitude = round(latitude, 3)) %>% 
+      dplyr::select(longitude, latitude, nam) %>% 
+      unique()
+    colnames(buffer)[3] = "sector_nam"
+    buffer_label = buffer %>% 
+      group_by(sector_nam) %>% 
+      summarise(longitude = quantile(longitude, 0.5), latitude = quantile(latitude, 0.5))
+    
+  }
   
   ################################
   ### Read Island survey boxes ###
@@ -560,7 +564,7 @@ for (i in 1:length(islands)) {
       
       
     } 
-
+    
     # use ggmap
     tryCatch({
       
@@ -780,8 +784,8 @@ for (i in 1:length(islands)) {
     # coord_map() + 
     coord_sf(crs = 4326) + 
     
-    scale_x_continuous(sec.axis = dup_axis(), "", limits = range(pretty(buffer$longitude) + c(-0.1, 0.1))) +
-    scale_y_continuous(sec.axis = dup_axis(), "", limits = range(pretty(buffer$latitude) + c(-0.1, 0.1))) +
+    scale_x_continuous(sec.axis = dup_axis(), "", limits = range(pretty(buffer$longitude))) +
+    scale_y_continuous(sec.axis = dup_axis(), "", limits = range(pretty(buffer$latitude))) +
     
     theme(legend.position = "bottom",
           axis.text = element_text(size = 10),

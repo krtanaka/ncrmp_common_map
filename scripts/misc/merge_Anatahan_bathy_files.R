@@ -16,7 +16,7 @@ b6 = rast("N:/GIS/Projects/CommonMaps/Bathymetry/2020_ngs_topobathy_anatahan/Job
 b7 = rast("N:/GIS/Projects/CommonMaps/Bathymetry/2020_ngs_topobathy_anatahan/Job1075853_002_003.tif"); plot(b7); res(b7)
 b8 = rast("N:/GIS/Projects/CommonMaps/Bathymetry/2020_ngs_topobathy_anatahan/Job1075853_002_004.tif"); plot(b8); res(b8)
 
-# b9 = rast("N:/GIS/Projects/CommonMaps/Bathymetry/2022_rainier_anatahan/H13586_MBAB_6m_S221_100kHz_1of3.tif"); plot(b9); res(b9)
+b9 = rast("N:/GIS/Projects/CommonMaps/Bathymetry/2022_rainier_anatahan/H13586_MBAB_6m_S221_100kHz_1of3.tif"); plot(b9); res(b9)
 b10 = rast("N:/GIS/Projects/CommonMaps/Bathymetry/2022_rainier_anatahan/H13586_MBAB_2m_2803_300kHz_2of3.tif"); plot(b10); res(b10)
 b11 = rast("N:/GIS/Projects/CommonMaps/Bathymetry/2022_rainier_anatahan/H13586_MBAB_2m_2804_300kHz_3of3.tif"); plot(b11); res(b11)
 
@@ -52,16 +52,29 @@ fine_topo_1[fine_topo_1 <= -30] <- NA
 
 plot(fine_topo_1)
 
-fine_topo_2 = mosaic(b10, b11)
+fine_topo_2 <- b9
 
 fine_topo_2[fine_topo_2 >= 0] <- NA
 fine_topo_2[fine_topo_2 <= -30] <- NA
 
 plot(fine_topo_2)
 
-fine_topo_1 = resample(fine_topo_1, fine_topo_2, method = "near"); plot(fine_topo_1)
+fine_topo_3 = mosaic(b10, b11)
 
-fine_topo = mean(c(fine_topo_1, fine_topo_2), na.rm = T)
+fine_topo_3[fine_topo_3 >= 0] <- NA
+fine_topo_3[fine_topo_3 <= -30] <- NA
+
+plot(fine_topo_3)
+
+res(fine_topo_1)
+res(fine_topo_2)
+res(fine_topo_3)
+
+fine_topo_1 = resample(fine_topo_1, fine_topo_3, method = "near"); plot(fine_topo_1)
+fine_topo_2 = resample(fine_topo_2, fine_topo_3, method = "near"); plot(fine_topo_2)
+
+fine_topo = mean(c(fine_topo_1, fine_topo_2, fine_topo_3), na.rm = T)
+fine_topo = mean(c(fine_topo_1, fine_topo_3), na.rm = T)
 
 fine_topo[fine_topo >= 0] <- NA
 fine_topo[fine_topo <= -30] <- NA
