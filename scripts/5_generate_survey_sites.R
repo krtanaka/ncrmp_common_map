@@ -1,6 +1,6 @@
-###############################################
-# Generate Stratified-Random Survey Sites
-###############################################
+###########################################
+# Generate Stratified-Random Survey Sites #
+###########################################
 
 # Load Required Libraries
 library(raster)
@@ -16,33 +16,17 @@ library(ggspatial)
 library(ggthemes)
 library(ggmap)
 
-# Avoid conflicts by explicitly using dplyr's select
 select <- dplyr::select
-
-# Load Data
 utm <- read_csv('data/misc/ncrmp_utm_zones.csv')
 
+# sampling effort levels
+effort_levels <- c("low", "mid", "high")[2] # Select 'mid' sampling effort
 
-##################################################
-# Parameter Settings for Stratified Random Surveys
-##################################################
-
-# Sampling Effort Levels
-effort_levels <- c("low", "mid", "high")
-selected_effort_level <- effort_levels[2] # Select 'mid' sampling effort
-
-# Sampling Parameters
-min_sets <- 1        # Minimum number of sets per stratum
-max_sets <- 50       # Maximum number of sets per stratum
+# sampling parameters
+min_sets <- 1 # Minimum number of sets per stratum
+max_sets <- 50 # Maximum number of sets per stratum
 trawl_dim <- c(0.01, 0.0353) # Area of survey (sq.km)
-
-# Resampling Flag
 resample_cells <- FALSE
-
-
-##################################################################
-# Determine Number of Sites to Deploy at Each Island
-##################################################################
 
 # Load Survey Effort Data
 load('data/misc/survey_effort_ncrmp_2000-2020.RData')
@@ -53,18 +37,12 @@ island_name_code <- read_csv('data/misc/island_name_code.csv')
 # Prepare Survey Effort Data Frame
 survey_effort <- data.frame(
   Island = survey_effort$Island,
-  Effort = survey_effort[[selected_effort_level]]
+  Effort = survey_effort[[effort_levels]]
 )
 
 # Merge Island Names with Effort Data
 survey_effort <- merge(island_name_code, survey_effort)
-head(survey_effort) # Inspect the top rows
-tail(survey_effort) # Inspect the bottom rows
-
-
-#################################
-# Read in Island Boundaries
-#################################
+head(survey_effort) ; tail(survey_effort) 
 
 # Load Island Boundaries Shapefile
 load('data/gis_island_boundaries/ncrmp_islands_shp.RData')
@@ -72,12 +50,7 @@ load('data/gis_island_boundaries/ncrmp_islands_shp.RData')
 # Set CRS for Island Boundaries
 crs(ISL_bounds) <- "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
 
-
-##################################
-# Select Islands and Regions
-##################################
-
-# Define a function for selecting islands and regions
+# selecting islands and regions
 select_region <- function(region_name) {
   switch(
     region_name,
@@ -91,32 +64,19 @@ select_region <- function(region_name) {
   )
 }
 
-# Example: Select South Mariana Islands
-region_data <- select_region("N.MARIAN")
+# select regions
+region_data <- select_region("S.MARIAN")
 islands <- region_data$islands
 region <- region_data$region
 
-
-#######################################################################
-# The Last Known Site Number from Data Management for Each Island
-#######################################################################
-
-# Load and process site number data
+# last known site number from data management for each island
 site_num <- read_csv("data/misc/V_NCRMP_MAX_SITE_NUM_DATA.csv") %>%
-  mutate(
-    MAX_SITE_NUM = sprintf("%04d", MAX_SITE_NUM), # Format site numbers with leading zeros
-    ISLANDCODE = tolower(ISLANDCODE)              # Convert island codes to lowercase
-  ) %>% 
+  mutate(MAX_SITE_NUM = sprintf("%04d", MAX_SITE_NUM),
+         ISLANDCODE = tolower(ISLANDCODE)) %>% 
   select(ISLANDCODE, MAX_SITE_NUM)
 
-
-##################################
-# Set Global Parameters
-##################################
-
-set.seed(2024) # Set random seed for reproducibility
+set.seed(2024)
 ggmap::register_google("AIzaSyDpirvA5gB7bmbEbwB1Pk__6jiV4SXAEcY")
-
 
 #################################################################
 ### Generate survey site tables & maps, check outputs/ folder ###
