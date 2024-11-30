@@ -20,12 +20,12 @@ select <- dplyr::select
 utm <- read_csv('data/misc/ncrmp_utm_zones.csv')
 
 # sampling effort levels
-effort_levels <- c("low", "mid", "high")[2] # Select 'mid' sampling effort
+effort_levels <- c("low", "mid", "high")[2]
 
 # sampling parameters
-min_sets <- 1 # Minimum number of sets per stratum
-max_sets <- 50 # Maximum number of sets per stratum
-trawl_dim <- c(0.01, 0.0353) # Area of survey (sq.km)
+min_sets <- 1 # min number of sets per stratum
+max_sets <- 50 # max number of sets per stratum
+trawl_dim <- c(0.01, 0.0353) # area of single survey effort (sq.km)
 resample_cells <- FALSE
 
 # Load Survey Effort Data
@@ -84,7 +84,7 @@ ggmap::register_google("AIzaSyDpirvA5gB7bmbEbwB1Pk__6jiV4SXAEcY")
 
 for (i in 1:length(islands)) {
   
-  # i = 7
+  # i = 3
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData"))#; plot(survey_grid_ncrmp)
