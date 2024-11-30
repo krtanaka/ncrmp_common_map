@@ -46,7 +46,7 @@ select = dplyr::select
 
 for (isl in 1:length(islands)) {
   
-  # isl = 3
+  # isl = 1
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -425,7 +425,6 @@ for (isl in 1:length(islands)) {
       panel.grid = element_line(color = "gray15"),
       axis.title = element_blank(),
       axis.text = element_blank()
-      
     )
   
   create_raster_plot <- function(data, fill_var, title) {
@@ -433,7 +432,6 @@ for (isl in 1:length(islands)) {
       geom_raster(aes(x, y, fill = !!sym(fill_var))) +
       common_theme +
       coord_fixed() +
-      scale_fill_discrete() +
       ggtitle(title)
   }
   
@@ -520,7 +518,7 @@ for (isl in 1:length(islands)) {
   ################################################################
   ### create table to match strata to numbers for output table ###
   ################################################################
-  tab <- df 
+  tab <- df
   
   tab$depth_bin_value = ""
   tab$depth_bin_value = ifelse(tab$depth_bin == "shallow", "SHAL", tab$depth_bin_value) 
@@ -532,9 +530,7 @@ for (isl in 1:length(islands)) {
     distinct() %>% 
     mutate(across(where(is.character), toupper))
   
-  colnames(tab)[5] <- "depth_bin"
-  
-  write_csv(tab, file = paste0("outputs/tables/strata_keys_", region, "_", islands[isl], ".csv"))
+  colnames(tab) <- c("stratum", "stratum_name", "sector_id", "reef_id", "depth_bin")
   
   # Calculate dynamic dimensions based on data ranges
   longitude_range <- diff(range(df$longitude, na.rm = TRUE))
@@ -572,9 +568,6 @@ for (isl in 1:length(islands)) {
       plot.margin = unit(c(0, 0, 0, 0), "cm") # Remove plot margins
     )
   
-  # Display the plot
-  print(strata_plot)
-  
   # Save the plot with dynamic dimensions
   ggsave(
     filename = paste0("outputs/maps/strata_", region, "_", islands[isl], ".png"),
@@ -602,8 +595,16 @@ for (isl in 1:length(islands)) {
   strat_det$cell_area <- prod(res(survey_grid_ncrmp)); strat_det
   strat_det$strat_area <- strat_det$strat_cells * prod(res(survey_grid_ncrmp)); strat_det
   
+  strat_det = strat_det %>% 
+    dplyr::select(strat, strat_area)
+  
+  colnames(strat_det) = c("stratum", "area_km2")
+  
+  tab = left_join(tab,  strat_det)
+  tab$area_km2 = round(tab$area_km2, 2)
+  
   cat(paste0("saving strata table for ", region, " ", islands[isl], " as CSV...\n"))
-  readr::write_csv(strat_det, file = paste0("outputs/tables/strata_table_", region, "_", islands[isl], ".csv"))
+  write_csv(tab, file = paste0("outputs/keys/key_", region, "_", islands[isl], ".csv"))
   
   save(survey_grid_ncrmp, file = paste0("data/survey_grid_ncrmp/survey_grid_", islands[isl], ".RData"))
   cat(paste0("... ", islands[isl], " survey domain generated ...\n"))

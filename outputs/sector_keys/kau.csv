@@ -1,7 +1,0 @@
-strat,strat_nam,sector_id,reef_id,depth_bin_value
-1,deep_kau_east_forereef,kau_east,forereef,DEEP
-3,mid_kau_east_forereef,kau_east,forereef,MIDD
-2,deep_kau_napali_forereef,kau_napali,forereef,DEEP
-5,shallow_kau_east_forereef,kau_east,forereef,SHAL
-4,mid_kau_napali_forereef,kau_napali,forereef,MIDD
-6,shallow_kau_napali_forereef,kau_napali,forereef,SHAL
