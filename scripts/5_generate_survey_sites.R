@@ -300,10 +300,12 @@ for (i in 1:length(islands)) {
   
   sets_i <- sets_i %>% 
     mutate_if(is.numeric, round, digits = 4) %>% 
-    mutate_if(is.character, toupper)
+    mutate_if(is.character, toupper) %>% 
+    select(-REEF_ID) %>% 
+    distinct()
   
   cat(paste0("\n\n\n... saving survey table for ", region, " ", islands[i], " to CSV ...\n\n\n"))
-  readr::write_csv(sets_i, file = paste0("outputs/tables/survey_table_", region, "_", islands[i], ".csv"))
+  readr::write_csv(sets_i, file = paste0("outputs/coordinates/coordinates_", region, "_", islands[i], ".csv"))
   
   # bathymetry = cells %>% 
   #   ggplot(aes(x, y)) +
