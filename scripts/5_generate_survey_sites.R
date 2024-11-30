@@ -84,7 +84,7 @@ ggmap::register_google("AIzaSyDpirvA5gB7bmbEbwB1Pk__6jiV4SXAEcY")
 
 for (i in 1:length(islands)) {
   
-  # i = 3
+  # i = 1
   
   # survey domain with sector & reef & hard_unknown & 3 depth bins
   load(paste0("data/survey_grid_ncrmp/survey_grid_", islands[i], ".RData"))#; plot(survey_grid_ncrmp)
@@ -198,13 +198,16 @@ for (i in 1:length(islands)) {
     mutate(island = islands[i],
            region = region)
   
-  keys = read_csv(paste0("outputs/tables/strata_keys_", region, "_", islands[i], ".csv"))
+  keys <- read_csv(paste0("outputs/keys/key_", region, "_", islands[i], ".csv"),
+                   col_names = c("strat", "strat_nam", "sector_id", "reef_id", "depth_bin", "strat_area"),
+                   skip = 1) %>% 
+    select(depth_bin, sector_id, reef_id, strat, strat_nam)
   
   strat_set = left_join(strat_set, keys) %>% 
     select(region, island, depth_bin, sector_id, reef_id, strat, strat_nam, strat_area, strat_sets)
   
   cat(paste0("saving strata set for ", region, " ", islands[i], " to CSV...\n"))
-  readr::write_csv(strat_set, file = paste0("outputs/tables/strata_set_", region, "_", islands[i], ".csv"))
+  readr::write_csv(strat_set, file = paste0("outputs/allocations/allocation_", region, "_", islands[i], ".csv"))
   
   cells <- merge(cells, strat_det, by = c("strat")) 
   
@@ -219,7 +222,7 @@ for (i in 1:length(islands)) {
   sets <- cells[, .SD[sample(.N, size = unique(strat_sets), replace = resample_cells)], by = c("strat")]
   
   # remove sites that are closer than 100 m
-  nearby_sites <- data.frame(longitude = sets$longitude, latitude = sets$latitude); plot(nearby_sites, pch = 20, col = 2, axes = F)
+  nearby_sites <- data.frame(longitude = sets$longitude, latitude = sets$latitude); #plot(nearby_sites, pch = 20, col = 2, axes = F)
   
   library(geosphere)
   remove_close_points <- function(data, threshold = 100) {
@@ -236,7 +239,7 @@ for (i in 1:length(islands)) {
     data[keep, ]
   }
   
-  nearby_sites <- remove_close_points(nearby_sites, 100); points(nearby_sites, pch = 20, col = 4)
+  nearby_sites <- remove_close_points(nearby_sites, 100); #points(nearby_sites, pch = 20, col = 4)
   
   colnames(nearby_sites) = c("longitude", "latitude")
   nearby_sites$latitude = round(nearby_sites$latitude, 4)
@@ -249,7 +252,7 @@ for (i in 1:length(islands)) {
   
   sets = inner_join(sets, nearby_sites)
   
-  if (islands[i] %in% unique(site_num$ISLANDCODE) ) {
+  if (islands[i] %in% unique(site_num$ISLANDCODE)) {
     
     id = site_num %>% filter(ISLANDCODE == islands[i])
     id = id$MAX_SITE_NUM %>% as.numeric()
@@ -286,7 +289,7 @@ for (i in 1:length(islands)) {
   
   sets_i = sets
   
-  key_i = read_csv(paste0("outputs/tables/strata_keys_", region, "_", islands[i], ".csv")) %>%
+  key_i = read_csv(paste0("outputs/keys/key_", region, "_", islands[i], ".csv")) %>%
     mutate(depth_bin = stringr::str_replace(depth_bin, "MIDD", "MID"))
   
   sets_i = left_join(sets_i, key_i)
@@ -302,90 +305,41 @@ for (i in 1:length(islands)) {
   cat(paste0("\n\n\n... saving survey table for ", region, " ", islands[i], " to CSV ...\n\n\n"))
   readr::write_csv(sets_i, file = paste0("outputs/tables/survey_table_", region, "_", islands[i], ".csv"))
   
-  # #########################################
-  # ## Export set table as two columns pdf ##
-  # #########################################
+  # bathymetry = cells %>% 
+  #   ggplot(aes(x, y)) +
+  #   geom_raster(aes(fill = depth)) + 
+  #   # coord_fixed() +
+  #   theme_map() + 
+  #   scale_fill_viridis_c("Depth (m)", limits = c(0, 30), direction = -1) + 
+  #   theme(panel.background = element_rect(fill = "gray10"),
+  #         panel.grid = element_line(color = "gray15"),
+  #         legend.background = element_rect(fill = "transparent"), 
+  #         legend.text = element_text(color = "white"),           
+  #         legend.title = element_text(color = "white"))
   # 
-  # # Add additional row to sets with odd numbers so they can be evenly split
-  # if(nrow(sets) %% 2 == 1){
+  # variability = cells %>% 
+  #   ggplot(aes(x, y)) +
+  #   geom_raster(aes(fill = sd_total)) + 
+  #   # coord_fixed() +
+  #   theme_map() + 
+  #   scale_fill_viridis_c("Var") + 
+  #   theme(panel.background = element_rect(fill = "gray10"),
+  #         panel.grid = element_line(color = "gray15"),
+  #         legend.background = element_rect(fill = "transparent"), 
+  #         legend.text = element_text(color = "white"),           
+  #         legend.title = element_text(color = "white"))
   # 
-  #   blankrow <- data.frame(matrix(ncol = 8, nrow = 1))
-  #   colnames(blankrow) <- colnames(sets)
-  #   sets <- rbind(sets, blankrow)
-  # 
-  # }
-  # 
-  # # Format and split sets to create two columns
-  # sets$depth <- round(sets$depth, digits = 2)
-  # sets_print <- select(sets, "id", "longitude","latitude","depth","strat","depth_bin")
-  # 
-  # sets1 <- data.frame(split(sets_print, factor(sort(rank(row.names(sets_print))%%2))))
-  # sets1 <- sets1[,1:6]
-  # colnames(sets1) <- colnames(sets_print)
-  # sets2 <- anti_join(sets_print, sets1)
-  # list = seq.int((nrow(sets2) + 1 ), nrow(sets))
-  # 
-  # # Print table
-  # if(dim(sets1)[1] < 30) {
-  # 
-  #   page_height = 14.5 # Margins for smaller site lists i.e Rota
-  #   page_width = 10.5 # Margins for smaller site lists i.e Rota
-  # 
-  # } else {
-  # 
-  #   page_height = 21.75 # Margins for larger site lists i.e. Guam
-  #   page_width = 15.75 # Margins for larger site lists i.e. Guam
-  # 
-  # }
-  # 
-  # library(grid)
-  # library(gridExtra)
-  # pdf(paste0("outputs/tables/survey_table_", region, "_", islands[i], ".pdf"), height = page_height, width = page_width)
-  # sets1 <- tableGrob(sets1)
-  # sets2 <- tableGrob(sets2, rows = list)
-  # grid.arrange(rectGrob(), rectGrob(), ncol = 2)
-  # grid.arrange(sets1, sets2, nrow = 1, ncol = 2, newpage = F)
-  # dev.off()
-  
-  bathymetry = cells %>% 
-    ggplot(aes(x, y)) +
-    geom_raster(aes(fill = depth)) + 
-    # coord_fixed() +
-    theme_map() + 
-    scale_fill_viridis_c("Depth (m)", limits = c(0, 30), direction = -1) + 
-    theme(panel.background = element_rect(fill = "gray10"),
-          panel.grid = element_line(color = "gray15"),
-          legend.background = element_rect(fill = "transparent"), 
-          legend.text = element_text(color = "white"),           
-          legend.title = element_text(color = "white"))
-  
-  variability = cells %>% 
-    ggplot(aes(x, y)) +
-    geom_raster(aes(fill = sd_total)) + 
-    # coord_fixed() +
-    theme_map() + 
-    scale_fill_viridis_c("Var") + 
-    theme(panel.background = element_rect(fill = "gray10"),
-          panel.grid = element_line(color = "gray15"),
-          legend.background = element_rect(fill = "transparent"), 
-          legend.text = element_text(color = "white"),           
-          legend.title = element_text(color = "white"))
-  
-  area = cells %>% 
-    ggplot(aes(x, y)) +
-    geom_raster(aes(fill = strat_area )) + 
-    # coord_fixed() +
-    theme_map() + 
-    scale_fill_viridis_c("Area (km2)") + 
-    theme(panel.background = element_rect(fill = "gray10"),
-          panel.grid = element_line(color = "gray15"),
-          legend.background = element_rect(fill = "transparent"), 
-          legend.text = element_text(color = "white"),           
-          legend.title = element_text(color = "white"))
-  
-  # png(paste0("outputs/maps/survey_layers_", islands[i], ".png"), height = 5, width = 15, res = 500, units = "in")
-  # print(bathymetry + variability + area)
-  # dev.off()
+  # area = cells %>% 
+  #   ggplot(aes(x, y)) +
+  #   geom_raster(aes(fill = strat_area )) + 
+  #   # coord_fixed() +
+  #   theme_map() + 
+  #   scale_fill_viridis_c("Area (km2)") + 
+  #   theme(panel.background = element_rect(fill = "gray10"),
+  #         panel.grid = element_line(color = "gray15"),
+  #         legend.background = element_rect(fill = "transparent"), 
+  #         legend.text = element_text(color = "white"),           
+  #         legend.title = element_text(color = "white"))
   
   isl_shp = island_name_code %>% subset(Island_Code == islands[i])
   
