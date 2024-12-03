@@ -70,8 +70,8 @@ res(fine_topo_1)
 res(fine_topo_2)
 res(fine_topo_3)
 
-fine_topo_1 = resample(fine_topo_1, fine_topo_3, method = "near"); plot(fine_topo_1)
-fine_topo_2 = resample(fine_topo_2, fine_topo_3, method = "near"); plot(fine_topo_2)
+fine_topo_1 = resample(fine_topo_1, fine_topo_2, method = "near"); plot(fine_topo_1)
+fine_topo_3 = resample(fine_topo_3, fine_topo_2, method = "near"); plot(fine_topo_3)
 
 fine_topo = mean(c(fine_topo_1, fine_topo_2, fine_topo_3), na.rm = T)
 fine_topo = mean(c(fine_topo_1, fine_topo_3), na.rm = T)
