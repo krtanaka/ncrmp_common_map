@@ -25,7 +25,7 @@ utm <- read_csv('data/misc/ncrmp_utm_zones.csv')
 # Define island groups and regions
 
 # South Mariana Islands
-islands <- c("gua", "rot", "sai", "tin", "agu"); region <- "S.MARIAN"; gua_mp = T
+islands <- c("gua", "rot", "sai", "tin", "agu"); region <- "S.MARIAN"
 
 # North Mariana Islands
 islands <- c("agr", "ala", "ana", "asc", "gug", "fdp", "mau", "sar", "sup", "pag", "zea"); region <- "N.MARIAN"
@@ -43,6 +43,9 @@ islands <- c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); reg
 islands <- c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region <- "NWHI"
 
 select = dplyr::select
+
+# If you want to lump Guam MPAs into a signle "gua_mp" sector, turn gua_mp = T
+gua_mp = T
 
 for (isl in 1:length(islands)) {
   

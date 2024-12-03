@@ -30,19 +30,17 @@ for (isl in 1:length(islands)) {
   
   # isl = 7
   
-  key = read_csv(paste0("outputs/tables/strata_keys_", region, "_", islands[isl], ".csv"))
-  table = read_csv(paste0("outputs/tables/strata_table_", region, "_", islands[isl], ".csv"))
+  key = read_csv(paste0("outputs/keys/key_", region, "_", islands[isl], ".csv"))
+
+  key$region = region
+  key$island = islands[isl]
   
-  key_table = left_join(key, table)
-  key_table$region = region
-  key_table$island = islands[isl]
+  key = key %>% dplyr::select(stratum, stratum_name, sector_id, reef_id, depth_bin, area_km2, island, region)
+  colnames(key)[1] = "stratum_id"
   
-  key_table = key_table %>% dplyr::select(strat, strat_nam, sector_id, reef_id, depth_bin, strat_area, island, region)
-  colnames(key_table)[1] = "strat_id"
+  key$area_km2 = round(key$area_km2, 2)
   
-  key_table$strat_area = round(key_table$strat_area, 5)
-  
-  df_all = rbind(df_all, key_table)
+  df_all = rbind(df_all, key)
   
 }
 
