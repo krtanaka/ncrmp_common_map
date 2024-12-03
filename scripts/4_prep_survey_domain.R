@@ -25,7 +25,7 @@ utm <- read_csv('data/misc/ncrmp_utm_zones.csv')
 # Define island groups and regions
 
 # South Mariana Islands
-islands <- c("gua", "rot", "sai", "tin", "agu"); region <- "S.MARIAN"
+islands <- c("gua", "rot", "sai", "tin", "agu"); region <- "S.MARIAN"; gua_mp = T
 
 # North Mariana Islands
 islands <- c("agr", "ala", "ana", "asc", "gug", "fdp", "mau", "sar", "sup", "pag", "zea"); region <- "N.MARIAN"
@@ -384,6 +384,17 @@ for (isl in 1:length(islands)) {
     
     # Filter out rows with NA in all restricted columns
     df = df %>% filter(if_all(.cols = contains("restricted_"), ~ is.na(.)))
+    
+  }
+  
+  if (islands[isl] == "gua" & gua_mp == T) {
+    
+    guam_sector = read_csv("data/misc/Guam_sectors_combine.csv")
+    
+    df = df %>%
+      mutate(
+        sector_id = if_else(sector_id %in% tolower(unique(guam_sector$sector_id)), "gua_mp", sector_id)
+      )
     
   }
   
