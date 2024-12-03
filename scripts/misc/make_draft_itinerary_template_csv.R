@@ -1,5 +1,5 @@
 ##################################################################
-### Exporting Strata ID, Areas as single table for each region ###
+### Exporting draft itinerary table as csv for selected regions ##
 ##################################################################
 
 rm(list = ls())
