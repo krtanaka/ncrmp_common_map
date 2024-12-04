@@ -70,7 +70,7 @@ islands <- region_data$islands
 region <- region_data$region
 
 # last known site number from data management for each island
-site_num <- read_csv("data/misc/V_NCRMP_MAX_SITE_NUM_DATA.csv") %>%
+site_num <- read_csv("data/misc/TABLE_EXPORT_DATA.csv") %>%
   mutate(MAX_SITE_NUM = sprintf("%04d", MAX_SITE_NUM),
          ISLANDCODE = tolower(ISLANDCODE)) %>% 
   select(ISLANDCODE, MAX_SITE_NUM)
