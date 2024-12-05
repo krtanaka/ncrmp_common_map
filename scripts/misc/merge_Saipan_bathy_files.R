@@ -5,15 +5,6 @@ library(readr)
 
 rm(list = ls())
 
-# patch finer res bathymetry files first
-
-# Rota Island: Bathymetry PIBHMC
-# https://www.soest.hawaii.edu/pibhmc/cms/data-by-location/cnmi-guam/rota-island/rota-island-bathymetry/
-
-# -----------------------------
-# 1. Load Fine Resolution Bathymetry Rasters
-# -----------------------------
-
 # Define file paths for fine bathymetry rasters
 fine_bathymetry_files <- list(
   b1 = "N:/GIS/Projects/CommonMaps/Bathymetry/sai_dball.asc",

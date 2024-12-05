@@ -9,9 +9,9 @@ rm(list = ls())
 
 # Rota Island: Bathymetry PIBHMC
 # https://www.soest.hawaii.edu/pibhmc/cms/data-by-location/cnmi-guam/rota-island/rota-island-bathymetry/
-b1 = rast("N:/GIS/Projects/CommonMaps/Bathymetry/2020_ngs_topobathy_dem_guguan_Job1075176_merged.tif"); plot(b1)
-b2 = rast("N:/GIS/Projects/CommonMaps/Bathymetry/2020_ngs_topobathy_guguan_Job1075177_merged.tif"); plot(b2)
-b3 = rast("N:/GIS/Projects/SeafloorCalc/Final_Products/gug_inpo/w001001.adf"); plot(b3)
+b1 = rast("N:/GIS/Projects/CommonMaps/Bathymetry/2020_ngs_topobathy_guguan/2020_ngs_topobathy_dem_guguan_J1075176.tif"); plot(b1); res(b1)
+b2 = rast("N:/GIS/Projects/CommonMaps/Bathymetry/2020_ngs_topobathy_guguan/2020_ngs_topobathy_guguan_Job1075177.tif"); plot(b2); res(b2)
+b3 = rast("N:/GIS/Projects/SeafloorCalc/Final_Products/gug_inpo/w001001.adf"); plot(b3); res(b3)
 
 utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 island_boxes = read_csv("data/misc/Island_Extents.csv") # Updated Bounding boxes 2021
