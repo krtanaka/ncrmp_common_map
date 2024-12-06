@@ -16,17 +16,8 @@ b2 = rast("N:/GIS/Projects/SeafloorCalc/Final_Products/pag_inpo/w001001.adf")
 b2[b2 >= 0] <- NA
 b2[b2 <= -30] <- NA
 
-b3 <- list.files("N:/GIS/Projects/CommonMaps/Bathymetry/2022_rainier_pag/", pattern = "\\.tif$", full.names = TRUE)
-b3 <- lapply(b3, rast)
-template <- b3[[5]] # Resample all rasters to match the resolution and extent of the 5th raster, Use the 5th raster as the template
-b3 <- lapply(b3, function(r) resample(r, template, method = "near"))
-b3 <- do.call(merge, b3)
-b3[b3 >= 0] <- NA
-b3[b3 <= -30] <- NA
-
 plot(b1); res(b1)
 plot(b2); res(b2)
-plot(b3); res(b3)
 
 # utm = read_csv('data/misc/ncrmp_utm_zones.csv')
 # island_boxes = read_csv("data/misc/Island_Extents.csv") # Updated Bounding boxes 2021
@@ -44,9 +35,8 @@ plot(b3); res(b3)
 # b2 <- project(b2, sr); plot(b2)
 
 b1 = resample(b1, b2, method = "near"); plot(b1)
-b3 = resample(b3, b2, method = "near"); plot(b3)
 
-fine_topo = mean(c(b1, b2, b3), na.rm = T)
+fine_topo = mean(c(b1, b2), na.rm = T)
 
 fine_topo[fine_topo >= 0] <- NA
 fine_topo[fine_topo <= -30] <- NA
