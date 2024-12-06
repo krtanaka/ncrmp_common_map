@@ -30,8 +30,10 @@ b5 <- project(b5, sr); plot(b5)
 b1 = resample(b1, b4, method = "near"); plot(b1)
 b2 = resample(b2, b4, method = "near"); plot(b2)
 b3 = resample(b3, b4, method = "near"); plot(b3)
+b4 = resample(b4, b4, method = "near"); plot(b4)
+b5 = resample(b5, b4, method = "near"); plot(b5)
 
-fine_topo = mean(c(b1, b2, b3, b4, b5), na.rm = T)
+fine_topo = mean(c(b2, b3, b4, b5), na.rm = T)
 
 fine_topo[fine_topo >= 0] <- NA
 fine_topo[fine_topo <= -30] <- NA
