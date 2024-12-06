@@ -4,8 +4,6 @@ library(readr)
 
 rm(list = ls())
 
-# patch finer res bathymetry files first
-
 b1 = rast("N:/GIS/Projects/CommonMaps/Bathymetry/tut_dball.asc"); plot(b1); res(b1)
 b2 = rast("N:/GIS/Projects/CommonMaps/Bathymetry/tut_dbmb.asc"); plot(b2); res(b2)
 b3 = rast("N:/GIS/Projects/CommonMaps/Bathymetry/Tutuila_5m.asc"); plot(b3); res(b3)
@@ -25,9 +23,12 @@ b6 = resample(b6, base, method = "near"); plot(b6)
 fine_topo <- mean(c(b1, b2, b3, b4, b5, b6), na.rm = TRUE)
 
 fine_topo[fine_topo >= 0] <- NA
-fine_topo[fine_topo <= -30] <- NA
+fine_topo[fine_topo <= -18] <- NA
 
 plot(fine_topo)
+topo_i = readAll(raster(fine_topo))
+
+plot(topo_i)
 save(topo_i, file = 'data/gis_bathymetry/tut_merged.RData')
 
 # Assign the UTM Zone 2S CRS to fine_topo
