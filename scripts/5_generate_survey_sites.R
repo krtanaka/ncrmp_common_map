@@ -23,7 +23,7 @@ utm <- read_csv('data/misc/ncrmp_utm_zones.csv')
 effort_levels <- c("low", "mid", "high")[3]
 
 # sampling parameters
-min_sets <- 1 # min number of sets per stratum
+min_sets <- 20 # min number of sets per stratum
 max_sets <- 50 # max number of sets per stratum
 trawl_dim <- c(0.01, 0.0353) # area of single survey effort (sq.km)
 resample_cells <- FALSE
@@ -99,7 +99,7 @@ for (i in 1:length(islands)) {
     
   } else {
     
-    total_sample = total_sample$Effort*2
+    total_sample = total_sample$Effort*5
     
   }
   
