@@ -20,7 +20,7 @@ select <- dplyr::select
 utm <- read_csv('data/misc/ncrmp_utm_zones.csv')
 
 # sampling effort levels
-effort_levels <- c("low", "mid", "high")[2]
+effort_levels <- c("low", "mid", "high")[3]
 
 # sampling parameters
 min_sets <- 1 # min number of sets per stratum
@@ -65,7 +65,7 @@ select_region <- function(region_name) {
 }
 
 # select regions
-region_data <- select_region("S.MARIAN")
+region_data <- select_region("MHI")
 islands <- region_data$islands
 region <- region_data$region
 

@@ -5,10 +5,6 @@ library(readr)
 
 rm(list = ls())
 
-# patch finer res bathymetry files first
-
-# Rota Island: Bathymetry PIBHMC
-# https://www.soest.hawaii.edu/pibhmc/cms/data-by-location/cnmi-guam/rota-island/rota-island-bathymetry/
 b1 = rast("N:/GIS/Projects/CommonMaps/Bathymetry/2020_ngs_topobathy_guguan/2020_ngs_topobathy_dem_guguan_J1075176.tif"); plot(b1); res(b1)
 b2 = rast("N:/GIS/Projects/CommonMaps/Bathymetry/2020_ngs_topobathy_guguan/2020_ngs_topobathy_guguan_Job1075177.tif"); plot(b2); res(b2)
 b3 = rast("N:/GIS/Projects/SeafloorCalc/Final_Products/gug_inpo/w001001.adf"); plot(b3); res(b3)
@@ -20,12 +16,12 @@ island_names_codes_boxes = merge(island_names_codes, island_boxes)
 rm(island_names_codes, island_boxes)
 utm_i = utm %>% subset(Island_Code == "gug")
 
-# determine northern or southern hemisphere
-sr = paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +north')
-# sr = paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +south')
+if (mean(yFromRow(b1, 1:nrow(b1))) > 0) sr = paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +north')
+if (mean(yFromRow(b1, 1:nrow(b1))) < 0) sr = paste0('+proj=utm +zone=', utm_i$UTM_Zone, ' +datum=WGS84 +units=m +no_defs +south')
 
 b1 <- project(b1, sr); plot(b1)
 b2 <- project(b2, sr); plot(b2)
+b3 <- project(b3, sr); plot(b3)
 
 b1 = resample(b1, b3, method = "near"); plot(b1)
 b2 = resample(b2, b3, method = "near"); plot(b2)
