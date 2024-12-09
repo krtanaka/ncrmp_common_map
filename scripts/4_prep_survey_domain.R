@@ -49,7 +49,7 @@ gua_mp = T
 
 for (isl in 1:length(islands)) {
   
-  # isl = 1
+  # isl = 3
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   
@@ -217,6 +217,21 @@ for (isl in 1:length(islands)) {
     
   } 
   
+  ### Marianas restricted areas ###
+  if (region %in% c("S.MARIAN", "N.MARIAN")) {
+    
+    load("data/gis_sector/marianas_restricted_areas_sai.RData"); restricted_sai = raster_and_table
+
+    restricted_sai_areas = restricted_sai[[1]]; restricted_sai_names = restricted_sai[[2]]
+
+    restricted_sai_names$ID  = as.character(restricted_sai_names$ID)
+
+    colnames(restricted_sai_names) = c("restricted_sai_areas", "restricted_sai_areas_id")
+
+    restricted_sai_names$restricted_sai_areas_id <- gsub(" ", "_", tolower(restricted_sai_names$restricted_sai_areas_id))
+
+  } 
+  
   # Resample raster layers to match 'topo_i' resolution using nearest-neighbor method
   cat("resampling base raster layers to match original bathymetry resolution... this may take some time...\n")
   hardsoft <- resample(hardsoft, topo_i, method = "ngb")
@@ -244,6 +259,12 @@ for (isl in 1:length(islands)) {
   if (islands[isl] %in% c("oah", "lan", "mai")) {
     
     restricted_oah_lan_mai_areas = resample(restricted_oah_lan_mai_areas, topo_i, method = "ngb")
+    
+  }
+  
+  if (islands[isl] %in% c("sai")) {
+    
+    restricted_sai_areas = resample(restricted_sai_areas, topo_i, method = "ngb")
     
   } 
   
@@ -288,6 +309,13 @@ for (isl in 1:length(islands)) {
                    "restricted_kau_oah_b_areas", 
                    "restricted_oah_lan_mai_areas",
                    "restricted_oah_mokapu_areas")
+  } 
+  
+  if (islands[isl] %in% c("sai")) {
+    
+    df = stack(hardsoft, sector, reef, bathymetry, buffer, restricted_sai_areas)
+    names(df) <- c("hardsoft", "sector", "reef", "depth", "buffer", "restricted_sai_areas")
+    
   } 
   
   # if (islands[isl] %in% c("kau")) {
@@ -370,6 +398,32 @@ for (isl in 1:length(islands)) {
       restricted_kau_oah_b_names,
       restricted_oah_lan_mai_names,
       restricted_oah_mokapu_names
+      
+    )) {
+      
+      tryCatch({
+        
+        df <- left_join(df, df_to_join)
+        
+      }, error = function(e) {
+        
+        # Ignore errors and continue
+        message("Error ignored:", e$message)
+        
+      })
+    }
+    
+    # Filter out rows with NA in all restricted columns
+    df = df %>% filter(if_all(.cols = contains("restricted_"), ~ is.na(.)))
+    
+  }
+  
+  # Loop through restricted dataframes and perform left join
+  if (region %in% c("S.MARIAN", "N.MARIAN")) {
+    
+    for (df_to_join in list(
+      
+      restricted_sai_names
       
     )) {
       
