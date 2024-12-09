@@ -23,7 +23,7 @@ spatial_resolution = 100
 buffer_distance = 0.005
 
 # Define the path to the shapefiles
-shp_path = "N:/GIS/Projects/CommonMaps/Restricted areas_2016/"
+shp_path = "N:/GIS/Projects/CommonMaps/Restricted_Areas/MHI/"
 
 # List all shapefiles in the specified path
 shp_list = list.files(path = shp_path, pattern = "\\.shp$", full.names = TRUE)
