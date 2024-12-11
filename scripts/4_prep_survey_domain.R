@@ -19,37 +19,23 @@ library(ggthemes)
 library(data.table)
 library(terra)
 
-# Load UTM zones data
+select <- dplyr::select
+
+source("scripts/common_map_functions.R")
+
 utm <- read_csv('data/misc/ncrmp_utm_zones.csv')
 
-# Define island groups and regions
-
-# South Mariana Islands
-islands <- c("gua", "rot", "sai", "tin", "agu"); region <- "S.MARIAN"
-
-# North Mariana Islands
-islands <- c("agr", "ala", "ana", "asc", "gug", "fdp", "mau", "sar", "sup", "pag", "zea"); region <- "N.MARIAN"
-
-# American Samoa
-islands <- c("ofu", "ros", "swa", "tau", "tut"); region <- "SAMOA"
-
-# Pacific Remote Island Areas (PRIAs)
-islands <- c("bak", "how", "jar", "joh", "kin", "pal", "wak"); region <- "PRIAs"
-
-# Main Hawaiian Islands (MHI)
-islands <- c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"); region <- "MHI"
-
-# Northwestern Hawaiian Islands (NWHI)
-islands <- c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"); region <- "NWHI"
-
-select = dplyr::select
+# select regions, S.MARIAN, N.MARIAN, SAMOA, PRIAs, MHI, NWHI
+region_data <- select_region("S.MARIAN"); region_data
+islands <- region_data$islands
+region <- region_data$region
 
 # If you want to lump Guam MPAs into a signle "gua_mp" sector, turn gua_mp = T
 gua_mp = T
 
 for (isl in 1:length(islands)) {
   
-  # isl = 3
+  # isl = 1
   
   load(paste0("data/gis_bathymetry/", islands[isl], ".RData"))
   

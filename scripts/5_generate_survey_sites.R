@@ -17,13 +17,16 @@ library(ggthemes)
 library(ggmap)
 
 select <- dplyr::select
+
+source("scripts/common_map_functions.R")
+
 utm <- read_csv('data/misc/ncrmp_utm_zones.csv')
 
 # sampling effort levels
-effort_levels <- c("low", "mid", "high")[3]
+effort_levels <- c("low", "mid", "high")[2]
 
 # sampling parameters
-min_sets <- 20 # min number of sets per stratum
+min_sets <- 1 # min number of sets per stratum
 max_sets <- 50 # max number of sets per stratum
 trawl_dim <- c(0.01, 0.0353) # area of single survey effort (sq.km)
 resample_cells <- FALSE
@@ -44,28 +47,29 @@ survey_effort <- data.frame(
 survey_effort <- merge(island_name_code, survey_effort)
 head(survey_effort) ; tail(survey_effort) 
 
+# load site number exclusion lists if there are any
+# first exclusion list sent by L.Luers on 2024/12/04
+if (list.files("data/misc/site_exclusion_list/") > 0) {
+  
+  # Read all CSV files and combine them into one data frame
+  exc <- list.files("data/misc/site_exclusion_list/", pattern = "\\.csv$", full.names = TRUE) %>%
+    lapply(read_csv) %>%
+    bind_rows() %>%
+    mutate(Island = ISLAND) %>% 
+    left_join(island_name_code, by = "Island") %>%
+    select(SITE, Island_Code) %>%
+    mutate(SITE = stringr::str_remove(SITE, "^[A-Z]+-")) #remove the prefix consisting of uppercase letters followed by a hyphen
+  
+}
+
 # Load Island Boundaries Shapefile
 load('data/gis_island_boundaries/ncrmp_islands_shp.RData')
 
 # Set CRS for Island Boundaries
 crs(ISL_bounds) <- "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
 
-# selecting islands and regions
-select_region <- function(region_name) {
-  switch(
-    region_name,
-    "S.MARIAN" = list(islands = c("gua", "rot", "sai", "tin", "agu"), region = "S.MARIAN"),
-    "N.MARIAN" = list(islands = c("agr", "ala", "ana", "asc", "gug", "fdp", "mau", "sar", "sup", "pag", "zea"), region = "N.MARIAN"),
-    "SAMOA" = list(islands = c("ofu", "ros", "swa", "tau", "tut"), region = "SAMOA"),
-    "PRIAs" = list(islands = c("bak", "how", "jar", "joh", "kin", "pal", "wak"), region = "PRIAs"),
-    "MHI" = list(islands = c("haw", "kah", "kal", "kau", "lan", "mai", "mol", "nii", "oah"), region = "MHI"),
-    "NWHI" = list(islands = c("ffs", "kur", "lay", "lis", "mar", "mid", "phr"), region = "NWHI"),
-    stop("Invalid region name. Please specify a valid region.")
-  )
-}
-
-# select regions
-region_data <- select_region("MHI")
+# select regions, S.MARIAN, N.MARIAN, SAMOA, PRIAs, MHI, NWHI
+region_data <- select_region("S.MARIAN"); region_data
 islands <- region_data$islands
 region <- region_data$region
 
@@ -76,6 +80,7 @@ site_num <- read_csv("data/misc/TABLE_EXPORT_DATA.csv") %>%
   select(ISLANDCODE, MAX_SITE_NUM)
 
 set.seed(2024)
+
 ggmap::register_google("AIzaSyDpirvA5gB7bmbEbwB1Pk__6jiV4SXAEcY")
 
 #################################################################
@@ -99,7 +104,7 @@ for (i in 1:length(islands)) {
     
   } else {
     
-    total_sample = total_sample$Effort*5
+    total_sample = total_sample$Effort*3
     
   }
   
@@ -166,7 +171,7 @@ for (i in 1:length(islands)) {
   # add "strat" "strat_cells" "tow_area" ...
   strat_det = strat_det[, c("strat", "strat_cells", "tow_area", "cell_area", "strat_area", "strat_sets")]
   
-  if (any(grepl(paste0(islands[i], "_itinerary"),list.files("outputs/sector_keys/")))) {
+  if (any(grepl(paste0(islands[i], "_itinerary"),list.files("outputs/keys/")))) {
     
     load(paste0("outputs/sector_keys/", islands[i], "_itinerary.Rdata"))
     
@@ -224,21 +229,6 @@ for (i in 1:length(islands)) {
   # remove sites that are closer than 100 m
   nearby_sites <- data.frame(longitude = sets$longitude, latitude = sets$latitude); #plot(nearby_sites, pch = 20, col = 2, axes = F)
   
-  library(geosphere)
-  remove_close_points <- function(data, threshold = 100) {
-    keep <- rep(TRUE, nrow(data))
-    for (i in 1:(nrow(data) - 1)) {
-      if (keep[i]) {
-        dists <- distm(data[i, c("longitude", "latitude")], data[(i+1):nrow(data), c("longitude", "latitude")], fun = distHaversine)
-        close_points <- which(dists < threshold)
-        if (length(close_points) > 0) {
-          keep[(i + close_points)] <- FALSE
-        }
-      }
-    }
-    data[keep, ]
-  }
-  
   nearby_sites <- remove_close_points(nearby_sites, 100); #points(nearby_sites, pch = 20, col = 4)
   
   colnames(nearby_sites) = c("longitude", "latitude")
@@ -248,7 +238,7 @@ for (i in 1:length(islands)) {
   sets$latitude = round(sets$latitude, 4)
   sets$longitude = round(sets$longitude, 4)
   
-  cat(paste0("removing ", nrow(sets) - nrow(nearby_sites), " sites to maintain a minimum distance of 100 m between each site...\n"))
+  cat(paste0("\nremoving ", nrow(sets) - nrow(nearby_sites), " sites to maintain a minimum distance of 100 m between each site...\n"))
   
   sets = inner_join(sets, nearby_sites)
   
@@ -256,19 +246,32 @@ for (i in 1:length(islands)) {
     
     id = site_num %>% filter(ISLANDCODE == islands[i])
     id = id$MAX_SITE_NUM %>% as.numeric()
-    id = seq(id,id + dim(sets)[1]-1,1)
-    id = sprintf("s_%04d", id)
-    id = gsub("s",  toupper(islands[i]), id)
-    id = paste0(id, "A")
+    id = seq(id, id + dim(sets)[1]-1,1)
     
   }else{
     
     id <- seq(1,dim(sets)[1],1)
-    id = sprintf("s_%04d", id)
-    id = gsub("s",  islands[i], id)
-    id = paste0(id, "A")
     
   }
+  
+  # Check if 'exc' exists
+  if (exists("exc")) {
+    
+    exc = exc %>% filter(Island_Code == islands[i])
+    existing_sites <- as.integer(exc$SITE)
+
+    # generate new unique IDs
+    id <- generate_new_ids(id, existing_sites)
+    
+  } else {
+    
+    # If 'exc' doesn't exist, notify and proceed with 'id' as is
+    message("'exc' does not exist. Proceeding without conflict checks.")
+  }
+  
+  id = sprintf("s_%04d", id)
+  id = gsub("s",  toupper(islands[i]), id)
+  id = paste0(id, "A")
   
   # count number of distinct sim*year*cell combinations
   sets[, `:=`(cell_sets, .N), by = c("cell")]

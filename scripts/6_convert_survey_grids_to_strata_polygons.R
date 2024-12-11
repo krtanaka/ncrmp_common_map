@@ -9,11 +9,11 @@ grids = list.files("./data/survey_grid_ncrmp/", full.names = T)
 drop_grids = which(regexpr(pattern = "Oahu", text = grids) > 0)
 grids = grids[-drop_grids]
 
-keys = list.files("./outputs/sector_keys/", full.names = T)
+keys = list.files("./outputs/keys/", full.names = T)
 
 for(i in 1:length(grids)){
   
-  # i = 22
+  # i = 3
   # Get the right grid and sector key
   
   grid_file = grids[i]
