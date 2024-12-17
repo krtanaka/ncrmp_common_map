@@ -710,9 +710,15 @@ for (e in 1:nlayers(eds)) {
   
   whole_map = ggmap(map) +
     geom_raster(data = ei, aes(x = longitude, y = latitude, fill = var), alpha = 0.8) + 
-    scale_fill_viridis_c(
+    # scale_fill_viridis_c(
+    #   "", 
+    #   option = "magma"
+    #   # breaks = c(var_min, var_mean, var_max)
+    #   # labels = c("Min", "Mean", "Max")
+    # ) + 
+    scale_fill_gradientn(
       "", 
-      option = "magma"
+      colours = matlab.like(100)
       # breaks = c(var_min, var_mean, var_max)
       # labels = c("Min", "Mean", "Max")
     ) + 
