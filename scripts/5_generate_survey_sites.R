@@ -686,3 +686,54 @@ file.remove(paste0("outputs/maps/survey_map_", region, "_", islands[i], "_SW.pdf
 file.remove(paste0("outputs/tables/survey_table_", region, "_", islands[i], ".pdf"))
 
 # }
+load("/Users/Kisei.Tanaka/Desktop/eds.rdata")
+
+map <- get_map(location = c(mean(sets$longitude, na.rm = T),
+                            mean(sets$latitude, na.rm = T)),
+               zoom = 11,
+               color = "bw",
+               maptype = 'satellite')
+
+for (e in 1:nlayers(eds)) {
+  
+  # e = 1
+  
+  ei = eds[[e]] %>% rasterToPoints() %>% as.data.table()
+  var_name = colnames(ei)[3]
+  colnames(ei) = c("longitude", "latitude", "var")
+  ei$var = round(ei$var, 2)
+  # ei = ei %>% mutate(across(c(latitude, longitude), round, digits = 3)) %>% distinct()
+  
+  var_min  <- min(ei$var, na.rm = TRUE)
+  var_mean <- mean(ei$var, na.rm = TRUE)
+  var_max  <- max(ei$var, na.rm = TRUE)
+  
+  whole_map = ggmap(map) +
+    geom_raster(data = ei, aes(x = longitude, y = latitude, fill = var), alpha = 0.8) + 
+    scale_fill_viridis_c(
+      "", 
+      option = "magma"
+      # breaks = c(var_min, var_mean, var_max)
+      # labels = c("Min", "Mean", "Max")
+    ) + 
+    annotation_scale(location = "br", width_hint = 0.2, text_col = "gray90", bar_cols = "gray90", size = 5) +
+    coord_sf(crs = 4326) +
+    scale_x_continuous(sec.axis = dup_axis(), "", limits = range(cells$longitude)) +
+    scale_y_continuous(sec.axis = dup_axis(), "", limits = range(cells$latitude)) +
+    theme(
+      legend.position = c(0.95, 0.25),
+      legend.text = element_text(size = 10, color = "white"),
+      legend.background = element_blank()
+    ) +
+    labs(title = var_name)
+
+  pdf(paste0("outputs/env_maps/survey_map_", region, "_", islands[i], "_", var_name, ".pdf"), height = 6, width = 11)
+  print(whole_map)
+  dev.off()
+
+  
+}
+
+pdf_combine(input = list.files("outputs/env_maps/", full.names = T),
+            output = paste0("outputs/maps/survey_env_maps_", region, "_", islands[i], ".pdf"))
+
