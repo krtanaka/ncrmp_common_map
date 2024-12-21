@@ -25,7 +25,7 @@ for (isl in 1:length(islands)) {
   
   # isl = 1
   
-  tab = read_csv(paste0("outputs/tables/strata_keys_", region, "_", islands[isl], ".csv"))
+  tab = read_csv(paste0("outputs/keys/key_", region, "_", islands[isl], ".csv"))
   
   itinerary_i = itinerary %>% filter(Island_Code == islands[isl])
   
