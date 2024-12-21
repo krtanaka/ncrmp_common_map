@@ -47,4 +47,4 @@ for (isl in 1:length(islands)) {
 df_all = df_all %>% 
   mutate(across(where(is.character), toupper))
 
-write_csv(df_all, file = paste0("outputs/tables/strata_table_", region, ".csv"))
+write_csv(df_all, file = paste0("outputs/keys/strata_table_", region, ".csv"))
