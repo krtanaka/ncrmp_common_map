@@ -67,17 +67,17 @@ write.csv(sec.new %>% select(-...1), 'outputs/keys/Update_Sectors-Strata-Areas.c
 
 ### NWHI + MHI ####
 # LOAD COMMON MAPS FILES
-haw.area<-read.csv('outputs/tables/strata_table_MHI.csv') %>% # strata areas --> AREA = KM^2 (MULTIPLY BY 100 TO CONVERT TO HECTARES)
-  bind_rows(read.csv('outputs/tables/strata_table_NWHI.csv'))
+haw.area<-read.csv('outputs/keys/strata_table_MHI.csv') %>% # strata areas --> AREA = KM^2 (MULTIPLY BY 100 TO CONVERT TO HECTARES)
+  bind_rows(read.csv('outputs/keys/strata_table_NWHI.csv'))
 
 haw.new <- haw.area %>% 
-  dplyr::rename(AREA_KM2 = strat_area) %>% 
+  dplyr::rename(AREA_KM2 = area_km2) %>% 
   # UPDATE FORMATTING --> consistent with areas file in fish-paste
   mutate_at(vars(sector_id), ~toupper(.)) %>% mutate_at(vars(depth_bin, reef_id), ~tolower(.)) %>% 
   mutate_at(vars(reef_id, depth_bin), ~sub("(.)", "\\U\\1", ., perl=TRUE)) %>% mutate(reef_id = ifelse(reef_id == "Protected slope", "Protected Slope", reef_id)) %>% 
   mutate(depth_bin = ifelse(depth_bin == "Midd", "Mid", ifelse(depth_bin == "Shal", "Shallow", depth_bin))) %>% 
   dplyr::rename(SEC_NAME = sector_id, REEF_ZONE = reef_id, DEPTH_BIN = depth_bin) %>% 
-  select(-strat_id, -strat_nam, -island, -region) %>% 
+  select(-stratum_id, -stratum_name, -island, -region) %>% 
   # FIX SECTOR NAMES SO CONSISTENT WITH SURVEY MASTER
   mutate(SEC_NAME = ifelse(SEC_NAME == "HAW_HAMAK", "HAW_HAMAKUA", ifelse(SEC_NAME == "KAL", "KAL_KAULA", ifelse(SEC_NAME == "FFS_SECTOR", "French Frigate", ifelse(SEC_NAME == "KUR_SECTOR", "Kure", ifelse(SEC_NAME == "LAY_SECTOR", "Laysan", ifelse(SEC_NAME == "LIS_SECTOR", "Lisianski", ifelse(SEC_NAME == "MAR_SECTOR", "Maro", ifelse(SEC_NAME == "MID_SECTOR", "Midway", ifelse(SEC_NAME == "PHR_SECTOR", "Pearl & Hermes", SEC_NAME))))))))))
 

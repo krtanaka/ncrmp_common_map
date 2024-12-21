@@ -1,0 +1,271 @@
+REGION,JurisdictionName,JurisdictionCode,SubjurisdictionName,SubjurisdictionCode,SEC_NAME,SectorName,SectorCode,REEF_ZONE,DEPTH_BIN,StrataName,StrataCode
+SAMOA,American Samoa,SAMOA,Ofu and Olosega,OFU,Ofu & Olosega,Ofu and Olosega,OFU,Forereef,Deep,Forereef Deep,FRF_D
+SAMOA,American Samoa,SAMOA,Ofu and Olosega,OFU,Ofu & Olosega,Ofu and Olosega,OFU,Forereef,Mid,Forereef Mid,FRF_M
+SAMOA,American Samoa,SAMOA,Ofu and Olosega,OFU,Ofu & Olosega,Ofu and Olosega,OFU,Forereef,Shallow,Forereef Shallow,FRF_S
+SAMOA,American Samoa,SAMOA,Rose Atoll,ROS,ROS,Rose Atoll,ROS,Backreef,Mid,Backreef Mid,BRF_M
+SAMOA,American Samoa,SAMOA,Rose Atoll,ROS,ROS,Rose Atoll,ROS,Backreef,Shallow,Backreef Shallow,BRF_S
+SAMOA,American Samoa,SAMOA,Rose Atoll,ROS,ROS,Rose Atoll,ROS,Lagoon,Deep,Lagoon Deep,LAG_D
+SAMOA,American Samoa,SAMOA,Rose Atoll,ROS,ROS,Rose Atoll,ROS,Lagoon,Mid,Lagoon Mid,LAG_M
+SAMOA,American Samoa,SAMOA,Rose Atoll,ROS,ROS,Rose Atoll,ROS,Lagoon,Shallow,Lagoon Shallow,LAG_S
+SAMOA,American Samoa,SAMOA,Rose Atoll,ROS,ROS,Rose Atoll,ROS,Forereef,Deep,Forereef Deep,FRF_D
+SAMOA,American Samoa,SAMOA,Rose Atoll,ROS,ROS,Rose Atoll,ROS,Forereef,Mid,Forereef Mid,FRF_M
+SAMOA,American Samoa,SAMOA,Rose Atoll,ROS,ROS,Rose Atoll,ROS,Forereef,Shallow,Forereef Shallow,FRF_S
+SAMOA,American Samoa,SAMOA,Swains,SWA,SWA_OPEN,Open,SWA_open,Forereef,Deep,Forereef Deep,FRF_D
+SAMOA,American Samoa,SAMOA,Swains,SWA,SWA_OPEN,Open,SWA_open,Forereef,Mid,Forereef Mid,FRF_M
+SAMOA,American Samoa,SAMOA,Swains,SWA,SWA_OPEN,Open,SWA_open,Forereef,Shallow,Forereef Shallow,FRF_S
+SAMOA,American Samoa,SAMOA,Swains,SWA,SWA_SANCTUARY,Sanctuary,SWA_sanctuary,Forereef,Deep,Forereef Deep,FRF_D
+SAMOA,American Samoa,SAMOA,Swains,SWA,SWA_SANCTUARY,Sanctuary,SWA_sanctuary,Forereef,Mid,Forereef Mid,FRF_M
+SAMOA,American Samoa,SAMOA,Swains,SWA,SWA_SANCTUARY,Sanctuary,SWA_sanctuary,Forereef,Shallow,Forereef Shallow,FRF_S
+SAMOA,American Samoa,SAMOA,Tau,TAU,TAU_OPEN,Open,TAU_open,Forereef,Deep,Forereef Deep,FRF_D
+SAMOA,American Samoa,SAMOA,Tau,TAU,TAU_OPEN,Open,TAU_open,Forereef,Mid,Forereef Mid,FRF_M
+SAMOA,American Samoa,SAMOA,Tau,TAU,TAU_OPEN,Open,TAU_open,Forereef,Shallow,Forereef Shallow,FRF_S
+SAMOA,American Samoa,SAMOA,Tau,TAU,TAU_SANCTUARY,Sanctuary,TAU_sanctuary,Forereef,Deep,Forereef Deep,FRF_D
+SAMOA,American Samoa,SAMOA,Tau,TAU,TAU_SANCTUARY,Sanctuary,TAU_sanctuary,Forereef,Mid,Forereef Mid,FRF_M
+SAMOA,American Samoa,SAMOA,Tau,TAU,TAU_SANCTUARY,Sanctuary,TAU_sanctuary,Forereef,Shallow,Forereef Shallow,FRF_S
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_AUNUU_A,Aunuu A,TUT_AunuuA,Forereef,Deep,Forereef Deep,FRF_D
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_AUNUU_A,Aunuu A,TUT_AunuuA,Forereef,Mid,Forereef Mid,FRF_M
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_AUNUU_A,Aunuu A,TUT_AunuuA,Forereef,Shallow,Forereef Shallow,FRF_S
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_AUNUU_B,Aunuu B,TUT_AunuuB,Forereef,Deep,Forereef Deep,FRF_D
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_AUNUU_B,Aunuu B,TUT_AunuuB,Forereef,Mid,Forereef Mid,FRF_M
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_AUNUU_B,Aunuu B,TUT_AunuuB,Forereef,Shallow,Forereef Shallow,FRF_S
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_FAGALUA,Fagalua,TUT_Fagalua,Forereef,Deep,Forereef Deep,FRF_D
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_FAGALUA,Fagalua,TUT_Fagalua,Forereef,Mid,Forereef Mid,FRF_M
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_FAGALUA,Fagalua,TUT_Fagalua,Forereef,Shallow,Forereef Shallow,FRF_S
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_FAGATELE,Fagatele,TUT_Fagatele,Forereef,Deep,Forereef Deep,FRF_D
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_FAGATELE,Fagatele,TUT_Fagatele,Forereef,Mid,Forereef Mid,FRF_M
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_FAGATELE,Fagatele,TUT_Fagatele,Forereef,Shallow,Forereef Shallow,FRF_S
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_NE_OPEN,Northeast Open,TUT_NEopen,Forereef,Deep,Forereef Deep,FRF_D
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_NE_OPEN,Northeast Open,TUT_NEopen,Forereef,Mid,Forereef Mid,FRF_M
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_NE_OPEN,Northeast Open,TUT_NEopen,Forereef,Shallow,Forereef Shallow,FRF_S
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_NW_OPEN,Northwest Open,TUT_NWopen,Forereef,Deep,Forereef Deep,FRF_D
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_NW_OPEN,Northwest Open,TUT_NWopen,Forereef,Mid,Forereef Mid,FRF_M
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_NW_OPEN,Northwest Open,TUT_NWopen,Forereef,Shallow,Forereef Shallow,FRF_S
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_PAGOPAGO,Pago Pago,TUT_PagoPago,Forereef,Deep,Forereef Deep,FRF_D
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_PAGOPAGO,Pago Pago,TUT_PagoPago,Forereef,Mid,Forereef Mid,FRF_M
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_PAGOPAGO,Pago Pago,TUT_PagoPago,Forereef,Shallow,Forereef Shallow,FRF_S
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_SE_OPEN,Southeast Open,TUT_SEopen,Forereef,Deep,Forereef Deep,FRF_D
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_SE_OPEN,Southeast Open,TUT_SEopen,Forereef,Mid,Forereef Mid,FRF_M
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_SE_OPEN,Southeast Open,TUT_SEopen,Forereef,Shallow,Forereef Shallow,FRF_S
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_SW_OPEN,Southwest Open,TUT_SWopen,Forereef,Deep,Forereef Deep,FRF_D
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_SW_OPEN,Southwest Open,TUT_SWopen,Forereef,Mid,Forereef Mid,FRF_M
+SAMOA,American Samoa,SAMOA,Tutuila,TUT,TUT_SW_OPEN,Southwest Open,TUT_SWopen,Forereef,Shallow,Forereef Shallow,FRF_S
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Agrihan,AGR,Agrihan,Agrihan,AGR,Forereef,Deep,Forereef Deep,FRF_D
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Agrihan,AGR,Agrihan,Agrihan,AGR,Forereef,Mid,Forereef Mid,FRF_M
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Agrihan,AGR,Agrihan,Agrihan,AGR,Forereef,Shallow,Forereef Shallow,FRF_S
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Aguijan,AGU,Aguijan,Aguijan,AGU,Forereef,Deep,Forereef Deep,FRF_D
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Aguijan,AGU,Aguijan,Aguijan,AGU,Forereef,Mid,Forereef Mid,FRF_M
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Aguijan,AGU,Aguijan,Aguijan,AGU,Forereef,Shallow,Forereef Shallow,FRF_S
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,"Sarigan, Guguan and Alamagan",SGA,Alamagan,Alamagan,Alamagan,Forereef,Deep,Forereef Deep,FRF_D
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,"Sarigan, Guguan and Alamagan",SGA,Alamagan,Alamagan,Alamagan,Forereef,Mid,Forereef Mid,FRF_M
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,"Sarigan, Guguan and Alamagan",SGA,Alamagan,Alamagan,Alamagan,Forereef,Shallow,Forereef Shallow,FRF_S
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Asuncion,ASC,Asuncion,Asuncion,ASC,Forereef,Deep,Forereef Deep,FRF_D
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Asuncion,ASC,Asuncion,Asuncion,ASC,Forereef,Mid,Forereef Mid,FRF_M
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Asuncion,ASC,Asuncion,Asuncion,ASC,Forereef,Shallow,Forereef Shallow,FRF_S
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Farallon de Pajaros,FDP,Farallon de Pajaros,Farallon de Pajaros,FDP,Forereef,Deep,Forereef Deep,FRF_D
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Farallon de Pajaros,FDP,Farallon de Pajaros,Farallon de Pajaros,FDP,Forereef,Mid,Forereef Mid,FRF_M
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Farallon de Pajaros,FDP,Farallon de Pajaros,Farallon de Pajaros,FDP,Forereef,Shallow,Forereef Shallow,FRF_S
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,"Sarigan, Guguan and Alamagan",SGA,Guguan,Guguan,Guguan,Forereef,Deep,Forereef Deep,FRF_D
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,"Sarigan, Guguan and Alamagan",SGA,Guguan,Guguan,Guguan,Forereef,Mid,Forereef Mid,FRF_M
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,"Sarigan, Guguan and Alamagan",SGA,Guguan,Guguan,Guguan,Forereef,Shallow,Forereef Shallow,FRF_S
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Maug,MAU,Maug,Maug,MAU,Forereef,Deep,Forereef Deep,FRF_D
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Maug,MAU,Maug,Maug,MAU,Forereef,Mid,Forereef Mid,FRF_M
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Maug,MAU,Maug,Maug,MAU,Forereef,Shallow,Forereef Shallow,FRF_S
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Pagan,PAG,Pagan,Pagan,PAG,Forereef,Deep,Forereef Deep,FRF_D
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Pagan,PAG,Pagan,Pagan,PAG,Forereef,Mid,Forereef Mid,FRF_M
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Pagan,PAG,Pagan,Pagan,PAG,Forereef,Shallow,Forereef Shallow,FRF_S
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Rota,ROT,Rota,Rota,ROT,Forereef,Deep,Forereef Deep,FRF_D
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Rota,ROT,Rota,Rota,ROT,Forereef,Mid,Forereef Mid,FRF_M
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Rota,ROT,Rota,Rota,ROT,Forereef,Shallow,Forereef Shallow,FRF_S
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Saipan,SAI,Saipan,Saipan,SAI,Backreef,Deep,Backreef Deep,BRF_D
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Saipan,SAI,Saipan,Saipan,SAI,Backreef,Mid,Backreef Mid,BRF_M
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Saipan,SAI,Saipan,Saipan,SAI,Backreef,Shallow,Backreef Shallow,BRF_S
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Saipan,SAI,Saipan,Saipan,SAI,Forereef,Deep,Forereef Deep,FRF_D
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Saipan,SAI,Saipan,Saipan,SAI,Forereef,Mid,Forereef Mid,FRF_M
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Saipan,SAI,Saipan,Saipan,SAI,Forereef,Shallow,Forereef Shallow,FRF_S
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Saipan,SAI,Saipan,Saipan,SAI,Lagoon,Mid,Lagoon Mid,LAG_M
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Saipan,SAI,Saipan,Saipan,SAI,Lagoon,Shallow,Lagoon Shallow,LAG_S
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,"Sarigan, Guguan and Alamagan",SGA,Sarigan,Sarigan,Sarigan,Forereef,Deep,Forereef Deep,FRF_D
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,"Sarigan, Guguan and Alamagan",SGA,Sarigan,Sarigan,Sarigan,Forereef,Mid,Forereef Mid,FRF_M
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,"Sarigan, Guguan and Alamagan",SGA,Sarigan,Sarigan,Sarigan,Forereef,Shallow,Forereef Shallow,FRF_S
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Tinian,TIN,Tinian,Tinian,TIN,Forereef,Deep,Forereef Deep,FRF_D
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Tinian,TIN,Tinian,Tinian,TIN,Forereef,Mid,Forereef Mid,FRF_M
+MARIAN,Commonwealth of the Northern Mariana Islands,CNMI,Tinian,TIN,Tinian,Tinian,TIN,Forereef,Shallow,Forereef Shallow,FRF_S
+MARIAN,Guam,GUA,Guam,GUA,GUA_ACHANG,Achang,GUA_Achang,Forereef,Deep,Forereef Deep,FRF_D
+MARIAN,Guam,GUA,Guam,GUA,GUA_ACHANG,Achang,GUA_Achang,Forereef,Mid,Forereef Mid,FRF_M
+MARIAN,Guam,GUA,Guam,GUA,GUA_ACHANG,Achang,GUA_Achang,Forereef,Shallow,Forereef Shallow,FRF_S
+MARIAN,Guam,GUA,Guam,GUA,GUA_EAST_OPEN,East Open,GUA_Eopen,Forereef,Deep,Forereef Deep,FRF_D
+MARIAN,Guam,GUA,Guam,GUA,GUA_EAST_OPEN,East Open,GUA_Eopen,Forereef,Mid,Forereef Mid,FRF_M
+MARIAN,Guam,GUA,Guam,GUA,GUA_EAST_OPEN,East Open,GUA_Eopen,Forereef,Shallow,Forereef Shallow,FRF_S
+MARIAN,Guam,GUA,Guam,GUA,GUA_PATI_POINT,Pati Point,GUA_PatiPoint,Forereef,Deep,Forereef Deep,FRF_D
+MARIAN,Guam,GUA,Guam,GUA,GUA_PATI_POINT,Pati Point,GUA_PatiPoint,Forereef,Mid,Forereef Mid,FRF_M
+MARIAN,Guam,GUA,Guam,GUA,GUA_PATI_POINT,Pati Point,GUA_PatiPoint,Forereef,Shallow,Forereef Shallow,FRF_S
+MARIAN,Guam,GUA,Guam,GUA,GUA_PITI_BOMB,Piti Bomb,GUA_PitiBomb,Forereef,Deep,Forereef Deep,FRF_D
+MARIAN,Guam,GUA,Guam,GUA,GUA_PITI_BOMB,Piti Bomb,GUA_PitiBomb,Forereef,Mid,Forereef Mid,FRF_M
+MARIAN,Guam,GUA,Guam,GUA,GUA_PITI_BOMB,Piti Bomb,GUA_PitiBomb,Forereef,Shallow,Forereef Shallow,FRF_S
+MARIAN,Guam,GUA,Guam,GUA,GUA_TUMON,Tumon Bay,GUA_TumonBay,Forereef,Deep,Forereef Deep,FRF_D
+MARIAN,Guam,GUA,Guam,GUA,GUA_TUMON,Tumon Bay,GUA_TumonBay,Forereef,Mid,Forereef Mid,FRF_M
+MARIAN,Guam,GUA,Guam,GUA,GUA_TUMON,Tumon Bay,GUA_TumonBay,Forereef,Shallow,Forereef Shallow,FRF_S
+MARIAN,Guam,GUA,Guam,GUA,GUA_WEST_OPEN,West Open,GUA_Wopen,Forereef,Deep,Forereef Deep,FRF_D
+MARIAN,Guam,GUA,Guam,GUA,GUA_WEST_OPEN,West Open,GUA_Wopen,Forereef,Mid,Forereef Mid,FRF_M
+MARIAN,Guam,GUA,Guam,GUA,GUA_WEST_OPEN,West Open,GUA_Wopen,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Hawaii,HAW,HAW_HAMAKUA,Hamakua,HAW_Hamakua,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Hawaii,HAW,HAW_HAMAKUA,Hamakua,HAW_Hamakua,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Hawaii,HAW,HAW_HAMAKUA,Hamakua,HAW_Hamakua,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Hawaii,HAW,HAW_KONA,Kona,HAW_Kona,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Hawaii,HAW,HAW_KONA,Kona,HAW_Kona,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Hawaii,HAW,HAW_KONA,Kona,HAW_Kona,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Hawaii,HAW,HAW_PUNA,Puna,HAW_Puna,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Hawaii,HAW,HAW_PUNA,Puna,HAW_Puna,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Hawaii,HAW,HAW_PUNA,Puna,HAW_Puna,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Hawaii,HAW,HAW_SE,Southeast,HAW_SE,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Hawaii,HAW,HAW_SE,Southeast,HAW_SE,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Hawaii,HAW,HAW_SE,Southeast,HAW_SE,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Kahoolawe,KAH,KAH_NORTH,North,KAH_N,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Kahoolawe,KAH,KAH_NORTH,North,KAH_N,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Kahoolawe,KAH,KAH_NORTH,North,KAH_N,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Kahoolawe,KAH,KAH_SOUTH,South,KAH_S,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Kahoolawe,KAH,KAH_SOUTH,South,KAH_S,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Kahoolawe,KAH,KAH_SOUTH,South,KAH_S,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Kauai,KAU,KAU_EAST,East,KAU_E,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Kauai,KAU,KAU_EAST,East,KAU_E,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Kauai,KAU,KAU_EAST,East,KAU_E,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Kauai,KAU,KAU_NAPALI,Napali,KAU_Napali,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Kauai,KAU,KAU_NAPALI,Napali,KAU_Napali,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Kauai,KAU,KAU_NAPALI,Napali,KAU_Napali,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Lanai,LAN,LAN_NORTH,North,LAN_N,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Lanai,LAN,LAN_NORTH,North,LAN_N,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Lanai,LAN,LAN_NORTH,North,LAN_N,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Lanai,LAN,LAN_SOUTH,South,LAN_S,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Lanai,LAN,LAN_SOUTH,South,LAN_S,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Lanai,LAN,LAN_SOUTH,South,LAN_S,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Maui,MAI,MAI_HANA,Hana,MAI_Hana,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Maui,MAI,MAI_HANA,Hana,MAI_Hana,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Maui,MAI,MAI_HANA,Hana,MAI_Hana,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Maui,MAI,MAI_KAHULUI,Kahului,MAI_Kahului,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Maui,MAI,MAI_KAHULUI,Kahului,MAI_Kahului,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Maui,MAI,MAI_KAHULUI,Kahului,MAI_Kahului,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Maui,MAI,MAI_KIHEI,Kihei,MAI_Kihei,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Maui,MAI,MAI_KIHEI,Kihei,MAI_Kihei,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Maui,MAI,MAI_KIHEI,Kihei,MAI_Kihei,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Maui,MAI,MAI_LAHAINA,Lahaina,MAI_Lahaina,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Maui,MAI,MAI_LAHAINA,Lahaina,MAI_Lahaina,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Maui,MAI,MAI_LAHAINA,Lahaina,MAI_Lahaina,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Maui,MAI,MAI_NE,Northeast,MAI_NE,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Maui,MAI,MAI_NE,Northeast,MAI_NE,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Maui,MAI,MAI_NE,Northeast,MAI_NE,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Maui,MAI,MAI_NW,Northwest,MAI_NW,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Maui,MAI,MAI_NW,Northwest,MAI_NW,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Maui,MAI,MAI_NW,Northwest,MAI_NW,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Maui,MAI,MAI_SE,Southeast,MAI_SE,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Maui,MAI,MAI_SE,Southeast,MAI_SE,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Maui,MAI,MAI_SE,Southeast,MAI_SE,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Molokai,MOL,MOL_NW,Northwest,MOL_NW,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Molokai,MOL,MOL_NW,Northwest,MOL_NW,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Molokai,MOL,MOL_NW,Northwest,MOL_NW,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Molokai,MOL,MOL_PALI,Pali,MOL_Pali,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Molokai,MOL,MOL_PALI,Pali,MOL_Pali,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Molokai,MOL,MOL_PALI,Pali,MOL_Pali,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Molokai,MOL,MOL_SOUTH,South,MOL_S,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Molokai,MOL,MOL_SOUTH,South,MOL_S,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Molokai,MOL,MOL_SOUTH,South,MOL_S,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Molokai,MOL,MOL_WEST,West,MOL_W,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Molokai,MOL,MOL_WEST,West,MOL_W,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Molokai,MOL,MOL_WEST,West,MOL_W,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Niihau and Lehua,NII,NII_EAST,East,NII_E,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Niihau and Lehua,NII,NII_EAST,East,NII_E,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Niihau and Lehua,NII,NII_EAST,East,NII_E,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Niihau and Lehua,NII,NII_LEHUA,Lehua,NII_Lehua,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Niihau and Lehua,NII,NII_LEHUA,Lehua,NII_Lehua,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Niihau and Lehua,NII,NII_LEHUA,Lehua,NII_Lehua,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Niihau and Lehua,NII,NII_WEST,West,NII_W,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Niihau and Lehua,NII,NII_WEST,West,NII_W,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Niihau and Lehua,NII,NII_WEST,West,NII_W,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Oahu,OAH,OAH_EAST,East,OAH_E,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Oahu,OAH,OAH_EAST,East,OAH_E,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Oahu,OAH,OAH_EAST,East,OAH_E,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Oahu,OAH,OAH_KAENA,Kaena,OAH_Kaena,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Oahu,OAH,OAH_KAENA,Kaena,OAH_Kaena,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Oahu,OAH,OAH_KAENA,Kaena,OAH_Kaena,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Oahu,OAH,OAH_NE,Northeast,OAH_NE,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Oahu,OAH,OAH_NE,Northeast,OAH_NE,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Oahu,OAH,OAH_NE,Northeast,OAH_NE,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Oahu,OAH,OAH_NORTH,North,OAH_N,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Oahu,OAH,OAH_NORTH,North,OAH_N,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Oahu,OAH,OAH_NORTH,North,OAH_N,Forereef,Shallow,Forereef Shallow,FRF_S
+MHI,Main Hawaiian Islands,MHI,Oahu,OAH,OAH_SOUTH,South,OAH_S,Forereef,Deep,Forereef Deep,FRF_D
+MHI,Main Hawaiian Islands,MHI,Oahu,OAH,OAH_SOUTH,South,OAH_S,Forereef,Mid,Forereef Mid,FRF_M
+MHI,Main Hawaiian Islands,MHI,Oahu,OAH,OAH_SOUTH,South,OAH_S,Forereef,Shallow,Forereef Shallow,FRF_S
+NWHI,Northwestern Hawaiian Islands,NWHI,French Frigate Shoals,FFS,French Frigate,French Frigate Shoals,FFS,Backreef,Mid,Backreef Mid,BRF_M
+NWHI,Northwestern Hawaiian Islands,NWHI,French Frigate Shoals,FFS,French Frigate,French Frigate Shoals,FFS,Backreef,Shallow,Backreef Shallow,BRF_S
+NWHI,Northwestern Hawaiian Islands,NWHI,French Frigate Shoals,FFS,French Frigate,French Frigate Shoals,FFS,Forereef,Deep,Forereef Deep,FRF_D
+NWHI,Northwestern Hawaiian Islands,NWHI,French Frigate Shoals,FFS,French Frigate,French Frigate Shoals,FFS,Forereef,Mid,Forereef Mid,FRF_M
+NWHI,Northwestern Hawaiian Islands,NWHI,French Frigate Shoals,FFS,French Frigate,French Frigate Shoals,FFS,Forereef,Shallow,Forereef Shallow,FRF_S
+NWHI,Northwestern Hawaiian Islands,NWHI,French Frigate Shoals,FFS,French Frigate,French Frigate Shoals,FFS,Lagoon,Mid,Lagoon Mid,LAG_M
+NWHI,Northwestern Hawaiian Islands,NWHI,French Frigate Shoals,FFS,French Frigate,French Frigate Shoals,FFS,Lagoon,Shallow,Lagoon Shallow,LAG_S
+NWHI,Northwestern Hawaiian Islands,NWHI,French Frigate Shoals,FFS,French Frigate,French Frigate Shoals,FFS,Protected Slope,Deep,Protected Slope Deep,PRS_D
+NWHI,Northwestern Hawaiian Islands,NWHI,French Frigate Shoals,FFS,French Frigate,French Frigate Shoals,FFS,Protected Slope,Mid,Protected Slope Mid,PRS_M
+NWHI,Northwestern Hawaiian Islands,NWHI,French Frigate Shoals,FFS,French Frigate,French Frigate Shoals,FFS,Protected Slope,Shallow,Protected Slope Shallow,PRS_S
+NWHI,Northwestern Hawaiian Islands,NWHI,Kure Atoll,KUR,Kure,Kure Atoll,KUR,Backreef,Mid,Backreef Mid,BRF_M
+NWHI,Northwestern Hawaiian Islands,NWHI,Kure Atoll,KUR,Kure,Kure Atoll,KUR,Backreef,Shallow,Backreef Shallow,BRF_S
+NWHI,Northwestern Hawaiian Islands,NWHI,Kure Atoll,KUR,Kure,Kure Atoll,KUR,Forereef,Deep,Forereef Deep,FRF_D
+NWHI,Northwestern Hawaiian Islands,NWHI,Kure Atoll,KUR,Kure,Kure Atoll,KUR,Forereef,Mid,Forereef Mid,FRF_M
+NWHI,Northwestern Hawaiian Islands,NWHI,Kure Atoll,KUR,Kure,Kure Atoll,KUR,Forereef,Shallow,Forereef Shallow,FRF_S
+NWHI,Northwestern Hawaiian Islands,NWHI,Kure Atoll,KUR,Kure,Kure Atoll,KUR,Lagoon,Mid,Lagoon Mid,LAG_M
+NWHI,Northwestern Hawaiian Islands,NWHI,Kure Atoll,KUR,Kure,Kure Atoll,KUR,Lagoon,Shallow,Lagoon Shallow,LAG_S
+NWHI,Northwestern Hawaiian Islands,NWHI,Lisianski Island,LIS,Lisianski,Lisianski,LIS,Forereef,Deep,Forereef Deep,FRF_D
+NWHI,Northwestern Hawaiian Islands,NWHI,Lisianski Island,LIS,Lisianski,Lisianski,LIS,Forereef,Mid,Forereef Mid,FRF_M
+NWHI,Northwestern Hawaiian Islands,NWHI,Lisianski Island,LIS,Lisianski,Lisianski,LIS,Forereef,Shallow,Forereef Shallow,FRF_S
+NWHI,Northwestern Hawaiian Islands,NWHI,Pearl and Hermes Atolls,PHR,Pearl & Hermes,Pearl and Hermes Atolls,PHR,Backreef,Mid,Backreef Mid,BRF_M
+NWHI,Northwestern Hawaiian Islands,NWHI,Pearl and Hermes Atolls,PHR,Pearl & Hermes,Pearl and Hermes Atolls,PHR,Backreef,Shallow,Backreef Shallow,BRF_S
+NWHI,Northwestern Hawaiian Islands,NWHI,Pearl and Hermes Atolls,PHR,Pearl & Hermes,Pearl and Hermes Atolls,PHR,Forereef,Deep,Forereef Deep,FRF_D
+NWHI,Northwestern Hawaiian Islands,NWHI,Pearl and Hermes Atolls,PHR,Pearl & Hermes,Pearl and Hermes Atolls,PHR,Forereef,Mid,Forereef Mid,FRF_M
+NWHI,Northwestern Hawaiian Islands,NWHI,Pearl and Hermes Atolls,PHR,Pearl & Hermes,Pearl and Hermes Atolls,PHR,Forereef,Shallow,Forereef Shallow,FRF_S
+NWHI,Northwestern Hawaiian Islands,NWHI,Pearl and Hermes Atolls,PHR,Pearl & Hermes,Pearl and Hermes Atolls,PHR,Lagoon,Mid,Lagoon Mid,LAG_M
+NWHI,Northwestern Hawaiian Islands,NWHI,Pearl and Hermes Atolls,PHR,Pearl & Hermes,Pearl and Hermes Atolls,PHR,Lagoon,Shallow,Lagoon Shallow,LAG_S
+PRIAs,Pacific Remote Island Areas,PRIA,Baker,BAK,Baker,Baker,BAK,Forereef,Deep,Forereef Deep,FRF_D
+PRIAs,Pacific Remote Island Areas,PRIA,Baker,BAK,Baker,Baker,BAK,Forereef,Mid,Forereef Mid,FRF_M
+PRIAs,Pacific Remote Island Areas,PRIA,Baker,BAK,Baker,Baker,BAK,Forereef,Shallow,Forereef Shallow,FRF_S
+PRIAs,Pacific Remote Island Areas,PRIA,Howland,HOW,Howland,Howland,HOW,Forereef,Deep,Forereef Deep,FRF_D
+PRIAs,Pacific Remote Island Areas,PRIA,Howland,HOW,Howland,Howland,HOW,Forereef,Mid,Forereef Mid,FRF_M
+PRIAs,Pacific Remote Island Areas,PRIA,Howland,HOW,Howland,Howland,HOW,Forereef,Shallow,Forereef Shallow,FRF_S
+PRIAs,Pacific Remote Island Areas,PRIA,Jarvis,JAR,Jarvis,Jarvis,JAR,Forereef,Deep,Forereef Deep,FRF_D
+PRIAs,Pacific Remote Island Areas,PRIA,Jarvis,JAR,Jarvis,Jarvis,JAR,Forereef,Mid,Forereef Mid,FRF_M
+PRIAs,Pacific Remote Island Areas,PRIA,Jarvis,JAR,Jarvis,Jarvis,JAR,Forereef,Shallow,Forereef Shallow,FRF_S
+PRIAs,Pacific Remote Island Areas,PRIA,Johnston Atoll,JOH,Johnston,Johnston Atoll,JOH,Backreef,Mid,Backreef Mid,BRF_M
+PRIAs,Pacific Remote Island Areas,PRIA,Johnston Atoll,JOH,Johnston,Johnston Atoll,JOH,Backreef,Shallow,Backreef Shallow,BRF_S
+PRIAs,Pacific Remote Island Areas,PRIA,Johnston Atoll,JOH,Johnston,Johnston Atoll,JOH,Forereef,Mid,Forereef Mid,FRF_M
+PRIAs,Pacific Remote Island Areas,PRIA,Johnston Atoll,JOH,Johnston,Johnston Atoll,JOH,Forereef,Shallow,Forereef Shallow,FRF_S
+PRIAs,Pacific Remote Island Areas,PRIA,Johnston Atoll,JOH,Johnston,Johnston Atoll,JOH,Forereef,Deep,Forereef Deep,FRF_D
+PRIAs,Pacific Remote Island Areas,PRIA,Johnston Atoll,JOH,Johnston,Johnston Atoll,JOH,Lagoon,Deep,Lagoon Deep,LAG_D
+PRIAs,Pacific Remote Island Areas,PRIA,Johnston Atoll,JOH,Johnston,Johnston Atoll,JOH,Lagoon,Mid,Lagoon Mid,LAG_M
+PRIAs,Pacific Remote Island Areas,PRIA,Johnston Atoll,JOH,Johnston,Johnston Atoll,JOH,Lagoon,Shallow,Lagoon Shallow,LAG_S
+PRIAs,Pacific Remote Island Areas,PRIA,Johnston Atoll,JOH,Johnston,Johnston Atoll,JOH,Protected Slope,Deep,Protected Slope Deep,PRS_D
+PRIAs,Pacific Remote Island Areas,PRIA,Johnston Atoll,JOH,Johnston,Johnston Atoll,JOH,Protected Slope,Mid,Protected Slope Mid,PRS_M
+PRIAs,Pacific Remote Island Areas,PRIA,Johnston Atoll,JOH,Johnston,Johnston Atoll,JOH,Protected Slope,Shallow,Protected Slope Shallow,PRS_S
+PRIAs,Pacific Remote Island Areas,PRIA,Kingman Reef,KIN,Kingman,Kingman Reef,KIN,Backreef,Deep,Backreef Deep,BRF_D
+PRIAs,Pacific Remote Island Areas,PRIA,Kingman Reef,KIN,Kingman,Kingman Reef,KIN,Backreef,Mid,Backreef Mid,BRF_M
+PRIAs,Pacific Remote Island Areas,PRIA,Kingman Reef,KIN,Kingman,Kingman Reef,KIN,Backreef,Shallow,Backreef Shallow,BRF_S
+PRIAs,Pacific Remote Island Areas,PRIA,Kingman Reef,KIN,Kingman,Kingman Reef,KIN,Forereef,Deep,Forereef Deep,FRF_D
+PRIAs,Pacific Remote Island Areas,PRIA,Kingman Reef,KIN,Kingman,Kingman Reef,KIN,Forereef,Mid,Forereef Mid,FRF_M
+PRIAs,Pacific Remote Island Areas,PRIA,Kingman Reef,KIN,Kingman,Kingman Reef,KIN,Forereef,Shallow,Forereef Shallow,FRF_S
+PRIAs,Pacific Remote Island Areas,PRIA,Kingman Reef,KIN,Kingman,Kingman Reef,KIN,Lagoon,Deep,Lagoon Deep,LAG_D
+PRIAs,Pacific Remote Island Areas,PRIA,Kingman Reef,KIN,Kingman,Kingman Reef,KIN,Lagoon,Mid,Lagoon Mid,LAG_M
+PRIAs,Pacific Remote Island Areas,PRIA,Kingman Reef,KIN,Kingman,Kingman Reef,KIN,Lagoon,Shallow,Lagoon Shallow,LAG_S
+PRIAs,Pacific Remote Island Areas,PRIA,Kingman Reef,KIN,Kingman,Kingman Reef,KIN,Protected Slope,Deep,Protected Slope Deep,PRS_D
+PRIAs,Pacific Remote Island Areas,PRIA,Kingman Reef,KIN,Kingman,Kingman Reef,KIN,Protected Slope,Mid,Protected Slope Mid,PRS_M
+PRIAs,Pacific Remote Island Areas,PRIA,Kingman Reef,KIN,Kingman,Kingman Reef,KIN,Protected Slope,Shallow,Protected Slope Shallow,PRS_S
+PRIAs,Pacific Remote Island Areas,PRIA,Palmyra Atoll,PAL,Palmyra,Palmyra Atoll,PAL,Backreef,Deep,Backreef Deep,BRF_D
+PRIAs,Pacific Remote Island Areas,PRIA,Palmyra Atoll,PAL,Palmyra,Palmyra Atoll,PAL,Backreef,Mid,Backreef Mid,BRF_M
+PRIAs,Pacific Remote Island Areas,PRIA,Palmyra Atoll,PAL,Palmyra,Palmyra Atoll,PAL,Backreef,Shallow,Backreef Shallow,BRF_S
+PRIAs,Pacific Remote Island Areas,PRIA,Palmyra Atoll,PAL,Palmyra,Palmyra Atoll,PAL,Forereef,Deep,Forereef Deep,FRF_D
+PRIAs,Pacific Remote Island Areas,PRIA,Palmyra Atoll,PAL,Palmyra,Palmyra Atoll,PAL,Forereef,Mid,Forereef Mid,FRF_M
+PRIAs,Pacific Remote Island Areas,PRIA,Palmyra Atoll,PAL,Palmyra,Palmyra Atoll,PAL,Forereef,Shallow,Forereef Shallow,FRF_S
+PRIAs,Pacific Remote Island Areas,PRIA,Palmyra Atoll,PAL,Palmyra,Palmyra Atoll,PAL,Lagoon,Mid,Lagoon Mid,LAG_M
+PRIAs,Pacific Remote Island Areas,PRIA,Palmyra Atoll,PAL,Palmyra,Palmyra Atoll,PAL,Lagoon,Shallow,Lagoon Shallow,LAG_S
+PRIAs,Pacific Remote Island Areas,PRIA,Wake,WAK,Wake,Wake,WAK,Backreef,Deep,Backreef Deep,BRF_D
+PRIAs,Pacific Remote Island Areas,PRIA,Wake,WAK,Wake,Wake,WAK,Backreef,Mid,Backreef Mid,BRF_M
+PRIAs,Pacific Remote Island Areas,PRIA,Wake,WAK,Wake,Wake,WAK,Backreef,Shallow,Backreef Shallow,BRF_S
+PRIAs,Pacific Remote Island Areas,PRIA,Wake,WAK,Wake,Wake,WAK,Forereef,Deep,Forereef Deep,FRF_D
+PRIAs,Pacific Remote Island Areas,PRIA,Wake,WAK,Wake,Wake,WAK,Forereef,Mid,Forereef Mid,FRF_M
+PRIAs,Pacific Remote Island Areas,PRIA,Wake,WAK,Wake,Wake,WAK,Forereef,Shallow,Forereef Shallow,FRF_S
+PRIAs,Pacific Remote Island Areas,PRIA,Wake,WAK,Wake,Wake,WAK,Lagoon,Shallow,Lagoon Shallow,LAG_S

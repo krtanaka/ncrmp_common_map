@@ -26,7 +26,7 @@ source("scripts/common_map_functions.R")
 utm <- read_csv('data/misc/ncrmp_utm_zones.csv')
 
 # select regions, S.MARIAN, N.MARIAN, SAMOA, PRIAs, MHI, NWHI
-region_data <- select_region("S.MARIAN"); region_data
+region_data <- select_region("NWHI"); region_data
 islands <- region_data$islands
 region <- region_data$region
 
