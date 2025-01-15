@@ -259,9 +259,9 @@ sets = sets  %>%
   dplyr::select(id, x, y, longitude, latitude, depth, strat)
 
 sets$depth_bin = ""
-sets$depth_bin = ifelse(sets$depth >= 0  & sets$depth <= 6, "SHAL", sets$depth_bin) 
-sets$depth_bin = ifelse(sets$depth > 6  & sets$depth <= 18, "MID", sets$depth_bin) 
-sets$depth_bin = ifelse(sets$depth > 18, "DEEP", sets$depth_bin) 
+sets$depth_bin = ifelse(sets$depth >= 0  & sets$depth <= 6, "Shallow (0-6m)", sets$depth_bin) 
+sets$depth_bin = ifelse(sets$depth > 6  & sets$depth <= 18, "Mid (6-18m)", sets$depth_bin) 
+sets$depth_bin = ifelse(sets$depth > 18, "Deep (18-30m)", sets$depth_bin) 
 
 sets$SITE_NO = substr(sets$id, 5, 8)
 
@@ -538,7 +538,8 @@ for (d in 1:length(map_direction)) {
     annotation_scale(location = "br", width_hint = 0.2, text_col = "gray80", bar_cols = "white", size = 60) +  # new_scale_color() +
     
     geom_label_repel(data = sets_i, 
-                     aes(longitude, latitude, label = paste0(SITE_NO, "\n", round(depth, 1))),
+                     # aes(longitude, latitude, label = paste0(SITE_NO, "\n", round(depth, 1))),
+                     aes(longitude, latitude, label = SITE_NO),
                      size = 4,
                      label.size = NA, 
                      alpha = 0.75, 
@@ -590,7 +591,7 @@ whole_map =
   # geom_path(data = ISL_this, aes(long, lat, group = group), inherit.aes = F, size = 0.01, color = "gray10") + # coastline
   # geom_polygon(data = ISL_this, aes(long, lat, group = group), fill = "gray50", color = NA, alpha = 0.9) + # land shapefile
   
-  geom_raster(data = cells %>% mutate(across(c(latitude, longitude), round, digits = 3)), aes(longitude, latitude, fill = factor(strat)), alpha = 0.8) + # stratum
+  geom_raster(data = cells %>% mutate(across(c(latitude, longitude), round, digits = 3)), aes(longitude, latitude, fill = factor(strat)), alpha = 0.8, show.legend = F) + # stratum
   
   scale_fill_discrete("Strata") + 
   scale_color_discrete("Strata") + 
@@ -659,13 +660,14 @@ whole_map =
         axis.text = element_text(size = 10),
         axis.title = element_text(size = 10)) +   
   labs(
-    title = "",
-    subtitle = paste0(paste0("Island = ", toupper(as.character(isl_shp[1])),"\n",
-                             # "Number of strata = ", length(unique(cells$strat)), "\n",
-                             # "Target survey effort = ", total_sample, " sites \n",
-                             "Target effort = ", sum(strat_det$strat_sets), " sites")))
+    title = "Project : Modeling, Monitoring, AI, and Genetics to Support Pacific ESA-Listed Coral Recovery In the Face of Climate Change Threats",
+    # subtitle = paste0(paste0("Island = ", toupper(as.character(isl_shp[1])),"\n",
+    #                          # "Number of strata = ", length(unique(cells$strat)), "\n",
+    #                          # "Target survey effort = ", total_sample, " sites \n",
+    #                          "Target effort = ", sum(strat_det$strat_sets), " sites"))
+    )
 
-pdf(paste0("outputs/maps/survey_map_", region, "_", islands[i], ".pdf"), height = 8, width = 10)
+pdf(paste0("outputs/maps/survey_map_", region, "_", islands[i], ".pdf"), height = 7.5, width = 12)
 print(whole_map)
 dev.off()
 
